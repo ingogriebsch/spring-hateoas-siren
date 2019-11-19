@@ -1,8 +1,8 @@
 # Spring HATEOAS Siren
-This module extends [Spring HATEOAS][] with the custom media type [Siren][]. 
+This module extends [Spring HATEOAS][] with the custom hypermedia type [Siren][]. 
 > _Siren: a hypermedia specification for representing entities_
 
-The media type of [Siren][] is defined as `application/vnd.siren+json`.
+The media type for [Siren][] is defined as `application/vnd.siren+json`.
 
 ## Configuration
 To enable the [Siren][] hypermedia type you simply need to add this module as a dependency to your project.
@@ -26,18 +26,18 @@ dependencies {
 }
 ```
 
-Having the module on the classpath of your project is all you need to do to get the hypermedia type automatically enabled. This way incoming requests asking for the mentioned media type will get appropriate responses.
+Having this module on the classpath of your project is all you need to do to get the hypermedia type automatically enabled. This way incoming requests asking for the mentioned media type will get an appropriate response.
 
 ## Behavior
-Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json` in the following way. 
+Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json` in the following way:
 
-In general each [Representation Model][Spring HATEOAS Representation Model] is rendered into a Siren [Entity][Siren Entity]. Depending on the type of respective type of the [Representation Model][Spring HATEOAS Representation Model] the following rules apply:
+In general each [Representation Model][Spring HATEOAS Representation Model] is rendered into a Siren [Entity][Siren Entity]. Depending on the respective type of the [Representation Model][Spring HATEOAS Representation Model] the following rules apply:
 
 ### RepresentationModel
 When this module renders a `RepresentationModel`, it will
 
 * map links of the representation model to Siren links and actions (see below to understand how links are rendered).
-* map any custom properties of the representation model (because it was sub classed) to Siren properties.
+* map any custom properties of the representation model (because it is sub classed) to Siren properties.
 
 ### EntityModel
 When this module renders an `EntityModel`, it will
@@ -45,40 +45,43 @@ When this module renders an `EntityModel`, it will
 * map links of the entity model to Siren links and actions (see below to understand how links are rendered).
 * map the value of the content property of the entity model to Siren properties.
 
-When this module renders an `EntityModel`, it will NOT
+When this module renders an `EntityModel`, it will not
 
-* map the value of the content property if the value is an instance of one of the available representation models!
-* map custom properties of the entity model (if it has some because it was sub classed).
+* map the value of the content property if the value is an instance of one of the available [Representation Model][Spring HATEOAS Representation Model]s!
+* map custom properties of the entity model (if it has some because it is sub classed).
 
 ### CollectionModel
 When this module renders a `CollectionModel`, it will
 
 * map links of the collection model to Siren links and actions (see below to understand how links are rendered).
 * map the size of the content property of the collection model to Siren properties.
-* map the value of the content property of the collection model to Siren entities.
+* map the value of the content property of the collection model to Siren entities (regardless if it represents instances of one of the available [Representation Model][Spring HATEOAS Representation Model]s or simple pojos).
 
-When this module renders a `CollectionModel`, it will NOT
+When this module renders a `CollectionModel`, it will not
 
-* map custom properties of the collection model (if it has some because it was sub classed).
+* map custom properties of the collection model (if it has some because it is sub classed).
 
 ### PagedModel
 When this module renders a `PagedModel`, it will
 
 * map links of the paged model to Siren links and actions (see below to understand how links are rendered).
 * map the page metadata of the paged model to Siren properties.
-* map the value of the content property of the paged model to Siren entities.
+* map the value of the content property of the paged model to Siren entities (regardless if it represents instances of one of the available [Representation Model][Spring HATEOAS Representation Model]s or simple pojos).
 
-When this module renders a `PagedModel`, it will NOT
+When this module renders a `PagedModel`, it will not
 
-* map custom properties of the paged model (if it has some because it was sub classed).
+* map custom properties of the paged model (if it has some because it is sub classed).
 
 ### Link
 When this module renders a `Link`, it will
 
-* map links to Siren links and it's corresponding affordances to Siren actions.
+* map links having a http method equal to `GET` to Siren links.
+* map the affordances corresponding to a link to Siren actions.
 
-When this module renders a `Link`, it will NOT
+When this module renders a `Link`, it will not
 
+* map any links having a http method not equal to `GET`.
+* distinguish between not templated and templated links.
 
 ## Restrictions
 * Siren [Embedded Link][Siren Entity Embedded Link]s are currently not implemented through the module itself. If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
