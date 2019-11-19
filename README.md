@@ -88,7 +88,7 @@ When this module renders a `Link`, it will not
 * Siren [embedded representations][Siren Entity Embedded Representation] are currently only supported if defined as the content of either a `CollectionModel` or a `PagedModel` instance. It is currently not possible to build a hierarchy based on instances of either `RepresentationModel` or `EntityModel`.
 
 ## Customization
-This module currently uses a really simple approach to map the respective model to the [class][Siren Entity Class] attribute of the Siren [entity][Siren Entity]. If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider` interface as a Spring bean.
+This module currently uses a really simple approach to map the respective [representation model][Spring HATEOAS Representation Model] to the [class][Siren Entity Class] attribute of the Siren [entity][Siren Entity]. If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider` interface as a Spring bean.
 
 ## Client-side Support
 
