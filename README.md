@@ -7,7 +7,7 @@ The media type for [Siren][] is defined as `application/vnd.siren+json`.
 ## Configuration
 To enable the [Siren][] hypermedia type you simply need to add this module as a dependency to your project.
 
-* Maven
+### Maven
 
 ```
 <dependency>
@@ -18,7 +18,7 @@ To enable the [Siren][] hypermedia type you simply need to add this module as a 
 </dependency>
 ```
 
-* Gradle
+### Gradle
 
 ```
 dependencies {
@@ -31,31 +31,31 @@ Having this module on the classpath of your project is all you need to do to get
 ## Behavior
 Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json` in the following way:
 
-In general each [Representation Model][Spring HATEOAS Representation Model] is rendered into a Siren [Entity][Siren Entity]. Depending on the respective type of the [Representation Model][Spring HATEOAS Representation Model] the following rules apply:
+In general each [representation model][Spring HATEOAS Representation Model] is rendered into a Siren [entity][Siren Entity]. Depending on the respective type of the [representation model][Spring HATEOAS Representation Model] the following rules apply:
 
 ### RepresentationModel
 When this module renders a `RepresentationModel`, it will
 
-* map links of the representation model to Siren links and actions (see below to understand how links are rendered).
-* map any custom properties of the representation model (because it is sub classed) to Siren properties.
+* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map any custom properties of the representation model (if it has some because it is sub classed) to Siren [properties][Siren Entity Properties].
 
 ### EntityModel
 When this module renders an `EntityModel`, it will
 
-* map links of the entity model to Siren links and actions (see below to understand how links are rendered).
-* map the value of the content property of the entity model to Siren properties.
+* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map the value of the content property of the entity model to Siren [properties][Siren Entity Properties].
 
 When this module renders an `EntityModel`, it will not
 
-* map the value of the content property if the value is an instance of one of the available [Representation Model][Spring HATEOAS Representation Model]s!
+* map the value of the content property if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
 * map custom properties of the entity model (if it has some because it is sub classed).
 
 ### CollectionModel
 When this module renders a `CollectionModel`, it will
 
-* map links of the collection model to Siren links and actions (see below to understand how links are rendered).
-* map the size of the content property of the collection model to Siren properties.
-* map the value of the content property of the collection model to Siren entities (regardless if it represents instances of one of the available [Representation Model][Spring HATEOAS Representation Model]s or simple pojos).
+* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map the size of the content property of the collection model to Siren [properties][Siren Entity Properties].
+* map the value of the content property of the collection model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
 
 When this module renders a `CollectionModel`, it will not
 
@@ -64,9 +64,9 @@ When this module renders a `CollectionModel`, it will not
 ### PagedModel
 When this module renders a `PagedModel`, it will
 
-* map links of the paged model to Siren links and actions (see below to understand how links are rendered).
-* map the page metadata of the paged model to Siren properties.
-* map the value of the content property of the paged model to Siren entities (regardless if it represents instances of one of the available [Representation Model][Spring HATEOAS Representation Model]s or simple pojos).
+* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map the page metadata of the paged model to Siren [properties][Siren Entity Properties].
+* map the value of the content property of the paged model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
 
 When this module renders a `PagedModel`, it will not
 
@@ -75,20 +75,20 @@ When this module renders a `PagedModel`, it will not
 ### Link
 When this module renders a `Link`, it will
 
-* map links having a http method equal to `GET` to Siren links.
-* map the affordances corresponding to a link to Siren actions.
+* map links having a http method equal to `GET` to Siren [links][Siren Entity Link].
+* map the affordances corresponding to a link to Siren [actions][Siren Entity Action].
 
 When this module renders a `Link`, it will not
 
 * map any links having a http method not equal to `GET`.
-* distinguish between not templated and templated links.
+* distinguish between templated and not templated links.
 
 ## Restrictions
-* Siren [Embedded Link][Siren Entity Embedded Link]s are currently not implemented through the module itself. If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
-* Siren [Embedded Representation][Siren Entity Embedded Representation]s are currently only supported if defined as the content of either a `CollectionModel` or a `PagedModel` instance. It is currently not possible to build a hierarchy based on instances of either `RepresentationModel` or `EntityModel`.
+* Siren [embedded links][Siren Entity Embedded Link] are currently not implemented through the module itself. If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
+* Siren [embedded representations][Siren Entity Embedded Representation] are currently only supported if defined as the content of either a `CollectionModel` or a `PagedModel` instance. It is currently not possible to build a hierarchy based on instances of either `RepresentationModel` or `EntityModel`.
 
 ## Customization
-This module currently uses a really simple approach to map the respective model to the [class attribute][Siren Entity Class] of the [Siren Entity][]. If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider` interface as a Spring bean.
+This module currently uses a really simple approach to map the respective model to the [class][Siren Entity Class] attribute of the Siren [entity][Siren Entity]. If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider` interface as a Spring bean.
 
 ## Client-side Support
 
@@ -118,8 +118,12 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 [Spring HATEOAS]: https://docs.spring.io/spring-hateoas/docs/current/reference/html/
 [Spring HATEOAS Representation Model]: https://docs.spring.io/spring-hateoas/docs/current/reference/html/#fundamentals.representation-models
 [Siren]: https://github.com/kevinswiber/siren
-[Siren Entity]: https://github.com/kevinswiber/siren/blob/master/README.md#entities
+[Siren Entity]: https://github.com/kevinswiber/siren/blob/master/README.md#entity
+[Siren Entities]: https://github.com/kevinswiber/siren/blob/master/README.md#entities-1
 [Siren Entity Embedded Link]: https://github.com/kevinswiber/siren/blob/master/README.md#embedded-link
 [Siren Entity Embedded Representation]: https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation
 [Siren Entity Class]: https://github.com/kevinswiber/siren/blob/master/README.md#class
+[Siren Entity Properties]: https://github.com/kevinswiber/siren/blob/master/README.md#properties
+[Siren Entity Link]: https://github.com/kevinswiber/siren/blob/master/README.md#links-1
+[Siren Entity Action]: https://github.com/kevinswiber/siren/blob/master/README.md#actions-1
 [JSONPath]: https://github.com/json-path/JsonPath
