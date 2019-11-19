@@ -9,27 +9,29 @@ To enable the [Siren][] hypermedia type you simply need to add this module as a 
 
 * Maven
 
-``
+```
 <dependency>
     <groupId>com.github.ingogriebsch</groupId>
     <artifactId>spring-hateoas-siren</artifactId>
     <version>1.0.0</version>
     <scope>compile</scope>
 </dependency>
-``
+```
 
 * Gradle
 
-``
+```
 dependencies {
     compile "com.github.ingogriebsch:spring-hateoas-siren:1.0.0"
 }
-``
+```
 
 Having the module on the classpath of your project is all you need to do to get the hypermedia type automatically enabled. This way incoming requests asking for the mentioned media type will get appropriate responses.
 
 ## Behavior
-Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json` in the following way. In general each [Representation Model][Spring HATEOAS Representation Model] is rendered into a Siren [Entity][Siren Entity]. Depending on the type of respective type of the [Representation Model][Spring HATEOAS Representation Model] the following rules apply:
+Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json` in the following way. 
+
+In general each [Representation Model][Spring HATEOAS Representation Model] is rendered into a Siren [Entity][Siren Entity]. Depending on the type of respective type of the [Representation Model][Spring HATEOAS Representation Model] the following rules apply:
 
 ### RepresentationModel
 When this module renders a `RepresentationModel`, it will
@@ -79,11 +81,11 @@ When this module renders a `Link`, it will NOT
 
 
 ## Restrictions
-* Siren [Embedded Link][Siren Entity Embedded Link]s are currently not implemented through the module itself. If you need them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
+* Siren [Embedded Link][Siren Entity Embedded Link]s are currently not implemented through the module itself. If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
 * Siren [Embedded Representation][Siren Entity Embedded Representation]s are currently only supported if defined as the content of either a `CollectionModel` or a `PagedModel` instance. It is currently not possible to build a hierarchy based on instances of either `RepresentationModel` or `EntityModel`.
 
 ## Customization
-This module currently uses a really simple approach to map the respective model to Siren [entity-class][Siren Entity Class] attributes. If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider' interface as a Spring bean.
+This module currently uses a really simple approach to map the respective model to the [class attribute][Siren Entity Class] of the [Siren Entity][]. If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider` interface as a Spring bean.
 
 ## Client-side Support
 
@@ -96,13 +98,16 @@ The hypermedia type `application/vnd.siren+json` is currently not usable with th
 ### Using LinkDiscoverer Instances
 When working with hypermedia enabled representations, a common task is to find a link with a particular relation type in it. [Spring HATEOAS][] provides [JSONPath][]-based implementations of the `LinkDiscoverer` interface for the configured hypermedia types. When using this module, an instance supporting this hypermedia type is exposed as a Spring bean. 
 <br/><br/>Alternatively, you can setup and use an instance as follows:
-``
+
+```
 String content = "{'_links' :  { 'foo' : { 'href' : '/foo/bar' }}}";
+
 LinkDiscoverer discoverer = new SirenLinkDiscoverer();
 Link link = discoverer.findLinkWithRel("foo", content);
+
 assertThat(link.getRel(), is("foo"));
 assertThat(link.getHref(), is("/foo/bar"));
-``
+```
 
 ## License
 This code is open source software licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html).
