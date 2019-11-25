@@ -36,14 +36,82 @@ In general each [representation model][Spring HATEOAS Representation Model] is r
 ### RepresentationModel
 When this module renders a `RepresentationModel`, it will
 
-* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 * map any custom properties of the representation model (if it has some because it is sub classed) to Siren [properties][Siren Entity Properties].
+* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+
+_A sample representation model type_
+```
+class PersonModel extends RepresentationModel<PersonModel> {
+  String firstname, lastname;
+}
+```
+
+_Using the person representation model_
+```
+PersonModel model = new PersonModel();
+model.firstname = "Dave";
+model.lastname = "Matthews";
+```
+
+_The Siren representation generated for the person representation model_
+```
+{
+  "class": [
+    "representation"
+  ],
+  "properties": {
+    "firstname": "Dave",
+    "lastname": "Matthews"
+  },
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+```
 
 ### EntityModel
 When this module renders an `EntityModel`, it will
 
-* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 * map the value of the content property of the entity model to Siren [properties][Siren Entity Properties].
+* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+
+_A sample person object_
+```
+class Person {
+  String firstname, lastname;
+}
+```
+
+_Using an entity model to wrap the person object_
+```
+Person person = new Person();
+person.firstname = "Dave";
+person.lastname = "Matthews";
+
+EntityModel<Person> model = new EntityModel<>(person);
+```
+
+_The Siren representation generated for the entity model wrapped person_
+```
+{
+  "class": [
+    "entity"
+  ],
+  "properties": {
+    "firstname": "Dave",
+    "lastname": "Matthews"
+  },
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+```
 
 When this module renders an `EntityModel`, it will not
 
@@ -53,9 +121,59 @@ When this module renders an `EntityModel`, it will not
 ### CollectionModel
 When this module renders a `CollectionModel`, it will
 
-* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 * map the size of the content property of the collection model to Siren [properties][Siren Entity Properties].
 * map the value of the content property of the collection model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
+* map links of the collection model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+
+_A sample person object_
+```
+class Person {
+  String firstname, lastname;
+}
+```
+
+_Using a collection model to wrap a collection of person objects_
+```
+Person person = new Person();
+person.firstname = "Dave";
+person.lastname = "Matthews";
+
+Collection<Person> people = Collections.singleton(person);
+CollectionModel<Person> model = new CollectionModel<>(people);
+```
+
+_The Siren representation generated for the collection model wrapped persons_
+```
+{
+  "class": [
+    "collection"
+  ],
+  "properties": {
+    "size": 1
+  },
+  "entities": [{
+    "class": [
+      "entity"
+    ],
+    "properties": {
+      "firstname": "Dave",
+      "lastname": "Matthews"
+    },
+    "links": [
+      ...
+    ],
+    "actions": [
+      ...
+    ]
+  }],
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+```
 
 When this module renders a `CollectionModel`, it will not
 
@@ -64,9 +182,63 @@ When this module renders a `CollectionModel`, it will not
 ### PagedModel
 When this module renders a `PagedModel`, it will
 
-* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 * map the page metadata of the paged model to Siren [properties][Siren Entity Properties].
 * map the value of the content property of the paged model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
+* map links of the paged model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+
+_A sample person object_
+```
+class Person {
+  String firstname, lastname;
+}
+```
+
+_Using a paged model to wrap a page of person objects_
+```
+Person person = new Person();
+person.firstname = "Dave";
+person.lastname = "Matthews";
+
+Collection<Person> people = Collections.singleton(person);
+PageMetadata metadata = new PageMetadata(20, 0, 1, 1);
+PagedModel<Person> model = new PagedModel<>(people, metadata);
+```
+
+_The Siren representation generated for the paged model wrapped persons_
+```
+{
+  "class": [
+    "paged"
+  ],
+  "properties": {
+    "size": 20,
+    "totalElements": 1,
+    "totalPages": 1,
+    "number": 0
+  },
+  "entities": [{
+    "class": [
+      "entity"
+    ],
+    "properties": {
+      "firstname": "Dave",
+      "lastname": "Matthews"
+    },
+    "links": [
+      ...
+    ],
+    "actions": [
+      ...
+    ]
+  }],
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+```
 
 When this module renders a `PagedModel`, it will not
 
@@ -76,7 +248,74 @@ When this module renders a `PagedModel`, it will not
 When this module renders a `Link`, it will
 
 * map links having a http method equal to `GET` to Siren [links][Siren Entity Link].
-* map the affordances corresponding to a link to Siren [actions][Siren Entity Action].
+* map affordances corresponding to a link to Siren [actions][Siren Entity Action].
+
+_A sample person object_
+```
+class Person {
+  String firstname, lastname;
+}
+```
+
+_A sample person controller_
+```
+@RestController
+class PersonController {
+
+  @GetMapping("/persons/{id}")
+  ResponseEntity<EntityModel<Person>> findOne(Long id) { … }
+
+  @PutMapping("/persons/{id}")
+  ResponseEntity<EntityModel<Person>> update(Long id, Person person) { … }
+
+  @DeleteMapping("/persons/{id}")
+  ResponseEntity<Void> update(Long id) { … }
+}
+```
+
+_A self link having affordances_
+```
+@GetMapping("/persons/{id}")
+ResponseEntity<EntityModel<Person>> findOne(Long id) {
+  Person person = personService.findOne(id);
+
+  Link selfLink = linkTo(methodOn(controllerClass).findOne(id)).withSelfRel() //
+    .andAffordance(afford(methodOn(controllerClass).update(null, id))) // 
+    .andAffordance(afford(methodOn(controllerClass).delete(id)));
+  
+  EntityModel<Person> model = new EntityModel<>(person, selfLink);
+  return ResponseEntity.ok(model);
+} 
+```
+
+_The Siren representation generated for the link and it's affordances_
+```
+{
+  ...
+  "links": [{
+    "rel": [
+      "self"
+    ],
+    "href": "http://localhost:8080/persons/1"
+  }],
+  "actions": [{
+    "name": "update",
+    "method": "PUT",
+    "href": "http://localhost:8080/persons/1",
+    "fields": [{
+      "name": "firstname",
+      "type": "text"
+    },{
+      "name": "lastname",
+      "type": "text"
+    }]
+  },{
+    "name": "delete",
+    "method": "DELETE",
+    "href": "http://localhost:8080/persons/1"
+  }]
+}
+```
 
 When this module renders a `Link`, it will not
 
