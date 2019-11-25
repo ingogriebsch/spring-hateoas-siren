@@ -43,7 +43,7 @@ In general each [representation model][Spring HATEOAS Representation Model] is r
 ### RepresentationModel
 When this module renders a `RepresentationModel`, it will
 
-* map any custom properties of the representation model (if it has some because it is sub classed) to Siren [properties][Siren Entity Properties].
+* map any custom properties of the representation model (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties].
 * map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
 _A sample representation model type_
@@ -123,7 +123,7 @@ _The Siren representation generated for the entity model wrapped person_
 When this module renders an `EntityModel`, it will not
 
 * map the value of the content property if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
-* map custom properties of the entity model (if it has some because it is sub classed).
+* map custom properties of the entity model (if it has some because it is subclassed).
 
 ### CollectionModel
 When this module renders a `CollectionModel`, it will
@@ -184,7 +184,7 @@ _The Siren representation generated for the collection model wrapped persons_
 
 When this module renders a `CollectionModel`, it will not
 
-* map custom properties of the collection model (if it has some because it is sub classed).
+* map custom properties of the collection model (if it has some because it is subclassed).
 
 ### PagedModel
 When this module renders a `PagedModel`, it will
@@ -249,7 +249,7 @@ _The Siren representation generated for the paged model wrapped persons_
 
 When this module renders a `PagedModel`, it will not
 
-* map custom properties of the paged model (if it has some because it is sub classed).
+* map custom properties of the paged model (if it has some because it is subclassed).
 
 ### Link
 When this module renders a `Link`, it will
@@ -270,24 +270,24 @@ _A sample person controller_
 class PersonController {
 
   @GetMapping("/persons/{id}")
-  ResponseEntity<EntityModel<Person>> findOne(Long id) { … }
+  ResponseEntity<EntityModel<Person>> findOne(Long id) { ... }
 
   @PutMapping("/persons/{id}")
-  ResponseEntity<EntityModel<Person>> update(Long id, Person person) { … }
+  ResponseEntity<EntityModel<Person>> update(Long id, Person person) { ... }
 
   @DeleteMapping("/persons/{id}")
-  ResponseEntity<Void> update(Long id) { … }
+  ResponseEntity<Void> delete(Long id) { ... }
 }
 ```
 
-_A self link having affordances_
+_A self link having affordances created based on the available person controller methods_
 ```
 @GetMapping("/persons/{id}")
 ResponseEntity<EntityModel<Person>> findOne(Long id) {
   Person person = personService.findOne(id);
 
   Link selfLink = linkTo(methodOn(controllerClass).findOne(id)).withSelfRel() //
-    .andAffordance(afford(methodOn(controllerClass).update(null, id))) // 
+    .andAffordance(afford(methodOn(controllerClass).update(id, null))) // 
     .andAffordance(afford(methodOn(controllerClass).delete(id)));
   
   EntityModel<Person> model = new EntityModel<>(person, selfLink);
