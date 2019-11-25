@@ -4,6 +4,13 @@ This module extends [Spring HATEOAS][] with the custom hypermedia type [Siren][]
 
 The media type for [Siren][] is defined as `application/vnd.siren+json`.
 
+## Table of Contents
+1. [Configuration](#configuration)
+1. [Behavior](#behavior)
+1. [Restrictions](#restrictions)
+1. [Customization](#customization)
+1. [Client-side Support](#client-side-support)
+
 ## Configuration
 To enable the [Siren][] hypermedia type you simply need to add this module as a dependency to your project.
 
