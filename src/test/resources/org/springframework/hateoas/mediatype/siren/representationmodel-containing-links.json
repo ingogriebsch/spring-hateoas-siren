@@ -1,0 +1,16 @@
+{
+  "class" : [ "representation" ],
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees"
+  }, {
+    "rel" : [ "about" ],
+    "href" : "/about"
+  }, {
+    "rel" : [ "help" ],
+    "href" : "/help"
+  }, {
+    "rel" : [ "license" ],
+    "href" : "/license"
+  } ]
+}

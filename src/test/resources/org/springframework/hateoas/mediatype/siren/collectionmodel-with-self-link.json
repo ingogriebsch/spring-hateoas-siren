@@ -1,0 +1,10 @@
+{
+  "class" : [ "collection" ],
+  "properties" : {
+    "size" : 0
+  },
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees"
+  } ]
+}

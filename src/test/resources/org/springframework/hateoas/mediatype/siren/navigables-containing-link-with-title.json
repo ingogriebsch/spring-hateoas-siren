@@ -1,0 +1,8 @@
+{
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees/1",
+    "title" : "title"
+  } ],
+  "actions" : []
+}

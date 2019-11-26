@@ -1,0 +1,18 @@
+{
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees/1"
+  } ],
+  "actions" : [ {
+    "name" : "updateEmployee",
+    "method" : "PUT",
+    "href" : "/employees/1",
+    "fields" : [ {
+      "name" : "name",
+      "type" : "text"
+    },{
+      "name" : "role",
+      "type" : "text"
+    } ]
+  } ]
+}

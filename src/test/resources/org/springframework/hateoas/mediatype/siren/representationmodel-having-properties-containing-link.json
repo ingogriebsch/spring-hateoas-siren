@@ -1,0 +1,10 @@
+{
+  "class" : [ "representation" ],
+  "properties" : {
+    "name" : "Peter"
+  },
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employee"
+  } ]
+}

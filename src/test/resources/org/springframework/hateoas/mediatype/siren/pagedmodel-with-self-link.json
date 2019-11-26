@@ -1,0 +1,13 @@
+{
+  "class" : [ "paged" ],
+  "properties" : {
+    "size" : 20,
+    "totalElements" : 0,
+    "totalPages" : 0,
+    "number" : 0
+  },
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees?page=0&size=20"
+  } ]
+}

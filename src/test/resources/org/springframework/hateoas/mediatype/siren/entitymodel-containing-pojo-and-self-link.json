@@ -1,0 +1,11 @@
+{
+  "class" : [ "entity" ],
+  "properties" : {
+    "name" : "Peter",
+    "role" : "Carpenter"
+  },
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees/1"
+  } ]
+}

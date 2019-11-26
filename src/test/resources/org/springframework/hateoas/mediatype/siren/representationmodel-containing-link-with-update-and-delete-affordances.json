@@ -1,0 +1,23 @@
+{
+  "class" : [ "representation" ],
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/employees/1"
+  } ],
+  "actions" : [ {
+    "name" : "update",
+    "method" : "PUT",
+    "href" : "/employees/1",
+    "fields" : [ {
+      "name" : "name",
+      "type" : "text"
+    }, {
+      "name" : "role",
+      "type" : "text"
+    } ]
+  }, {
+    "name" : "delete",
+    "method" : "DELETE",
+    "href" : "/employees/1"
+  } ]
+}

@@ -1,0 +1,18 @@
+{
+  "class" : [ "collection" ],
+  "properties" : {
+    "size" : 1
+  },
+  "entities" : [ {
+    "class" : [ "entity" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "Peter",
+      "role" : "Carpenter"
+    },
+    "links" : [ {
+      "rel" : [ "self" ],
+      "href" : "/employees/1"
+    } ]
+  } ]
+}

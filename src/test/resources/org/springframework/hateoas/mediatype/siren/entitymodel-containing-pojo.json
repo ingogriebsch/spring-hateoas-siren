@@ -1,0 +1,7 @@
+{
+  "class" : [ "entity" ],
+  "properties" : {
+    "name" : "Peter",
+    "role" : "Carpenter"
+  }
+}
