@@ -1,4 +1,8 @@
 # Spring HATEOAS Siren
+[![Actions Status](https://github.com/ingogriebsch/spring-hateoas-siren/workflows/verify/badge.svg)](https://github.com/ingogriebsch/spring-hateoas-siren/actions)
+[![DepShield Status](https://depshield.sonatype.org/badges/ingogriebsch/spring-hateoas-siren/depshield.svg)](https://depshield.github.io)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 This module extends [Spring HATEOAS][] with the custom hypermedia type [Siren][]. 
 > _Siren: a hypermedia specification for representing entities_
 
