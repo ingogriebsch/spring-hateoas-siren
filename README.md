@@ -11,6 +11,7 @@ The media type for [Siren][] is defined as `application/vnd.siren+json`.
 ## Table of Contents
 1. [Configuration](#configuration)
 1. [Behavior](#behavior)
+1. [Internationalization](#internationalization)
 1. [Restrictions](#restrictions)
 1. [Customization](#customization)
 1. [Client-side Support](#client-side-support)
@@ -46,8 +47,9 @@ In general each [representation model][Spring HATEOAS Representation Model] is r
 
 ### RepresentationModel
 If this module renders a `RepresentationModel`, it will
-* map any custom properties of the representation model (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties].
-* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map any custom properties of the model (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties].
+* map the type of the model to the Siren Entity [title][Siren Entity Title] if available through the [Internationalization](#internationalization) mechanism.
+* map links of the model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
 #### Example: Serialize a subclassed RepresentationModel having some links
 _A sample representation model type_
@@ -86,12 +88,13 @@ _The Siren representation generated for the person representation model_
 
 ### EntityModel
 If this module renders an `EntityModel`, it will
-* map the value of the content property of the entity model to Siren [properties][Siren Entity Properties].
-* map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map the value of the content property of the model to Siren [properties][Siren Entity Properties].
+* map the type of the content property of the model to the Siren Entity [title][Siren Entity Title] if available through the [Internationalization](#internationalization) mechanism.
+* map links of the model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
 If this module renders an `EntityModel`, it will not
-* map the value of the content property if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
-* map custom properties of the entity model (if it has some because it is subclassed).
+* map the value of the content property of the model if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
+* map custom properties of the model (if it has some because it is subclassed).
 
 #### Example: Serialize an EntityModel wrapping a pojo and having some links
 _A sample person object_
@@ -132,9 +135,10 @@ _The Siren representation generated for the entity model wrapped person_
 
 ### CollectionModel
 If this module renders a `CollectionModel`, it will
-* map the size of the content property of the collection model to Siren [properties][Siren Entity Properties].
-* map the value of the content property of the collection model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
-* map links of the collection model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map the size of the content property of the model to Siren [properties][Siren Entity Properties].
+* map the value of the content property of the model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
+* map the type of the model to the Siren Entity [title][Siren Entity Title] if available through the [Internationalization](#internationalization) mechanism.
+* map links of the model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
 If this module renders a `CollectionModel`, it will not
 * map custom properties of the collection model (if it has some because it is subclassed).
@@ -187,9 +191,10 @@ _The Siren representation generated for the collection model wrapped persons_
 
 ### PagedModel
 If this module renders a `PagedModel`, it will
-* map the page metadata of the paged model to Siren [properties][Siren Entity Properties].
-* map the value of the content property of the paged model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
-* map links of the paged model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* map the page metadata of the model to Siren [properties][Siren Entity Properties].
+* map the value of the content property of the model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
+* map the type of the model to the Siren Entity [title][Siren Entity Title] if available through the [Internationalization](#internationalization) mechanism.
+* map links of the model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
 If this module renders a `PagedModel`, it will not
 * map custom properties of the paged model (if it has some because it is subclassed).
@@ -247,7 +252,10 @@ _The Siren representation generated for the paged model wrapped persons_
 ### Link
 If this module renders a `Link`, it will
 * map links having a http method equal to `GET` to Siren [links][Siren Entity Link].
+* map the rel of the link to the Siren Link [title][Siren Link Title] if available through the [Internationalization](#internationalization) mechanism.
 * map affordances corresponding to a link to Siren [actions][Siren Entity Action].
+* map the name of an affordance bound to the link to the Siren Action [title][Siren Action Title] if available through the [Internationalization](#internationalization) mechanism.
+* map the name of an input property which is part of an affordance bound to the link to the Siren Action Field [title][Siren Action Field Title] if available through the [Internationalization](#internationalization) mechanism.
 
 If this module renders a `Link`, it will not
 * map any links having a http method not equal to `GET`.
@@ -321,6 +329,19 @@ _The Siren representation generated for the link and it's affordances_
 }
 ```
 
+## Internationalization
+Siren defines a `title` attribute for its entity, link and action (including their fields) objects. These titles can be populated by using Spring’s resource bundle abstraction and a resource bundle named `rest-messages` so that clients can use them in their UIs directly. This bundle will be set up automatically and is used during Siren serialization.
+
+### Entity
+To define a title for an entity, use the key template `_entity.$type.title`. Which type is used to build the resulting key depends on which type of model is used. To evaluate if a title is available for the specific type, the `fqcn` will be checked first, followed by the `simple name`. Finally, it is checked whether type `default` is available.
+
+### Link
+To define a title for a link, use the key template `_link.$rel.title`. To evaluate if a title is available for the link, the `rel` of the link will be checked first. Finally, it is checked whether type `default` is available.
+
+### Action
+To define a title for an action, use the key template `_action.$name.title`. To evaluate if a title is available for the action, the `name` of the affordance will be checked first. Finally, it is checked whether type `default` is available.
+To define a title for an action-field, use the key template `_field.$name.title`. To evaluate if a title is available for the action-field, the `name` of the input property which is part of the affordance will be checked first. Finally, it is checked whether type `default` is available.
+
 ## Restrictions
 * Siren [embedded links][Siren Entity Embedded Link] are currently not implemented through the module itself. If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
 * Siren [embedded representations][Siren Entity Embedded Representation] are currently only supported if defined as the content of either a `CollectionModel` or a `PagedModel` instance. It is currently not possible to build a hierarchy based on instances of either `RepresentationModel` or `EntityModel`.
@@ -362,6 +383,10 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 [Siren Entity Embedded Representation]: https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation
 [Siren Entity Class]: https://github.com/kevinswiber/siren/blob/master/README.md#class
 [Siren Entity Properties]: https://github.com/kevinswiber/siren/blob/master/README.md#properties
+[Siren Entity Title]: https://github.com/kevinswiber/siren/blob/master/README.md#title
 [Siren Entity Link]: https://github.com/kevinswiber/siren/blob/master/README.md#links-1
+[Siren Entity Link Title]: https://github.com/kevinswiber/siren/blob/master/README.md#title-2
 [Siren Entity Action]: https://github.com/kevinswiber/siren/blob/master/README.md#actions-1
+[Siren Entity Action Title]: https://github.com/kevinswiber/siren/blob/master/README.md#title-3
+[Siren Entity Action Field Title]: https://github.com/kevinswiber/siren/blob/master/README.md#title-4
 [JSONPath]: https://github.com/json-path/JsonPath
