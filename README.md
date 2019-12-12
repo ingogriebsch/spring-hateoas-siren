@@ -45,11 +45,11 @@ Using this module will make your application respond to requests that have an `A
 In general each [representation model][Spring HATEOAS Representation Model] is rendered into a Siren [entity][Siren Entity]. Depending on the respective type of the [representation model][Spring HATEOAS Representation Model] the following rules apply:
 
 ### RepresentationModel
-When this module renders a `RepresentationModel`, it will
-
+If this module renders a `RepresentationModel`, it will
 * map any custom properties of the representation model (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties].
 * map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
+#### Example: Serialize a subclassed RepresentationModel having some links
 _A sample representation model type_
 ```
 class PersonModel extends RepresentationModel<PersonModel> {
@@ -62,6 +62,7 @@ _Using the person representation model_
 PersonModel model = new PersonModel();
 model.firstname = "Dave";
 model.lastname = "Matthews";
+// add some links (having affordances) to the model...
 ```
 
 _The Siren representation generated for the person representation model_
@@ -84,11 +85,15 @@ _The Siren representation generated for the person representation model_
 ```
 
 ### EntityModel
-When this module renders an `EntityModel`, it will
-
+If this module renders an `EntityModel`, it will
 * map the value of the content property of the entity model to Siren [properties][Siren Entity Properties].
 * map links of the representation model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
+If this module renders an `EntityModel`, it will not
+* map the value of the content property if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
+* map custom properties of the entity model (if it has some because it is subclassed).
+
+#### Example: Serialize an EntityModel wrapping a pojo and having some links
 _A sample person object_
 ```
 class Person {
@@ -103,6 +108,7 @@ person.firstname = "Dave";
 person.lastname = "Matthews";
 
 EntityModel<Person> model = new EntityModel<>(person);
+// add some links (having affordances) to the model...
 ```
 
 _The Siren representation generated for the entity model wrapped person_
@@ -124,18 +130,16 @@ _The Siren representation generated for the entity model wrapped person_
 }
 ```
 
-When this module renders an `EntityModel`, it will not
-
-* map the value of the content property if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
-* map custom properties of the entity model (if it has some because it is subclassed).
-
 ### CollectionModel
-When this module renders a `CollectionModel`, it will
-
+If this module renders a `CollectionModel`, it will
 * map the size of the content property of the collection model to Siren [properties][Siren Entity Properties].
 * map the value of the content property of the collection model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
 * map links of the collection model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
+If this module renders a `CollectionModel`, it will not
+* map custom properties of the collection model (if it has some because it is subclassed).
+
+#### Example: Serialize a CollectionModel wrapping a pojo and having some links
 _A sample person object_
 ```
 class Person {
@@ -151,6 +155,7 @@ person.lastname = "Matthews";
 
 Collection<Person> people = Collections.singleton(person);
 CollectionModel<Person> model = new CollectionModel<>(people);
+// add some links (having affordances) to the model...
 ```
 
 _The Siren representation generated for the collection model wrapped persons_
@@ -169,13 +174,7 @@ _The Siren representation generated for the collection model wrapped persons_
     "properties": {
       "firstname": "Dave",
       "lastname": "Matthews"
-    },
-    "links": [
-      ...
-    ],
-    "actions": [
-      ...
-    ]
+    }
   }],
   "links": [
     ...
@@ -186,17 +185,16 @@ _The Siren representation generated for the collection model wrapped persons_
 }
 ```
 
-When this module renders a `CollectionModel`, it will not
-
-* map custom properties of the collection model (if it has some because it is subclassed).
-
 ### PagedModel
-When this module renders a `PagedModel`, it will
-
+If this module renders a `PagedModel`, it will
 * map the page metadata of the paged model to Siren [properties][Siren Entity Properties].
 * map the value of the content property of the paged model to Siren [entities][Siren Entities] (regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos).
 * map links of the paged model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
+If this module renders a `PagedModel`, it will not
+* map custom properties of the paged model (if it has some because it is subclassed).
+
+#### Example: Serialize a PagedModel wrapping a pojo and having some links
 _A sample person object_
 ```
 class Person {
@@ -213,6 +211,7 @@ person.lastname = "Matthews";
 Collection<Person> people = Collections.singleton(person);
 PageMetadata metadata = new PageMetadata(20, 0, 1, 1);
 PagedModel<Person> model = new PagedModel<>(people, metadata);
+// add some links (having affordances) to the model...
 ```
 
 _The Siren representation generated for the paged model wrapped persons_
@@ -234,13 +233,7 @@ _The Siren representation generated for the paged model wrapped persons_
     "properties": {
       "firstname": "Dave",
       "lastname": "Matthews"
-    },
-    "links": [
-      ...
-    ],
-    "actions": [
-      ...
-    ]
+    }
   }],
   "links": [
     ...
@@ -251,16 +244,16 @@ _The Siren representation generated for the paged model wrapped persons_
 }
 ```
 
-When this module renders a `PagedModel`, it will not
-
-* map custom properties of the paged model (if it has some because it is subclassed).
-
 ### Link
-When this module renders a `Link`, it will
-
+If this module renders a `Link`, it will
 * map links having a http method equal to `GET` to Siren [links][Siren Entity Link].
 * map affordances corresponding to a link to Siren [actions][Siren Entity Action].
 
+If this module renders a `Link`, it will not
+* map any links having a http method not equal to `GET`.
+* distinguish between templated and not templated links.
+
+#### Example: Serialize a link having affordances
 _A sample person object_
 ```
 class Person {
@@ -327,11 +320,6 @@ _The Siren representation generated for the link and it's affordances_
   }]
 }
 ```
-
-When this module renders a `Link`, it will not
-
-* map any links having a http method not equal to `GET`.
-* distinguish between templated and not templated links.
 
 ## Restrictions
 * Siren [embedded links][Siren Entity Embedded Link] are currently not implemented through the module itself. If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.
