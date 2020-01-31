@@ -68,7 +68,7 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
             .entities(entities(model)) //
             .links(navigables.getLinks()) //
             .properties(model.getMetadata()) //
-            .title(title(model.getContent().getClass())) //
+            .title(title(model.getClass())) //
             .build();
 
         provider.findValueSerializer(SirenEntity.class, property).serialize(sirenEntity, gen, provider);

@@ -69,7 +69,7 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
             .entities(entities(model)) //
             .links(navigables.getLinks()) //
             .properties(properties(model)) //
-            .title(title(model.getContent().getClass())) //
+            .title(title(model.getClass())) //
             .build();
 
         provider.findValueSerializer(SirenEntity.class, property).serialize(sirenEntity, gen, provider);
