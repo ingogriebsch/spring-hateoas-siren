@@ -20,7 +20,6 @@ The media type for [Siren][] is defined as `application/vnd.siren+json`.
 To enable the [Siren][] hypermedia type you simply need to add this module as a dependency to your project.
 
 ### Maven
-
 ```
 <dependency>
     <groupId>com.github.ingogriebsch</groupId>
@@ -31,7 +30,6 @@ To enable the [Siren][] hypermedia type you simply need to add this module as a 
 ```
 
 ### Gradle
-
 ```
 dependencies {
     compile "com.github.ingogriebsch:spring-hateoas-siren:1.0.0"
@@ -360,7 +358,6 @@ The hypermedia type `application/vnd.siren+json` is currently not usable with th
 ### Using LinkDiscoverer Instances
 When working with hypermedia enabled representations, a common task is to find a link with a particular relation type in it. [Spring HATEOAS][] provides [JSONPath][]-based implementations of the `LinkDiscoverer` interface for the configured hypermedia types. When using this module, an instance supporting this hypermedia type is exposed as a Spring bean. 
 <br/><br/>Alternatively, you can setup and use an instance as follows:
-
 ```
 String content = "{'_links' :  { 'foo' : { 'href' : '/foo/bar' }}}";
 
