@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Spring HATEOAS Siren sample
+ * Spring HATEOAS Siren
  * %%
  * Copyright (C) 2018 - 2020 Ingo Griebsch
  * %%
