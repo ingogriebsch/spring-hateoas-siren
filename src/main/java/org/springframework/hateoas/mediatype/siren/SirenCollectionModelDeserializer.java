@@ -69,14 +69,14 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     @Override
     public CollectionModel<?> deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        List<Object> content = null;
+        List<Object> entities = null;
         List<SirenLink> sirenLinks = newArrayList();
         List<SirenAction> sirenActions = newArrayList();
 
         while (jp.nextToken() != null) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 if ("entities".equals(jp.getText())) {
-                    content = deserializeContent(jp, ctxt);
+                    entities = deserializeEntities(jp, ctxt);
                 }
 
                 if ("links".equals(jp.getText())) {
@@ -89,12 +89,12 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
             }
         }
 
-        content = content != null ? content : newArrayList();
+        entities = entities != null ? entities : newArrayList();
         List<Link> links = linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
-        return new CollectionModel<>(content, links);
+        return new CollectionModel<>(entities, links);
     }
 
-    private List<Object> deserializeContent(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
         List<JavaType> bindings = contentType.getBindings().getTypeParameters();
         if (CollectionUtils.isEmpty(bindings)) {
             throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
