@@ -1,55 +1,55 @@
 {
   "class" : [ "collection" ],
   "properties" : {
-    "size" : 1
+    "size" : 4
   },
   "entities" : [ {
     "class" : [ "entity" ],
+    "rel" : [ "item" ],
     "properties" : {
-      "id" : 1,
       "name" : "Peter",
       "role" : "Carpenter"
     },
     "links" : [ {
-      "rel" : ["employee"],
+      "rel" : [ "employee" ],
       "href" : "/employees/1"
     } ]
   }, {
     "class" : [ "entity" ],
+    "rel" : [ "item" ],
     "properties" : {
-      "id" : 2,
       "name" : "Paul",
       "role" : "Craftsman"
     },
     "links" : [ {
-      "rel" : ["employee"],
+      "rel" : [ "employee" ],
       "href" : "/employees/2"
     } ]
   }, {
     "class" : [ "entity" ],
+    "rel" : [ "item" ],
     "properties" : {
-      "id" : 3,
       "name" : "Sarah",
       "role" : "Baker"
     },
     "links" : [ {
-      "rel" : ["employee"],
+      "rel" : [ "employee" ],
       "href" : "/employees/3"
     } ]
   }, {
     "class" : [ "entity" ],
+    "rel" : [ "item" ],
     "properties" : {
-      "id" : 4,
       "name" : "Stephanie",
       "role" : "Mechanic"
     },
     "links" : [ {
-      "rel" : ["employee"],
+      "rel" : [ "employee" ],
       "href" : "/employees/4"
     } ]
   } ],
   "links" : [ {
-    "rel" : ["self"],
+    "rel" : [ "self" ],
     "href" : "/employees"
   } ]
 }

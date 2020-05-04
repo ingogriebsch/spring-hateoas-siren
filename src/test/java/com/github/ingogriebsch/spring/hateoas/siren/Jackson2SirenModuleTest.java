@@ -37,6 +37,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -104,6 +105,21 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
+            void containing_entitymodels() throws Exception {
+                List<EntityModel<Employee>> content = newArrayList( //
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", "employee")), //
+                    new EntityModel<>(new Employee("Paul", "Craftsman"), new Link("/employees/2", "employee")), //
+                    new EntityModel<>(new Employee("Sarah", "Baker"), new Link("/employees/3", "employee")), //
+                    new EntityModel<>(new Employee("Stephanie", "Mechanic"), new Link("/employees/4", "employee")) //
+                );
+                CollectionModel<EntityModel<Employee>> source = new CollectionModel<>(content, new Link("/employees", SELF));
+                String expected = readResource("collection/containing_entitymodels.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
             void containing_pojo_and_self_link() throws Exception {
                 CollectionModel<Employee> source =
                     new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")), new Link("/employees", SELF));
@@ -162,6 +178,23 @@ class Jackson2SirenModuleTest {
                 String source = readResource("collection/containing_entitymodel_containing_pojo.json");
                 EntityModel<Employee> entityModel = new EntityModel<>(new Employee("Peter", "Carpenter"));
                 CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(newArrayList(entityModel));
+
+                CollectionModel<EntityModel<Employee>> actual =
+                    read(source, new TypeReference<CollectionModel<EntityModel<Employee>>>() {
+                    });
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_entitymodels() throws Exception {
+                String source = readResource("collection/containing_entitymodels.json");
+                List<EntityModel<Employee>> content = newArrayList( //
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", "employee")), //
+                    new EntityModel<>(new Employee("Paul", "Craftsman"), new Link("/employees/2", "employee")), //
+                    new EntityModel<>(new Employee("Sarah", "Baker"), new Link("/employees/3", "employee")), //
+                    new EntityModel<>(new Employee("Stephanie", "Mechanic"), new Link("/employees/4", "employee")) //
+                );
+                CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(content, new Link("/employees", SELF));
 
                 CollectionModel<EntityModel<Employee>> actual =
                     read(source, new TypeReference<CollectionModel<EntityModel<Employee>>>() {
@@ -562,6 +595,16 @@ class Jackson2SirenModuleTest {
 
         @Nested
         class Deserialize {
+
+            @Test
+            void containing_link_with_delete_affordance() throws Exception {
+                String source = readResource("representation/containing_link_with_delete_affordance.json");
+                Link link = of(new Link("/employees/1", SELF)).afford(DELETE).withName("delete").toLink();
+                RepresentationModel<?> expected = new RepresentationModel<>(link);
+
+                RepresentationModel<?> actual = read(source, RepresentationModel.class);
+                assertThat(actual).isEqualTo(expected);
+            }
 
             @Test
             void containing_link() throws Exception {
