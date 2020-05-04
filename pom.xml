@@ -41,21 +41,14 @@
     </issueManagement>
 
     <properties>
-        <jackson-bom.version>2.10.0</jackson-bom.version>
         <java.version>1.8</java.version>
-        <junit.version>5.5.1</junit.version>
+        <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.plugin.formatter-maven-plugin.version>2.11.0</project.plugin.formatter-maven-plugin.version>
-        <project.plugin.impsort-maven-plugin.version>1.3.2</project.plugin.impsort-maven-plugin.version>
-        <project.plugin.license-maven-plugin.version>2.0.0</project.plugin.license-maven-plugin.version>
-        <project.plugin.tidy-maven-plugin.version>1.1.0</project.plugin.tidy-maven-plugin.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <reactor-bom.version>Dysprosium-RELEASE</reactor-bom.version>
         <slf4j.version>1.7.26</slf4j.version>
-        <spring.version>5.2.2.RELEASE</spring.version>
-        <spring-hateoas.version>1.0.3.RELEASE</spring-hateoas.version>
+        <tidy-maven-plugin.version>1.1.0</tidy-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -63,28 +56,28 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>${jackson-bom.version}</version>
+                <version>2.10.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-bom</artifactId>
-                <version>${reactor-bom.version}</version>
+                <version>Dysprosium-RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>${junit.version}</version>
+                <version>5.5.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
-                <version>${spring.version}</version>
+                <version>5.2.2.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -194,7 +187,7 @@
         <dependency>
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
-            <version>${spring-hateoas.version}</version>
+            <version>1.0.3.RELEASE</version>
         </dependency>
     </dependencies>
 
@@ -242,7 +235,7 @@
             <plugin><!-- http://www.mojohaus.org/tidy-maven-plugin/ -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>tidy-maven-plugin</artifactId>
-                <version>${project.plugin.tidy-maven-plugin.version}</version>
+                <version>${tidy-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>default-check</id>
@@ -256,7 +249,7 @@
             <plugin><!-- https://code.revelc.net/impsort-maven-plugin -->
                 <groupId>net.revelc.code</groupId>
                 <artifactId>impsort-maven-plugin</artifactId>
-                <version>${project.plugin.impsort-maven-plugin.version}</version>
+                <version>1.3.2</version>
                 <configuration>
                     <staticGroups>java.,javax.,*</staticGroups>
                     <groups>java.,javax.,com.,org.,*</groups>
@@ -275,7 +268,7 @@
             <plugin><!-- https://www.mojohaus.org/license-maven-plugin -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>${project.plugin.license-maven-plugin.version}</version>
+                <version>${license-maven-plugin.version}</version>
                 <configuration>
                     <addJavaLicenseAfterPackage>>false</addJavaLicenseAfterPackage>
                     <failOnMissingHeader>true</failOnMissingHeader>
@@ -296,7 +289,7 @@
             <plugin><!-- https://code.revelc.net/formatter-maven-plugin -->
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <version>${project.plugin.formatter-maven-plugin.version}</version>
+                <version>2.11.0</version>
                 <configuration>
                     <configFile>/src/config/java-formatter.xml</configFile>
                     <directories>
@@ -367,7 +360,7 @@
                                             <pluginExecutionFilter>
                                                 <groupId>org.codehaus.mojo</groupId>
                                                 <artifactId>tidy-maven-plugin</artifactId>
-                                                <versionRange>[${project.plugin.tidy-maven-plugin.version},)</versionRange>
+                                                <versionRange>[${tidy-maven-plugin.version},)</versionRange>
                                                 <goals>
                                                     <goal>check</goal>
                                                 </goals>
@@ -380,7 +373,7 @@
                                             <pluginExecutionFilter>
                                                 <groupId>org.codehaus.mojo</groupId>
                                                 <artifactId>license-maven-plugin</artifactId>
-                                                <versionRange>[${project.plugin.license-maven-plugin.version},)</versionRange>
+                                                <versionRange>[${license-maven-plugin.version},)</versionRange>
                                                 <goals>
                                                     <goal>check-file-header</goal>
                                                 </goals>
