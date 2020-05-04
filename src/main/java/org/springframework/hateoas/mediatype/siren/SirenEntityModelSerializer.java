@@ -76,6 +76,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
             .actions(navigables.getActions()) //
             .classes(classes(model)) //
             .links(navigables.getLinks()) //
+            .entities(entities(model)) //
             .properties(properties(model)) //
             .rels(rels(model, gen)) //
             .title(title(model.getContent().getClass())) //
@@ -87,6 +88,15 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
 
     private List<LinkRelation> rels(EntityModel<?> model, JsonGenerator gen) {
         return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
+    }
+
+    private List<Object> entities(EntityModel<?> model) {
+        Object content = model.getContent();
+        if (content != null && isOfResourceType(content.getClass())) {
+            return newArrayList(content);
+        } else {
+            return newArrayList();
+        }
     }
 
     private Object properties(EntityModel<?> model) {

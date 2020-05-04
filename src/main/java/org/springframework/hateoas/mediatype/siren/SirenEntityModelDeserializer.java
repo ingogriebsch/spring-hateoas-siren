@@ -21,27 +21,31 @@ package org.springframework.hateoas.mediatype.siren;
 
 import static java.lang.String.format;
 
+import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
+import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
+import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.common.collect.Lists.newArrayList;
-import static org.springframework.hateoas.mediatype.PropertyUtils.createObjectFromProperties;
+import static com.google.common.collect.MoreCollectors.toOptional;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.google.common.primitives.Primitives;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.mediatype.JacksonHelper;
 
 import lombok.NonNull;
 
@@ -68,42 +72,117 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
 
     @Override
     public EntityModel<?> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
-
-        Object content = content(sirenEntity);
-        if (content == null) {
-            throw new JsonParseException(jp, format("No content available!"));
+        JsonToken token = jp.currentToken();
+        if (!START_OBJECT.equals(token)) {
+            throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
         }
-        List<Link> links = links(sirenEntity);
 
+        Object content = null;
+        List<SirenLink> sirenLinks = null;
+        List<SirenAction> sirenActions = null;
+
+        while (!END_OBJECT.equals(jp.nextToken())) {
+            if (FIELD_NAME.equals(jp.currentToken())) {
+                String text = jp.getText();
+                if ("properties".equals(text)) {
+                    content = deserializeProperties(jp, ctxt);
+                }
+
+                if ("entities".equals(text)) {
+                    content = deserializeEntities(jp, ctxt);
+                }
+
+                if ("links".equals(text)) {
+                    sirenLinks = deserializeLinks(jp, ctxt);
+                }
+
+                if ("actions".equals(text)) {
+                    sirenActions = deserializeActions(jp, ctxt);
+                }
+            }
+        }
+
+        List<Link> links = convert(sirenLinks, sirenActions);
         return new EntityModel<>(content, links);
     }
 
-    @SuppressWarnings("unchecked")
-    private Object content(SirenEntity entity) {
-        JavaType targetType = JacksonHelper.findRootType(this.contentType);
-        Object properties = entity.getProperties();
-        if (properties == null) {
-            return null;
+    private Object deserializeProperties(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        List<JavaType> bindings = contentType.getBindings().getTypeParameters();
+        if (isEmpty(bindings)) {
+            throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
         }
 
-        Class<? extends Object> propertiesType = properties.getClass();
-        if (String.class.equals(propertiesType) || Primitives.isWrapperType(propertiesType)) {
-            return properties;
+        JavaType binding = bindings.iterator().next();
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(binding);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for binding '%s'!", binding));
         }
 
-        if (Map.class.isAssignableFrom(propertiesType)) {
-            return createObjectFromProperties(targetType.getRawClass(), (Map<String, Object>) properties);
-        }
-
-        return properties;
+        jp.nextToken();
+        return deserializer.deserialize(jp, ctxt);
     }
 
-    private List<Link> links(SirenEntity sirenEntity) {
-        List<SirenLink> sirenLinks = sirenEntity.getLinks() != null ? sirenEntity.getLinks() : newArrayList();
-        List<SirenAction> sirenActions = sirenEntity.getActions() != null ? sirenEntity.getActions() : newArrayList();
-        List<Link> links = linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
+    private Object deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        List<JavaType> bindings = contentType.getBindings().getTypeParameters();
+        if (isEmpty(bindings)) {
+            throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
+        }
+
+        JavaType binding = bindings.iterator().next();
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(binding);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for binding '%s'!", binding));
+        }
+
+        List<Object> content = newArrayList();
+        if (START_ARRAY.equals(jp.nextToken())) {
+            while (!END_ARRAY.equals(jp.nextToken())) {
+                Object entity = deserializer.deserialize(jp, ctxt);
+                content.add(entity);
+            }
+        }
+
+        return content.stream().collect(toOptional()).orElse(null);
+    }
+
+    private List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JavaType type = defaultInstance().constructType(SirenLink.class);
+        JsonDeserializer<Object> deserializer = ctxt.findContextualValueDeserializer(type, null);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
+        }
+
+        List<SirenLink> links = newArrayList();
+        if (START_ARRAY.equals(jp.nextToken())) {
+            while (!END_ARRAY.equals(jp.nextToken())) {
+                links.add((SirenLink) deserializer.deserialize(jp, ctxt));
+            }
+        }
+
         return links;
+    }
+
+    private List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JavaType type = defaultInstance().constructType(SirenAction.class);
+        JsonDeserializer<Object> deserializer = ctxt.findContextualValueDeserializer(type, null);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
+        }
+
+        List<SirenAction> actions = newArrayList();
+        if (START_ARRAY.equals(jp.nextToken())) {
+            while (!END_ARRAY.equals(jp.nextToken())) {
+                actions.add((SirenAction) deserializer.deserialize(jp, ctxt));
+            }
+        }
+
+        return actions;
+    }
+
+    private List<Link> convert(List<SirenLink> sirenLinks, List<SirenAction> sirenActions) {
+        sirenLinks = sirenLinks != null ? sirenLinks : newArrayList();
+        sirenActions = sirenActions != null ? sirenActions : newArrayList();
+        return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
     }
 
 }
