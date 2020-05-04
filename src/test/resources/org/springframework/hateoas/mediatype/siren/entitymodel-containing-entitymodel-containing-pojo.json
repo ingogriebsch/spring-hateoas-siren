@@ -1,3 +1,11 @@
 {
-  "class" : [ "entity" ]
+  "class" : [ "entity" ],
+  "entities" : [ {
+    "class" : [ "entity" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "Peter",
+      "role" : "Carpenter"
+    }
+  } ]
 }

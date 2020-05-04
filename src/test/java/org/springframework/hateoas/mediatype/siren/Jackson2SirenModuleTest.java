@@ -42,6 +42,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -193,6 +194,16 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
+            void containing_pojo_and_self_link() throws Exception {
+                EntityModel<Employee> source =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
+                String expected = readResource("entitymodel-containing-pojo-and-self-link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
             void containing_entitymodel_containing_pojo() throws Exception {
                 EntityModel<EntityModel<Employee>> source =
                     new EntityModel<>(new EntityModel<>(new Employee("Peter", "Carpenter")));
@@ -203,15 +214,16 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
-            void containing_pojo_and_self_link() throws Exception {
-                EntityModel<Employee> source =
-                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
-                String expected = readResource("entitymodel-containing-pojo-and-self-link.json");
+            void containing_link_and_entitymodel_containing_pojo_and_link() throws Exception {
+                EntityModel<Employee> contained =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/departments/6/employees/1", SELF));
+                EntityModel<EntityModel<Employee>> source =
+                    new EntityModel<>(contained, new Link("/departments/6/employees", SELF));
+                String expected = readResource("entitymodel-containing-link-and-entitymodel-containing-pojo-and-link.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
-
         }
 
         @Nested
@@ -418,6 +430,38 @@ class Jackson2SirenModuleTest {
                     new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
 
                 EntityModel<Employee> actual = read(source, expectedType);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_entitymodel_containing_pojo() throws Exception {
+                String source = readResource("entitymodel-containing-entitymodel-containing-pojo.json");
+
+                TypeFactory typeFactory = objectMapper.getTypeFactory();
+                JavaType expectedType = typeFactory.constructParametricType(EntityModel.class,
+                    typeFactory.constructParametricType(EntityModel.class, Employee.class));
+
+                EntityModel<EntityModel<Employee>> expected =
+                    new EntityModel<>(new EntityModel<>(new Employee("Peter", "Carpenter")));
+
+                EntityModel<EntityModel<Employee>> actual = read(source, expectedType);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_link_and_entitymodel_containing_pojo_and_link() throws Exception {
+                String source = readResource("entitymodel-containing-link-and-entitymodel-containing-pojo-and-link.json");
+
+                TypeFactory typeFactory = objectMapper.getTypeFactory();
+                JavaType expectedType = typeFactory.constructParametricType(EntityModel.class,
+                    typeFactory.constructParametricType(EntityModel.class, Employee.class));
+
+                EntityModel<Employee> contained =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/departments/6/employees/1", SELF));
+                EntityModel<EntityModel<Employee>> expected =
+                    new EntityModel<>(contained, new Link("/departments/6/employees", SELF));
+
+                EntityModel<EntityModel<Employee>> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
             }
         }
