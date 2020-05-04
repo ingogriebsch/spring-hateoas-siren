@@ -126,7 +126,7 @@ class SirenWebFluxIntegrationTest {
     @Test
     void newEmployee() throws Exception {
         ResponseSpec response = testClient.post().uri("http://localhost/employees").contentType(SIREN_JSON)
-            .bodyValue(read(new ClassPathResource("new-employee.json", getClass()))).exchange();
+            .bodyValue(read(new ClassPathResource("new_employee.json", getClass()))).exchange();
 
         response.expectStatus().isCreated() //
             .expectHeader().valueEquals(LOCATION, "http://localhost/employees/2");
@@ -135,7 +135,7 @@ class SirenWebFluxIntegrationTest {
     @Test
     void updateEmployee() throws Exception {
         ResponseSpec response = testClient.put().uri("http://localhost/employees/0").contentType(SIREN_JSON)
-            .bodyValue(read(new ClassPathResource("update-employee.json", getClass()))).exchange();
+            .bodyValue(read(new ClassPathResource("update_employee.json", getClass()))).exchange();
 
         response.expectStatus().isNoContent() //
             .expectHeader().valueEquals(LOCATION, "http://localhost/employees/0");
@@ -144,7 +144,7 @@ class SirenWebFluxIntegrationTest {
     @Test
     void partiallyUpdateEmployee() throws Exception {
         ResponseSpec response = testClient.patch().uri("http://localhost/employees/0").contentType(SIREN_JSON)
-            .bodyValue(read(new ClassPathResource("update-employee.json", getClass()))).exchange();
+            .bodyValue(read(new ClassPathResource("update_employee.json", getClass()))).exchange();
 
         response.expectStatus().isNoContent() //
             .expectHeader().valueEquals(LOCATION, "http://localhost/employees/0");

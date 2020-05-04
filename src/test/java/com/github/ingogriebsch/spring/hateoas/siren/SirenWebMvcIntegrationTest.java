@@ -128,7 +128,7 @@ class SirenWebMvcIntegrationTest {
 
     @Test
     void newEmployee() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("new-employee.json", getClass()));
+        String specBasedJson = MappingUtils.read(new ClassPathResource("new_employee.json", getClass()));
 
         ResultActions result = mockMvc.perform(post("/employees").content(specBasedJson).contentType(SIREN_JSON));
         result.andExpect(status().isCreated()).andExpect(header().stringValues(LOCATION, "http://localhost/employees/2"));
@@ -136,7 +136,7 @@ class SirenWebMvcIntegrationTest {
 
     @Test
     void updateEmployee() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("update-employee.json", getClass()));
+        String specBasedJson = MappingUtils.read(new ClassPathResource("update_employee.json", getClass()));
 
         ResultActions result = mockMvc.perform(put("/employees/0").content(specBasedJson).contentType(SIREN_JSON));
         result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/employees/0"));
@@ -144,7 +144,7 @@ class SirenWebMvcIntegrationTest {
 
     @Test
     void partiallyUpdateEmployee() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("partially-update-employee.json", getClass()));
+        String specBasedJson = MappingUtils.read(new ClassPathResource("partially_update_employee.json", getClass()));
 
         ResultActions result = mockMvc.perform(patch("/employees/0").content(specBasedJson).contentType(SIREN_JSON));
         result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/employees/0"));
