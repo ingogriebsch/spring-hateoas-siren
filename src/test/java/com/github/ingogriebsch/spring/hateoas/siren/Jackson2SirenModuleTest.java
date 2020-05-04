@@ -597,16 +597,6 @@ class Jackson2SirenModuleTest {
         class Deserialize {
 
             @Test
-            void containing_link_with_delete_affordance() throws Exception {
-                String source = readResource("representation/containing_link_with_delete_affordance.json");
-                Link link = of(new Link("/employees/1", SELF)).afford(DELETE).withName("delete").toLink();
-                RepresentationModel<?> expected = new RepresentationModel<>(link);
-
-                RepresentationModel<?> actual = read(source, RepresentationModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
             void containing_link() throws Exception {
                 String source = readResource("representation/containing_link.json");
                 RepresentationModel<?> expected = new RepresentationModel<>(new Link("/about", ABOUT));
