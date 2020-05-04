@@ -15,12 +15,12 @@
  */
 package org.springframework.hateoas.support;
 
-import lombok.RequiredArgsConstructor;
-
 import org.assertj.core.matcher.AssertionMatcher;
 import org.hamcrest.Matcher;
 import org.springframework.lang.Nullable;
 import org.springframework.test.util.JsonPathExpectationsHelper;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Greg Turnquist

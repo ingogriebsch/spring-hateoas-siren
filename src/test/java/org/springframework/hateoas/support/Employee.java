@@ -15,13 +15,13 @@
  */
 package org.springframework.hateoas.support;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.experimental.Wither;
-
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.experimental.Wither;
 
 /**
  * @author Greg Turnquist

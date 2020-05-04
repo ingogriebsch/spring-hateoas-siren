@@ -15,10 +15,12 @@
  */
 package org.springframework.hateoas.support;
 
-import static org.springframework.hateoas.MediaTypes.*;
-import static org.springframework.hateoas.mediatype.PropertyUtils.*;
-import static org.springframework.hateoas.mediatype.alps.Alps.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.MediaTypes.ALPS_JSON_VALUE;
+import static org.springframework.hateoas.mediatype.PropertyUtils.getExposedProperties;
+import static org.springframework.hateoas.mediatype.alps.Alps.doc;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.ArrayList;
 import java.util.Collections;

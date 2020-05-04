@@ -15,11 +15,12 @@
  */
 package org.springframework.hateoas.support;
 
-import static org.springframework.hateoas.MediaTypes.*;
-import static org.springframework.hateoas.mediatype.PropertyUtils.*;
-import static org.springframework.hateoas.mediatype.alps.Alps.*;
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.*;
-import static reactor.function.TupleUtils.*;
+import static org.springframework.hateoas.MediaTypes.ALPS_JSON_VALUE;
+import static org.springframework.hateoas.mediatype.PropertyUtils.getExposedProperties;
+import static org.springframework.hateoas.mediatype.alps.Alps.doc;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
+import static reactor.function.TupleUtils.function;
 
 import java.util.Collections;
 import java.util.Map;
@@ -27,8 +28,6 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -50,6 +49,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Sample controller using {@link WebFluxLinkBuilder} to create {@link Affordance}s.
