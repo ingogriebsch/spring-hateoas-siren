@@ -48,7 +48,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <slf4j.version>1.7.26</slf4j.version>
-        <tidy-maven-plugin.version>1.1.0</tidy-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -235,14 +234,13 @@
             <plugin><!-- http://www.mojohaus.org/tidy-maven-plugin/ -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>tidy-maven-plugin</artifactId>
-                <version>${tidy-maven-plugin.version}</version>
+                <version>1.1.0</version>
                 <executions>
                     <execution>
                         <id>default-check</id>
                         <goals>
                             <goal>check</goal>
                         </goals>
-                        <phase>validate</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -356,19 +354,6 @@
                             <configuration>
                                 <lifecycleMappingMetadata>
                                     <pluginExecutions>
-                                        <pluginExecution>
-                                            <pluginExecutionFilter>
-                                                <groupId>org.codehaus.mojo</groupId>
-                                                <artifactId>tidy-maven-plugin</artifactId>
-                                                <versionRange>[${tidy-maven-plugin.version},)</versionRange>
-                                                <goals>
-                                                    <goal>check</goal>
-                                                </goals>
-                                            </pluginExecutionFilter>
-                                            <action>
-                                                <execute />
-                                            </action>
-                                        </pluginExecution>
                                         <pluginExecution>
                                             <pluginExecutionFilter>
                                                 <groupId>org.codehaus.mojo</groupId>
