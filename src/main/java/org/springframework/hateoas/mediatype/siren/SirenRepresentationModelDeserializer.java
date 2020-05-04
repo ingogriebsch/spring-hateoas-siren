@@ -22,6 +22,8 @@ package org.springframework.hateoas.mediatype.siren;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static org.springframework.hateoas.mediatype.PropertyUtils.createObjectFromProperties;
+import static org.springframework.hateoas.mediatype.PropertyUtils.extractPropertyValues;
 
 import java.io.IOException;
 import java.util.List;
@@ -37,7 +39,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.mediatype.PropertyUtils;
 
 import lombok.NonNull;
 
@@ -70,10 +71,7 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         Map<String, Object> properties = properties(sirenEntity);
         List<Link> links = links(sirenEntity);
 
-        Class<?> targetType = this.getContentType().getRawClass();
-        RepresentationModel<?> resourceSupport =
-            (RepresentationModel<?>) PropertyUtils.createObjectFromProperties(targetType, properties);
-        return resourceSupport.add(links);
+        return createModel(properties, links);
     }
 
     @SuppressWarnings("unchecked")
@@ -86,13 +84,19 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         if (Map.class.isAssignableFrom(properties.getClass())) {
             return (Map<String, Object>) properties;
         }
-        return PropertyUtils.extractPropertyValues(properties);
+        return extractPropertyValues(properties);
     }
 
     private List<Link> links(SirenEntity sirenEntity) {
         List<SirenLink> sirenLinks = sirenEntity.getLinks() != null ? sirenEntity.getLinks() : newArrayList();
         List<SirenAction> sirenActions = sirenEntity.getActions() != null ? sirenEntity.getActions() : newArrayList();
         return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
+    }
+
+    private RepresentationModel<?> createModel(Map<String, Object> properties, List<Link> links) {
+        RepresentationModel<?> model = (RepresentationModel<?>) createObjectFromProperties(contentType.getRawClass(), properties);
+        model.add(links);
+        return model;
     }
 
 }
