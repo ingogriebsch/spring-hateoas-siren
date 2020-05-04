@@ -49,13 +49,13 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_empty_optional_if_not_available() throws IOException {
-                String source = MappingUtils.read(resource("representationmodel-containing-links.json"));
+                String source = MappingUtils.read(resource("representation/containing_links.json"));
                 assertThat(discoverer.findLinkWithRel(APPENDIX, source)).isEmpty();
             }
 
             @Test
             void should_return_self_link() throws IOException {
-                String source = MappingUtils.read(resource("representationmodel-containing-links.json"));
+                String source = MappingUtils.read(resource("representation/containing_links.json"));
 
                 Optional<Link> link = discoverer.findLinkWithRel(SELF, source);
                 assertThat(link).map(Link::getHref).hasValue("/employees");
@@ -64,7 +64,7 @@ class SirenLinkDiscovererTest {
             @ParameterizedTest
             @CsvSource(value = { "self,/employees", "about,/about", "help,/help", "license,/license" })
             void should_return_matching_link(LinkRelation rel, String href) throws IOException {
-                String source = MappingUtils.read(resource("representationmodel-containing-links.json"));
+                String source = MappingUtils.read(resource("representation/containing_links.json"));
                 Optional<Link> link = discoverer.findLinkWithRel(rel, source);
                 assertThat(link).map(Link::getHref).hasValue(href);
             }
@@ -75,14 +75,14 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_empty_optional_if_not_available() throws IOException {
-                try (InputStream source = source("representationmodel-containing-links.json")) {
+                try (InputStream source = source("representation/containing_links.json")) {
                     assertThat(discoverer.findLinkWithRel(APPENDIX, source)).isEmpty();
                 }
             }
 
             @Test
             void should_return_self_link() throws IOException {
-                try (InputStream source = source("representationmodel-containing-links.json")) {
+                try (InputStream source = source("representation/containing_links.json")) {
                     Optional<Link> link = discoverer.findLinkWithRel(SELF, source);
                     assertThat(link).map(Link::getHref).hasValue("/employees");
                 }
@@ -91,7 +91,7 @@ class SirenLinkDiscovererTest {
             @ParameterizedTest
             @CsvSource(value = { "self,/employees", "about,/about", "help,/help", "license,/license" })
             void should_return_matching_link(LinkRelation rel, String href) throws IOException {
-                try (InputStream source = source("representationmodel-containing-links.json")) {
+                try (InputStream source = source("representation/containing_links.json")) {
                     Optional<Link> link = discoverer.findLinkWithRel(rel, source);
                     assertThat(link).map(Link::getHref).hasValue(href);
                 }
@@ -108,13 +108,13 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_empty_optional_if_not_available() throws IOException {
-                String source = MappingUtils.read(resource("collectionmodel-containing-entitymodels.json"));
+                String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
                 assertThat(discoverer.findLinksWithRel(APPENDIX, source)).isEmpty();
             }
 
             @Test
             void should_return_self_link() throws IOException {
-                String source = MappingUtils.read(resource("collectionmodel-containing-entitymodels.json"));
+                String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
                 assertThat(discoverer.findLinksWithRel(SELF, source)) //
                     .extracting("href") //
                     .containsExactlyInAnyOrder("/employees");
@@ -122,7 +122,7 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_employee_links() throws IOException {
-                String source = MappingUtils.read(resource("collectionmodel-containing-entitymodels.json"));
+                String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
                 assertThat(discoverer.findLinksWithRel("employee", source)) //
                     .extracting("href") //
                     .containsExactlyInAnyOrder("/employees/1", "/employees/2", "/employees/3", "/employees/4");
@@ -134,14 +134,14 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_empty_optional_if_not_available() throws IOException {
-                try (InputStream source = source("collectionmodel-containing-entitymodels.json")) {
+                try (InputStream source = source("collection/containing_entitymodels.json")) {
                     assertThat(discoverer.findLinkWithRel(APPENDIX, source)).isEmpty();
                 }
             }
 
             @Test
             void should_return_self_link() throws IOException {
-                try (InputStream source = source("collectionmodel-containing-entitymodels.json")) {
+                try (InputStream source = source("collection/containing_entitymodels.json")) {
                     assertThat(discoverer.findLinksWithRel(SELF, source)) //
                         .extracting("href") //
                         .containsExactlyInAnyOrder("/employees");
@@ -150,7 +150,7 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_employee_links() throws IOException {
-                try (InputStream source = source("collectionmodel-containing-entitymodels.json")) {
+                try (InputStream source = source("collection/containing_entitymodels.json")) {
                     assertThat(discoverer.findLinksWithRel("employee", source)) //
                         .extracting("href") //
                         .containsExactlyInAnyOrder("/employees/1", "/employees/2", "/employees/3", "/employees/4");

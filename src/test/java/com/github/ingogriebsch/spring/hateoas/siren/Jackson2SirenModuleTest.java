@@ -78,126 +78,16 @@ class Jackson2SirenModuleTest {
     }
 
     @Nested
-    class Serialize {
+    class Collection {
 
         @Nested
-        class Representation {
+        class Serialize {
 
             @Test
-            void without_links() throws Exception {
-                RepresentationModel<?> source = new RepresentationModel<>();
-                String expected = readResource("representationmodel-without-links.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link() throws Exception {
-                RepresentationModel<?> source = new RepresentationModel<>(new Link("/about", ABOUT));
-                String expected = readResource("representationmodel-containing-link.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_properties_and_link() throws Exception {
-                RepresentationModel<?> source = new EmployeeResource("Peter");
-                source.add(new Link("/employee", SELF));
-                String expected = readResource("representationmodel-containing-properties-and-link.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link_with_title() throws Exception {
-                Link link = new Link("/about", ABOUT).withTitle("about");
-                RepresentationModel<?> source = new RepresentationModel<>(link);
-                String expected = readResource("representationmodel-containing-link-with-title.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_links() throws Exception {
-                RepresentationModel<?> source = new RepresentationModel<>(newArrayList(new Link("/employees", SELF),
-                    new Link("/about", ABOUT), new Link("/help", HELP), new Link("/license", LICENSE)));
-                String expected = readResource("representationmodel-containing-links.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link_with_delete_affordance() throws Exception {
-                Link link = of(new Link("/employees/1", SELF)).afford(DELETE).withName("delete").toLink();
-                RepresentationModel<?> source = new RepresentationModel<>(link);
-                String expected = readResource("representationmodel-containing-link-with-delete-affordance.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link_with_update_affordance() throws Exception {
-                Link link = of(new Link("/employees/1", SELF)).afford(PUT).withInput(Employee.class).withName("update").toLink();
-                RepresentationModel<?> source = new RepresentationModel<>(link);
-                String expected = readResource("representationmodel-containing-link-with-update-affordance.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link_with_update_and_delete_affordances() throws Exception {
-                Link link = of(new Link("/employees/1", SELF)).afford(PUT).withInput(Employee.class).withName("update")
-                    .andAfford(DELETE).withName("delete").toLink();
-                RepresentationModel<?> source = new RepresentationModel<>(link);
-                String expected = readResource("representationmodel-containing-link-with-update-and-delete-affordances.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-        }
-
-        @Nested
-        class Entity {
-
-            @Test
-            void containing_string() throws Exception {
-                EntityModel<String> source = new EntityModel<>("Something");
-                String expected = readResource("entitymodel-containing-string.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_integer() throws Exception {
-                EntityModel<Integer> source = new EntityModel<>(42);
-                String expected = readResource("entitymodel-containing-integer.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_pojo() throws Exception {
-                EntityModel<Employee> source = new EntityModel<>(new Employee("Peter", "Carpenter"));
-                String expected = readResource("entitymodel-containing-pojo.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_pojo_and_self_link() throws Exception {
-                EntityModel<Employee> source =
-                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
-                String expected = readResource("entitymodel-containing-pojo-and-self-link.json");
+            void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
+                CollectionModel<?> source = new CollectionModel<>(
+                    newArrayList(new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF))));
+                String expected = readResource("collection/containing_entitymodel_containing_pojo_and_self_link.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
@@ -205,52 +95,9 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_entitymodel_containing_pojo() throws Exception {
-                EntityModel<EntityModel<Employee>> source =
-                    new EntityModel<>(new EntityModel<>(new Employee("Peter", "Carpenter")));
-                String expected = readResource("entitymodel-containing-entitymodel-containing-pojo.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link_and_entitymodel_containing_pojo_and_link() throws Exception {
-                EntityModel<Employee> contained =
-                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/departments/6/employees/1", SELF));
-                EntityModel<EntityModel<Employee>> source =
-                    new EntityModel<>(contained, new Link("/departments/6/employees", SELF));
-                String expected = readResource("entitymodel-containing-link-and-entitymodel-containing-pojo-and-link.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-        }
-
-        @Nested
-        class Collection {
-
-            @Test
-            void without_content() throws Exception {
-                CollectionModel<?> source = new CollectionModel<>(newArrayList());
-                String expected = readResource("collectionmodel-without-content.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void with_self_link() throws Exception {
-                CollectionModel<?> source = new CollectionModel<>(newArrayList(), new Link("/employees", SELF));
-                String expected = readResource("collectionmodel-with-self-link.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_pojo() throws Exception {
-                CollectionModel<Employee> source = new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")));
-                String expected = readResource("collectionmodel-containing-pojo.json");
+                CollectionModel<?> source =
+                    new CollectionModel<>(newArrayList(new EntityModel<>(new Employee("Peter", "Carpenter"))));
+                String expected = readResource("collection/containing_entitymodel_containing_pojo.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
@@ -260,40 +107,16 @@ class Jackson2SirenModuleTest {
             void containing_pojo_and_self_link() throws Exception {
                 CollectionModel<Employee> source =
                     new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")), new Link("/employees", SELF));
-                String expected = readResource("collectionmodel-containing-pojo-and-self-link.json");
+                String expected = readResource("collection/containing_pojo_and_self_link.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_entity_model_containing_pojo() throws Exception {
-                CollectionModel<?> source =
-                    new CollectionModel<>(newArrayList(new EntityModel<>(new Employee("Peter", "Carpenter"))));
-                String expected = readResource("collectionmodel-containing-entitymodel-containing-pojo.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_entity_model_containing_pojo_and_self_link() throws Exception {
-                CollectionModel<?> source = new CollectionModel<>(
-                    newArrayList(new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF))));
-                String expected = readResource("collectionmodel-containing-entitymodel-containing-pojo-and-self-link.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-        }
-
-        @Nested
-        class Paged {
-
-            @Test
-            void without_content() throws Exception {
-                PagedModel<?> source = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0));
-                String expected = readResource("pagedmodel-without-content.json");
+            void containing_pojo() throws Exception {
+                CollectionModel<Employee> source = new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")));
+                String expected = readResource("collection/containing_pojo.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
@@ -301,141 +124,164 @@ class Jackson2SirenModuleTest {
 
             @Test
             void with_self_link() throws Exception {
-                PagedModel<?> source = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0),
-                    enhance(new Link("/employees", SELF), pagingParams(0, 20)));
-                String expected = readResource("pagedmodel-with-self-link.json");
+                CollectionModel<?> source = new CollectionModel<>(newArrayList(), new Link("/employees", SELF));
+                String expected = readResource("collection/with_self_link.json");
 
                 String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void without_content() throws Exception {
+                CollectionModel<?> source = new CollectionModel<>(newArrayList());
+                String expected = readResource("collection/without_content.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+        }
+
+        @Nested
+        class Deserialize {
+
+            @Test
+            void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
+                String source = readResource("collection/containing_entitymodel_containing_pojo_and_self_link.json");
+                EntityModel<Employee> entityModel =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
+                CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(newArrayList(entityModel));
+
+                CollectionModel<EntityModel<Employee>> actual =
+                    read(source, new TypeReference<CollectionModel<EntityModel<Employee>>>() {
+                    });
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_entitymodel_containing_pojo() throws Exception {
+                String source = readResource("collection/containing_entitymodel_containing_pojo.json");
+                EntityModel<Employee> entityModel = new EntityModel<>(new Employee("Peter", "Carpenter"));
+                CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(newArrayList(entityModel));
+
+                CollectionModel<EntityModel<Employee>> actual =
+                    read(source, new TypeReference<CollectionModel<EntityModel<Employee>>>() {
+                    });
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_pojo_and_self_link() throws Exception {
+                String source = readResource("collection/containing_pojo_and_self_link.json");
+                CollectionModel<Employee> expected =
+                    new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")), new Link("/employees", SELF));
+
+                CollectionModel<Employee> actual = read(source, new TypeReference<CollectionModel<Employee>>() {
+                });
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
             void containing_pojo() throws Exception {
-                PagedModel<Employee> source =
-                    new PagedModel<>(newArrayList(new Employee("Peter", "Carpenter")), new PageMetadata(20, 0, 1));
-                String expected = readResource("pagedmodel-containing-pojo.json");
+                String source = readResource("collection/containing_pojo.json");
+                CollectionModel<Employee> expected = new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")));
 
-                String actual = write(source);
+                CollectionModel<Employee> actual = read(source, new TypeReference<CollectionModel<Employee>>() {
+                });
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_entity_model_containing_pojo() throws Exception {
-                EntityModel<Employee> entityModel = new EntityModel<>(new Employee("Peter", "Carpenter"));
-                PagedModel<EntityModel<Employee>> source =
-                    new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
-                String expected = readResource("pagedmodel-containing-entitymodel-containing-pojo.json");
+            void with_self_link() throws Exception {
+                String source = readResource("collection/with_self_link.json");
+                CollectionModel<?> expected = new CollectionModel<>(newArrayList(), new Link("/employees", SELF));
 
-                String actual = write(source);
+                CollectionModel<?> actual = read(source, CollectionModel.class);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_entity_model_containing_pojo_and_self_link() throws Exception {
-                EntityModel<Employee> entityModel =
-                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
-                PagedModel<EntityModel<Employee>> source =
-                    new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
-                String expected = readResource("pagedmodel-containing-entitymodel-containing-pojo-and-self-link.json");
+            void without_content() throws Exception {
+                String source = readResource("collection/without_content.json");
+                CollectionModel<?> expected = new CollectionModel<>(newArrayList());
 
-                String actual = write(source);
+                CollectionModel<?> actual = read(source, CollectionModel.class);
                 assertThat(actual).isEqualTo(expected);
             }
         }
     }
 
     @Nested
-    class Deserialize {
+    class Entity {
 
         @Nested
-        class Representation {
+        class Serialize {
 
             @Test
-            void without_links() throws Exception {
-                String source = readResource("representationmodel-without-links.json");
-                RepresentationModel<?> expected = new RepresentationModel<>();
+            void containing_entitymodel_containing_pojo() throws Exception {
+                EntityModel<EntityModel<Employee>> source =
+                    new EntityModel<>(new EntityModel<>(new Employee("Peter", "Carpenter")));
+                String expected = readResource("entity/containing_entitymodel_containing_pojo.json");
 
-                RepresentationModel<?> actual = read(source, RepresentationModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_link() throws Exception {
-                String source = readResource("representationmodel-containing-link.json");
-                RepresentationModel<?> expected = new RepresentationModel<>(new Link("/about", ABOUT));
-
-                RepresentationModel<?> actual = read(source, RepresentationModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_properties_and_link() throws Exception {
-                String source = readResource("representationmodel-containing-properties-and-link.json");
-                RepresentationModel<?> expected = new EmployeeResource("Peter");
-                expected.add(new Link("/employee", SELF));
-
-                RepresentationModel<?> actual = read(source, EmployeeResource.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_links() throws Exception {
-                String source = readResource("representationmodel-containing-links.json");
-                RepresentationModel<?> expected = new RepresentationModel<>(newArrayList(new Link("/employees", SELF),
-                    new Link("/about", ABOUT), new Link("/help", HELP), new Link("/license", LICENSE)));
-
-                RepresentationModel<?> actual = read(source, RepresentationModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-        }
-
-        @Nested
-        class Entity {
-
-            @Test
-            void containing_string() throws Exception {
-                String source = readResource("entitymodel-containing-string.json");
-                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, String.class);
-                EntityModel<String> expected = new EntityModel<>("Something");
-
-                EntityModel<String> actual = read(source, expectedType);
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
             void containing_integer() throws Exception {
-                String source = readResource("entitymodel-containing-integer.json");
-                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Integer.class);
-                EntityModel<Integer> expected = new EntityModel<>(42);
+                EntityModel<Integer> source = new EntityModel<>(42);
+                String expected = readResource("entity/containing_integer.json");
 
-                EntityModel<Employee> actual = read(source, expectedType);
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_pojo() throws Exception {
-                String source = readResource("entitymodel-containing-pojo.json");
-                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Employee.class);
-                EntityModel<Employee> expected = new EntityModel<>(new Employee("Peter", "Carpenter"));
+            void containing_link_and_entitymodel_containing_pojo_and_link() throws Exception {
+                EntityModel<Employee> contained =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/departments/6/employees/1", SELF));
+                EntityModel<EntityModel<Employee>> source =
+                    new EntityModel<>(contained, new Link("/departments/6/employees", SELF));
+                String expected = readResource("entity/containing_link_and_entitymodel_containing_pojo_and_link.json");
 
-                EntityModel<Employee> actual = read(source, expectedType);
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
             void containing_pojo_and_self_link() throws Exception {
-                String source = readResource("entitymodel-containing-pojo-and-self-link.json");
-                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Employee.class);
-                EntityModel<Employee> expected =
+                EntityModel<Employee> source =
                     new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
+                String expected = readResource("entity/containing_pojo_and_self_link.json");
 
-                EntityModel<Employee> actual = read(source, expectedType);
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
+            void containing_pojo() throws Exception {
+                EntityModel<Employee> source = new EntityModel<>(new Employee("Peter", "Carpenter"));
+                String expected = readResource("entity/containing_pojo.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_string() throws Exception {
+                EntityModel<String> source = new EntityModel<>("Something");
+                String expected = readResource("entity/containing_string.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+        }
+
+        @Nested
+        class Deserialize {
+
+            @Test
             void containing_entitymodel_containing_pojo() throws Exception {
-                String source = readResource("entitymodel-containing-entitymodel-containing-pojo.json");
+                String source = readResource("entity/containing_entitymodel_containing_pojo.json");
 
                 TypeFactory typeFactory = objectMapper.getTypeFactory();
                 JavaType expectedType = typeFactory.constructParametricType(EntityModel.class,
@@ -449,8 +295,18 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
+            void containing_integer() throws Exception {
+                String source = readResource("entity/containing_integer.json");
+                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Integer.class);
+                EntityModel<Integer> expected = new EntityModel<>(42);
+
+                EntityModel<Employee> actual = read(source, expectedType);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
             void containing_link_and_entitymodel_containing_pojo_and_link() throws Exception {
-                String source = readResource("entitymodel-containing-link-and-entitymodel-containing-pojo-and-link.json");
+                String source = readResource("entity/containing_link_and_entitymodel_containing_pojo_and_link.json");
 
                 TypeFactory typeFactory = objectMapper.getTypeFactory();
                 JavaType expectedType = typeFactory.constructParametricType(EntityModel.class,
@@ -464,65 +320,106 @@ class Jackson2SirenModuleTest {
                 EntityModel<EntityModel<Employee>> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
             }
-        }
-
-        @Nested
-        class Collection {
 
             @Test
-            void without_content() throws Exception {
-                String source = readResource("collectionmodel-without-content.json");
-                CollectionModel<?> expected = new CollectionModel<>(newArrayList());
+            void containing_pojo_and_self_link() throws Exception {
+                String source = readResource("entity/containing_pojo_and_self_link.json");
+                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Employee.class);
+                EntityModel<Employee> expected =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
 
-                CollectionModel<?> actual = read(source, CollectionModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void with_self_link() throws Exception {
-                String source = readResource("collectionmodel-with-self-link.json");
-                CollectionModel<?> expected = new CollectionModel<>(newArrayList(), new Link("/employees", SELF));
-
-                CollectionModel<?> actual = read(source, CollectionModel.class);
+                EntityModel<Employee> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
             void containing_pojo() throws Exception {
-                String source = readResource("collectionmodel-containing-pojo.json");
-                CollectionModel<Employee> expected = new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")));
+                String source = readResource("entity/containing_pojo.json");
+                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Employee.class);
+                EntityModel<Employee> expected = new EntityModel<>(new Employee("Peter", "Carpenter"));
 
-                CollectionModel<Employee> actual = read(source, new TypeReference<CollectionModel<Employee>>() {
-                });
+                EntityModel<Employee> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_pojo_and_self_link() throws Exception {
-                String source = readResource("collectionmodel-containing-pojo-and-self-link.json");
-                CollectionModel<Employee> expected =
-                    new CollectionModel<>(newArrayList(new Employee("Peter", "Carpenter")), new Link("/employees", SELF));
+            void containing_string() throws Exception {
+                String source = readResource("entity/containing_string.json");
+                JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, String.class);
+                EntityModel<String> expected = new EntityModel<>("Something");
 
-                CollectionModel<Employee> actual = read(source, new TypeReference<CollectionModel<Employee>>() {
-                });
+                EntityModel<String> actual = read(source, expectedType);
+                assertThat(actual).isEqualTo(expected);
+            }
+        }
+    }
+
+    @Nested
+    class Paged {
+
+        @Nested
+        class Serialize {
+
+            @Test
+            void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
+                EntityModel<Employee> entityModel =
+                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
+                PagedModel<EntityModel<Employee>> source =
+                    new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
+                String expected = readResource("paged/containing_entitymodel_containing_pojo_and_self_link.json");
+
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_entity_model_containing_pojo() throws Exception {
-                String source = readResource("collectionmodel-containing-entitymodel-containing-pojo.json");
+            void containing_entitymodel_containing_pojo() throws Exception {
                 EntityModel<Employee> entityModel = new EntityModel<>(new Employee("Peter", "Carpenter"));
-                CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(newArrayList(entityModel));
+                PagedModel<EntityModel<Employee>> source =
+                    new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
+                String expected = readResource("paged/containing_entitymodel_containing_pojo.json");
 
-                CollectionModel<EntityModel<Employee>> actual =
-                    read(source, new TypeReference<CollectionModel<EntityModel<Employee>>>() {
-                    });
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_entity_model_containing_pojo_and_self_link() throws Exception {
-                String source = readResource("collectionmodel-containing-entitymodel-containing-pojo-and-self-link.json");
+            void containing_pojo() throws Exception {
+                PagedModel<Employee> source =
+                    new PagedModel<>(newArrayList(new Employee("Peter", "Carpenter")), new PageMetadata(20, 0, 1));
+                String expected = readResource("paged/containing_pojo.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void with_self_link() throws Exception {
+                PagedModel<?> source = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0),
+                    enhance(new Link("/employees", SELF), pagingParams(0, 20)));
+                String expected = readResource("paged/with_self_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void without_content() throws Exception {
+                PagedModel<?> source = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0));
+                String expected = readResource("paged/without_content.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+        }
+
+        @Nested
+        class Deserialize {
+
+            @Test
+            void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
+                String source = readResource("paged/containing_entitymodel_containing_pojo_and_self_link.json");
                 EntityModel<Employee> entityModel =
                     new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
                 CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(newArrayList(entityModel));
@@ -532,44 +429,10 @@ class Jackson2SirenModuleTest {
                     });
                 assertThat(actual).isEqualTo(expected);
             }
-        }
-
-        @Nested
-        class Paged {
 
             @Test
-            void without_content() throws Exception {
-                String source = readResource("pagedmodel-without-content.json");
-                PagedModel<?> expected = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0));
-
-                PagedModel<?> actual = read(source, PagedModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void with_self_link() throws Exception {
-                String source = readResource("pagedmodel-with-self-link.json");
-                PagedModel<?> expected = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0),
-                    enhance(new Link("/employees", SELF), pagingParams(0, 20)));
-
-                PagedModel<?> actual = read(source, PagedModel.class);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_pojo() throws Exception {
-                String source = readResource("pagedmodel-containing-pojo.json");
-                PagedModel<Employee> expected =
-                    new PagedModel<>(newArrayList(new Employee("Peter", "Carpenter")), new PageMetadata(20, 0, 1));
-
-                PagedModel<Employee> actual = read(source, new TypeReference<PagedModel<Employee>>() {
-                });
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_entity_model_containing_pojo() throws Exception {
-                String source = readResource("pagedmodel-containing-entitymodel-containing-pojo.json");
+            void containing_entitymodel_containing_pojo() throws Exception {
+                String source = readResource("paged/containing_entitymodel_containing_pojo.json");
                 EntityModel<Employee> entityModel = new EntityModel<>(new Employee("Peter", "Carpenter"));
                 PagedModel<EntityModel<Employee>> expected =
                     new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
@@ -580,15 +443,161 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
-            void containing_entity_model_containing_pojo_and_self_link() throws Exception {
-                String source = readResource("pagedmodel-containing-entitymodel-containing-pojo-and-self-link.json");
-                EntityModel<Employee> entityModel =
-                    new EntityModel<>(new Employee("Peter", "Carpenter"), new Link("/employees/1", SELF));
-                CollectionModel<EntityModel<Employee>> expected = new CollectionModel<>(newArrayList(entityModel));
+            void containing_pojo() throws Exception {
+                String source = readResource("paged/containing_pojo.json");
+                PagedModel<Employee> expected =
+                    new PagedModel<>(newArrayList(new Employee("Peter", "Carpenter")), new PageMetadata(20, 0, 1));
 
-                CollectionModel<EntityModel<Employee>> actual =
-                    read(source, new TypeReference<CollectionModel<EntityModel<Employee>>>() {
-                    });
+                PagedModel<Employee> actual = read(source, new TypeReference<PagedModel<Employee>>() {
+                });
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void with_self_link() throws Exception {
+                String source = readResource("paged/with_self_link.json");
+                PagedModel<?> expected = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0),
+                    enhance(new Link("/employees", SELF), pagingParams(0, 20)));
+
+                PagedModel<?> actual = read(source, PagedModel.class);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void without_content() throws Exception {
+                String source = readResource("paged/without_content.json");
+                PagedModel<?> expected = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0));
+
+                PagedModel<?> actual = read(source, PagedModel.class);
+                assertThat(actual).isEqualTo(expected);
+            }
+        }
+    }
+
+    @Nested
+    class Representation {
+
+        @Nested
+        class Serialize {
+
+            @Test
+            void containing_link_with_delete_affordance() throws Exception {
+                Link link = of(new Link("/employees/1", SELF)).afford(DELETE).withName("delete").toLink();
+                RepresentationModel<?> source = new RepresentationModel<>(link);
+                String expected = readResource("representation/containing_link_with_delete_affordance.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_link_with_title() throws Exception {
+                Link link = new Link("/about", ABOUT).withTitle("about");
+                RepresentationModel<?> source = new RepresentationModel<>(link);
+                String expected = readResource("representation/containing_link_with_title.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_link_with_update_affordance() throws Exception {
+                Link link = of(new Link("/employees/1", SELF)).afford(PUT).withInput(Employee.class).withName("update").toLink();
+                RepresentationModel<?> source = new RepresentationModel<>(link);
+                String expected = readResource("representation/containing_link_with_update_affordance.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_link_with_update_and_delete_affordances() throws Exception {
+                Link link = of(new Link("/employees/1", SELF)).afford(PUT).withInput(Employee.class).withName("update")
+                    .andAfford(DELETE).withName("delete").toLink();
+                RepresentationModel<?> source = new RepresentationModel<>(link);
+                String expected = readResource("representation/containing_link_with_update_and_delete_affordances.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_link() throws Exception {
+                RepresentationModel<?> source = new RepresentationModel<>(new Link("/about", ABOUT));
+                String expected = readResource("representation/containing_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_links() throws Exception {
+                RepresentationModel<?> source = new RepresentationModel<>(newArrayList(new Link("/employees", SELF),
+                    new Link("/about", ABOUT), new Link("/help", HELP), new Link("/license", LICENSE)));
+                String expected = readResource("representation/containing_links.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_properties_and_link() throws Exception {
+                RepresentationModel<?> source = new EmployeeResource("Peter");
+                source.add(new Link("/employee", SELF));
+                String expected = readResource("representation/containing_properties_and_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void without_links() throws Exception {
+                RepresentationModel<?> source = new RepresentationModel<>();
+                String expected = readResource("representation/without_links.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+        }
+
+        @Nested
+        class Deserialize {
+
+            @Test
+            void containing_link() throws Exception {
+                String source = readResource("representation/containing_link.json");
+                RepresentationModel<?> expected = new RepresentationModel<>(new Link("/about", ABOUT));
+
+                RepresentationModel<?> actual = read(source, RepresentationModel.class);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_links() throws Exception {
+                String source = readResource("representation/containing_links.json");
+                RepresentationModel<?> expected = new RepresentationModel<>(newArrayList(new Link("/employees", SELF),
+                    new Link("/about", ABOUT), new Link("/help", HELP), new Link("/license", LICENSE)));
+
+                RepresentationModel<?> actual = read(source, RepresentationModel.class);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_properties_and_link() throws Exception {
+                String source = readResource("representation/containing_properties_and_link.json");
+                RepresentationModel<?> expected = new EmployeeResource("Peter");
+                expected.add(new Link("/employee", SELF));
+
+                RepresentationModel<?> actual = read(source, EmployeeResource.class);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void without_links() throws Exception {
+                String source = readResource("representation/without_links.json");
+                RepresentationModel<?> expected = new RepresentationModel<>();
+
+                RepresentationModel<?> actual = read(source, RepresentationModel.class);
                 assertThat(actual).isEqualTo(expected);
             }
         }
