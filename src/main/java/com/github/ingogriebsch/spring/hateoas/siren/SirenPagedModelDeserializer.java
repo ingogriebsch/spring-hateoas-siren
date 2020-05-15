@@ -71,19 +71,24 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
 
     @Override
     public PagedModel<?> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        List<Object> content = null;
-        PageMetadata pageMetadata = null;
-        List<SirenLink> sirenLinks = newArrayList();
-        List<SirenAction> sirenActions = newArrayList();
+        JsonToken token = jp.currentToken();
+        if (!START_OBJECT.equals(token)) {
+            throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
+        }
+
+        List<Object> entities = null;
+        PageMetadata metadata = null;
+        List<SirenLink> sirenLinks = null;
+        List<SirenAction> sirenActions = null;
 
         while (jp.nextToken() != null) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 if ("entities".equals(jp.getText())) {
-                    content = deserializeContent(jp, ctxt);
+                    entities = deserializeEntities(jp, ctxt);
                 }
 
                 if ("properties".equals(jp.getText())) {
-                    pageMetadata = deserializePageMetadata(jp, ctxt);
+                    metadata = deserializeMetadata(jp, ctxt);
                 }
 
                 if ("links".equals(jp.getText())) {
@@ -96,12 +101,12 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
             }
         }
 
-        content = content != null ? content : newArrayList();
-        List<Link> links = linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
-        return new PagedModel<>(content, pageMetadata, links);
+        entities = entities != null ? entities : newArrayList();
+        List<Link> links = convert(sirenLinks, sirenActions);
+        return new PagedModel<>(entities, metadata, links);
     }
 
-    private List<Object> deserializeContent(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
         List<JavaType> bindings = contentType.getBindings().getTypeParameters();
         if (CollectionUtils.isEmpty(bindings)) {
             throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
@@ -122,7 +127,7 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         return content;
     }
 
-    private PageMetadata deserializePageMetadata(JsonParser jp, DeserializationContext ctxt) throws IOException {
+    private PageMetadata deserializeMetadata(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JavaType type = defaultInstance().constructType(PageMetadata.class);
         JsonDeserializer<Object> deserializer = ctxt.findNonContextualValueDeserializer(type);
         if (deserializer == null) {
@@ -169,5 +174,11 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         }
 
         return actions;
+    }
+
+    private List<Link> convert(List<SirenLink> sirenLinks, List<SirenAction> sirenActions) {
+        sirenLinks = sirenLinks != null ? sirenLinks : newArrayList();
+        sirenActions = sirenActions != null ? sirenActions : newArrayList();
+        return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
     }
 }
