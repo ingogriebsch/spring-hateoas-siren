@@ -131,6 +131,57 @@ _The Siren representation generated for the entity model wrapped person_
 }
 ```
 
+#### Example: Serialize an EntityModel wrapping an EntityModel wrapping a pojo and having some links
+_A sample person object_
+```
+class Person {
+  String firstname, lastname;
+}
+```
+
+_Using an entity model to wrap the person object_
+```
+Person person = new Person();
+person.firstname = "Dave";
+person.lastname = "Matthews";
+
+EntityModel<Person> personModel = new EntityModel<>(person);
+// add some links (having affordances) to the person model...
+```
+
+_Using an entity model to wrap the entity model wrapping the person_
+```
+EntityModel<EntityModel<Person>> model = new EntityModel<>(personModel);
+// add some links (having affordances) to the model...
+```
+
+_The Siren representation generated for the entity model wrapped entity model wrapped person_
+```
+{
+  "class": [
+    "entity"
+  ],
+  "entities": [
+    "class": [
+      "entity"
+    ],
+    "rel": [
+      ...
+    ],
+    "properties": {
+      "firstname": "Dave",
+      "lastname": "Matthews"
+    }
+  ],
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+```
+
 ### CollectionModel
 If this module renders a `CollectionModel`, it will
 * map the size of the content property of the model to Siren [properties][Siren Entity Properties].
