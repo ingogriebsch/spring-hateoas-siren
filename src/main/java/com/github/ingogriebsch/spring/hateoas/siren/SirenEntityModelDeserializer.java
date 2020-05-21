@@ -137,8 +137,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         List<Object> content = newArrayList();
         if (START_ARRAY.equals(jp.nextToken())) {
             while (!END_ARRAY.equals(jp.nextToken())) {
-                Object entity = deserializer.deserialize(jp, ctxt);
-                content.add(entity);
+                content.add(deserializer.deserialize(jp, ctxt));
             }
         }
 
