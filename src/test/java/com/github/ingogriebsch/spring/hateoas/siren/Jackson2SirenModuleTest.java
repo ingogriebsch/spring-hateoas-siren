@@ -574,10 +574,10 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
-            void containing_properties_and_link() throws Exception {
+            void having_properties_containing_link() throws Exception {
                 RepresentationModel<?> source = new EmployeeResource("Peter");
                 source.add(new Link("/employee", SELF));
-                String expected = readResource("representation/containing_properties_and_link.json");
+                String expected = readResource("representation/having_properties_containing_link.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
@@ -616,8 +616,8 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
-            void containing_properties_and_link() throws Exception {
-                String source = readResource("representation/containing_properties_and_link.json");
+            void having_properties_containing_link() throws Exception {
+                String source = readResource("representation/having_properties_containing_link.json");
                 RepresentationModel<?> expected = new EmployeeResource("Peter");
                 expected.add(new Link("/employee", SELF));
 
