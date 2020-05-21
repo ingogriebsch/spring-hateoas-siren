@@ -68,14 +68,14 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         throws IOException, JsonProcessingException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
 
-        Map<String, Object> properties = obtainProperties(sirenEntity);
-        List<Link> links = obtainlinks(sirenEntity.getLinks(), sirenEntity.getActions());
+        Map<String, Object> properties = deserializeProperties(sirenEntity);
+        List<Link> links = convert(sirenEntity.getLinks(), sirenEntity.getActions());
 
         return createModel(properties, links);
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> obtainProperties(SirenEntity sirenEntity) {
+    private Map<String, Object> deserializeProperties(SirenEntity sirenEntity) {
         Object properties = sirenEntity.getProperties();
         if (properties == null) {
             return newHashMap();
@@ -87,7 +87,7 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         return extractPropertyValues(properties);
     }
 
-    private List<Link> obtainlinks(List<SirenLink> links, List<SirenAction> actions) {
+    private List<Link> convert(List<SirenLink> links, List<SirenAction> actions) {
         List<SirenLink> sirenLinks = links != null ? links : newArrayList();
         List<SirenAction> sirenActions = actions != null ? actions : newArrayList();
         return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
