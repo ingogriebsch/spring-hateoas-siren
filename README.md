@@ -87,11 +87,11 @@ _The Siren representation generated for the person representation model_
 ### EntityModel
 If this module renders an `EntityModel`, it will
 * map the value of the content property of the model to Siren [properties][Siren Entity Properties].
+* map the value of the content property of the model to Siren [entities][Siren Entities] if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
 * map the type of the content property of the model to the Siren Entity [title][Siren Entity Title] if available through the [Internationalization](#internationalization) mechanism.
 * map links of the model to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
 
 If this module renders an `EntityModel`, it will not
-* map the value of the content property of the model if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model]!
 * map custom properties of the model (if it has some because it is subclassed).
 
 #### Example: Serialize an EntityModel wrapping a pojo and having some links
