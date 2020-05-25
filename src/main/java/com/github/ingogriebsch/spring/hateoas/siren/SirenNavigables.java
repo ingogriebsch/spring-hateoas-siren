@@ -40,6 +40,10 @@ class SirenNavigables {
     private final List<SirenLink> links;
     private final List<SirenAction> actions;
 
+    public static SirenNavigables navigables(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
+        return of(links, actions);
+    }
+
     public static SirenNavigables of(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
         return new SirenNavigables(links, actions);
     }
