@@ -19,8 +19,6 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static java.util.Optional.ofNullable;
-
 import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModel;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.springframework.hateoas.IanaLinkRelations.ITEM;
@@ -86,7 +84,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
 
     private List<Object> entities(EntityModel<?> model) {
         Object content = model.getContent();
-        if (content != null && isRepresentationModel(content.getClass())) {
+        if (isRepresentationModel(content.getClass())) {
             return newArrayList(content);
         } else {
             return newArrayList();
@@ -94,6 +92,10 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
     }
 
     private Object properties(EntityModel<?> model) {
-        return ofNullable(model.getContent()).filter(c -> !isRepresentationModel(c.getClass())).orElse(null);
+        Object content = model.getContent();
+        if (!isRepresentationModel(content.getClass())) {
+            return model.getContent();
+        }
+        return null;
     }
 }
