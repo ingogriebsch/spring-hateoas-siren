@@ -41,7 +41,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.util.CollectionUtils;
@@ -76,34 +75,27 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
             throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
         }
 
-        List<Object> entities = null;
-        PageMetadata metadata = null;
-        List<SirenLink> sirenLinks = null;
-        List<SirenAction> sirenActions = null;
-
+        SirenPagedModelBuilder builder = SirenPagedModelBuilder.builder(contentType.getRawClass(), linkConverter);
         while (jp.nextToken() != null) {
             if (FIELD_NAME.equals(jp.currentToken())) {
-                if ("entities".equals(jp.getText())) {
-                    entities = deserializeEntities(jp, ctxt);
+                if ("properties".equals(jp.getText())) {
+                    builder.metadata(deserializeMetadata(jp, ctxt));
                 }
 
-                if ("properties".equals(jp.getText())) {
-                    metadata = deserializeMetadata(jp, ctxt);
+                if ("entities".equals(jp.getText())) {
+                    builder.content(deserializeEntities(jp, ctxt));
                 }
 
                 if ("links".equals(jp.getText())) {
-                    sirenLinks = deserializeLinks(jp, ctxt);
+                    builder.links(deserializeLinks(jp, ctxt));
                 }
 
                 if ("actions".equals(jp.getText())) {
-                    sirenActions = deserializeActions(jp, ctxt);
+                    builder.actions(deserializeActions(jp, ctxt));
                 }
             }
         }
-
-        entities = entities != null ? entities : newArrayList();
-        List<Link> links = convert(sirenLinks, sirenActions);
-        return new PagedModel<>(entities, metadata, links);
+        return builder.build();
     }
 
     private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -174,11 +166,5 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         }
 
         return actions;
-    }
-
-    private List<Link> convert(List<SirenLink> sirenLinks, List<SirenAction> sirenActions) {
-        sirenLinks = sirenLinks != null ? sirenLinks : newArrayList();
-        sirenActions = sirenActions != null ? sirenActions : newArrayList();
-        return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
     }
 }
