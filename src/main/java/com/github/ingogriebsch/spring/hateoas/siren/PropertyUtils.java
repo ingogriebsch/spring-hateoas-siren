@@ -13,7 +13,7 @@ import lombok.NonNull;
 @NoArgsConstructor(access = PRIVATE)
 class PropertyUtils {
 
-    static Map<String, Object> extractPropertyValues(@NonNull Object object, @NonNull String... excludes) {
+    static Map<String, Object> extractProperties(@NonNull Object object, @NonNull String... excludes) {
         Map<String, Object> properties = new ObjectMapper().convertValue(object, new TypeReference<Map<String, Object>>() {
         });
 

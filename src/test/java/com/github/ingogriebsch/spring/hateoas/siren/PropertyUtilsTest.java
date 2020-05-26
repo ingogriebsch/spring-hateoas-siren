@@ -3,7 +3,7 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Stream.of;
 
-import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractPropertyValues;
+import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractProperties;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
 public class PropertyUtilsTest {
 
     @Nested
-    class ExtractPropertyValues {
+    class ExtractProperties {
 
         @Test
         void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> extractPropertyValues(null, (String[]) null)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> extractProperties(null, (String[]) null)).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -31,7 +31,7 @@ public class PropertyUtilsTest {
                 of(new SimpleEntry<>("links", newArrayList()), new SimpleEntry<>("name", object.getName()))
                     .collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-            assertThat(extractPropertyValues(object)).isEqualTo(propertyValues);
+            assertThat(extractProperties(object)).isEqualTo(propertyValues);
         }
 
         @Test
@@ -40,7 +40,7 @@ public class PropertyUtilsTest {
             Map<String, Object> propertyValues =
                 of(new SimpleEntry<>("name", object.getName())).collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-            assertThat(extractPropertyValues(object, "links")).isEqualTo(propertyValues);
+            assertThat(extractProperties(object, "links")).isEqualTo(propertyValues);
         }
     }
 }

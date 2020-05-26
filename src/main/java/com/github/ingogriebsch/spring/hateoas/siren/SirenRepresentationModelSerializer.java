@@ -19,7 +19,7 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractPropertyValues;
+import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractProperties;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.springframework.hateoas.IanaLinkRelations.ITEM;
 
@@ -84,7 +84,7 @@ public class SirenRepresentationModelSerializer extends AbstractSirenSerializer<
     }
 
     private static Map<String, Object> properties(RepresentationModel<?> model) {
-        Map<String, Object> properties = extractPropertyValues(model, "links");
+        Map<String, Object> properties = extractProperties(model, "links");
         return properties.isEmpty() ? null : properties;
     }
 

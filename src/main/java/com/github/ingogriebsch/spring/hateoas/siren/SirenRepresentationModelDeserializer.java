@@ -20,7 +20,7 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractPropertyValues;
+import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractProperties;
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         if (Map.class.isAssignableFrom(properties.getClass())) {
             return (Map<String, Object>) properties;
         }
-        return extractPropertyValues(properties);
+        return extractProperties(properties);
     }
 
 }
