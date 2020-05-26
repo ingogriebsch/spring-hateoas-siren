@@ -20,7 +20,7 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractProperties;
+import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.io.IOException;
