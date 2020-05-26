@@ -36,9 +36,9 @@ abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends
 
     private static final long serialVersionUID = -8665900081601124431L;
 
+    protected final SirenEntityClassProvider sirenEntityClassProvider;
     protected final SirenConfiguration sirenConfiguration;
     protected final SirenLinkConverter sirenLinkConverter;
-    protected final SirenEntityClassProvider sirenEntityClassProvider;
     protected final MessageResolver messageResolver;
     protected final BeanProperty property;
 
