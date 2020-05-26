@@ -129,7 +129,7 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
 
     private List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JavaType type = defaultInstance().constructType(SirenLink.class);
-        JsonDeserializer<Object> deserializer = ctxt.findContextualValueDeserializer(type, null);
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
         if (deserializer == null) {
             throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
         }
@@ -146,7 +146,7 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
 
     private List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JavaType type = defaultInstance().constructType(SirenAction.class);
-        JsonDeserializer<Object> deserializer = ctxt.findContextualValueDeserializer(type, null);
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
         if (deserializer == null) {
             throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
         }
