@@ -79,7 +79,7 @@ public class SirenRepresentationModelSerializer extends AbstractSirenSerializer<
         serializer.serialize(sirenEntity, gen, provider);
     }
 
-    private List<LinkRelation> rels(RepresentationModel<?> model, JsonGenerator gen) {
+    private static List<LinkRelation> rels(RepresentationModel<?> model, JsonGenerator gen) {
         return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
     }
 

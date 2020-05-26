@@ -78,11 +78,11 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
         serializer.serialize(sirenEntity, gen, provider);
     }
 
-    private List<LinkRelation> rels(EntityModel<?> model, JsonGenerator gen) {
+    private static List<LinkRelation> rels(EntityModel<?> model, JsonGenerator gen) {
         return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
     }
 
-    private List<Object> entities(EntityModel<?> model) {
+    private static List<Object> entities(EntityModel<?> model) {
         Object content = model.getContent();
         if (isRepresentationModel(content.getClass())) {
             return newArrayList(content);
@@ -91,7 +91,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
         }
     }
 
-    private Object properties(EntityModel<?> model) {
+    private static Object properties(EntityModel<?> model) {
         Object content = model.getContent();
         if (!isRepresentationModel(content.getClass())) {
             return model.getContent();
