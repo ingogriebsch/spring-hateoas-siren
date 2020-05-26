@@ -45,7 +45,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 
 import lombok.NonNull;
 
@@ -77,33 +76,28 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
             throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
         }
 
-        Object content = null;
-        List<SirenLink> sirenLinks = null;
-        List<SirenAction> sirenActions = null;
-
+        SirenEntityModelBuilder builder = SirenEntityModelBuilder.builder(contentType.getRawClass(), linkConverter);
         while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 String text = jp.getText();
                 if ("properties".equals(text)) {
-                    content = deserializeProperties(jp, ctxt);
+                    builder.content(deserializeProperties(jp, ctxt));
                 }
 
                 if ("entities".equals(text)) {
-                    content = deserializeEntities(jp, ctxt);
+                    builder.content(deserializeEntities(jp, ctxt));
                 }
 
                 if ("links".equals(text)) {
-                    sirenLinks = deserializeLinks(jp, ctxt);
+                    builder.links(deserializeLinks(jp, ctxt));
                 }
 
                 if ("actions".equals(text)) {
-                    sirenActions = deserializeActions(jp, ctxt);
+                    builder.actions(deserializeActions(jp, ctxt));
                 }
             }
         }
-
-        List<Link> links = convert(sirenLinks, sirenActions);
-        return new EntityModel<>(content, links);
+        return builder.build();
     }
 
     private Object deserializeProperties(JsonParser jp, DeserializationContext ctxt) throws IOException {
@@ -176,12 +170,6 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         }
 
         return actions;
-    }
-
-    private List<Link> convert(List<SirenLink> sirenLinks, List<SirenAction> sirenActions) {
-        sirenLinks = sirenLinks != null ? sirenLinks : newArrayList();
-        sirenActions = sirenActions != null ? sirenActions : newArrayList();
-        return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
     }
 
 }
