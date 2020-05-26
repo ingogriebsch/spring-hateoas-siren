@@ -43,7 +43,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
-import org.springframework.util.CollectionUtils;
 
 import lombok.NonNull;
 
@@ -95,15 +94,10 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     }
 
     private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        List<JavaType> bindings = contentType.getBindings().getTypeParameters();
-        if (CollectionUtils.isEmpty(bindings)) {
-            throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
-        }
-
-        JavaType binding = bindings.iterator().next();
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(binding);
+        JavaType type = obtainContainedType();
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
         if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for binding '%s'!", binding));
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
         }
 
         List<Object> content = newArrayList();

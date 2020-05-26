@@ -24,6 +24,7 @@ import static java.lang.String.format;
 import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -75,4 +76,25 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
         return null;
     }
 
+    protected JavaType obtainContainedType() {
+        List<JavaType> typeParameters;
+        JavaType type = contentType;
+        do {
+            typeParameters = type.getBindings().getTypeParameters();
+            if (!typeParameters.isEmpty()) {
+                break;
+            }
+            type = type.getSuperClass();
+        } while (type != null);
+
+        if (typeParameters.isEmpty()) {
+            throw new IllegalArgumentException(format("No type parameters available through content type '%s'!", contentType));
+        }
+
+        if (typeParameters.size() > 1) {
+            throw new IllegalArgumentException(
+                format("No unique type parameter available through content type '%s'!", contentType));
+        }
+        return typeParameters.iterator().next();
+    }
 }

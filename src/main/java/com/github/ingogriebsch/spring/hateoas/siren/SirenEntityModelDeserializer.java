@@ -28,7 +28,6 @@ import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.MoreCollectors.toOptional;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.io.IOException;
 import java.util.List;
@@ -95,15 +94,10 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     }
 
     private Object deserializeProperties(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        List<JavaType> bindings = contentType.getBindings().getTypeParameters();
-        if (isEmpty(bindings)) {
-            throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
-        }
-
-        JavaType binding = bindings.iterator().next();
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(binding);
+        JavaType type = obtainContainedType();
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
         if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for binding '%s'!", binding));
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
         }
 
         jp.nextToken();
@@ -111,15 +105,10 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     }
 
     private Object deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        List<JavaType> bindings = contentType.getBindings().getTypeParameters();
-        if (isEmpty(bindings)) {
-            throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
-        }
-
-        JavaType binding = bindings.iterator().next();
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(binding);
+        JavaType type = obtainContainedType();
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
         if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for binding '%s'!", binding));
+            throw new JsonParseException(jp, format("No deserializer available for binding '%s'!", type));
         }
 
         List<Object> content = newArrayList();
