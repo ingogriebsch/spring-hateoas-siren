@@ -20,13 +20,10 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static com.google.common.collect.Lists.newArrayList;
+import static com.github.ingogriebsch.spring.hateoas.siren.PropertyUtils.extractPropertyValues;
 import static com.google.common.collect.Maps.newHashMap;
-import static org.springframework.hateoas.mediatype.PropertyUtils.createObjectFromProperties;
-import static org.springframework.hateoas.mediatype.PropertyUtils.extractPropertyValues;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -37,7 +34,6 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 import lombok.NonNull;
@@ -68,14 +64,12 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         throws IOException, JsonProcessingException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
 
-        Map<String, Object> properties = deserializeProperties(sirenEntity);
-        List<Link> links = convert(sirenEntity.getLinks(), sirenEntity.getActions());
-
-        return createModel(properties, links);
+        return SirenRepresentationModelBuilder.builder(contentType.getRawClass(), linkConverter)
+            .properties(properties(sirenEntity)).links(sirenEntity.getLinks()).actions(sirenEntity.getActions()).build();
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> deserializeProperties(SirenEntity sirenEntity) {
+    private Map<String, Object> properties(SirenEntity sirenEntity) {
         Object properties = sirenEntity.getProperties();
         if (properties == null) {
             return newHashMap();
@@ -85,18 +79,6 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
             return (Map<String, Object>) properties;
         }
         return extractPropertyValues(properties);
-    }
-
-    private List<Link> convert(List<SirenLink> links, List<SirenAction> actions) {
-        List<SirenLink> sirenLinks = links != null ? links : newArrayList();
-        List<SirenAction> sirenActions = actions != null ? actions : newArrayList();
-        return linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
-    }
-
-    private RepresentationModel<?> createModel(Map<String, Object> properties, List<Link> links) {
-        RepresentationModel<?> model = (RepresentationModel<?>) createObjectFromProperties(contentType.getRawClass(), properties);
-        model.add(links);
-        return model;
     }
 
 }
