@@ -22,7 +22,6 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +33,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.mediatype.MessageResolver;
+import org.springframework.hateoas.mediatype.PropertyUtils;
 
 import lombok.NonNull;
 
@@ -76,9 +76,10 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
     }
 
     private static Map<String, Object> properties(CollectionModel<?> model) {
-        Map<String, Object> content = new HashMap<>();
-        content.put("size", model.getContent().size());
-        return content;
+        Map<String, Object> properties = PropertyUtils.extractPropertyValues(model);
+        properties.put("size", model.getContent().size());
+        properties.remove("content");
+        return properties;
     }
 
     private static List<Object> entities(CollectionModel<?> model) {

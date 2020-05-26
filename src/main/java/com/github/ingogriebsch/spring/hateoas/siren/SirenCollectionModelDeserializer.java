@@ -22,17 +22,21 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static java.lang.String.format;
 
 import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
 import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
 import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
@@ -40,7 +44,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 import org.springframework.util.CollectionUtils;
 
 import lombok.NonNull;
@@ -69,35 +72,58 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     @Override
     public CollectionModel<?> deserialize(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        List<Object> entities = null;
-        List<SirenLink> sirenLinks = newArrayList();
-        List<SirenAction> sirenActions = newArrayList();
+        JsonToken token = jp.currentToken();
+        if (!START_OBJECT.equals(token)) {
+            throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
+        }
 
-        while (jp.nextToken() != null) {
+        SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType.getRawClass(), linkConverter);
+        while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {
-                if ("entities".equals(jp.getText())) {
-                    entities = deserializeEntities(jp, ctxt);
+                String text = jp.getText();
+                if ("properties".equals(text)) {
+                    builder.properties(deserializeProperties(jp, ctxt));
                 }
 
-                if ("links".equals(jp.getText())) {
-                    sirenLinks = deserializeLinks(jp, ctxt);
+                if ("entities".equals(text)) {
+                    builder.content(deserializeEntities(jp, ctxt));
                 }
 
-                if ("actions".equals(jp.getText())) {
-                    sirenActions = deserializeActions(jp, ctxt);
+                if ("links".equals(text)) {
+                    builder.links(deserializeLinks(jp, ctxt));
+                }
+
+                if ("actions".equals(text)) {
+                    builder.actions(deserializeActions(jp, ctxt));
                 }
             }
         }
+        return builder.build();
+    }
 
-        entities = entities != null ? entities : newArrayList();
-        List<Link> links = linkConverter.from(SirenNavigables.of(sirenLinks, sirenActions));
-        return new CollectionModel<>(entities, links);
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> deserializeProperties(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JavaType type = defaultInstance().constructMapType(Map.class, String.class, Object.class);
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
+        }
+
+        JsonToken nextToken = jp.nextToken();
+        if (!START_OBJECT.equals(nextToken)) {
+            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%']!", START_OBJECT, nextToken));
+        }
+
+        return (Map<String, Object>) deserializer.deserialize(jp, ctxt);
     }
 
     private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
         List<JavaType> bindings = contentType.getBindings().getTypeParameters();
         if (CollectionUtils.isEmpty(bindings)) {
-            throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
+            bindings = contentType.getSuperClass().getBindings().getTypeParameters();
+            if (CollectionUtils.isEmpty(bindings)) {
+                throw new JsonParseException(jp, format("No bindings available through content type '%s'!", contentType));
+            }
         }
 
         JavaType binding = bindings.iterator().next();
