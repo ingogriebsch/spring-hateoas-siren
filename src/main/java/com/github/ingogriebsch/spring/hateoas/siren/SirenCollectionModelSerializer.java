@@ -33,7 +33,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.mediatype.MessageResolver;
-import org.springframework.hateoas.mediatype.PropertyUtils;
 
 import lombok.NonNull;
 
@@ -76,9 +75,8 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
     }
 
     private static Map<String, Object> properties(CollectionModel<?> model) {
-        Map<String, Object> properties = PropertyUtils.extractPropertyValues(model);
+        Map<String, Object> properties = BeanUtils.extractProperties(model, "links", "content");
         properties.put("size", model.getContent().size());
-        properties.remove("content");
         return properties;
     }
 
