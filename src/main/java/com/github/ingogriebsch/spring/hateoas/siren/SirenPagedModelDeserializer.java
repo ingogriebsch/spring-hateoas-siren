@@ -69,12 +69,8 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     }
 
     @Override
-    public PagedModel<?> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        JsonToken token = jp.currentToken();
-        if (!START_OBJECT.equals(token)) {
-            throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
-        }
-
+    protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
+        throws IOException, JsonProcessingException {
         SirenPagedModelBuilder builder = SirenPagedModelBuilder.builder(contentType.getRawClass(), linkConverter);
         while (jp.nextToken() != null) {
             if (FIELD_NAME.equals(jp.currentToken())) {

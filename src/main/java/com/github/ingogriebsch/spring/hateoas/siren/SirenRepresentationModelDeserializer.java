@@ -60,10 +60,9 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     }
 
     @Override
-    public RepresentationModel<?> deserialize(JsonParser jp, DeserializationContext ctxt)
+    protected RepresentationModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
-
         return SirenRepresentationModelBuilder.builder(contentType.getRawClass(), linkConverter)
             .properties(properties(sirenEntity)).links(sirenEntity.getLinks()).actions(sirenEntity.getActions()).build();
     }

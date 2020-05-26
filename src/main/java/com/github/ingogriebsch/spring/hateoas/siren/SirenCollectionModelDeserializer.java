@@ -70,13 +70,8 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     }
 
     @Override
-    public CollectionModel<?> deserialize(JsonParser jp, DeserializationContext ctxt)
+    protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        JsonToken token = jp.currentToken();
-        if (!START_OBJECT.equals(token)) {
-            throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
-        }
-
         SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType.getRawClass(), linkConverter);
         while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {

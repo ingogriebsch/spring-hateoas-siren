@@ -25,7 +25,6 @@ import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
 import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
 import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
-import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.MoreCollectors.toOptional;
@@ -37,7 +36,6 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
@@ -70,12 +68,8 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     }
 
     @Override
-    public EntityModel<?> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        JsonToken token = jp.currentToken();
-        if (!START_OBJECT.equals(token)) {
-            throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
-        }
-
+    protected EntityModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
+        throws IOException, JsonProcessingException {
         SirenEntityModelBuilder builder = SirenEntityModelBuilder.builder(contentType.getRawClass(), linkConverter);
         while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {
