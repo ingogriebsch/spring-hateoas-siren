@@ -23,7 +23,7 @@ class BeanUtils {
 
     static <T> T instantiate(@NonNull Class<T> clazz, @NonNull Class<?>[] types, @NonNull Object[] args) {
         try {
-            return instantiateClass(clazz.getConstructor(types), args);
+            return instantiateClass(clazz.getDeclaredConstructor(types), args);
         } catch (NoSuchMethodException | SecurityException e) {
             throw new RuntimeException(e);
         }
