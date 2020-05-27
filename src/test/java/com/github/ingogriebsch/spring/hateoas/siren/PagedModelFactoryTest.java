@@ -1,0 +1,48 @@
+package com.github.ingogriebsch.spring.hateoas.siren;
+
+import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import com.fasterxml.jackson.databind.JavaType;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.PagedModel.PageMetadata;
+
+class PagedModelFactoryTest {
+
+    @Test
+    void create_should_throw_exception_if_input_is_null() {
+        PagedModelFactory factory = new PagedModelFactory() {
+        };
+
+        assertThatThrownBy(() -> factory.create(null, null, null, null)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void create_should_throw_exception_if_type_is_not_matching() {
+        PagedModelFactory factory = new PagedModelFactory() {
+        };
+
+        JavaType type = defaultInstance().constructSimpleType(String.class, null);
+        assertThatThrownBy(() -> factory.create(type, newArrayList(), newArrayList(), new PageMetadata(0, 0, 0)))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void create_should_return_paged_model_containing_given_links() {
+        PagedModelFactory factory = new PagedModelFactory() {
+        };
+
+        JavaType type = defaultInstance().constructParametricType(PagedModel.class, String.class);
+        Iterable<Link> links = newArrayList(new Link("href1"), new Link("href2"));
+        PagedModel<?> model = factory.create(type, links, newArrayList(), new PageMetadata(0, 0, 0));
+
+        assertThat(model).isNotNull();
+        assertThat(model.getLinks()).isNotNull();
+        assertThat(model.getLinks().toList()).isEqualTo(links);
+    }
+}
