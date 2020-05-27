@@ -43,27 +43,32 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     private static final long serialVersionUID = -3683235541542548855L;
     private static final JavaType TYPE = defaultInstance().constructType(RepresentationModel.class);
 
+    private final RepresentationModelFactory modelFactory;
+
     public SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, linkConverter, TYPE);
+        @NonNull RepresentationModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter) {
+        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
     public SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter linkConverter, @NonNull JavaType contentType) {
+        @NonNull RepresentationModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter,
+        @NonNull JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);
+        this.modelFactory = modelFactory;
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
-        return new SirenRepresentationModelDeserializer(sirenConfiguration, linkConverter, contentType);
+        return new SirenRepresentationModelDeserializer(sirenConfiguration, modelFactory, linkConverter, contentType);
     }
 
     @Override
     protected RepresentationModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
-        return SirenRepresentationModelBuilder.builder(contentType.getRawClass(), linkConverter)
+
+        return SirenRepresentationModelBuilder.builder(contentType, modelFactory, linkConverter)
             .properties(properties(sirenEntity)).links(sirenEntity.getLinks()).actions(sirenEntity.getActions()).build();
     }
 

@@ -162,8 +162,10 @@ class SirenWebMvcIntegrationTest {
 
         @Bean
         SirenMediaTypeConfiguration sirenMediaTypeConfiguration(ObjectProvider<SirenConfiguration> sirenConfiguration,
+            ObjectProvider<RepresentationModelFactories> representationModelFactories,
             ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider, MessageResolver messageResolver) {
-            return new SirenMediaTypeConfiguration(sirenConfiguration, sirenEntityClassProvider, messageResolver);
+            return new SirenMediaTypeConfiguration(sirenConfiguration, representationModelFactories, sirenEntityClassProvider,
+                messageResolver);
         }
     }
 

@@ -1,12 +1,12 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.instantiate;
 import static com.github.ingogriebsch.spring.hateoas.siren.SirenNavigables.navigables;
 import static com.google.common.collect.Lists.newArrayList;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.util.Collection;
 import java.util.List;
+
+import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
@@ -19,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 class SirenPagedModelBuilder {
 
     @NonNull
-    private final Class<?> type;
+    private final JavaType type;
+    @NonNull
+    private final PagedModelFactory modelFactory;
     @NonNull
     private final SirenLinkConverter linkConverter;
 
@@ -28,8 +30,9 @@ class SirenPagedModelBuilder {
     private List<Object> content = newArrayList();
     private PageMetadata metadata;
 
-    static SirenPagedModelBuilder builder(@NonNull Class<?> type, @NonNull SirenLinkConverter linkConverter) {
-        return new SirenPagedModelBuilder(type, linkConverter);
+    static SirenPagedModelBuilder builder(@NonNull JavaType type, @NonNull PagedModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter) {
+        return new SirenPagedModelBuilder(type, modelFactory, linkConverter);
     }
 
     SirenPagedModelBuilder metadata(@NonNull PageMetadata metadata) {
@@ -57,9 +60,7 @@ class SirenPagedModelBuilder {
     }
 
     PagedModel<?> build() {
-        PagedModel<?> model = (PagedModel<?>) instantiate(type,
-            new Class[] { Collection.class, PageMetadata.class, Iterable.class }, new Object[] { content, metadata, links() });
-        return model;
+        return modelFactory.create(type, links(), content, metadata);
     }
 
 }

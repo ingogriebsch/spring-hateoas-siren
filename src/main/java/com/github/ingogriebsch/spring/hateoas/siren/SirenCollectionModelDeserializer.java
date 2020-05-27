@@ -52,26 +52,29 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     private static final long serialVersionUID = 4364222303241126575L;
     private static final JavaType TYPE = defaultInstance().constructType(CollectionModel.class);
 
+    private final CollectionModelFactory modelFactory;
+
     public SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, linkConverter, TYPE);
+        @NonNull CollectionModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter) {
+        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
     public SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
+        @NonNull CollectionModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);
+        this.modelFactory = modelFactory;
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
-        return new SirenCollectionModelDeserializer(sirenConfiguration, linkConverter,
+        return new SirenCollectionModelDeserializer(sirenConfiguration, modelFactory, linkConverter,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
     protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType.getRawClass(), linkConverter);
+        SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType, modelFactory, linkConverter);
         while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 String text = jp.getText();

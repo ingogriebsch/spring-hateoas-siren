@@ -1,6 +1,5 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.instantiate;
 import static com.github.ingogriebsch.spring.hateoas.siren.SirenNavigables.navigables;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
@@ -8,6 +7,8 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -19,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 class SirenCollectionModelBuilder {
 
     @NonNull
-    private final Class<?> type;
+    private final JavaType type;
+    @NonNull
+    private final CollectionModelFactory modelFactory;
     @NonNull
     private final SirenLinkConverter linkConverter;
 
@@ -28,8 +31,9 @@ class SirenCollectionModelBuilder {
     private List<SirenLink> links = newArrayList();
     private List<Object> content = newArrayList();
 
-    static SirenCollectionModelBuilder builder(@NonNull Class<?> type, @NonNull SirenLinkConverter linkConverter) {
-        return new SirenCollectionModelBuilder(type, linkConverter);
+    static SirenCollectionModelBuilder builder(@NonNull JavaType type, @NonNull CollectionModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter) {
+        return new SirenCollectionModelBuilder(type, modelFactory, linkConverter);
     }
 
     SirenCollectionModelBuilder properties(@NonNull Map<String, Object> properties) {
@@ -57,10 +61,7 @@ class SirenCollectionModelBuilder {
     }
 
     CollectionModel<?> build() {
-        CollectionModel<?> model = (CollectionModel<?>) instantiate(type, new Class[] { Iterable.class, Iterable.class },
-            new Object[] { content, links() });
-        BeanUtils.applyProperties(model, properties);
-        return model;
+        return modelFactory.create(type, links(), content, properties);
     }
 
 }

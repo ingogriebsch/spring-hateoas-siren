@@ -51,26 +51,29 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     private static final long serialVersionUID = 4364222303241126575L;
     private static final JavaType TYPE = defaultInstance().constructType(PagedModel.class);
 
-    public SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
+    private final PagedModelFactory modelFactory;
+
+    public SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
         @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, linkConverter, TYPE);
+        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
-    public SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter linkConverter,
-        JavaType contentType) {
+    public SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);
+        this.modelFactory = modelFactory;
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
-        return new SirenPagedModelDeserializer(sirenConfiguration, linkConverter,
+        return new SirenPagedModelDeserializer(sirenConfiguration, modelFactory, linkConverter,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
     protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        SirenPagedModelBuilder builder = SirenPagedModelBuilder.builder(contentType.getRawClass(), linkConverter);
+        SirenPagedModelBuilder builder = SirenPagedModelBuilder.builder(contentType, modelFactory, linkConverter);
         while (jp.nextToken() != null) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 if ("properties".equals(jp.getText())) {

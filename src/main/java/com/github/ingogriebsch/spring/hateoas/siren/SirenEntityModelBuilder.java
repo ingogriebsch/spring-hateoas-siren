@@ -1,11 +1,12 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.instantiate;
 import static com.github.ingogriebsch.spring.hateoas.siren.SirenNavigables.navigables;
 import static com.google.common.collect.Lists.newArrayList;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
+
+import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 class SirenEntityModelBuilder {
 
     @NonNull
-    private final Class<?> type;
+    private final JavaType type;
+    @NonNull
+    private final EntityModelFactory modelFactory;
     @NonNull
     private final SirenLinkConverter linkConverter;
 
@@ -25,8 +28,9 @@ class SirenEntityModelBuilder {
     private List<SirenLink> links = newArrayList();
     private Object content;
 
-    static SirenEntityModelBuilder builder(@NonNull Class<?> type, @NonNull SirenLinkConverter linkConverter) {
-        return new SirenEntityModelBuilder(type, linkConverter);
+    static SirenEntityModelBuilder builder(@NonNull JavaType type, @NonNull EntityModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter) {
+        return new SirenEntityModelBuilder(type, modelFactory, linkConverter);
     }
 
     SirenEntityModelBuilder content(@NonNull Object content) {
@@ -49,8 +53,6 @@ class SirenEntityModelBuilder {
     }
 
     EntityModel<?> build() {
-        EntityModel<?> model =
-            (EntityModel<?>) instantiate(type, new Class[] { Object.class, Iterable.class }, new Object[] { content, links() });
-        return model;
+        return modelFactory.create(type, links(), content);
     }
 }

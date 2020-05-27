@@ -43,6 +43,8 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     @NonNull
     private final ObjectProvider<SirenConfiguration> sirenConfiguration;
     @NonNull
+    private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
+    @NonNull
     private final ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider;
     @NonNull
     private final MessageResolver messageResolver;
@@ -61,18 +63,24 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     public ObjectMapper configureObjectMapper(@NonNull ObjectMapper mapper) {
         mapper = HypermediaMappingInformation.super.configureObjectMapper(mapper);
 
-        SirenHandlerInstantiator instantiator =
-            new SirenHandlerInstantiator(sirenConfiguration(), sirenEntityClassProvider(), messageResolver);
+        SirenHandlerInstantiator instantiator = new SirenHandlerInstantiator(sirenConfiguration(), representationModelFactories(),
+            sirenEntityClassProvider(), messageResolver);
         mapper.setHandlerInstantiator(instantiator);
 
         return mapper;
+    }
+
+    private SirenConfiguration sirenConfiguration() {
+        return sirenConfiguration.getIfAvailable(() -> new SirenConfiguration());
+    }
+
+    private RepresentationModelFactories representationModelFactories() {
+        return representationModelFactories.getIfAvailable(() -> new RepresentationModelFactories() {
+        });
     }
 
     private SirenEntityClassProvider sirenEntityClassProvider() {
         return sirenEntityClassProvider.getIfAvailable(() -> new SimpleSirenEntityClassProvider());
     }
 
-    private SirenConfiguration sirenConfiguration() {
-        return sirenConfiguration.getIfAvailable(() -> new SirenConfiguration());
-    }
 }

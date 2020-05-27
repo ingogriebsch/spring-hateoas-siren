@@ -68,11 +68,16 @@ class Jackson2SirenModuleTest {
     @BeforeAll
     static void beforeAll() {
         SimpleObjectProvider<SirenConfiguration> sirenConfiguration = new SimpleObjectProvider<>(new SirenConfiguration());
+
+        SimpleObjectProvider<RepresentationModelFactories> representationModelFactories =
+            new SimpleObjectProvider<>(new RepresentationModelFactories() {
+            });
+
         SimpleObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider =
             new SimpleObjectProvider<>(new SimpleSirenEntityClassProvider());
 
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration =
-            new SirenMediaTypeConfiguration(sirenConfiguration, sirenEntityClassProvider, DEFAULTS_ONLY);
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(sirenConfiguration,
+            representationModelFactories, sirenEntityClassProvider, DEFAULTS_ONLY);
 
         objectMapper = sirenMediaTypeConfiguration.configureObjectMapper(new ObjectMapper());
         objectMapper.configure(INDENT_OUTPUT, true);

@@ -1,7 +1,5 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.applyProperties;
-import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.instantiate;
 import static com.github.ingogriebsch.spring.hateoas.siren.SirenNavigables.navigables;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
@@ -9,6 +7,8 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
@@ -20,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 class SirenRepresentationModelBuilder {
 
     @NonNull
-    private final Class<?> type;
+    private final JavaType type;
+    @NonNull
+    private final RepresentationModelFactory modelFactory;
     @NonNull
     private final SirenLinkConverter linkConverter;
 
@@ -28,8 +30,9 @@ class SirenRepresentationModelBuilder {
     private List<SirenAction> actions = newArrayList();
     private List<SirenLink> links = newArrayList();
 
-    static SirenRepresentationModelBuilder builder(@NonNull Class<?> type, @NonNull SirenLinkConverter linkConverter) {
-        return new SirenRepresentationModelBuilder(type, linkConverter);
+    static SirenRepresentationModelBuilder builder(@NonNull JavaType type, @NonNull RepresentationModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter) {
+        return new SirenRepresentationModelBuilder(type, modelFactory, linkConverter);
     }
 
     SirenRepresentationModelBuilder properties(@NonNull Map<String, Object> properties) {
@@ -52,9 +55,6 @@ class SirenRepresentationModelBuilder {
     }
 
     RepresentationModel<?> build() {
-        RepresentationModel<?> model = (RepresentationModel<?>) instantiate(type, new Class[] {}, new Object[] {});
-        applyProperties(model, properties);
-        model.add(links());
-        return model;
+        return modelFactory.create(type, links(), properties);
     }
 }
