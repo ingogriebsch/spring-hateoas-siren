@@ -21,9 +21,11 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.SirenNavigables.navigables;
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
 
@@ -43,6 +45,7 @@ class SirenEntityModelBuilder {
     @NonNull
     private final SirenLinkConverter linkConverter;
 
+    private Map<String, Object> properties = newHashMap();
     private List<SirenAction> actions = newArrayList();
     private List<SirenLink> links = newArrayList();
     private Object content;
@@ -50,6 +53,11 @@ class SirenEntityModelBuilder {
     static SirenEntityModelBuilder builder(@NonNull JavaType type, @NonNull EntityModelFactory modelFactory,
         @NonNull SirenLinkConverter linkConverter) {
         return new SirenEntityModelBuilder(type, modelFactory, linkConverter);
+    }
+
+    SirenEntityModelBuilder properties(@NonNull Map<String, Object> properties) {
+        this.properties = properties;
+        return this;
     }
 
     SirenEntityModelBuilder content(@NonNull Object content) {
@@ -72,6 +80,6 @@ class SirenEntityModelBuilder {
     }
 
     EntityModel<?> build() {
-        return modelFactory.create(type, links(), content);
+        return modelFactory.create(type, links(), content, properties);
     }
 }

@@ -26,11 +26,14 @@ import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
 import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
 import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
+import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModel;
+import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModelSubclass;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.MoreCollectors.toOptional;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -77,7 +80,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
             if (FIELD_NAME.equals(jp.currentToken())) {
                 String text = jp.getText();
                 if ("properties".equals(text)) {
-                    builder.content(deserializeProperties(jp, ctxt));
+                    deserializeProperties(jp, ctxt, builder);
                 }
 
                 if ("entities".equals(text)) {
@@ -96,15 +99,30 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         return builder.build();
     }
 
-    private Object deserializeProperties(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JavaType type = obtainContainedType();
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
+    @SuppressWarnings("unchecked")
+    private void deserializeProperties(JsonParser jp, DeserializationContext ctxt, SirenEntityModelBuilder builder)
+        throws IOException {
+        JavaType containedType = obtainContainedType();
+        if (!isRepresentationModel(containedType.getRawClass())) {
+            JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(containedType);
+            if (deserializer == null) {
+                throw new JsonParseException(jp, format("No deserializer available for type '%s'!", containedType));
+            }
 
-        jp.nextToken();
-        return deserializer.deserialize(jp, ctxt);
+            jp.nextToken();
+            builder.content(deserializer.deserialize(jp, ctxt));
+        } else if (isRepresentationModelSubclass(contentType.getRawClass())) {
+            JavaType type = defaultInstance().constructMapType(Map.class, String.class, Object.class);
+            JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
+            if (deserializer == null) {
+                throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
+            }
+
+            jp.nextToken();
+            builder.properties((Map<String, Object>) deserializer.deserialize(jp, ctxt));
+        } else {
+            // Strange things happened...
+        }
     }
 
     private Object deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {

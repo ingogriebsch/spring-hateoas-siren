@@ -19,8 +19,11 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.applyProperties;
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.instantiate;
 import static org.springframework.util.Assert.isAssignable;
+
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
 
@@ -31,14 +34,21 @@ import lombok.NonNull;
 
 public interface EntityModelFactory {
 
-    default EntityModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Object content) {
+    default EntityModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Object content,
+        Map<String, Object> properties) {
         Class<?> modelType = type.getRawClass();
         isAssignable(EntityModel.class, modelType);
 
         // TODO check if type of object matches contained type?
 
-        return (EntityModel<?>) instantiate(modelType, new Class[] { Object.class, Iterable.class },
-            new Object[] { content, links });
-    }
+        Class<?>[] types =
+            new Class[] { EntityModel.class.equals(modelType) ? Object.class : content.getClass(), Iterable.class };
+        Object[] args = new Object[] { content, links };
+        EntityModel<?> model = (EntityModel<?>) instantiate(modelType, types, args);
 
+        if (properties != null) {
+            applyProperties(model, properties);
+        }
+        return model;
+    }
 }

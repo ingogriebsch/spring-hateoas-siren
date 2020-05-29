@@ -1,0 +1,13 @@
+{
+  "class" : [ "entity" ],
+  "properties" : {
+    "name" : "California"
+  },
+  "entities" : [ {
+    "class" : [ "representation" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "Sacramento"
+    }
+  } ]
+}

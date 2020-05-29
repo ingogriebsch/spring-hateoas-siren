@@ -312,6 +312,15 @@ class Jackson2SirenModuleTest {
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
+
+            @Test
+            void having_properties_containing_representationmodel() throws Exception {
+                State source = new State("California", new Capital("Sacramento"));
+                String expected = readResource("entity/having_properties_containing_representationmodel.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
         }
 
         @Nested
@@ -387,6 +396,16 @@ class Jackson2SirenModuleTest {
                 EntityModel<String> expected = new EntityModel<>("Something");
 
                 EntityModel<String> actual = read(source, expectedType);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void having_properties_containing_representationmodel() throws Exception {
+                String source = readResource("entity/having_properties_containing_representationmodel.json");
+                JavaType expectedType = objectMapper.getTypeFactory().constructSimpleType(State.class, null);
+                State expected = new State("California", new Capital("Sacramento"));
+
+                State actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
             }
         }

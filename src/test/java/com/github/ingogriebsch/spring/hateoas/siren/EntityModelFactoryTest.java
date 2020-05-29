@@ -37,7 +37,7 @@ class EntityModelFactoryTest {
         EntityModelFactory factory = new EntityModelFactory() {
         };
 
-        assertThatThrownBy(() -> factory.create(null, null, null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> factory.create(null, null, null, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -46,7 +46,8 @@ class EntityModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructSimpleType(String.class, null);
-        assertThatThrownBy(() -> factory.create(type, newArrayList(), new Object())).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> factory.create(type, newArrayList(), new Object(), null))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -56,7 +57,7 @@ class EntityModelFactoryTest {
 
         JavaType type = defaultInstance().constructParametricType(EntityModel.class, String.class);
         Iterable<Link> links = newArrayList(new Link("href1"), new Link("href2"));
-        EntityModel<?> model = factory.create(type, links, "content");
+        EntityModel<?> model = factory.create(type, links, "content", null);
 
         assertThat(model).isNotNull();
         assertThat(model.getLinks()).isNotNull();

@@ -20,6 +20,7 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModel;
+import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModelSubclass;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.springframework.hateoas.IanaLinkRelations.ITEM;
 
@@ -96,6 +97,11 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
         if (!isRepresentationModel(content.getClass())) {
             return model.getContent();
         }
+
+        if (isRepresentationModelSubclass(model.getClass())) {
+            return BeanUtils.extractProperties(model, "links", "content");
+        }
+
         return null;
     }
 }
