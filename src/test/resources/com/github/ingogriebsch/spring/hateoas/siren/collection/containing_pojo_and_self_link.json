@@ -1,8 +1,5 @@
 {
   "class" : [ "collection" ],
-  "properties" : {
-    "size" : 1
-  },
   "entities" : [ {
     "name" : "Peter",
     "role" : "Carpenter"

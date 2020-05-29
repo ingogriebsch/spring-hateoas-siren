@@ -1,0 +1,20 @@
+{
+  "class" : [ "collection" ],
+  "properties" : {
+    "name" : "America"
+  },
+  "entities" : [ {
+    "class" : [ "entity" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "California"
+    },
+    "entities" : [ {
+      "class" : [ "representation" ],
+      "rel" : [ "item" ],
+      "properties" : {
+        "name" : "Sacramento"
+      }
+    } ]
+  } ]
+}

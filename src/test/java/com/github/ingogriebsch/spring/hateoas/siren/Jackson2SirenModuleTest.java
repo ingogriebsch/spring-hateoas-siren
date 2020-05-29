@@ -144,6 +144,16 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
+            void having_properties_containing_entitymodel_containing_representationmodel() throws Exception {
+                Country source = new Country("America", newArrayList(new State("California", new Capital("Sacramento"))));
+                String expected =
+                    readResource("collection/having_properties_containing_entitymodel_containing_representationmodel.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
             void with_self_link() throws Exception {
                 CollectionModel<?> source = new CollectionModel<>(newArrayList(), new Link("/employees", SELF));
                 String expected = readResource("collection/with_self_link.json");
@@ -225,6 +235,16 @@ class Jackson2SirenModuleTest {
 
                 CollectionModel<Employee> actual = read(source, new TypeReference<CollectionModel<Employee>>() {
                 });
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void having_properties_containing_entitymodel_containing_representationmodel() throws Exception {
+                String source =
+                    readResource("collection/having_properties_containing_entitymodel_containing_representationmodel.json");
+                Country expected = new Country("America", newArrayList(new State("California", new Capital("Sacramento"))));
+
+                Country actual = read(source, Country.class);
                 assertThat(actual).isEqualTo(expected);
             }
 

@@ -1,6 +1,3 @@
 {
-  "class" : [ "collection" ],
-  "properties" : {
-    "size" : 0
-  }
+  "class" : [ "collection" ]
 }

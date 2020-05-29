@@ -75,7 +75,7 @@ class SirenWebMvcIntegrationTest {
         ResultActions result = mockMvc.perform(get("/employees").accept(SIREN_JSON));
         result.andExpect(status().isOk());
 
-        result.andExpect(jsonPath("$.properties.size", is(2))) //
+        result.andExpect(jsonPath("$.properties").doesNotExist()) //
             .andExpect(jsonPath("$.class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.entities[0].class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //
@@ -99,7 +99,7 @@ class SirenWebMvcIntegrationTest {
         ResultActions result = mockMvc.perform(get("/employees/search").param("name", "Frodo").accept(SIREN_JSON));
         result.andExpect(status().isOk());
 
-        result.andExpect(jsonPath("$.properties.size", is(1))) //
+        result.andExpect(jsonPath("$.properties").doesNotExist()) //
             .andExpect(jsonPath("$.class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.entities[0].class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //

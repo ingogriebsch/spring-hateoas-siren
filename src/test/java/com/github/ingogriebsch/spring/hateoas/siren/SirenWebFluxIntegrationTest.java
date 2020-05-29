@@ -68,7 +68,7 @@ class SirenWebFluxIntegrationTest {
         response.expectStatus().isOk().expectHeader().contentType(SIREN_JSON);
 
         response.expectBody(String.class) //
-            .value(jsonPath("$.properties.size", is(2))) //
+            .value(jsonPath("$.properties").doesNotExist()) //
             .value(jsonPath("$.class[0]", is("collection"))) //
             .value(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //
             .value(jsonPath("$.entities[0].properties.role", is("ring bearer"))) //
@@ -95,7 +95,7 @@ class SirenWebFluxIntegrationTest {
         response.expectStatus().isOk().expectHeader().contentType(SIREN_JSON);
 
         response.expectBody(String.class) //
-            .value(jsonPath("$.properties.size", is(1))) //
+            .value(jsonPath("$.properties").doesNotExist()) //
             .value(jsonPath("$.class[0]", is(not(empty())))) //
             .value(jsonPath("$.entities[0].class[0]", is(not(empty())))) //
             .value(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //

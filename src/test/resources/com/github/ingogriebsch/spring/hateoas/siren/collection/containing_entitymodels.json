@@ -1,8 +1,5 @@
 {
   "class" : [ "collection" ],
-  "properties" : {
-    "size" : 4
-  },
   "entities" : [ {
     "class" : [ "entity" ],
     "rel" : [ "item" ],
