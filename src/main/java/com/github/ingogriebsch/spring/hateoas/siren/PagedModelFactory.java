@@ -39,7 +39,8 @@ public interface PagedModelFactory {
         Class<?> modelType = type.getRawClass();
         isAssignable(PagedModel.class, modelType);
 
-        return (PagedModel<?>) instantiate(modelType, new Class[] { Collection.class, PageMetadata.class, Iterable.class },
-            new Object[] { content, metadata, links });
+        Class<?>[] types = new Class[] { Collection.class, PageMetadata.class, Iterable.class };
+        Object[] args = new Object[] { content, metadata, links };
+        return (PagedModel<?>) instantiate(modelType, types, args);
     }
 }

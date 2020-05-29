@@ -39,8 +39,9 @@ public interface CollectionModelFactory {
         Class<?> modelType = type.getRawClass();
         isAssignable(CollectionModel.class, modelType);
 
-        CollectionModel<?> model = (CollectionModel<?>) instantiate(modelType, new Class[] { Iterable.class, Iterable.class },
-            new Object[] { content, links });
+        Class<?>[] types = new Class[] { Iterable.class, Iterable.class };
+        Object[] args = new Object[] { content, links };
+        CollectionModel<?> model = (CollectionModel<?>) instantiate(modelType, types, args);
 
         if (properties != null) {
             applyProperties(model, properties);

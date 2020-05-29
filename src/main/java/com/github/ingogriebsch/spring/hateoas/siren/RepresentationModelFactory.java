@@ -38,7 +38,9 @@ public interface RepresentationModelFactory {
         Class<?> modelType = type.getRawClass();
         isAssignable(RepresentationModel.class, modelType);
 
-        RepresentationModel<?> model = (RepresentationModel<?>) instantiate(modelType, new Class[] {}, new Object[] {});
+        Class<?>[] types = new Class[] {};
+        Object[] args = new Object[] {};
+        RepresentationModel<?> model = (RepresentationModel<?>) instantiate(modelType, types, args);
         model.add(links);
 
         if (properties != null) {
