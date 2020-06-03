@@ -21,6 +21,9 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static java.util.stream.Collectors.toList;
 
+import static com.google.common.collect.Lists.newArrayList;
+import static org.springframework.hateoas.IanaLinkRelations.ITEM;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +34,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.mediatype.MessageResolver;
 
@@ -68,10 +72,15 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
             .entities(entities(model)) //
             .links(navigables.getLinks()) //
             .properties(model.getMetadata()) //
+            .rels(rels(model, gen)) //
             .title(title(model.getClass())) //
             .build();
 
         provider.findValueSerializer(SirenEntity.class, property).serialize(sirenEntity, gen, provider);
+    }
+
+    private static List<LinkRelation> rels(PagedModel<?> model, JsonGenerator gen) {
+        return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
     }
 
     private static List<Object> entities(CollectionModel<?> model) {
