@@ -31,39 +31,39 @@ import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.support.EmployeeResource;
 
-class SimpleSirenEntityClassProviderTest {
+class SirenEntityClassProviderTest {
 
-    private static final SirenEntityClassProvider sirenEntityClassProvider = new SimpleSirenEntityClassProvider();
+    private static final SirenEntityClassProvider provider = new SirenEntityClassProvider() {
+    };
 
     @Test
     void get_should_throw_exception_if_input_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> sirenEntityClassProvider.get(null));
+        assertThrows(IllegalArgumentException.class, () -> provider.get(null));
     }
 
     @Test
     void get_should_return_single_class_on_representation_model() {
-        assertThat(sirenEntityClassProvider.get(new RepresentationModel<>())).containsExactly("representation");
+        assertThat(provider.get(new RepresentationModel<>())).containsExactly("representation");
     }
 
     @Test
     void get_should_return_single_class_on_object_extending_representation_model() {
-        assertThat(sirenEntityClassProvider.get(new EmployeeResource("Peter"))).containsExactly("representation");
+        assertThat(provider.get(new EmployeeResource("Peter"))).containsExactly("representation");
     }
 
     @Test
     void get_should_return_single_class_on_entity_model() {
-        assertThat(sirenEntityClassProvider.get(new EntityModel<>("content"))).containsExactly("entity");
+        assertThat(provider.get(new EntityModel<>("content"))).containsExactly("entity");
     }
 
     @Test
     void get_should_return_single_class_on_collection_model() {
-        assertThat(sirenEntityClassProvider.get(new CollectionModel<>(newArrayList()))).containsExactly("collection");
+        assertThat(provider.get(new CollectionModel<>(newArrayList()))).containsExactly("collection");
     }
 
     @Test
     void get_should_return_single_class_on_paged_model() {
-        assertThat(sirenEntityClassProvider.get(new PagedModel<>(newArrayList(), new PageMetadata(0, 0, 0))))
-            .containsExactly("paged");
+        assertThat(provider.get(new PagedModel<>(newArrayList(), new PageMetadata(0, 0, 0)))).containsExactly("paged");
     }
 
 }

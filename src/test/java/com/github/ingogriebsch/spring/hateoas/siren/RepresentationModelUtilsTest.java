@@ -66,6 +66,22 @@ class RepresentationModelUtilsTest {
         }
     }
 
+    @Nested
+    class GetRepresentationModelClass {
+
+        @ParameterizedTest
+        @ValueSource(classes = { EntityModelExtension.class, CollectionModelExtension.class })
+        void should_return_matching_class_if_type_is_representation_model(Class<?> clazz) {
+            assertThat(RepresentationModelUtils.getRepresentationModelClass(clazz)).isEqualTo(clazz.getSuperclass());
+        }
+
+        @ParameterizedTest
+        @ValueSource(classes = { String.class, Object.class, Integer.class, Employee.class })
+        void should_return_null_if_type_is_matchting(Class<?> clazz) {
+            assertThat(RepresentationModelUtils.getRepresentationModelClass(clazz)).isNull();
+        }
+    }
+
     private static class EntityModelExtension extends EntityModel<Object> {
     }
 

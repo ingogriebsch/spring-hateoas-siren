@@ -19,10 +19,10 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Lists.newArrayList;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -35,8 +35,8 @@ import lombok.NonNull;
 @NoArgsConstructor(access = PRIVATE)
 class RepresentationModelUtils {
 
-    private static final Set<Class<?>> REPRESENTATION_MODEL_TYPES =
-        newHashSet(RepresentationModel.class, EntityModel.class, CollectionModel.class, PagedModel.class);
+    private static final List<Class<?>> REPRESENTATION_MODEL_TYPES =
+        newArrayList(PagedModel.class, CollectionModel.class, EntityModel.class, RepresentationModel.class);
 
     static boolean isRepresentationModel(@NonNull Class<?> clazz) {
         for (Class<?> resourceType : REPRESENTATION_MODEL_TYPES) {
@@ -50,4 +50,15 @@ class RepresentationModelUtils {
     static boolean isRepresentationModelSubclass(@NonNull Class<?> clazz) {
         return !REPRESENTATION_MODEL_TYPES.contains(clazz) && REPRESENTATION_MODEL_TYPES.contains(clazz.getSuperclass());
     }
+
+    @SuppressWarnings("unchecked")
+    static Class<? extends RepresentationModel<?>> getRepresentationModelClass(@NonNull Class<?> clazz) {
+        for (Class<?> resourceType : REPRESENTATION_MODEL_TYPES) {
+            if (resourceType.isAssignableFrom(clazz)) {
+                return (Class<RepresentationModel<?>>) resourceType;
+            }
+        }
+        return null;
+    }
+
 }

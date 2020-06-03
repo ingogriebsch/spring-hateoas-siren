@@ -19,12 +19,22 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.getRepresentationModelClass;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.apache.commons.lang3.StringUtils.substringBeforeLast;
+import static org.apache.commons.lang3.StringUtils.uncapitalize;
+
 import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import lombok.NonNull;
+
 public interface SirenEntityClassProvider {
 
-    List<String> get(RepresentationModel<?> model);
+    default List<String> get(@NonNull RepresentationModel<?> model) {
+        return newArrayList(
+            uncapitalize(substringBeforeLast(getRepresentationModelClass(model.getClass()).getSimpleName(), "Model")));
+    }
 
 }

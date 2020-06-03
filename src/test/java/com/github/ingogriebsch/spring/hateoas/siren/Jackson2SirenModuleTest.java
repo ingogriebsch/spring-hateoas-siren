@@ -74,7 +74,8 @@ class Jackson2SirenModuleTest {
             });
 
         SimpleObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider =
-            new SimpleObjectProvider<>(new SimpleSirenEntityClassProvider());
+            new SimpleObjectProvider<>(new SirenEntityClassProvider() {
+            });
 
         SimpleObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider =
             new SimpleObjectProvider<>(new SirenEntityRelProvider() {

@@ -82,7 +82,8 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     }
 
     private SirenEntityClassProvider sirenEntityClassProvider() {
-        return sirenEntityClassProvider.getIfAvailable(() -> new SimpleSirenEntityClassProvider());
+        return sirenEntityClassProvider.getIfAvailable(() -> new SirenEntityClassProvider() {
+        });
     }
 
     private SirenEntityRelProvider sirenEntityRelProvider() {
