@@ -24,10 +24,12 @@ import java.util.List;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.ContainerSerializer;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 
+import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.MessageResolver;
 
@@ -35,19 +37,23 @@ abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends
     implements ContextualSerializer {
 
     private static final long serialVersionUID = -8665900081601124431L;
+    protected static final String ATTR_KEY_PARENT = "__SIREN_ENTITY_PARENT_OBJECT__";
 
     protected final SirenEntityClassProvider sirenEntityClassProvider;
+    protected final SirenEntityRelProvider sirenEntityRelProvider;
     protected final SirenConfiguration sirenConfiguration;
     protected final SirenLinkConverter sirenLinkConverter;
     protected final MessageResolver messageResolver;
     protected final BeanProperty property;
 
     protected AbstractSirenSerializer(Class<?> type, SirenConfiguration sirenConfiguration, SirenLinkConverter sirenLinkConverter,
-        SirenEntityClassProvider sirenEntityClassProvider, MessageResolver messageResolver, BeanProperty property) {
+        SirenEntityClassProvider sirenEntityClassProvider, SirenEntityRelProvider sirenEntityRelProvider,
+        MessageResolver messageResolver, BeanProperty property) {
         super(type, false);
         this.sirenConfiguration = sirenConfiguration;
         this.sirenLinkConverter = sirenLinkConverter;
         this.sirenEntityClassProvider = sirenEntityClassProvider;
+        this.sirenEntityRelProvider = sirenEntityRelProvider;
         this.messageResolver = messageResolver;
         this.property = property;
     }
@@ -76,8 +82,22 @@ abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends
         return sirenEntityClassProvider.get(model);
     }
 
+    protected List<LinkRelation> rels(RepresentationModel<?> model, SerializerProvider provider) {
+        return sirenEntityRelProvider.get(model, getAttribute(ATTR_KEY_PARENT, provider));
+    }
+
     protected String title(Class<?> type) {
         return messageResolver.resolve(SirenEntity.TitleResolvable.of(type));
     }
 
+    protected Object setAttribute(String key, Object value, SerializerProvider provider) {
+        Object current = provider.getAttribute(key);
+        provider.setAttribute(key, value);
+        return current;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected T getAttribute(String key, SerializerProvider provider) {
+        return (T) provider.getAttribute(key);
+    }
 }

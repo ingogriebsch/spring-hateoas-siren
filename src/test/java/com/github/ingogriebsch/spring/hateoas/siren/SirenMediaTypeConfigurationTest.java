@@ -43,9 +43,12 @@ class SirenMediaTypeConfigurationTest {
 
         SimpleObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider =
             new SimpleObjectProvider<>(new SimpleSirenEntityClassProvider());
+        SimpleObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider =
+            new SimpleObjectProvider<>(new SirenEntityRelProvider() {
+            });
 
         sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(sirenConfiguration, representationModelFactories,
-            sirenEntityClassProvider, DEFAULTS_ONLY);
+            sirenEntityClassProvider, sirenEntityRelProvider, DEFAULTS_ONLY);
     }
 
     @Nested

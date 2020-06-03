@@ -163,9 +163,10 @@ class SirenWebFluxIntegrationTest {
         @Bean
         SirenMediaTypeConfiguration sirenMediaTypeConfiguration(ObjectProvider<SirenConfiguration> sirenConfiguration,
             ObjectProvider<RepresentationModelFactories> representationModelFactories,
-            ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider, MessageResolver messageResolver) {
+            ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider,
+            ObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider, MessageResolver messageResolver) {
             return new SirenMediaTypeConfiguration(sirenConfiguration, representationModelFactories, sirenEntityClassProvider,
-                messageResolver);
+                sirenEntityRelProvider, messageResolver);
         }
 
         @Bean

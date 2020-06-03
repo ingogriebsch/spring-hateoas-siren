@@ -48,33 +48,35 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
 
     public SirenHandlerInstantiator(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull RepresentationModelFactories representationModelFactories,
-        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull MessageResolver messageResolver) {
-        this(sirenConfiguration, representationModelFactories, sirenEntityClassProvider, messageResolver, null);
+        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
+        @NonNull MessageResolver messageResolver) {
+        this(sirenConfiguration, representationModelFactories, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver,
+            null);
     }
 
     public SirenHandlerInstantiator(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull RepresentationModelFactories representationModelFactories,
-        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull MessageResolver messageResolver,
-        AutowireCapableBeanFactory beanFactory) {
+        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
+        @NonNull MessageResolver messageResolver, AutowireCapableBeanFactory beanFactory) {
         SirenLinkConverter sirenLinkConverter = new SirenLinkConverter(messageResolver);
 
         serializers.put(SirenRepresentationModelSerializer.class, new SirenRepresentationModelSerializer(sirenConfiguration,
-            sirenLinkConverter, sirenEntityClassProvider, messageResolver));
+            sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver));
         serializers.put(SirenRepresentationModelDeserializer.class, new SirenRepresentationModelDeserializer(sirenConfiguration,
             representationModelFactories.forRepresentationModel(), sirenLinkConverter));
 
-        serializers.put(SirenEntityModelSerializer.class,
-            new SirenEntityModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver));
+        serializers.put(SirenEntityModelSerializer.class, new SirenEntityModelSerializer(sirenConfiguration, sirenLinkConverter,
+            sirenEntityClassProvider, sirenEntityRelProvider, messageResolver));
         serializers.put(SirenEntityModelDeserializer.class, new SirenEntityModelDeserializer(sirenConfiguration,
             representationModelFactories.forEntityModel(), sirenLinkConverter));
 
         serializers.put(SirenCollectionModelSerializer.class, new SirenCollectionModelSerializer(sirenConfiguration,
-            sirenLinkConverter, sirenEntityClassProvider, messageResolver));
+            sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver));
         serializers.put(SirenCollectionModelDeserializer.class, new SirenCollectionModelDeserializer(sirenConfiguration,
             representationModelFactories.forCollectioModel(), sirenLinkConverter));
 
-        serializers.put(SirenPagedModelSerializer.class,
-            new SirenPagedModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver));
+        serializers.put(SirenPagedModelSerializer.class, new SirenPagedModelSerializer(sirenConfiguration, sirenLinkConverter,
+            sirenEntityClassProvider, sirenEntityRelProvider, messageResolver));
         serializers.put(SirenPagedModelDeserializer.class, new SirenPagedModelDeserializer(sirenConfiguration,
             representationModelFactories.forPagedModel(), sirenLinkConverter));
 

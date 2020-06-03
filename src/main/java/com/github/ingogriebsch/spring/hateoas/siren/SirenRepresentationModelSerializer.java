@@ -20,11 +20,8 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
-import static com.google.common.collect.Lists.newArrayList;
-import static org.springframework.hateoas.IanaLinkRelations.ITEM;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -33,7 +30,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.MessageResolver;
 
@@ -45,21 +41,21 @@ public class SirenRepresentationModelSerializer extends AbstractSirenSerializer<
 
     public SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull MessageResolver messageResolver) {
-        this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver, null);
+        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver) {
+        this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
     }
 
     public SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull MessageResolver messageResolver, BeanProperty property) {
-        super(RepresentationModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver,
-            property);
+        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver, BeanProperty property) {
+        super(RepresentationModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,
+            messageResolver, property);
     }
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
         return new SirenRepresentationModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider,
-            messageResolver, property);
+            sirenEntityRelProvider, messageResolver, property);
     }
 
     @Override
@@ -71,16 +67,18 @@ public class SirenRepresentationModelSerializer extends AbstractSirenSerializer<
             .classes(classes(model)) //
             .links(navigables.getLinks()) //
             .properties(properties(model)) //
-            .rels(rels(model, gen)) //
+            .rels(rels(model, provider)) //
             .title(title(model.getClass())) //
             .build();
 
         JsonSerializer<Object> serializer = provider.findValueSerializer(SirenEntity.class, property);
-        serializer.serialize(sirenEntity, gen, provider);
-    }
 
-    private static List<LinkRelation> rels(RepresentationModel<?> model, JsonGenerator gen) {
-        return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
+        Object parent = setAttribute(ATTR_KEY_PARENT, model, provider);
+        try {
+            serializer.serialize(sirenEntity, gen, provider);
+        } finally {
+            setAttribute(ATTR_KEY_PARENT, parent, provider);
+        }
     }
 
     private static Map<String, Object> properties(RepresentationModel<?> model) {

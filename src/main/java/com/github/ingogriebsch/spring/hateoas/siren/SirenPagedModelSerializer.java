@@ -21,9 +21,6 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static java.util.stream.Collectors.toList;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.springframework.hateoas.IanaLinkRelations.ITEM;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -34,7 +31,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.mediatype.MessageResolver;
 
@@ -46,20 +42,21 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
 
     public SirenPagedModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull MessageResolver messageResolver) {
-        this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver, null);
+        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver) {
+        this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
     }
 
     public SirenPagedModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull MessageResolver messageResolver, BeanProperty property) {
-        super(PagedModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver, property);
+        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver, BeanProperty property) {
+        super(PagedModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,
+            messageResolver, property);
     }
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
-        return new SirenPagedModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, messageResolver,
-            property);
+        return new SirenPagedModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider,
+            sirenEntityRelProvider, messageResolver, property);
     }
 
     @Override
@@ -72,15 +69,18 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
             .entities(entities(model)) //
             .links(navigables.getLinks()) //
             .properties(model.getMetadata()) //
-            .rels(rels(model, gen)) //
+            .rels(rels(model, provider)) //
             .title(title(model.getClass())) //
             .build();
 
-        provider.findValueSerializer(SirenEntity.class, property).serialize(sirenEntity, gen, provider);
-    }
+        JsonSerializer<Object> serializer = provider.findValueSerializer(SirenEntity.class, property);
 
-    private static List<LinkRelation> rels(PagedModel<?> model, JsonGenerator gen) {
-        return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
+        Object parent = setAttribute(ATTR_KEY_PARENT, model, provider);
+        try {
+            serializer.serialize(sirenEntity, gen, provider);
+        } finally {
+            setAttribute(ATTR_KEY_PARENT, parent, provider);
+        }
     }
 
     private static List<Object> entities(CollectionModel<?> model) {
