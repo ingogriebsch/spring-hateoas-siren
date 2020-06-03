@@ -22,6 +22,8 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static java.util.stream.Collectors.toList;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.springframework.hateoas.IanaLinkRelations.ITEM;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +36,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.mediatype.MessageResolver;
 
 import lombok.NonNull;
@@ -70,6 +73,7 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
             .entities(entities(model)) //
             .links(navigables.getLinks()) //
             .properties(properties(model)) //
+            .rels(rels(model, gen)) //
             .title(title(model.getClass())) //
             .build();
 
@@ -79,6 +83,10 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
     private static Map<String, Object> properties(CollectionModel<?> model) {
         Map<String, Object> properties = extractProperties(model, "links", "content");
         return properties.isEmpty() ? null : properties;
+    }
+
+    private static List<LinkRelation> rels(CollectionModel<?> model, JsonGenerator gen) {
+        return !gen.getOutputContext().inRoot() ? newArrayList(ITEM) : newArrayList();
     }
 
     private static List<Object> entities(CollectionModel<?> model) {
