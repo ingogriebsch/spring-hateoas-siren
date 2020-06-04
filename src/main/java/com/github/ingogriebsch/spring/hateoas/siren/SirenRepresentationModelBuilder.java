@@ -69,11 +69,12 @@ class SirenRepresentationModelBuilder {
         return this;
     }
 
+    RepresentationModel<?> build() {
+        return modelFactory.create(type, links(), properties);
+    }
+
     private List<Link> links() {
         return linkConverter.from(navigables(links, actions));
     }
 
-    RepresentationModel<?> build() {
-        return modelFactory.create(type, links(), properties);
-    }
 }

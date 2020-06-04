@@ -75,11 +75,12 @@ class SirenEntityModelBuilder {
         return this;
     }
 
+    EntityModel<?> build() {
+        return modelFactory.create(type, links(), content, properties);
+    }
+
     private Iterable<Link> links() {
         return linkConverter.from(navigables(links, actions));
     }
 
-    EntityModel<?> build() {
-        return modelFactory.create(type, links(), content, properties);
-    }
 }

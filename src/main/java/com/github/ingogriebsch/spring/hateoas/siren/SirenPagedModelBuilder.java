@@ -74,12 +74,11 @@ class SirenPagedModelBuilder {
         return this;
     }
 
-    private Iterable<Link> links() {
-        return linkConverter.from(navigables(links, actions));
-    }
-
     PagedModel<?> build() {
         return modelFactory.create(type, links(), content, metadata);
     }
 
+    private Iterable<Link> links() {
+        return linkConverter.from(navigables(links, actions));
+    }
 }

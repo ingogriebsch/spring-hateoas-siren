@@ -75,12 +75,12 @@ class SirenCollectionModelBuilder {
         return this;
     }
 
-    private Iterable<Link> links() {
-        return linkConverter.from(navigables(links, actions));
-    }
-
     CollectionModel<?> build() {
         return modelFactory.create(type, links(), content, properties);
+    }
+
+    private Iterable<Link> links() {
+        return linkConverter.from(navigables(links, actions));
     }
 
 }
