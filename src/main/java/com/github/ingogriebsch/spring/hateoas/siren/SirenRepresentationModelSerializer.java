@@ -31,7 +31,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.mediatype.MessageResolver;
 
 import lombok.NonNull;
 
@@ -39,28 +38,24 @@ class SirenRepresentationModelSerializer extends AbstractSirenSerializer<Represe
 
     private static final long serialVersionUID = 2893716845519287714L;
 
-    SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver) {
-        this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
+    SirenRepresentationModelSerializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenSerializerFacilities serializerFacilities) {
+        this(configuration, serializerFacilities, null);
     }
 
-    SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver, BeanProperty property) {
-        super(RepresentationModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,
-            messageResolver, property);
+    SirenRepresentationModelSerializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenSerializerFacilities serializerFacilities, BeanProperty property) {
+        super(RepresentationModel.class, configuration, serializerFacilities, property);
     }
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
-        return new SirenRepresentationModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider,
-            sirenEntityRelProvider, messageResolver, property);
+        return new SirenRepresentationModelSerializer(configuration, serializerFacilities, property);
     }
 
     @Override
     public void serialize(RepresentationModel<?> model, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        SirenNavigables navigables = sirenLinkConverter.to(model.getLinks());
+        SirenNavigables navigables = getLinkConverter().to(model.getLinks());
 
         SirenEntity sirenEntity = SirenEntity.builder() //
             .actions(navigables.getActions()) //

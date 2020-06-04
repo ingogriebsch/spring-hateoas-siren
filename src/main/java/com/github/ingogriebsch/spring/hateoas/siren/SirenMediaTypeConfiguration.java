@@ -41,13 +41,13 @@ import lombok.RequiredArgsConstructor;
 class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
     @NonNull
-    private final ObjectProvider<SirenConfiguration> sirenConfiguration;
+    private final ObjectProvider<SirenConfiguration> configuration;
     @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
     @NonNull
-    private final ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider;
+    private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
     @NonNull
-    private final ObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider;
+    private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
     @NonNull
     private final MessageResolver messageResolver;
 
@@ -65,22 +65,26 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     public ObjectMapper configureObjectMapper(@NonNull ObjectMapper mapper) {
         mapper = HypermediaMappingInformation.super.configureObjectMapper(mapper);
 
-        SirenHandlerInstantiator instantiator = new SirenHandlerInstantiator(sirenConfiguration(), sirenDeserializerFacilities(),
-            sirenEntityClassProvider(), sirenEntityRelProvider(), messageResolver);
+        SirenHandlerInstantiator instantiator =
+            new SirenHandlerInstantiator(configuration(), deserializerFacilities(), serializerFacilities());
         mapper.setHandlerInstantiator(instantiator);
 
         return mapper;
     }
 
-    private SirenConfiguration sirenConfiguration() {
-        return sirenConfiguration.getIfAvailable(() -> new SirenConfiguration());
+    private SirenConfiguration configuration() {
+        return configuration.getIfAvailable(() -> new SirenConfiguration());
     }
 
-    private SirenDeserializerFacilities sirenDeserializerFacilities() {
-        return new SirenDeserializerFacilities(representationModelFactories(), sirenLinkConverter());
+    private SirenDeserializerFacilities deserializerFacilities() {
+        return new SirenDeserializerFacilities(representationModelFactories(), linkConverter());
     }
 
-    private SirenLinkConverter sirenLinkConverter() {
+    private SirenSerializerFacilities serializerFacilities() {
+        return new SirenSerializerFacilities(entityClassProvider(), entityRelProvider(), linkConverter(), messageResolver);
+    }
+
+    private SirenLinkConverter linkConverter() {
         return new SirenLinkConverter(messageResolver);
     }
 
@@ -89,13 +93,13 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
         });
     }
 
-    private SirenEntityClassProvider sirenEntityClassProvider() {
-        return sirenEntityClassProvider.getIfAvailable(() -> new SirenEntityClassProvider() {
+    private SirenEntityClassProvider entityClassProvider() {
+        return entityClassProvider.getIfAvailable(() -> new SirenEntityClassProvider() {
         });
     }
 
-    private SirenEntityRelProvider sirenEntityRelProvider() {
-        return sirenEntityRelProvider.getIfAvailable(() -> new SirenEntityRelProvider() {
+    private SirenEntityRelProvider entityRelProvider() {
+        return entityRelProvider.getIfAvailable(() -> new SirenEntityRelProvider() {
         });
     }
 

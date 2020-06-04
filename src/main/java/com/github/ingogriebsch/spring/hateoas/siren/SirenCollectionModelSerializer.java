@@ -34,7 +34,6 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.mediatype.MessageResolver;
 
 import lombok.NonNull;
 
@@ -42,28 +41,24 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
 
     private static final long serialVersionUID = 9054285190464802945L;
 
-    SirenCollectionModelSerializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter sirenLinkConverter,
-        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
-        @NonNull MessageResolver messageResolver) {
-        this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
+    SirenCollectionModelSerializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenSerializerFacilities serializerFacilities) {
+        this(configuration, serializerFacilities, null);
     }
 
-    SirenCollectionModelSerializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter sirenLinkConverter,
-        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
-        @NonNull MessageResolver messageResolver, BeanProperty property) {
-        super(CollectionModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,
-            messageResolver, property);
+    SirenCollectionModelSerializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenSerializerFacilities serializerFacilities, BeanProperty property) {
+        super(CollectionModel.class, configuration, serializerFacilities, property);
     }
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
-        return new SirenCollectionModelSerializer(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider,
-            sirenEntityRelProvider, messageResolver, property);
+        return new SirenCollectionModelSerializer(configuration, serializerFacilities, property);
     }
 
     @Override
     public void serialize(CollectionModel<?> model, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        SirenNavigables navigables = sirenLinkConverter.to(model.getLinks());
+        SirenNavigables navigables = getLinkConverter().to(model.getLinks());
 
         SirenEntity sirenEntity = SirenEntity.builder() //
             .actions(navigables.getActions()) //

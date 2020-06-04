@@ -47,11 +47,11 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
     protected final SirenConfiguration configuration;
     protected final JavaType contentType;
 
-    protected AbstractSirenDeserializer(SirenConfiguration sirenConfiguration, SirenDeserializerFacilities deserializerFacilities,
+    protected AbstractSirenDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
         JavaType contentType) {
         super(contentType);
         this.deserializerFacilities = deserializerFacilities;
-        this.configuration = sirenConfiguration;
+        this.configuration = configuration;
         this.contentType = contentType;
     }
 
