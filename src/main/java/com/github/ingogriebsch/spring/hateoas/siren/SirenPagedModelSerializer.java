@@ -40,15 +40,15 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
 
     private static final long serialVersionUID = 9054285190464802945L;
 
-    public SirenPagedModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver) {
+    SirenPagedModelSerializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter sirenLinkConverter,
+        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
+        @NonNull MessageResolver messageResolver) {
         this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
     }
 
-    public SirenPagedModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver, BeanProperty property) {
+    SirenPagedModelSerializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter sirenLinkConverter,
+        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
+        @NonNull MessageResolver messageResolver, BeanProperty property) {
         super(PagedModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,
             messageResolver, property);
     }

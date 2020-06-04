@@ -45,12 +45,12 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
 
     private final RepresentationModelFactory modelFactory;
 
-    public SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
+    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull RepresentationModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter) {
         this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
-    public SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
+    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull RepresentationModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter,
         @NonNull JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);

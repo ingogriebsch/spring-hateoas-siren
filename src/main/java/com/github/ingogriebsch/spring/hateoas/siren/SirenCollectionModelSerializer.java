@@ -42,15 +42,15 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
 
     private static final long serialVersionUID = 9054285190464802945L;
 
-    public SirenCollectionModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver) {
+    SirenCollectionModelSerializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter sirenLinkConverter,
+        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
+        @NonNull MessageResolver messageResolver) {
         this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
     }
 
-    public SirenCollectionModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
-        @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver, BeanProperty property) {
+    SirenCollectionModelSerializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull SirenLinkConverter sirenLinkConverter,
+        @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
+        @NonNull MessageResolver messageResolver, BeanProperty property) {
         super(CollectionModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,
             messageResolver, property);
     }

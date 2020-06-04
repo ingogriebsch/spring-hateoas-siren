@@ -46,7 +46,7 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
     private final Map<Class<?>, Object> serializers = new HashMap<>();
     private final AutowireCapableBeanFactory beanFactory;
 
-    public SirenHandlerInstantiator(@NonNull SirenConfiguration sirenConfiguration,
+    SirenHandlerInstantiator(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull RepresentationModelFactories representationModelFactories,
         @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
         @NonNull MessageResolver messageResolver) {
@@ -54,7 +54,7 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
             null);
     }
 
-    public SirenHandlerInstantiator(@NonNull SirenConfiguration sirenConfiguration,
+    SirenHandlerInstantiator(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull RepresentationModelFactories representationModelFactories,
         @NonNull SirenEntityClassProvider sirenEntityClassProvider, @NonNull SirenEntityRelProvider sirenEntityRelProvider,
         @NonNull MessageResolver messageResolver, AutowireCapableBeanFactory beanFactory) {

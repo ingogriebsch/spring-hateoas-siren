@@ -48,15 +48,15 @@ class SirenLinkConverter {
     @NonNull
     private final MessageResolver messageResolver;
 
-    public SirenNavigables to(@NonNull Iterable<Link> links) {
+    SirenNavigables to(@NonNull Iterable<Link> links) {
         return SirenNavigables.merge(stream(links.spliterator(), false).map(l -> convert(l)).collect(toList()));
     }
 
-    public List<Link> from(@NonNull SirenNavigables navigables) {
+    List<Link> from(@NonNull SirenNavigables navigables) {
         return slice(navigables).stream().map(n -> convert(n)).collect(toList());
     }
 
-    private SirenNavigables convert(Link link) {
+    SirenNavigables convert(Link link) {
         return SirenNavigables.of(links(link), actions(link));
     }
 

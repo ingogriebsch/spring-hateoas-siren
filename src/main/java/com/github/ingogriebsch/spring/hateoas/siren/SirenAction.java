@@ -76,7 +76,7 @@ class SirenAction {
     @Builder
     @JsonPropertyOrder({ "name", "class", "type", "value", "title" })
     @Value
-    public static final class Field {
+    static final class Field {
 
         @NonNull
         private String name;
@@ -95,13 +95,13 @@ class SirenAction {
         @JsonInclude(NON_NULL)
         private String title;
 
-        public static enum Type {
+        static enum Type {
                 checkbox, color, date, datetime, datetime_local, email, file, hidden, month, number, password, radio, range,
                 search, tel, text, time, url, week
         }
 
         @Value(staticConstructor = "of")
-        public static final class TitleResolvable implements MessageSourceResolvable {
+        static final class TitleResolvable implements MessageSourceResolvable {
 
             private String name;
 
@@ -113,7 +113,7 @@ class SirenAction {
     }
 
     @Value(staticConstructor = "of")
-    public static final class TitleResolvable implements MessageSourceResolvable {
+    static final class TitleResolvable implements MessageSourceResolvable {
 
         private String name;
 

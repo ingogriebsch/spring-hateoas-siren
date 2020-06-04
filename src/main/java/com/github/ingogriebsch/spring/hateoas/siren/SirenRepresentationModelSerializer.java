@@ -39,13 +39,13 @@ class SirenRepresentationModelSerializer extends AbstractSirenSerializer<Represe
 
     private static final long serialVersionUID = 2893716845519287714L;
 
-    public SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
+    SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
         @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver) {
         this(sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider, messageResolver, null);
     }
 
-    public SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
+    SirenRepresentationModelSerializer(@NonNull SirenConfiguration sirenConfiguration,
         @NonNull SirenLinkConverter sirenLinkConverter, @NonNull SirenEntityClassProvider sirenEntityClassProvider,
         @NonNull SirenEntityRelProvider sirenEntityRelProvider, @NonNull MessageResolver messageResolver, BeanProperty property) {
         super(RepresentationModel.class, sirenConfiguration, sirenLinkConverter, sirenEntityClassProvider, sirenEntityRelProvider,

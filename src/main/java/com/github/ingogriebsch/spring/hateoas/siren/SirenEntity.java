@@ -69,7 +69,7 @@ class SirenEntity {
     private String title;
 
     @Value(staticConstructor = "of")
-    public static final class TitleResolvable implements MessageSourceResolvable {
+    static final class TitleResolvable implements MessageSourceResolvable {
 
         private Class<?> type;
 

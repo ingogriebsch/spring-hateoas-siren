@@ -60,7 +60,7 @@ class SirenLink {
     private String type;
 
     @Value(staticConstructor = "of")
-    public static final class TitleResolvable implements MessageSourceResolvable {
+    static final class TitleResolvable implements MessageSourceResolvable {
 
         private LinkRelation rel;
 

@@ -54,13 +54,13 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
 
     private final CollectionModelFactory modelFactory;
 
-    public SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull CollectionModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter) {
+    SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull CollectionModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter) {
         this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
-    public SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull CollectionModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
+    SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull CollectionModelFactory modelFactory,
+        @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);
         this.modelFactory = modelFactory;
     }

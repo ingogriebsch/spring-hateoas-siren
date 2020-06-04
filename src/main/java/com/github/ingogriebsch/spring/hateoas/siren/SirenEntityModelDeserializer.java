@@ -55,12 +55,12 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
 
     private final EntityModelFactory modelFactory;
 
-    public SirenEntityModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull EntityModelFactory modelFactory,
+    SirenEntityModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull EntityModelFactory modelFactory,
         @NonNull SirenLinkConverter linkConverter) {
         this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
-    public SirenEntityModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull EntityModelFactory modelFactory,
+    SirenEntityModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull EntityModelFactory modelFactory,
         @NonNull SirenLinkConverter linkConverter, @NonNull JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);
         this.modelFactory = modelFactory;

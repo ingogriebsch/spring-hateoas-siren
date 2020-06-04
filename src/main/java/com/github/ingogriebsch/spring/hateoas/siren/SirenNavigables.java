@@ -40,15 +40,15 @@ class SirenNavigables {
     private final List<SirenLink> links;
     private final List<SirenAction> actions;
 
-    public static SirenNavigables navigables(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
+    static SirenNavigables navigables(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
         return of(links, actions);
     }
 
-    public static SirenNavigables of(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
+    static SirenNavigables of(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
         return new SirenNavigables(links, actions);
     }
 
-    public static SirenNavigables merge(@NonNull Iterable<SirenNavigables> navigables) {
+    static SirenNavigables merge(@NonNull Iterable<SirenNavigables> navigables) {
         List<SirenLink> links = stream(navigables.spliterator(), false).flatMap(n -> n.getLinks().stream()).collect(toList());
         List<SirenAction> actions =
             stream(navigables.spliterator(), false).flatMap(n -> n.getActions().stream()).collect(toList());

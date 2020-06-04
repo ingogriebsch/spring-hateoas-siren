@@ -31,7 +31,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 class SirenAffordanceModel extends AffordanceModel {
 
-    public SirenAffordanceModel(String name, Link link, HttpMethod httpMethod, InputPayloadMetadata inputType,
+    SirenAffordanceModel(String name, Link link, HttpMethod httpMethod, InputPayloadMetadata inputType,
         List<QueryParameter> queryMethodParameters, PayloadMetadata outputType) {
         super(name, link, httpMethod, inputType, queryMethodParameters, outputType);
     }

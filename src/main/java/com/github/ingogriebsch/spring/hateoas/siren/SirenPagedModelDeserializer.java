@@ -53,12 +53,12 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
 
     private final PagedModelFactory modelFactory;
 
-    public SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
+    SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
         @NonNull SirenLinkConverter linkConverter) {
         this(sirenConfiguration, modelFactory, linkConverter, TYPE);
     }
 
-    public SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
+    SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
         @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
         super(sirenConfiguration, linkConverter, contentType);
         this.modelFactory = modelFactory;
