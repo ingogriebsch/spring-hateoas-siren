@@ -21,6 +21,7 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
+import static com.github.ingogriebsch.spring.hateoas.siren.SirenRepresentationModelBuilder.builder;
 import static com.google.common.collect.Maps.newHashMap;
 
 import java.io.IOException;
@@ -43,24 +44,20 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     private static final long serialVersionUID = -3683235541542548855L;
     private static final JavaType TYPE = defaultInstance().constructType(RepresentationModel.class);
 
-    private final RepresentationModelFactory modelFactory;
-
-    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull RepresentationModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
+    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+        this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration sirenConfiguration,
-        @NonNull RepresentationModelFactory modelFactory, @NonNull SirenLinkConverter linkConverter,
-        @NonNull JavaType contentType) {
-        super(sirenConfiguration, linkConverter, contentType);
-        this.modelFactory = modelFactory;
+    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities, @NonNull JavaType contentType) {
+        super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
-        return new SirenRepresentationModelDeserializer(sirenConfiguration, modelFactory, linkConverter, contentType);
+        return new SirenRepresentationModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override
@@ -68,8 +65,13 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
         throws IOException, JsonProcessingException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
 
-        return SirenRepresentationModelBuilder.builder(contentType, modelFactory, linkConverter)
-            .properties(properties(sirenEntity)).links(sirenEntity.getLinks()).actions(sirenEntity.getActions()).build();
+        SirenRepresentationModelBuilder builder =
+            builder(contentType, getRepresentationModelFactories().forRepresentationModel(), getLinkConverter());
+
+        return builder.properties(properties(sirenEntity)) //
+            .links(sirenEntity.getLinks()) //
+            .actions(sirenEntity.getActions()) //
+            .build();
     }
 
     @SuppressWarnings("unchecked")

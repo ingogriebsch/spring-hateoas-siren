@@ -51,29 +51,28 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     private static final long serialVersionUID = 4364222303241126575L;
     private static final JavaType TYPE = defaultInstance().constructType(PagedModel.class);
 
-    private final PagedModelFactory modelFactory;
-
-    SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
+    SirenPagedModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+        this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenPagedModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull PagedModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
-        super(sirenConfiguration, linkConverter, contentType);
-        this.modelFactory = modelFactory;
+    SirenPagedModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities, JavaType contentType) {
+        super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
-        return new SirenPagedModelDeserializer(sirenConfiguration, modelFactory, linkConverter,
+        return new SirenPagedModelDeserializer(configuration, deserializerFacilities,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
     protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        SirenPagedModelBuilder builder = SirenPagedModelBuilder.builder(contentType, modelFactory, linkConverter);
+        SirenPagedModelBuilder builder =
+            SirenPagedModelBuilder.builder(contentType, getRepresentationModelFactories().forPagedModel(), getLinkConverter());
+
         while (jp.nextToken() != null) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 if ("properties".equals(jp.getText())) {

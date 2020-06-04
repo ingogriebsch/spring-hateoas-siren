@@ -52,29 +52,28 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     private static final long serialVersionUID = 4364222303241126575L;
     private static final JavaType TYPE = defaultInstance().constructType(CollectionModel.class);
 
-    private final CollectionModelFactory modelFactory;
-
-    SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull CollectionModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
+    SirenCollectionModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+        this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenCollectionModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull CollectionModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter, JavaType contentType) {
-        super(sirenConfiguration, linkConverter, contentType);
-        this.modelFactory = modelFactory;
+    SirenCollectionModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities, JavaType contentType) {
+        super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
-        return new SirenCollectionModelDeserializer(sirenConfiguration, modelFactory, linkConverter,
+        return new SirenCollectionModelDeserializer(configuration, deserializerFacilities,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
     protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType, modelFactory, linkConverter);
+        SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType,
+            getRepresentationModelFactories().forCollectioModel(), getLinkConverter());
+
         while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 String text = jp.getText();

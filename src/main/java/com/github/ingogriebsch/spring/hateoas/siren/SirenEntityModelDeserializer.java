@@ -53,29 +53,28 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     private static final long serialVersionUID = -3683235541542548855L;
     private static final JavaType TYPE = defaultInstance().constructType(EntityModel.class);
 
-    private final EntityModelFactory modelFactory;
-
-    SirenEntityModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull EntityModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter) {
-        this(sirenConfiguration, modelFactory, linkConverter, TYPE);
+    SirenEntityModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+        this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenEntityModelDeserializer(@NonNull SirenConfiguration sirenConfiguration, @NonNull EntityModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter, @NonNull JavaType contentType) {
-        super(sirenConfiguration, linkConverter, contentType);
-        this.modelFactory = modelFactory;
+    SirenEntityModelDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities, @NonNull JavaType contentType) {
+        super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
-        return new SirenEntityModelDeserializer(sirenConfiguration, modelFactory, linkConverter, contentType);
+        return new SirenEntityModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     protected EntityModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
-        SirenEntityModelBuilder builder = SirenEntityModelBuilder.builder(contentType, modelFactory, linkConverter);
+        SirenEntityModelBuilder builder =
+            SirenEntityModelBuilder.builder(contentType, getRepresentationModelFactories().forEntityModel(), getLinkConverter());
+
         while (!END_OBJECT.equals(jp.nextToken())) {
             if (FIELD_NAME.equals(jp.currentToken())) {
                 String text = jp.getText();

@@ -43,15 +43,15 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
 
     private static final long serialVersionUID = 3796755247545654672L;
 
-    protected final SirenConfiguration sirenConfiguration;
-    protected final SirenLinkConverter linkConverter;
+    protected final SirenDeserializerFacilities deserializerFacilities;
+    protected final SirenConfiguration configuration;
     protected final JavaType contentType;
 
-    protected AbstractSirenDeserializer(SirenConfiguration sirenConfiguration, SirenLinkConverter linkConverter,
+    protected AbstractSirenDeserializer(SirenConfiguration sirenConfiguration, SirenDeserializerFacilities deserializerFacilities,
         JavaType contentType) {
         super(contentType);
-        this.sirenConfiguration = sirenConfiguration;
-        this.linkConverter = linkConverter;
+        this.deserializerFacilities = deserializerFacilities;
+        this.configuration = sirenConfiguration;
         this.contentType = contentType;
     }
 
@@ -74,6 +74,14 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
     @Override
     public JsonDeserializer<Object> getContentDeserializer() {
         return null;
+    }
+
+    protected SirenLinkConverter getLinkConverter() {
+        return deserializerFacilities.getLinkConverter();
+    }
+
+    protected RepresentationModelFactories getRepresentationModelFactories() {
+        return deserializerFacilities.getRepresentationModelFactories();
     }
 
     protected JavaType obtainContainedType() {
