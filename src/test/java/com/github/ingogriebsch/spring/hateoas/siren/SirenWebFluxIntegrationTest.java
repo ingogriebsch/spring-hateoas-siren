@@ -25,7 +25,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.empty;
 import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
-import static org.springframework.hateoas.support.JsonPathUtils.jsonPath;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.reactive.server.WebTestClient.bindToApplicationContext;
 
@@ -33,6 +32,8 @@ import java.util.Optional;
 
 import com.github.ingogriebsch.spring.hateoas.siren.support.WebFluxPersonController;
 
+import org.assertj.core.matcher.AssertionMatcher;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,9 +48,12 @@ import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.util.JsonPathExpectationsHelper;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 import org.springframework.web.reactive.config.EnableWebFlux;
+
+import lombok.RequiredArgsConstructor;
 
 @ContextConfiguration
 @ExtendWith(SpringExtension.class)
@@ -150,12 +154,26 @@ class SirenWebFluxIntegrationTest {
     }
 
     @Test
-    void oatch() throws Exception {
+    void patch() throws Exception {
         ResponseSpec response = testClient.patch().uri("http://localhost/persons/0").contentType(SIREN_JSON)
             .bodyValue(read(new ClassPathResource("update_person.json", getClass()))).exchange();
 
         response.expectStatus().isNoContent() //
             .expectHeader().valueEquals(LOCATION, "http://localhost/persons/0");
+    }
+
+    private static JsonPathAssertionMatcher jsonPath(String expression) {
+        return new JsonPathAssertionMatcher(expression, null);
+    }
+
+    private static <T> AssertionMatcher<String> jsonPath(String expression, Matcher<T> matcher) {
+        return new AssertionMatcher<String>() {
+
+            @Override
+            public void assertion(String actual) throws AssertionError {
+                new JsonPathExpectationsHelper(expression).assertValue(actual, matcher);
+            }
+        };
     }
 
     @Configuration
@@ -183,4 +201,24 @@ class SirenWebFluxIntegrationTest {
         }
     }
 
+    @RequiredArgsConstructor
+    private static class JsonPathAssertionMatcher extends AssertionMatcher<String> {
+
+        private final String expression;
+        private final Object expected;
+
+        @Override
+        public void assertion(String actual) throws AssertionError {
+            JsonPathExpectationsHelper helper = new JsonPathExpectationsHelper(expression);
+            if (expected == null) {
+                helper.doesNotHaveJsonPath(actual);
+            } else {
+                helper.assertValue(actual, expected);
+            }
+        }
+
+        public JsonPathAssertionMatcher doesNotExist() {
+            return new JsonPathAssertionMatcher(this.expression, null);
+        }
+    }
 }
