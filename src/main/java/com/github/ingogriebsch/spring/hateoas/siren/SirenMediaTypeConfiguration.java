@@ -28,7 +28,9 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.client.LinkDiscoverer;
 import org.springframework.hateoas.config.HypermediaMappingInformation;
 import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.http.MediaType;
@@ -55,6 +57,11 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
     @NonNull
     private final MessageResolver messageResolver;
+
+    @Bean
+    LinkDiscoverer sirenLinkDisocoverer() {
+        return new SirenLinkDiscoverer();
+    }
 
     /*
      * (non-Javadoc)
