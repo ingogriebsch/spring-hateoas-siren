@@ -20,12 +20,12 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
+import static com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader.read;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.empty;
 import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
 import static org.springframework.hateoas.support.JsonPathUtils.jsonPath;
-import static org.springframework.hateoas.support.MappingUtils.read;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.reactive.server.WebTestClient.bindToApplicationContext;
 

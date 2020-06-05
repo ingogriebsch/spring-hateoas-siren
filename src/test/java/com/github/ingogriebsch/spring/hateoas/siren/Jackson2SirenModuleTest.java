@@ -46,6 +46,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
+import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
 import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -58,7 +59,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.support.MappingUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 class Jackson2SirenModuleTest {
@@ -673,7 +673,7 @@ class Jackson2SirenModuleTest {
     }
 
     private String readResource(String sourceFilename) throws IOException {
-        return MappingUtils.read(new ClassPathResource(sourceFilename, getClass()));
+        return ResourceReader.read(new ClassPathResource(sourceFilename, getClass()));
     }
 
     private static <T> T read(String str, TypeReference<T> type) throws Exception {

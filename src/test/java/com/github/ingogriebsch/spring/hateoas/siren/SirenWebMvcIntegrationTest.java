@@ -20,6 +20,7 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
+import static com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader.read;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.empty;
@@ -45,7 +46,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.mediatype.MessageResolver;
-import org.springframework.hateoas.support.MappingUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -134,7 +134,7 @@ class SirenWebMvcIntegrationTest {
 
     @Test
     void insert() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("insert_person.json", getClass()));
+        String specBasedJson = read(new ClassPathResource("insert_person.json", getClass()));
 
         ResultActions result = mockMvc.perform(post("/persons").content(specBasedJson).contentType(SIREN_JSON));
         result.andExpect(status().isCreated()).andExpect(header().stringValues(LOCATION, "http://localhost/persons/3"));
@@ -142,7 +142,7 @@ class SirenWebMvcIntegrationTest {
 
     @Test
     void update() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("update_person.json", getClass()));
+        String specBasedJson = read(new ClassPathResource("update_person.json", getClass()));
 
         ResultActions result = mockMvc.perform(put("/persons/0").content(specBasedJson).contentType(SIREN_JSON));
         result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/persons/0"));
@@ -150,7 +150,7 @@ class SirenWebMvcIntegrationTest {
 
     @Test
     void patch() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("patch_person.json", getClass()));
+        String specBasedJson = read(new ClassPathResource("patch_person.json", getClass()));
 
         ResultActions result =
             mockMvc.perform(MockMvcRequestBuilders.patch("/persons/0").content(specBasedJson).contentType(SIREN_JSON));

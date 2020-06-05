@@ -19,6 +19,7 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader.read;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.IanaLinkRelations.APPENDIX;
 import static org.springframework.hateoas.IanaLinkRelations.SELF;
@@ -35,7 +36,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
-import org.springframework.hateoas.support.MappingUtils;
 
 class SirenLinkDiscovererTest {
 
@@ -49,13 +49,13 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_empty_optional_if_not_available() throws IOException {
-                String source = MappingUtils.read(resource("representation/containing_links.json"));
+                String source = read(resource("representation/containing_links.json"));
                 assertThat(discoverer.findLinkWithRel(APPENDIX, source)).isEmpty();
             }
 
             @Test
             void should_return_self_link() throws IOException {
-                String source = MappingUtils.read(resource("representation/containing_links.json"));
+                String source = read(resource("representation/containing_links.json"));
 
                 Optional<Link> link = discoverer.findLinkWithRel(SELF, source);
                 assertThat(link).map(Link::getHref).hasValue("/persons");
@@ -64,7 +64,8 @@ class SirenLinkDiscovererTest {
             @ParameterizedTest
             @CsvSource(value = { "self,/persons", "about,/about", "help,/help", "license,/license" })
             void should_return_matching_link(LinkRelation rel, String href) throws IOException {
-                String source = MappingUtils.read(resource("representation/containing_links.json"));
+                String source = read(resource("representation/containing_links.json"));
+
                 Optional<Link> link = discoverer.findLinkWithRel(rel, source);
                 assertThat(link).map(Link::getHref).hasValue(href);
             }
@@ -108,13 +109,14 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_empty_optional_if_not_available() throws IOException {
-                String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
+                String source = read(resource("collection/containing_entitymodels.json"));
                 assertThat(discoverer.findLinksWithRel(APPENDIX, source)).isEmpty();
             }
 
             @Test
             void should_return_self_link() throws IOException {
-                String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
+                String source = read(resource("collection/containing_entitymodels.json"));
+
                 assertThat(discoverer.findLinksWithRel(SELF, source)) //
                     .extracting("href") //
                     .containsExactlyInAnyOrder("/persons");
@@ -122,7 +124,8 @@ class SirenLinkDiscovererTest {
 
             @Test
             void should_return_person_links() throws IOException {
-                String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
+                String source = read(resource("collection/containing_entitymodels.json"));
+
                 assertThat(discoverer.findLinksWithRel("person", source)) //
                     .extracting("href") //
                     .containsExactlyInAnyOrder("/persons/1", "/persons/2", "/persons/3", "/persons/4");

@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
 import com.github.ingogriebsch.spring.hateoas.siren.support.StaticMessageResolver;
 import com.github.ingogriebsch.spring.hateoas.siren.support.WebMvcPersonController;
 
@@ -42,7 +43,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.support.MappingUtils;
 
 class SirenLinkConverterTest {
 
@@ -180,6 +180,6 @@ class SirenLinkConverterTest {
     }
 
     private String readResource(String sourceFilename) throws IOException {
-        return MappingUtils.read(new ClassPathResource(sourceFilename, getClass()));
+        return ResourceReader.read(new ClassPathResource(sourceFilename, getClass()));
     }
 }
