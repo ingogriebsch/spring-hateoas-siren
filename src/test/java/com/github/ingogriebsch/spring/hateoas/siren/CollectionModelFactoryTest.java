@@ -62,7 +62,7 @@ class CollectionModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructParametricType(CollectionModel.class, String.class);
-        Iterable<Link> links = newArrayList(new Link("href1"), new Link("href2"));
+        Iterable<Link> links = newArrayList(Link.of("href1"), Link.of("href2"));
         CollectionModel<?> model = factory.create(type, links, newArrayList(), null);
 
         assertThat(model).isNotNull();

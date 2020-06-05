@@ -54,17 +54,17 @@ class SirenEntityClassProviderTest {
 
     @Test
     void get_should_return_single_class_on_entity_model() {
-        assertThat(provider.get(new EntityModel<>("content"))).containsExactly("entity");
+        assertThat(provider.get(EntityModel.of("content"))).containsExactly("entity");
     }
 
     @Test
     void get_should_return_single_class_on_collection_model() {
-        assertThat(provider.get(new CollectionModel<>(newArrayList()))).containsExactly("collection");
+        assertThat(provider.get(CollectionModel.of(newArrayList()))).containsExactly("collection");
     }
 
     @Test
     void get_should_return_single_class_on_paged_model() {
-        assertThat(provider.get(new PagedModel<>(newArrayList(), new PageMetadata(0, 0, 0)))).containsExactly("paged");
+        assertThat(provider.get(PagedModel.of(newArrayList(), new PageMetadata(0, 0, 0)))).containsExactly("paged");
     }
 
 }

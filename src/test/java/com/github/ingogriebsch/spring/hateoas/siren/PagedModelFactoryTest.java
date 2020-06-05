@@ -57,7 +57,7 @@ class PagedModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructParametricType(PagedModel.class, String.class);
-        Iterable<Link> links = newArrayList(new Link("href1"), new Link("href2"));
+        Iterable<Link> links = newArrayList(Link.of("href1"), Link.of("href2"));
         PagedModel<?> model = factory.create(type, links, newArrayList(), new PageMetadata(0, 0, 0));
 
         assertThat(model).isNotNull();

@@ -59,7 +59,7 @@ class RepresentationModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructParametricType(RepresentationModel.class, String.class);
-        Iterable<Link> links = newArrayList(new Link("href1"), new Link("href2"));
+        Iterable<Link> links = newArrayList(Link.of("href1"), Link.of("href2"));
         RepresentationModel<?> model = factory.create(type, links, null);
 
         assertThat(model).isNotNull();

@@ -33,10 +33,14 @@ public class Country extends CollectionModel<State> {
     @NonNull
     private String name;
 
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
+    @SuppressWarnings("deprecation")
     public Country(@NonNull Iterable<State> content, @NonNull Iterable<Link> links) {
         super(content, links);
     }
 
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
+    @SuppressWarnings("deprecation")
     public Country(@NonNull Iterable<State> content, Link... links) {
         super(content, links);
     }

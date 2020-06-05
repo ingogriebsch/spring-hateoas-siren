@@ -71,7 +71,7 @@ class SirenLinkConverter {
         SirenLink link = navigables.getLinks().iterator().next();
         String rel = link.getRels().stream().findFirst().orElse(null);
 
-        return new Link(link.getHref(), rel) //
+        return Link.of(link.getHref(), rel) //
             .withTitle(link.getTitle()) //
             .withType(link.getType());
     }

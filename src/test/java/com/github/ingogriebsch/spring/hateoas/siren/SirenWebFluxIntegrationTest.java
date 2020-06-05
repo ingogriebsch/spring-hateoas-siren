@@ -42,7 +42,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
-import org.springframework.hateoas.config.WebClientConfigurer;
+import org.springframework.hateoas.config.HypermediaWebTestClientConfigurer;
 import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -178,9 +178,8 @@ class SirenWebFluxIntegrationTest {
         }
 
         @Bean
-        WebTestClient webTestClient(WebClientConfigurer webClientConfigurer, ApplicationContext ctx) {
-            return bindToApplicationContext(ctx).build().mutate()
-                .exchangeStrategies(webClientConfigurer.hypermediaExchangeStrategies()).build();
+        WebTestClient webTestClient(HypermediaWebTestClientConfigurer configurer, ApplicationContext ctx) {
+            return bindToApplicationContext(ctx).build().mutateWith(configurer);
         }
     }
 

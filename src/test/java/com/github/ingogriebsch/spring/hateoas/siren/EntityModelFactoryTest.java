@@ -56,7 +56,7 @@ class EntityModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructParametricType(EntityModel.class, String.class);
-        Iterable<Link> links = newArrayList(new Link("href1"), new Link("href2"));
+        Iterable<Link> links = newArrayList(Link.of("href1"), Link.of("href2"));
         EntityModel<?> model = factory.create(type, links, "content", null);
 
         assertThat(model).isNotNull();

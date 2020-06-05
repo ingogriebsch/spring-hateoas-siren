@@ -78,7 +78,7 @@ public class WebFluxPersonController {
                 .andAffordance(controller.insert(null)) //
                 .andAffordance(controller.search(null, null)) //
                 .toMono() //
-                .map(selfLink -> new CollectionModel<>(resources, selfLink)));
+                .map(selfLink -> CollectionModel.of(resources, selfLink)));
     }
 
     @GetMapping("/persons/search")
@@ -101,7 +101,7 @@ public class WebFluxPersonController {
                 .andAffordance(controller.insert(null)) //
                 .andAffordance(controller.search(null, null)) //
                 .toMono() //
-                .map(selfLink -> new CollectionModel<>(resources, selfLink)));
+                .map(selfLink -> CollectionModel.of(resources, selfLink)));
     }
 
     @GetMapping("/persons/{id}")
@@ -118,7 +118,7 @@ public class WebFluxPersonController {
 
         return selfLink.zipWith(personsLink) //
             .map(function((left, right) -> Links.of(left, right))) //
-            .map(links -> new EntityModel<>(PERSONS.get(id), links));
+            .map(links -> EntityModel.of(PERSONS.get(id), links));
     }
 
     @PostMapping("/persons")

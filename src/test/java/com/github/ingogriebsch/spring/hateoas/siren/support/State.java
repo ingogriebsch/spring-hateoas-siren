@@ -33,10 +33,14 @@ public class State extends EntityModel<Capital> {
     @NonNull
     private String name;
 
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
+    @SuppressWarnings("deprecation")
     public State(@NonNull Capital content, @NonNull Iterable<Link> links) {
         super(content, links);
     }
 
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
+    @SuppressWarnings("deprecation")
     public State(@NonNull Capital content, @NonNull Link... links) {
         super(content, links);
     }

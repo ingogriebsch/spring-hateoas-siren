@@ -70,7 +70,7 @@ public class WebMvcPersonController {
 
         return range(0, PERSONS.size()) //
             .mapToObj(this::findOne) //
-            .collect(collectingAndThen(toList(), it -> new CollectionModel<>(it, selfLink)));
+            .collect(collectingAndThen(toList(), it -> CollectionModel.of(it, selfLink)));
     }
 
     @GetMapping("/persons/search")
@@ -97,7 +97,7 @@ public class WebMvcPersonController {
             .andAffordance(afford(controller.insert(null))) //
             .andAffordance(afford(controller.search(null, null)));
 
-        return new CollectionModel<>(persons, selfLink);
+        return CollectionModel.of(persons, selfLink);
     }
 
     @GetMapping("/persons/{id}")
@@ -106,7 +106,7 @@ public class WebMvcPersonController {
         Link findOneLink = linkTo(controller.findOne(id)).withSelfRel();
         Link personsLink = linkTo(controller.findAll()).withRel("persons");
 
-        return new EntityModel<>(PERSONS.get(id), findOneLink //
+        return EntityModel.of(PERSONS.get(id), findOneLink //
             .andAffordance(afford(controller.update(id, null))) //
             .andAffordance(afford(controller.patch(id, null))), //
             personsLink);

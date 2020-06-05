@@ -97,7 +97,7 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
                 CollectionModel<?> source =
-                    new CollectionModel<>(newArrayList(new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", SELF))));
+                    CollectionModel.of(newArrayList(EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", SELF))));
                 String expected = readResource("collection/containing_entitymodel_containing_pojo_and_self_link.json");
 
                 String actual = write(source);
@@ -106,7 +106,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_entitymodel_containing_pojo() throws Exception {
-                CollectionModel<?> source = new CollectionModel<>(newArrayList(new EntityModel<>(new Person("Peter", 33))));
+                CollectionModel<?> source = CollectionModel.of(newArrayList(EntityModel.of(new Person("Peter", 33))));
                 String expected = readResource("collection/containing_entitymodel_containing_pojo.json");
 
                 String actual = write(source);
@@ -116,12 +116,12 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_entitymodels() throws Exception {
                 List<EntityModel<Person>> content = newArrayList( //
-                    new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", "person")), //
-                    new EntityModel<>(new Person("Paul", 44), new Link("/persons/2", "person")), //
-                    new EntityModel<>(new Person("Sarah", 55), new Link("/persons/3", "person")), //
-                    new EntityModel<>(new Person("Stephanie", 66), new Link("/persons/4", "person")) //
+                    EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", "person")), //
+                    EntityModel.of(new Person("Paul", 44), Link.of("/persons/2", "person")), //
+                    EntityModel.of(new Person("Sarah", 55), Link.of("/persons/3", "person")), //
+                    EntityModel.of(new Person("Stephanie", 66), Link.of("/persons/4", "person")) //
                 );
-                CollectionModel<EntityModel<Person>> source = new CollectionModel<>(content, new Link("/persons", SELF));
+                CollectionModel<EntityModel<Person>> source = CollectionModel.of(content, Link.of("/persons", SELF));
                 String expected = readResource("collection/containing_entitymodels.json");
 
                 String actual = write(source);
@@ -131,7 +131,7 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_pojo_and_self_link() throws Exception {
                 CollectionModel<Person> source =
-                    new CollectionModel<>(newArrayList(new Person("Peter", 33)), new Link("/persons", SELF));
+                    CollectionModel.of(newArrayList(new Person("Peter", 33)), Link.of("/persons", SELF));
                 String expected = readResource("collection/containing_pojo_and_self_link.json");
 
                 String actual = write(source);
@@ -140,7 +140,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_pojo() throws Exception {
-                CollectionModel<Person> source = new CollectionModel<>(newArrayList(new Person("Peter", 33)));
+                CollectionModel<Person> source = CollectionModel.of(newArrayList(new Person("Peter", 33)));
                 String expected = readResource("collection/containing_pojo.json");
 
                 String actual = write(source);
@@ -159,7 +159,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void with_self_link() throws Exception {
-                CollectionModel<?> source = new CollectionModel<>(newArrayList(), new Link("/persons", SELF));
+                CollectionModel<?> source = CollectionModel.of(newArrayList(), Link.of("/persons", SELF));
                 String expected = readResource("collection/with_self_link.json");
 
                 String actual = write(source);
@@ -168,7 +168,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void without_content() throws Exception {
-                CollectionModel<?> source = new CollectionModel<>(newArrayList());
+                CollectionModel<?> source = CollectionModel.of(newArrayList());
                 String expected = readResource("collection/without_content.json");
 
                 String actual = write(source);
@@ -182,8 +182,8 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
                 String source = readResource("collection/containing_entitymodel_containing_pojo_and_self_link.json");
-                EntityModel<Person> entityModel = new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", SELF));
-                CollectionModel<EntityModel<Person>> expected = new CollectionModel<>(newArrayList(entityModel));
+                EntityModel<Person> entityModel = EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", SELF));
+                CollectionModel<EntityModel<Person>> expected = CollectionModel.of(newArrayList(entityModel));
 
                 CollectionModel<EntityModel<Person>> actual =
                     read(source, new TypeReference<CollectionModel<EntityModel<Person>>>() {
@@ -194,8 +194,8 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_entitymodel_containing_pojo() throws Exception {
                 String source = readResource("collection/containing_entitymodel_containing_pojo.json");
-                EntityModel<Person> entityModel = new EntityModel<>(new Person("Peter", 33));
-                CollectionModel<EntityModel<Person>> expected = new CollectionModel<>(newArrayList(entityModel));
+                EntityModel<Person> entityModel = EntityModel.of(new Person("Peter", 33));
+                CollectionModel<EntityModel<Person>> expected = CollectionModel.of(newArrayList(entityModel));
 
                 CollectionModel<EntityModel<Person>> actual =
                     read(source, new TypeReference<CollectionModel<EntityModel<Person>>>() {
@@ -207,12 +207,12 @@ class Jackson2SirenModuleTest {
             void containing_entitymodels() throws Exception {
                 String source = readResource("collection/containing_entitymodels.json");
                 List<EntityModel<Person>> content = newArrayList( //
-                    new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", "person")), //
-                    new EntityModel<>(new Person("Paul", 44), new Link("/persons/2", "person")), //
-                    new EntityModel<>(new Person("Sarah", 55), new Link("/persons/3", "person")), //
-                    new EntityModel<>(new Person("Stephanie", 66), new Link("/persons/4", "person")) //
+                    EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", "person")), //
+                    EntityModel.of(new Person("Paul", 44), Link.of("/persons/2", "person")), //
+                    EntityModel.of(new Person("Sarah", 55), Link.of("/persons/3", "person")), //
+                    EntityModel.of(new Person("Stephanie", 66), Link.of("/persons/4", "person")) //
                 );
-                CollectionModel<EntityModel<Person>> expected = new CollectionModel<>(content, new Link("/persons", SELF));
+                CollectionModel<EntityModel<Person>> expected = CollectionModel.of(content, Link.of("/persons", SELF));
 
                 CollectionModel<EntityModel<Person>> actual =
                     read(source, new TypeReference<CollectionModel<EntityModel<Person>>>() {
@@ -224,7 +224,7 @@ class Jackson2SirenModuleTest {
             void containing_pojo_and_self_link() throws Exception {
                 String source = readResource("collection/containing_pojo_and_self_link.json");
                 CollectionModel<Person> expected =
-                    new CollectionModel<>(newArrayList(new Person("Peter", 33)), new Link("/persons", SELF));
+                    CollectionModel.of(newArrayList(new Person("Peter", 33)), Link.of("/persons", SELF));
 
                 CollectionModel<Person> actual = read(source, new TypeReference<CollectionModel<Person>>() {
                 });
@@ -234,7 +234,7 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_pojo() throws Exception {
                 String source = readResource("collection/containing_pojo.json");
-                CollectionModel<Person> expected = new CollectionModel<>(newArrayList(new Person("Peter", 33)));
+                CollectionModel<Person> expected = CollectionModel.of(newArrayList(new Person("Peter", 33)));
 
                 CollectionModel<Person> actual = read(source, new TypeReference<CollectionModel<Person>>() {
                 });
@@ -254,7 +254,7 @@ class Jackson2SirenModuleTest {
             @Test
             void with_self_link() throws Exception {
                 String source = readResource("collection/with_self_link.json");
-                CollectionModel<?> expected = new CollectionModel<>(newArrayList(), new Link("/persons", SELF));
+                CollectionModel<?> expected = CollectionModel.of(newArrayList(), Link.of("/persons", SELF));
 
                 CollectionModel<?> actual = read(source, CollectionModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -263,7 +263,7 @@ class Jackson2SirenModuleTest {
             @Test
             void without_content() throws Exception {
                 String source = readResource("collection/without_content.json");
-                CollectionModel<?> expected = new CollectionModel<>(newArrayList());
+                CollectionModel<?> expected = CollectionModel.of(newArrayList());
 
                 CollectionModel<?> actual = read(source, CollectionModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -279,7 +279,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_entitymodel_containing_pojo() throws Exception {
-                EntityModel<EntityModel<Person>> source = new EntityModel<>(new EntityModel<>(new Person("Peter", 33)));
+                EntityModel<EntityModel<Person>> source = EntityModel.of(EntityModel.of(new Person("Peter", 33)));
                 String expected = readResource("entity/containing_entitymodel_containing_pojo.json");
 
                 String actual = write(source);
@@ -288,7 +288,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_integer() throws Exception {
-                EntityModel<Integer> source = new EntityModel<>(42);
+                EntityModel<Integer> source = EntityModel.of(42);
                 String expected = readResource("entity/containing_integer.json");
 
                 String actual = write(source);
@@ -298,8 +298,8 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_link_and_entitymodel_containing_pojo_and_link() throws Exception {
                 EntityModel<Person> contained =
-                    new EntityModel<>(new Person("Peter", 33), new Link("/departments/6/persons/1", SELF));
-                EntityModel<EntityModel<Person>> source = new EntityModel<>(contained, new Link("/departments/6/persons", SELF));
+                    EntityModel.of(new Person("Peter", 33), Link.of("/departments/6/persons/1", SELF));
+                EntityModel<EntityModel<Person>> source = EntityModel.of(contained, Link.of("/departments/6/persons", SELF));
                 String expected = readResource("entity/containing_link_and_entitymodel_containing_pojo_and_link.json");
 
                 String actual = write(source);
@@ -308,7 +308,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_pojo_and_self_link() throws Exception {
-                EntityModel<Person> source = new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", SELF));
+                EntityModel<Person> source = EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", SELF));
                 String expected = readResource("entity/containing_pojo_and_self_link.json");
 
                 String actual = write(source);
@@ -317,7 +317,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_pojo() throws Exception {
-                EntityModel<Person> source = new EntityModel<>(new Person("Peter", 33));
+                EntityModel<Person> source = EntityModel.of(new Person("Peter", 33));
                 String expected = readResource("entity/containing_pojo.json");
 
                 String actual = write(source);
@@ -326,7 +326,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_string() throws Exception {
-                EntityModel<String> source = new EntityModel<>("Something");
+                EntityModel<String> source = EntityModel.of("Something");
                 String expected = readResource("entity/containing_string.json");
 
                 String actual = write(source);
@@ -354,7 +354,7 @@ class Jackson2SirenModuleTest {
                 JavaType expectedType = typeFactory.constructParametricType(EntityModel.class,
                     typeFactory.constructParametricType(EntityModel.class, Person.class));
 
-                EntityModel<EntityModel<Person>> expected = new EntityModel<>(new EntityModel<>(new Person("Peter", 33)));
+                EntityModel<EntityModel<Person>> expected = EntityModel.of(EntityModel.of(new Person("Peter", 33)));
 
                 EntityModel<EntityModel<Person>> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
@@ -364,7 +364,7 @@ class Jackson2SirenModuleTest {
             void containing_integer() throws Exception {
                 String source = readResource("entity/containing_integer.json");
                 JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Integer.class);
-                EntityModel<Integer> expected = new EntityModel<>(42);
+                EntityModel<Integer> expected = EntityModel.of(42);
 
                 EntityModel<Person> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
@@ -379,9 +379,8 @@ class Jackson2SirenModuleTest {
                     typeFactory.constructParametricType(EntityModel.class, Person.class));
 
                 EntityModel<Person> contained =
-                    new EntityModel<>(new Person("Peter", 33), new Link("/departments/6/persons/1", SELF));
-                EntityModel<EntityModel<Person>> expected =
-                    new EntityModel<>(contained, new Link("/departments/6/persons", SELF));
+                    EntityModel.of(new Person("Peter", 33), Link.of("/departments/6/persons/1", SELF));
+                EntityModel<EntityModel<Person>> expected = EntityModel.of(contained, Link.of("/departments/6/persons", SELF));
 
                 EntityModel<EntityModel<Person>> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
@@ -391,7 +390,7 @@ class Jackson2SirenModuleTest {
             void containing_pojo_and_self_link() throws Exception {
                 String source = readResource("entity/containing_pojo_and_self_link.json");
                 JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Person.class);
-                EntityModel<Person> expected = new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", SELF));
+                EntityModel<Person> expected = EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", SELF));
 
                 EntityModel<Person> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
@@ -401,7 +400,7 @@ class Jackson2SirenModuleTest {
             void containing_pojo() throws Exception {
                 String source = readResource("entity/containing_pojo.json");
                 JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, Person.class);
-                EntityModel<Person> expected = new EntityModel<>(new Person("Peter", 33));
+                EntityModel<Person> expected = EntityModel.of(new Person("Peter", 33));
 
                 EntityModel<Person> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
@@ -411,7 +410,7 @@ class Jackson2SirenModuleTest {
             void containing_string() throws Exception {
                 String source = readResource("entity/containing_string.json");
                 JavaType expectedType = objectMapper.getTypeFactory().constructParametricType(EntityModel.class, String.class);
-                EntityModel<String> expected = new EntityModel<>("Something");
+                EntityModel<String> expected = EntityModel.of("Something");
 
                 EntityModel<String> actual = read(source, expectedType);
                 assertThat(actual).isEqualTo(expected);
@@ -437,8 +436,8 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
-                EntityModel<Person> entityModel = new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", SELF));
-                PagedModel<EntityModel<Person>> source = new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
+                EntityModel<Person> entityModel = EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", SELF));
+                PagedModel<EntityModel<Person>> source = PagedModel.of(newArrayList(entityModel), new PageMetadata(20, 0, 1));
                 String expected = readResource("paged/containing_entitymodel_containing_pojo_and_self_link.json");
 
                 String actual = write(source);
@@ -447,8 +446,8 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_entitymodel_containing_pojo() throws Exception {
-                EntityModel<Person> entityModel = new EntityModel<>(new Person("Peter", 33));
-                PagedModel<EntityModel<Person>> source = new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
+                EntityModel<Person> entityModel = EntityModel.of(new Person("Peter", 33));
+                PagedModel<EntityModel<Person>> source = PagedModel.of(newArrayList(entityModel), new PageMetadata(20, 0, 1));
                 String expected = readResource("paged/containing_entitymodel_containing_pojo.json");
 
                 String actual = write(source);
@@ -457,7 +456,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_pojo() throws Exception {
-                PagedModel<Person> source = new PagedModel<>(newArrayList(new Person("Peter", 33)), new PageMetadata(20, 0, 1));
+                PagedModel<Person> source = PagedModel.of(newArrayList(new Person("Peter", 33)), new PageMetadata(20, 0, 1));
                 String expected = readResource("paged/containing_pojo.json");
 
                 String actual = write(source);
@@ -466,8 +465,8 @@ class Jackson2SirenModuleTest {
 
             @Test
             void with_self_link() throws Exception {
-                PagedModel<?> source = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0),
-                    enhance(new Link("/persons", SELF), pagingParams(0, 20)));
+                PagedModel<?> source = PagedModel.of(newArrayList(), new PageMetadata(20, 0, 0),
+                    enhance(Link.of("/persons", SELF), pagingParams(0, 20)));
                 String expected = readResource("paged/with_self_link.json");
 
                 String actual = write(source);
@@ -476,7 +475,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void without_content() throws Exception {
-                PagedModel<?> source = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0));
+                PagedModel<?> source = PagedModel.of(newArrayList(), new PageMetadata(20, 0, 0));
                 String expected = readResource("paged/without_content.json");
 
                 String actual = write(source);
@@ -491,8 +490,8 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_entitymodel_containing_pojo_and_self_link() throws Exception {
                 String source = readResource("paged/containing_entitymodel_containing_pojo_and_self_link.json");
-                EntityModel<Person> entityModel = new EntityModel<>(new Person("Peter", 33), new Link("/persons/1", SELF));
-                CollectionModel<EntityModel<Person>> expected = new CollectionModel<>(newArrayList(entityModel));
+                EntityModel<Person> entityModel = EntityModel.of(new Person("Peter", 33), Link.of("/persons/1", SELF));
+                CollectionModel<EntityModel<Person>> expected = CollectionModel.of(newArrayList(entityModel));
 
                 CollectionModel<EntityModel<Person>> actual =
                     read(source, new TypeReference<CollectionModel<EntityModel<Person>>>() {
@@ -503,9 +502,8 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_entitymodel_containing_pojo() throws Exception {
                 String source = readResource("paged/containing_entitymodel_containing_pojo.json");
-                EntityModel<Person> entityModel = new EntityModel<>(new Person("Peter", 33));
-                PagedModel<EntityModel<Person>> expected =
-                    new PagedModel<>(newArrayList(entityModel), new PageMetadata(20, 0, 1));
+                EntityModel<Person> entityModel = EntityModel.of(new Person("Peter", 33));
+                PagedModel<EntityModel<Person>> expected = PagedModel.of(newArrayList(entityModel), new PageMetadata(20, 0, 1));
 
                 PagedModel<EntityModel<Person>> actual = read(source, new TypeReference<PagedModel<EntityModel<Person>>>() {
                 });
@@ -515,7 +513,7 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_pojo() throws Exception {
                 String source = readResource("paged/containing_pojo.json");
-                PagedModel<Person> expected = new PagedModel<>(newArrayList(new Person("Peter", 33)), new PageMetadata(20, 0, 1));
+                PagedModel<Person> expected = PagedModel.of(newArrayList(new Person("Peter", 33)), new PageMetadata(20, 0, 1));
 
                 PagedModel<Person> actual = read(source, new TypeReference<PagedModel<Person>>() {
                 });
@@ -525,8 +523,8 @@ class Jackson2SirenModuleTest {
             @Test
             void with_self_link() throws Exception {
                 String source = readResource("paged/with_self_link.json");
-                PagedModel<?> expected = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0),
-                    enhance(new Link("/persons", SELF), pagingParams(0, 20)));
+                PagedModel<?> expected = PagedModel.of(newArrayList(), new PageMetadata(20, 0, 0),
+                    enhance(Link.of("/persons", SELF), pagingParams(0, 20)));
 
                 PagedModel<?> actual = read(source, PagedModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -535,7 +533,7 @@ class Jackson2SirenModuleTest {
             @Test
             void without_content() throws Exception {
                 String source = readResource("paged/without_content.json");
-                PagedModel<?> expected = new PagedModel<>(newArrayList(), new PageMetadata(20, 0, 0));
+                PagedModel<?> expected = PagedModel.of(newArrayList(), new PageMetadata(20, 0, 0));
 
                 PagedModel<?> actual = read(source, PagedModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -551,7 +549,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link_with_delete_affordance() throws Exception {
-                Link link = of(new Link("/persons/1", SELF)).afford(DELETE).withName("delete").toLink();
+                Link link = of(Link.of("/persons/1", SELF)).afford(DELETE).withName("delete").toLink();
                 RepresentationModel<?> source = new RepresentationModel<>(link);
                 String expected = readResource("representation/containing_link_with_delete_affordance.json");
 
@@ -561,7 +559,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link_with_title() throws Exception {
-                Link link = new Link("/about", ABOUT).withTitle("about");
+                Link link = Link.of("/about", ABOUT).withTitle("about");
                 RepresentationModel<?> source = new RepresentationModel<>(link);
                 String expected = readResource("representation/containing_link_with_title.json");
 
@@ -571,7 +569,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link_with_update_affordance() throws Exception {
-                Link link = of(new Link("/persons/1", SELF)).afford(PUT).withInput(Person.class).withName("update").toLink();
+                Link link = of(Link.of("/persons/1", SELF)).afford(PUT).withInput(Person.class).withName("update").toLink();
                 RepresentationModel<?> source = new RepresentationModel<>(link);
                 String expected = readResource("representation/containing_link_with_update_affordance.json");
 
@@ -581,7 +579,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link_with_update_and_delete_affordances() throws Exception {
-                Link link = of(new Link("/persons/1", SELF)).afford(PUT).withInput(Person.class).withName("update")
+                Link link = of(Link.of("/persons/1", SELF)).afford(PUT).withInput(Person.class).withName("update")
                     .andAfford(DELETE).withName("delete").toLink();
                 RepresentationModel<?> source = new RepresentationModel<>(link);
                 String expected = readResource("representation/containing_link_with_update_and_delete_affordances.json");
@@ -592,7 +590,7 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link() throws Exception {
-                RepresentationModel<?> source = new RepresentationModel<>(new Link("/about", ABOUT));
+                RepresentationModel<?> source = new RepresentationModel<>(Link.of("/about", ABOUT));
                 String expected = readResource("representation/containing_link.json");
 
                 String actual = write(source);
@@ -601,8 +599,8 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_links() throws Exception {
-                RepresentationModel<?> source = new RepresentationModel<>(newArrayList(new Link("/persons", SELF),
-                    new Link("/about", ABOUT), new Link("/help", HELP), new Link("/license", LICENSE)));
+                RepresentationModel<?> source = new RepresentationModel<>(newArrayList(Link.of("/persons", SELF),
+                    Link.of("/about", ABOUT), Link.of("/help", HELP), Link.of("/license", LICENSE)));
                 String expected = readResource("representation/containing_links.json");
 
                 String actual = write(source);
@@ -612,7 +610,7 @@ class Jackson2SirenModuleTest {
             @Test
             void having_properties_containing_link() throws Exception {
                 RepresentationModel<?> source = new PersonModel("Peter", 33);
-                source.add(new Link("/person", SELF));
+                source.add(Link.of("/person", SELF));
                 String expected = readResource("representation/having_properties_containing_link.json");
 
                 String actual = write(source);
@@ -635,7 +633,7 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_link() throws Exception {
                 String source = readResource("representation/containing_link.json");
-                RepresentationModel<?> expected = new RepresentationModel<>(new Link("/about", ABOUT));
+                RepresentationModel<?> expected = new RepresentationModel<>(Link.of("/about", ABOUT));
 
                 RepresentationModel<?> actual = read(source, RepresentationModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -644,8 +642,8 @@ class Jackson2SirenModuleTest {
             @Test
             void containing_links() throws Exception {
                 String source = readResource("representation/containing_links.json");
-                RepresentationModel<?> expected = new RepresentationModel<>(newArrayList(new Link("/persons", SELF),
-                    new Link("/about", ABOUT), new Link("/help", HELP), new Link("/license", LICENSE)));
+                RepresentationModel<?> expected = new RepresentationModel<>(newArrayList(Link.of("/persons", SELF),
+                    Link.of("/about", ABOUT), Link.of("/help", HELP), Link.of("/license", LICENSE)));
 
                 RepresentationModel<?> actual = read(source, RepresentationModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -655,7 +653,7 @@ class Jackson2SirenModuleTest {
             void having_properties_containing_link() throws Exception {
                 String source = readResource("representation/having_properties_containing_link.json");
                 RepresentationModel<?> expected = new PersonModel("Peter", 33);
-                expected.add(new Link("/person", SELF));
+                expected.add(Link.of("/person", SELF));
 
                 RepresentationModel<?> actual = read(source, PersonModel.class);
                 assertThat(actual).isEqualTo(expected);
@@ -706,6 +704,6 @@ class Jackson2SirenModuleTest {
         for (Map.Entry<String, Object> param : params.entrySet()) {
             builder.queryParam(param.getKey(), param.getValue());
         }
-        return new Link(of(builder.build().toString()), SELF);
+        return Link.of(of(builder.build().toString()), SELF);
     }
 }
