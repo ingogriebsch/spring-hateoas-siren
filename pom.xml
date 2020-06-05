@@ -8,7 +8,7 @@
 
     <name>Spring HATEOAS Siren</name>
     <description>Library implementing Siren as a custom Spring HATEOAS hypermedia type. Siren is a hypermedia specification for representing entities.</description>
-    <url>https://github.com/ingogriebsch/sample-spring-hateoas-siren</url>
+    <url>https://github.com/ingogriebsch/spring-hateoas-siren</url>
     <inceptionYear>2019</inceptionYear>
     <organization>
         <name>Ingo Griebsch</name>
