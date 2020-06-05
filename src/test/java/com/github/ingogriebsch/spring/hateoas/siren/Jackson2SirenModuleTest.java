@@ -44,6 +44,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -58,7 +59,6 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.support.Employee;
 import org.springframework.hateoas.support.EmployeeResource;
 import org.springframework.hateoas.support.MappingUtils;
-import org.springframework.hateoas.support.SimpleObjectProvider;
 import org.springframework.web.util.UriComponentsBuilder;
 
 class Jackson2SirenModuleTest {

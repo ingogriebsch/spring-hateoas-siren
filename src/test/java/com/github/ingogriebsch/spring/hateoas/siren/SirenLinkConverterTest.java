@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ingogriebsch.spring.hateoas.siren.support.StaticMessageResolver;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -41,7 +42,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.support.MappingUtils;
-import org.springframework.hateoas.support.StaticMessageResolver;
 import org.springframework.hateoas.support.WebMvcEmployeeController;
 
 class SirenLinkConverterTest {

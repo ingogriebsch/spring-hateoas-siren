@@ -24,10 +24,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
+import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.hateoas.support.SimpleObjectProvider;
 
 class SirenMediaTypeConfigurationTest {
 
