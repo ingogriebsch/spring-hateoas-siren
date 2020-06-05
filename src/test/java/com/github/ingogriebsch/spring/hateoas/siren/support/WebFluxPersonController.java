@@ -30,12 +30,10 @@ import static reactor.function.TupleUtils.function;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Links;
-import org.springframework.hateoas.server.reactive.WebFluxLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -49,12 +47,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * Sample controller using {@link WebFluxLinkBuilder} to create {@link Affordance}s.
- *
- * @author Greg Turnquist
- * @author Oliver Drotbohm
- */
 @RestController
 public class WebFluxPersonController {
 
