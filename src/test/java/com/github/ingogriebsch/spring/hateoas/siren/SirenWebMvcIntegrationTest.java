@@ -34,12 +34,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import java.util.Optional;
+
 import com.github.ingogriebsch.spring.hateoas.siren.support.WebMvcPersonController;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -168,12 +169,12 @@ class SirenWebMvcIntegrationTest {
         }
 
         @Bean
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration(ObjectProvider<SirenConfiguration> sirenConfiguration,
-            ObjectProvider<RepresentationModelFactories> representationModelFactories,
-            ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider,
-            ObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider, MessageResolver messageResolver) {
-            return new SirenMediaTypeConfiguration(sirenConfiguration, representationModelFactories, sirenEntityClassProvider,
-                sirenEntityRelProvider, messageResolver);
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration(Optional<SirenConfiguration> configuration,
+            Optional<RepresentationModelFactories> representationModelFactories,
+            Optional<SirenEntityClassProvider> entityClassProvider, Optional<SirenEntityRelProvider> entityRelProvider,
+            MessageResolver messageResolver) {
+            return new SirenMediaTypeConfiguration(configuration, representationModelFactories, entityClassProvider,
+                entityRelProvider, messageResolver);
         }
     }
 

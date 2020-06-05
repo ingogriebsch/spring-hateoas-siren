@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
-import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -36,22 +36,19 @@ class SirenMediaTypeConfigurationTest {
 
     @BeforeAll
     static void beforeAll() {
-        SimpleObjectProvider<SirenConfiguration> sirenConfiguration = new SimpleObjectProvider<>(new SirenConfiguration());
+        Optional<SirenConfiguration> configuration = Optional.of(new SirenConfiguration());
 
-        SimpleObjectProvider<RepresentationModelFactories> representationModelFactories =
-            new SimpleObjectProvider<>(new RepresentationModelFactories() {
-            });
+        Optional<RepresentationModelFactories> representationModelFactories = Optional.of(new RepresentationModelFactories() {
+        });
 
-        SimpleObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider =
-            new SimpleObjectProvider<>(new SirenEntityClassProvider() {
-            });
+        Optional<SirenEntityClassProvider> entityClassProvider = Optional.of(new SirenEntityClassProvider() {
+        });
 
-        SimpleObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider =
-            new SimpleObjectProvider<>(new SirenEntityRelProvider() {
-            });
+        Optional<SirenEntityRelProvider> entityRelProvider = Optional.of(new SirenEntityRelProvider() {
+        });
 
-        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(sirenConfiguration, representationModelFactories,
-            sirenEntityClassProvider, sirenEntityRelProvider, DEFAULTS_ONLY);
+        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(configuration, representationModelFactories,
+            entityClassProvider, entityRelProvider, DEFAULTS_ONLY);
     }
 
     @Nested

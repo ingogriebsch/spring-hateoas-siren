@@ -29,12 +29,13 @@ import static org.springframework.hateoas.support.JsonPathUtils.jsonPath;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.reactive.server.WebTestClient.bindToApplicationContext;
 
+import java.util.Optional;
+
 import com.github.ingogriebsch.spring.hateoas.siren.support.WebFluxPersonController;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -168,12 +169,12 @@ class SirenWebFluxIntegrationTest {
         }
 
         @Bean
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration(ObjectProvider<SirenConfiguration> sirenConfiguration,
-            ObjectProvider<RepresentationModelFactories> representationModelFactories,
-            ObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider,
-            ObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider, MessageResolver messageResolver) {
-            return new SirenMediaTypeConfiguration(sirenConfiguration, representationModelFactories, sirenEntityClassProvider,
-                sirenEntityRelProvider, messageResolver);
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration(Optional<SirenConfiguration> configuration,
+            Optional<RepresentationModelFactories> representationModelFactories,
+            Optional<SirenEntityClassProvider> entityClassProvider, Optional<SirenEntityRelProvider> entityRelProvider,
+            MessageResolver messageResolver) {
+            return new SirenMediaTypeConfiguration(configuration, representationModelFactories, entityClassProvider,
+                entityRelProvider, messageResolver);
         }
 
         @Bean

@@ -39,6 +39,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
@@ -47,7 +48,6 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
-import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
@@ -67,19 +67,16 @@ class Jackson2SirenModuleTest {
 
     @BeforeAll
     static void beforeAll() {
-        SimpleObjectProvider<SirenConfiguration> sirenConfiguration = new SimpleObjectProvider<>(new SirenConfiguration());
+        Optional<SirenConfiguration> sirenConfiguration = Optional.of(new SirenConfiguration());
 
-        SimpleObjectProvider<RepresentationModelFactories> representationModelFactories =
-            new SimpleObjectProvider<>(new RepresentationModelFactories() {
-            });
+        Optional<RepresentationModelFactories> representationModelFactories = Optional.of(new RepresentationModelFactories() {
+        });
 
-        SimpleObjectProvider<SirenEntityClassProvider> sirenEntityClassProvider =
-            new SimpleObjectProvider<>(new SirenEntityClassProvider() {
-            });
+        Optional<SirenEntityClassProvider> sirenEntityClassProvider = Optional.of(new SirenEntityClassProvider() {
+        });
 
-        SimpleObjectProvider<SirenEntityRelProvider> sirenEntityRelProvider =
-            new SimpleObjectProvider<>(new SirenEntityRelProvider() {
-            });
+        Optional<SirenEntityRelProvider> sirenEntityRelProvider = Optional.of(new SirenEntityRelProvider() {
+        });
 
         SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(sirenConfiguration,
             representationModelFactories, sirenEntityClassProvider, sirenEntityRelProvider, DEFAULTS_ONLY);
