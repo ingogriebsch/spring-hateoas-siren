@@ -2,11 +2,11 @@
   "class" : [ "representation" ],
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employees/1"
+    "href" : "/persons/1"
   } ],
   "actions" : [ {
     "name" : "delete",
     "method" : "DELETE",
-    "href" : "/employees/1"
+    "href" : "/persons/1"
   } ]
 }

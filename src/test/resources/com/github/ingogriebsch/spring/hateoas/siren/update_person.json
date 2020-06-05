@@ -1,6 +1,7 @@
 {
   "class" : [ "entity" ],
   "properties" : {
-    "name" : "Bingo Baggins"
+    "name" : "Peter",
+    "age": 34
   }
 }

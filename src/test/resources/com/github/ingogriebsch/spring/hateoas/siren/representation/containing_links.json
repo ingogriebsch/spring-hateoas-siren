@@ -2,7 +2,7 @@
   "class" : [ "representation" ],
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employees"
+    "href" : "/persons"
   }, {
     "rel" : [ "about" ],
     "href" : "/about"

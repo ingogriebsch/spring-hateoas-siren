@@ -2,6 +2,6 @@
   "class" : [ "collection" ],
   "entities" : [ {
     "name" : "Peter",
-    "role" : "Carpenter"
+    "age" : 33
   } ]
 }

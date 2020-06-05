@@ -29,6 +29,8 @@ import static org.springframework.hateoas.support.MappingUtils.read;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.reactive.server.WebTestClient.bindToApplicationContext;
 
+import com.github.ingogriebsch.spring.hateoas.siren.support.WebFluxPersonController;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +43,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.config.WebClientConfigurer;
 import org.springframework.hateoas.mediatype.MessageResolver;
-import org.springframework.hateoas.support.WebFluxEmployeeController;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -59,38 +60,44 @@ class SirenWebFluxIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        WebFluxEmployeeController.reset();
+        WebFluxPersonController.reset();
     }
 
     @Test
-    void all() throws Exception {
-        ResponseSpec response = testClient.get().uri("http://localhost/employees").accept(SIREN_JSON).exchange();
+    void findAll() throws Exception {
+        ResponseSpec response = testClient.get().uri("http://localhost/persons").accept(SIREN_JSON).exchange();
         response.expectStatus().isOk().expectHeader().contentType(SIREN_JSON);
 
         response.expectBody(String.class) //
             .value(jsonPath("$.properties").doesNotExist()) //
             .value(jsonPath("$.class[0]", is("collection"))) //
-            .value(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //
-            .value(jsonPath("$.entities[0].properties.role", is("ring bearer"))) //
+            .value(jsonPath("$.entities[0].properties.name", is("Peter"))) //
+            .value(jsonPath("$.entities[0].properties.age", is(33))) //
             .value(jsonPath("$.entities[0].links[0].rel[0]", is("self"))) //
-            .value(jsonPath("$.entities[0].links[0].href", is("http://localhost/employees/0"))) //
-            .value(jsonPath("$.entities[0].links[1].rel[0]", is("employees"))) //
-            .value(jsonPath("$.entities[0].links[1].href", is("http://localhost/employees"))) //
-            .value(jsonPath("$.entities[1].properties.name", is("Bilbo Baggins"))) //
-            .value(jsonPath("$.entities[1].properties.role", is("burglar"))) //
+            .value(jsonPath("$.entities[0].links[0].href", is("http://localhost/persons/0"))) //
+            .value(jsonPath("$.entities[0].links[1].rel[0]", is("persons"))) //
+            .value(jsonPath("$.entities[0].links[1].href", is("http://localhost/persons"))) //
+            .value(jsonPath("$.entities[1].properties.name", is("Paul"))) //
+            .value(jsonPath("$.entities[1].properties.age", is(44))) //
             .value(jsonPath("$.entities[1].links[0].rel[0]", is("self"))) //
-            .value(jsonPath("$.entities[1].links[0].href", is("http://localhost/employees/1"))) //
-            .value(jsonPath("$.entities[1].links[1].rel[0]", is("employees"))) //
-            .value(jsonPath("$.entities[1].links[1].href", is("http://localhost/employees"))) //
+            .value(jsonPath("$.entities[1].links[0].href", is("http://localhost/persons/1"))) //
+            .value(jsonPath("$.entities[1].links[1].rel[0]", is("persons"))) //
+            .value(jsonPath("$.entities[1].links[1].href", is("http://localhost/persons"))) //
+            .value(jsonPath("$.entities[2].properties.name", is("Mary"))) //
+            .value(jsonPath("$.entities[2].properties.age", is(55))) //
+            .value(jsonPath("$.entities[2].links[0].rel[0]", is("self"))) //
+            .value(jsonPath("$.entities[2].links[0].href", is("http://localhost/persons/2"))) //
+            .value(jsonPath("$.entities[2].links[1].rel[0]", is("persons"))) //
+            .value(jsonPath("$.entities[2].links[1].href", is("http://localhost/persons"))) //
             .value(jsonPath("$.links[0].rel[0]", is("self"))) //
-            .value(jsonPath("$.links[0].href", is("http://localhost/employees")));
+            .value(jsonPath("$.links[0].href", is("http://localhost/persons")));
     }
 
     @Test
     void search() throws Exception {
-        String name = "Frodo";
+        String name = "Peter";
         ResponseSpec response = testClient.get().uri(b -> {
-            return b.scheme("http").host("localhost").path("/employees/search").queryParam("name", name).build();
+            return b.scheme("http").host("localhost").path("/persons/search").queryParam("name", name).build();
         }).accept(SIREN_JSON).exchange();
         response.expectStatus().isOk().expectHeader().contentType(SIREN_JSON);
 
@@ -98,56 +105,56 @@ class SirenWebFluxIntegrationTest {
             .value(jsonPath("$.properties").doesNotExist()) //
             .value(jsonPath("$.class[0]", is(not(empty())))) //
             .value(jsonPath("$.entities[0].class[0]", is(not(empty())))) //
-            .value(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //
-            .value(jsonPath("$.entities[0].properties.role", is("ring bearer"))) //
+            .value(jsonPath("$.entities[0].properties.name", is("Peter"))) //
+            .value(jsonPath("$.entities[0].properties.age", is(33))) //
             .value(jsonPath("$.entities[0].links[0].rel[0]", is("self"))) //
-            .value(jsonPath("$.entities[0].links[0].href", is("http://localhost/employees/0")))
-            .value(jsonPath("$.entities[0].links[1].rel[0]", is("employees"))) //
-            .value(jsonPath("$.entities[0].links[1].href", is("http://localhost/employees"))) //
+            .value(jsonPath("$.entities[0].links[0].href", is("http://localhost/persons/0")))
+            .value(jsonPath("$.entities[0].links[1].rel[0]", is("persons"))) //
+            .value(jsonPath("$.entities[0].links[1].href", is("http://localhost/persons"))) //
             .value(jsonPath("$.links[0].rel[0]", is("self"))) //
-            .value(jsonPath("$.links[0].href", is("http://localhost/employees"))); //
+            .value(jsonPath("$.links[0].href", is("http://localhost/persons"))); //
     }
 
     @Test
     void findOne() throws Exception {
-        ResponseSpec response = testClient.get().uri("http://localhost/employees/0").accept(SIREN_JSON).exchange();
+        ResponseSpec response = testClient.get().uri("http://localhost/persons/0").accept(SIREN_JSON).exchange();
         response.expectStatus().isOk().expectHeader().contentType(SIREN_JSON);
 
         response.expectBody(String.class) //
-            .value(jsonPath("$.properties.name", is("Frodo Baggins"))) //
-            .value(jsonPath("$.properties.role", is("ring bearer"))) //
+            .value(jsonPath("$.properties.name", is("Peter"))) //
+            .value(jsonPath("$.properties.age", is(33))) //
             .value(jsonPath("$.class[0]", is(not(empty())))) //
             .value(jsonPath("$.links[0].rel[0]", is("self"))) //
-            .value(jsonPath("$.links[0].href", is("http://localhost/employees/0"))) //
-            .value(jsonPath("$.links[1].rel[0]", is("employees"))) //
-            .value(jsonPath("$.links[1].href", is("http://localhost/employees")));
+            .value(jsonPath("$.links[0].href", is("http://localhost/persons/0"))) //
+            .value(jsonPath("$.links[1].rel[0]", is("persons"))) //
+            .value(jsonPath("$.links[1].href", is("http://localhost/persons")));
     }
 
     @Test
-    void newEmployee() throws Exception {
-        ResponseSpec response = testClient.post().uri("http://localhost/employees").contentType(SIREN_JSON)
-            .bodyValue(read(new ClassPathResource("new_employee.json", getClass()))).exchange();
+    void insert() throws Exception {
+        ResponseSpec response = testClient.post().uri("http://localhost/persons").contentType(SIREN_JSON)
+            .bodyValue(read(new ClassPathResource("insert_person.json", getClass()))).exchange();
 
         response.expectStatus().isCreated() //
-            .expectHeader().valueEquals(LOCATION, "http://localhost/employees/2");
+            .expectHeader().valueEquals(LOCATION, "http://localhost/persons/3");
     }
 
     @Test
-    void updateEmployee() throws Exception {
-        ResponseSpec response = testClient.put().uri("http://localhost/employees/0").contentType(SIREN_JSON)
-            .bodyValue(read(new ClassPathResource("update_employee.json", getClass()))).exchange();
+    void update() throws Exception {
+        ResponseSpec response = testClient.put().uri("http://localhost/persons/0").contentType(SIREN_JSON)
+            .bodyValue(read(new ClassPathResource("update_person.json", getClass()))).exchange();
 
         response.expectStatus().isNoContent() //
-            .expectHeader().valueEquals(LOCATION, "http://localhost/employees/0");
+            .expectHeader().valueEquals(LOCATION, "http://localhost/persons/0");
     }
 
     @Test
-    void partiallyUpdateEmployee() throws Exception {
-        ResponseSpec response = testClient.patch().uri("http://localhost/employees/0").contentType(SIREN_JSON)
-            .bodyValue(read(new ClassPathResource("update_employee.json", getClass()))).exchange();
+    void oatch() throws Exception {
+        ResponseSpec response = testClient.patch().uri("http://localhost/persons/0").contentType(SIREN_JSON)
+            .bodyValue(read(new ClassPathResource("update_person.json", getClass()))).exchange();
 
         response.expectStatus().isNoContent() //
-            .expectHeader().valueEquals(LOCATION, "http://localhost/employees/0");
+            .expectHeader().valueEquals(LOCATION, "http://localhost/persons/0");
     }
 
     @Configuration
@@ -156,8 +163,8 @@ class SirenWebFluxIntegrationTest {
     static class TestConfig {
 
         @Bean
-        WebFluxEmployeeController employeeController() {
-            return new WebFluxEmployeeController();
+        WebFluxPersonController personController() {
+            return new WebFluxPersonController();
         }
 
         @Bean

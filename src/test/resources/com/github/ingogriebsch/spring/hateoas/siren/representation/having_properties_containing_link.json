@@ -1,10 +1,11 @@
 {
   "class" : [ "representation" ],
   "properties" : {
-    "name" : "Peter"
+    "name" : "Peter",
+    "age" : 33
   },
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employee"
+    "href" : "/person"
   } ]
 }

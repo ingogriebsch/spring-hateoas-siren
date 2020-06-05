@@ -2,6 +2,6 @@
   "class" : [ "collection" ],
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employees"
+    "href" : "/persons"
   } ]
 }

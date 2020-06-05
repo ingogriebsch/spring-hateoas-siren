@@ -26,13 +26,14 @@ import static org.hamcrest.Matchers.empty;
 import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+
+import com.github.ingogriebsch.spring.hateoas.siren.support.WebMvcPersonController;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,12 +46,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.hateoas.support.MappingUtils;
-import org.springframework.hateoas.support.WebMvcEmployeeController;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -67,87 +68,93 @@ class SirenWebMvcIntegrationTest {
     @BeforeEach
     void beforeEach() {
         mockMvc = webAppContextSetup(context).build();
-        WebMvcEmployeeController.reset();
+        WebMvcPersonController.reset();
     }
 
     @Test
-    void all() throws Exception {
-        ResultActions result = mockMvc.perform(get("/employees").accept(SIREN_JSON));
+    void findAll() throws Exception {
+        ResultActions result = mockMvc.perform(get("/persons").accept(SIREN_JSON));
         result.andExpect(status().isOk());
 
         result.andExpect(jsonPath("$.properties").doesNotExist()) //
             .andExpect(jsonPath("$.class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.entities[0].class[0]", is(not(empty())))) //
-            .andExpect(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //
-            .andExpect(jsonPath("$.entities[0].properties.role", is("ring bearer"))) //
+            .andExpect(jsonPath("$.entities[0].properties.name", is("Peter"))) //
+            .andExpect(jsonPath("$.entities[0].properties.age", is(33))) //
             .andExpect(jsonPath("$.entities[0].links[0].rel[0]", is("self"))) //
-            .andExpect(jsonPath("$.entities[0].links[0].href", is("http://localhost/employees/0"))) //
-            .andExpect(jsonPath("$.entities[0].links[1].rel[0]", is("employees"))) //
-            .andExpect(jsonPath("$.entities[0].links[1].href", is("http://localhost/employees"))) //
-            .andExpect(jsonPath("$.entities[1].properties.name", is("Bilbo Baggins"))) //
-            .andExpect(jsonPath("$.entities[1].properties.role", is("burglar"))) //
+            .andExpect(jsonPath("$.entities[0].links[0].href", is("http://localhost/persons/0"))) //
+            .andExpect(jsonPath("$.entities[0].links[1].rel[0]", is("persons"))) //
+            .andExpect(jsonPath("$.entities[0].links[1].href", is("http://localhost/persons"))) //
+            .andExpect(jsonPath("$.entities[1].properties.name", is("Paul"))) //
+            .andExpect(jsonPath("$.entities[1].properties.age", is(44))) //
             .andExpect(jsonPath("$.entities[1].links[0].rel[0]", is("self"))) //
-            .andExpect(jsonPath("$.entities[1].links[0].href", is("http://localhost/employees/1"))) //
-            .andExpect(jsonPath("$.entities[1].links[1].rel[0]", is("employees"))) //
-            .andExpect(jsonPath("$.entities[1].links[1].href", is("http://localhost/employees"))) //
+            .andExpect(jsonPath("$.entities[1].links[0].href", is("http://localhost/persons/1"))) //
+            .andExpect(jsonPath("$.entities[1].links[1].rel[0]", is("persons"))) //
+            .andExpect(jsonPath("$.entities[1].links[1].href", is("http://localhost/persons"))) //
+            .andExpect(jsonPath("$.entities[2].properties.name", is("Mary"))) //
+            .andExpect(jsonPath("$.entities[2].properties.age", is(55))) //
+            .andExpect(jsonPath("$.entities[2].links[0].rel[0]", is("self"))) //
+            .andExpect(jsonPath("$.entities[2].links[0].href", is("http://localhost/persons/2"))) //
+            .andExpect(jsonPath("$.entities[2].links[1].rel[0]", is("persons"))) //
+            .andExpect(jsonPath("$.entities[2].links[1].href", is("http://localhost/persons"))) //
             .andExpect(jsonPath("$.links[0].rel[0]", is("self"))) //
-            .andExpect(jsonPath("$.links[0].href", is("http://localhost/employees")));
+            .andExpect(jsonPath("$.links[0].href", is("http://localhost/persons")));
     }
 
     @Test
     void search() throws Exception {
-        ResultActions result = mockMvc.perform(get("/employees/search").param("name", "Frodo").accept(SIREN_JSON));
+        ResultActions result = mockMvc.perform(get("/persons/search").param("name", "Peter").accept(SIREN_JSON));
         result.andExpect(status().isOk());
 
         result.andExpect(jsonPath("$.properties").doesNotExist()) //
             .andExpect(jsonPath("$.class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.entities[0].class[0]", is(not(empty())))) //
-            .andExpect(jsonPath("$.entities[0].properties.name", is("Frodo Baggins"))) //
-            .andExpect(jsonPath("$.entities[0].properties.role", is("ring bearer"))) //
+            .andExpect(jsonPath("$.entities[0].properties.name", is("Peter"))) //
             .andExpect(jsonPath("$.entities[0].links[0].rel[0]", is("self"))) //
-            .andExpect(jsonPath("$.entities[0].links[0].href", is("http://localhost/employees/0"))) //
-            .andExpect(jsonPath("$.entities[0].links[1].rel[0]", is("employees"))) //
-            .andExpect(jsonPath("$.entities[0].links[1].href", is("http://localhost/employees"))) //
+            .andExpect(jsonPath("$.entities[0].links[0].href", is("http://localhost/persons/0"))) //
+            .andExpect(jsonPath("$.entities[0].links[1].rel[0]", is("persons"))) //
+            .andExpect(jsonPath("$.entities[0].links[1].href", is("http://localhost/persons"))) //
             .andExpect(jsonPath("$.links[0].rel[0]", is("self"))) //
-            .andExpect(jsonPath("$.links[0].href", is("http://localhost/employees")));
+            .andExpect(jsonPath("$.links[0].href", is("http://localhost/persons")));
     }
 
     @Test
     void findOne() throws Exception {
-        ResultActions result = mockMvc.perform(get("/employees/0").accept(SIREN_JSON));
+        ResultActions result = mockMvc.perform(get("/persons/0").accept(SIREN_JSON));
         result.andExpect(status().isOk());
 
-        result.andExpect(jsonPath("$.properties.name", is("Frodo Baggins"))) //
-            .andExpect(jsonPath("$.properties.role", is("ring bearer"))) //
+        result.andExpect(jsonPath("$.properties.name", is("Peter"))) //
+            .andExpect(jsonPath("$.properties.age", is(33))) //
             .andExpect(jsonPath("$.class[0]", is(not(empty())))) //
             .andExpect(jsonPath("$.links[0].rel[0]", is("self"))) //
-            .andExpect(jsonPath("$.links[0].href", is("http://localhost/employees/0"))) //
-            .andExpect(jsonPath("$.links[1].rel[0]", is("employees"))) //
-            .andExpect(jsonPath("$.links[1].href", is("http://localhost/employees")));
+            .andExpect(jsonPath("$.links[0].href", is("http://localhost/persons/0"))) //
+            .andExpect(jsonPath("$.links[1].rel[0]", is("persons"))) //
+            .andExpect(jsonPath("$.links[1].href", is("http://localhost/persons")));
     }
 
     @Test
-    void newEmployee() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("new_employee.json", getClass()));
+    void insert() throws Exception {
+        String specBasedJson = MappingUtils.read(new ClassPathResource("insert_person.json", getClass()));
 
-        ResultActions result = mockMvc.perform(post("/employees").content(specBasedJson).contentType(SIREN_JSON));
-        result.andExpect(status().isCreated()).andExpect(header().stringValues(LOCATION, "http://localhost/employees/2"));
+        ResultActions result = mockMvc.perform(post("/persons").content(specBasedJson).contentType(SIREN_JSON));
+        result.andExpect(status().isCreated()).andExpect(header().stringValues(LOCATION, "http://localhost/persons/3"));
     }
 
     @Test
-    void updateEmployee() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("update_employee.json", getClass()));
+    void update() throws Exception {
+        String specBasedJson = MappingUtils.read(new ClassPathResource("update_person.json", getClass()));
 
-        ResultActions result = mockMvc.perform(put("/employees/0").content(specBasedJson).contentType(SIREN_JSON));
-        result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/employees/0"));
+        ResultActions result = mockMvc.perform(put("/persons/0").content(specBasedJson).contentType(SIREN_JSON));
+        result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/persons/0"));
     }
 
     @Test
-    void partiallyUpdateEmployee() throws Exception {
-        String specBasedJson = MappingUtils.read(new ClassPathResource("partially_update_employee.json", getClass()));
+    void patch() throws Exception {
+        String specBasedJson = MappingUtils.read(new ClassPathResource("patch_person.json", getClass()));
 
-        ResultActions result = mockMvc.perform(patch("/employees/0").content(specBasedJson).contentType(SIREN_JSON));
-        result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/employees/0"));
+        ResultActions result =
+            mockMvc.perform(MockMvcRequestBuilders.patch("/persons/0").content(specBasedJson).contentType(SIREN_JSON));
+        result.andExpect(status().isNoContent()).andExpect(header().stringValues(LOCATION, "http://localhost/persons/0"));
     }
 
     @Configuration
@@ -156,8 +163,8 @@ class SirenWebMvcIntegrationTest {
     static class TestConfig {
 
         @Bean
-        WebMvcEmployeeController employeeController() {
-            return new WebMvcEmployeeController();
+        WebMvcPersonController personController() {
+            return new WebMvcPersonController();
         }
 
         @Bean

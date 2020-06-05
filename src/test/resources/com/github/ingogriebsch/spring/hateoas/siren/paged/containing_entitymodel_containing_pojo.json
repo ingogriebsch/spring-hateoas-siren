@@ -11,7 +11,7 @@
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Peter",
-      "role" : "Carpenter"
+      "age" : 33
     }
   } ]
 }

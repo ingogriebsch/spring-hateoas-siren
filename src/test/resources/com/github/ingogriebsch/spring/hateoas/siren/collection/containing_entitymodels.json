@@ -5,48 +5,48 @@
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Peter",
-      "role" : "Carpenter"
+      "age" : 33
     },
     "links" : [ {
-      "rel" : [ "employee" ],
-      "href" : "/employees/1"
+      "rel" : [ "person" ],
+      "href" : "/persons/1"
     } ]
   }, {
     "class" : [ "entity" ],
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Paul",
-      "role" : "Craftsman"
+      "age" : 44
     },
     "links" : [ {
-      "rel" : [ "employee" ],
-      "href" : "/employees/2"
+      "rel" : [ "person" ],
+      "href" : "/persons/2"
     } ]
   }, {
     "class" : [ "entity" ],
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Sarah",
-      "role" : "Baker"
+      "age" : 55
     },
     "links" : [ {
-      "rel" : [ "employee" ],
-      "href" : "/employees/3"
+      "rel" : [ "person" ],
+      "href" : "/persons/3"
     } ]
   }, {
     "class" : [ "entity" ],
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Stephanie",
-      "role" : "Mechanic"
+      "age" : 66
     },
     "links" : [ {
-      "rel" : [ "employee" ],
-      "href" : "/employees/4"
+      "rel" : [ "person" ],
+      "href" : "/persons/4"
     } ]
   } ],
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employees"
+    "href" : "/persons"
   } ]
 }

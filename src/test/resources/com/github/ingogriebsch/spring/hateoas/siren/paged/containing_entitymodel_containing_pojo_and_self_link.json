@@ -11,11 +11,11 @@
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Peter",
-      "role" : "Carpenter"
+      "age" : 33
     },
     "links" : [ {
       "rel" : [ "self" ],
-      "href" : "/employees/1"
+      "href" : "/persons/1"
     } ]
   } ]
 }

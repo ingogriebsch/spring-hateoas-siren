@@ -1,17 +1,17 @@
 {
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employees/1"
+    "href" : "/persons/1"
   } ],
   "actions" : [ {
-    "name" : "updateEmployee",
+    "name" : "update",
     "method" : "PUT",
-    "href" : "/employees/1",
+    "href" : "/persons/1",
     "fields" : [ {
+      "name" : "age",
+      "type" : "number"
+    }, {
       "name" : "name",
-      "type" : "text"
-    },{
-      "name" : "role",
       "type" : "text"
     } ]
   } ]

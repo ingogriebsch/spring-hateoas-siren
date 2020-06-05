@@ -2,10 +2,10 @@
   "class" : [ "collection" ],
   "entities" : [ {
     "name" : "Peter",
-    "role" : "Carpenter"
+    "age" : 33
   } ],
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/employees"
+    "href" : "/persons"
   } ]
 }

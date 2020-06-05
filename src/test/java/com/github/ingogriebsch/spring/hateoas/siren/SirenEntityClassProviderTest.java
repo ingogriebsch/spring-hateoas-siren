@@ -23,13 +23,14 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.support.EmployeeResource;
 
 class SirenEntityClassProviderTest {
 
@@ -48,7 +49,7 @@ class SirenEntityClassProviderTest {
 
     @Test
     void get_should_return_single_class_on_object_extending_representation_model() {
-        assertThat(provider.get(new EmployeeResource("Peter"))).containsExactly("representation");
+        assertThat(provider.get(new PersonModel("Peter", 33))).containsExactly("representation");
     }
 
     @Test

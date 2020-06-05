@@ -21,6 +21,8 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -28,7 +30,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.support.Employee;
 
 class RepresentationModelUtilsTest {
 
@@ -43,7 +44,7 @@ class RepresentationModelUtilsTest {
         }
 
         @ParameterizedTest
-        @ValueSource(classes = { String.class, Object.class, Integer.class, Employee.class })
+        @ValueSource(classes = { String.class, Object.class, Integer.class, Person.class })
         void should_return_false_if_type_does_not_match(Class<?> clazz) {
             assertThat(RepresentationModelUtils.isRepresentationModel(clazz)).isFalse();
         }
@@ -60,7 +61,7 @@ class RepresentationModelUtilsTest {
 
         @ParameterizedTest
         @ValueSource(classes = { RepresentationModel.class, EntityModel.class, CollectionModel.class, PagedModel.class,
-            String.class, Object.class, Integer.class, Employee.class })
+            String.class, Object.class, Integer.class, Person.class })
         void should_return_false_if_type_does_not_match(Class<?> clazz) {
             assertThat(RepresentationModelUtils.isRepresentationModelSubclass(clazz)).isFalse();
         }
@@ -76,7 +77,7 @@ class RepresentationModelUtilsTest {
         }
 
         @ParameterizedTest
-        @ValueSource(classes = { String.class, Object.class, Integer.class, Employee.class })
+        @ValueSource(classes = { String.class, Object.class, Integer.class, Person.class })
         void should_return_null_if_type_is_matchting(Class<?> clazz) {
             assertThat(RepresentationModelUtils.getRepresentationModelClass(clazz)).isNull();
         }

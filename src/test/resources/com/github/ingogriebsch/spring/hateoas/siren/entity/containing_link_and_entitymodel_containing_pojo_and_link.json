@@ -5,15 +5,15 @@
     "rel" : [ "item" ],
     "properties" : {
       "name" : "Peter",
-      "role" : "Carpenter"
+      "age" : 33
     },
     "links" : [ {
       "rel" : [ "self" ],
-      "href" : "/departments/6/employees/1"
+      "href" : "/departments/6/persons/1"
     } ]
   } ],
   "links" : [ {
     "rel" : [ "self" ],
-    "href" : "/departments/6/employees"
+    "href" : "/departments/6/persons"
   } ]
 }

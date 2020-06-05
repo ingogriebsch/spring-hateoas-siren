@@ -1,7 +1,6 @@
 {
   "class" : [ "entity" ],
   "properties" : {
-    "name" : "Peter",
-    "age" : 33
+    "age": 34
   }
 }

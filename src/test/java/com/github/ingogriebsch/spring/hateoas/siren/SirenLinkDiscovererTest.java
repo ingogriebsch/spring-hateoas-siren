@@ -58,11 +58,11 @@ class SirenLinkDiscovererTest {
                 String source = MappingUtils.read(resource("representation/containing_links.json"));
 
                 Optional<Link> link = discoverer.findLinkWithRel(SELF, source);
-                assertThat(link).map(Link::getHref).hasValue("/employees");
+                assertThat(link).map(Link::getHref).hasValue("/persons");
             }
 
             @ParameterizedTest
-            @CsvSource(value = { "self,/employees", "about,/about", "help,/help", "license,/license" })
+            @CsvSource(value = { "self,/persons", "about,/about", "help,/help", "license,/license" })
             void should_return_matching_link(LinkRelation rel, String href) throws IOException {
                 String source = MappingUtils.read(resource("representation/containing_links.json"));
                 Optional<Link> link = discoverer.findLinkWithRel(rel, source);
@@ -84,12 +84,12 @@ class SirenLinkDiscovererTest {
             void should_return_self_link() throws IOException {
                 try (InputStream source = source("representation/containing_links.json")) {
                     Optional<Link> link = discoverer.findLinkWithRel(SELF, source);
-                    assertThat(link).map(Link::getHref).hasValue("/employees");
+                    assertThat(link).map(Link::getHref).hasValue("/persons");
                 }
             }
 
             @ParameterizedTest
-            @CsvSource(value = { "self,/employees", "about,/about", "help,/help", "license,/license" })
+            @CsvSource(value = { "self,/persons", "about,/about", "help,/help", "license,/license" })
             void should_return_matching_link(LinkRelation rel, String href) throws IOException {
                 try (InputStream source = source("representation/containing_links.json")) {
                     Optional<Link> link = discoverer.findLinkWithRel(rel, source);
@@ -117,15 +117,15 @@ class SirenLinkDiscovererTest {
                 String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
                 assertThat(discoverer.findLinksWithRel(SELF, source)) //
                     .extracting("href") //
-                    .containsExactlyInAnyOrder("/employees");
+                    .containsExactlyInAnyOrder("/persons");
             }
 
             @Test
-            void should_return_employee_links() throws IOException {
+            void should_return_person_links() throws IOException {
                 String source = MappingUtils.read(resource("collection/containing_entitymodels.json"));
-                assertThat(discoverer.findLinksWithRel("employee", source)) //
+                assertThat(discoverer.findLinksWithRel("person", source)) //
                     .extracting("href") //
-                    .containsExactlyInAnyOrder("/employees/1", "/employees/2", "/employees/3", "/employees/4");
+                    .containsExactlyInAnyOrder("/persons/1", "/persons/2", "/persons/3", "/persons/4");
             }
         }
 
@@ -144,16 +144,16 @@ class SirenLinkDiscovererTest {
                 try (InputStream source = source("collection/containing_entitymodels.json")) {
                     assertThat(discoverer.findLinksWithRel(SELF, source)) //
                         .extracting("href") //
-                        .containsExactlyInAnyOrder("/employees");
+                        .containsExactlyInAnyOrder("/persons");
                 }
             }
 
             @Test
-            void should_return_employee_links() throws IOException {
+            void should_return_person_links() throws IOException {
                 try (InputStream source = source("collection/containing_entitymodels.json")) {
-                    assertThat(discoverer.findLinksWithRel("employee", source)) //
+                    assertThat(discoverer.findLinksWithRel("person", source)) //
                         .extracting("href") //
-                        .containsExactlyInAnyOrder("/employees/1", "/employees/2", "/employees/3", "/employees/4");
+                        .containsExactlyInAnyOrder("/persons/1", "/persons/2", "/persons/3", "/persons/4");
                 }
             }
         }

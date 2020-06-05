@@ -1,7 +1,7 @@
 {
   "class" : [ "entity" ],
   "properties" : {
-    "name" : "Peter",
-    "age" : 33
+    "name" : "Marc",
+    "age": 66
   }
 }
