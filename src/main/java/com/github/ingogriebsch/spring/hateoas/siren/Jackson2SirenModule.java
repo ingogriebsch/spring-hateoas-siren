@@ -41,7 +41,7 @@ class Jackson2SirenModule extends SimpleModule {
     private static final long serialVersionUID = 7377778164657569053L;
 
     public Jackson2SirenModule() {
-        super("siren-module", new Version(1, 0, 0, null, "com.github.ingogriebsch.samples", "spring-hateoas-siren"));
+        super("siren-module", new Version(1, 0, 0, null, "com.github.ingogriebsch", "spring-hateoas-siren"));
 
         setMixInAnnotation(RepresentationModel.class, RepresentationModelMixIn.class);
         setMixInAnnotation(EntityModel.class, EntityModelMixIn.class);
