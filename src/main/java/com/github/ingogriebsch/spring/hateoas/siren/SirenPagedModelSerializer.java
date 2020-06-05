@@ -35,6 +35,11 @@ import org.springframework.hateoas.PagedModel;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonSerializer} implementation which is able to serialize a {@link PagedModel} into a Siren entity.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
 
     private static final long serialVersionUID = 9054285190464802945L;

@@ -34,6 +34,11 @@ import org.springframework.hateoas.PagedModel.PageMetadata;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Builder that helps the {@link SirenPagedModelDeserializer} to deserialize a Siren entity into a {@link PagedModel}.
+ * 
+ * @author Ingo Griebsch
+ */
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenPagedModelBuilder {
 

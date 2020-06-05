@@ -40,6 +40,11 @@ import org.springframework.lang.Nullable;
 
 import lombok.NonNull;
 
+/**
+ * {@link HandlerInstantiator} to create Siren specific serializers, deserializers etc.
+ *
+ * @author Ingo Griebsch
+ */
 class SirenHandlerInstantiator extends HandlerInstantiator {
 
     private final Map<Class<?>, Object> serializers = new HashMap<>();
@@ -75,6 +80,10 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
         this.beanFactory = beanFactory;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see com.fasterxml.jackson.databind.cfg.HandlerInstantiator#deserializerInstance()
+     */
     @Override
     public JsonDeserializer<?> deserializerInstance(DeserializationConfig config, Annotated annotated, Class<?> deserClass) {
         return (JsonDeserializer<?>) findInstance(deserClass);

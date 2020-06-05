@@ -47,6 +47,11 @@ import org.springframework.hateoas.CollectionModel;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link CollectionModel}.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<CollectionModel<?>> {
 
     private static final long serialVersionUID = 4364222303241126575L;

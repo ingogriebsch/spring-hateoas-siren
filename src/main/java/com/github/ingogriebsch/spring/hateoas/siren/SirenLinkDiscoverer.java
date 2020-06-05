@@ -22,9 +22,18 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static com.github.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
 
 import org.springframework.hateoas.client.JsonPathLinkDiscoverer;
+import org.springframework.hateoas.client.LinkDiscoverer;
 
+/**
+ * {@link LinkDiscoverer} implementation based on Siren link structure.
+ *
+ * @author Ingo Griebsch
+ */
 public class SirenLinkDiscoverer extends JsonPathLinkDiscoverer {
 
+    /**
+     * Constructor for {@link MediaTypes#SIREN_JSON}.
+     */
     public SirenLinkDiscoverer() {
         super("$..links[?('%s' in @.rel)].href", SIREN_JSON);
     }

@@ -32,6 +32,12 @@ import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 
+/**
+ * Base class supporting the implementation of serializers which are able to serialize a specific {@link RepresentationModel} into
+ * a Siren entity.
+ * 
+ * @author Ingo Griebsch
+ */
 abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends ContainerSerializer<T>
     implements ContextualSerializer {
 

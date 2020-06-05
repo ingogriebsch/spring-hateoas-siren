@@ -32,13 +32,28 @@ import org.springframework.hateoas.mediatype.AffordanceModelFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
+/**
+ * Factory for creating {@link SirenAffordanceModel}s.
+ *
+ * @author Ingo Griebsch
+ */
 class SirenAffordanceModelFactory implements AffordanceModelFactory {
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.AffordanceModelFactory#getMediaType()
+     */
     @Override
     public MediaType getMediaType() {
         return SIREN_JSON;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.AffordanceModelFactory#getAffordanceModel(java.lang.String,
+     * org.springframework.hateoas.Link, org.springframework.http.HttpMethod, org.springframework.core.ResolvableType,
+     * java.util.List, org.springframework.core.ResolvableType)
+     */
     @Override
     public AffordanceModel getAffordanceModel(String name, Link link, HttpMethod httpMethod, InputPayloadMetadata inputType,
         List<QueryParameter> queryMethodParameters, PayloadMetadata outputType) {

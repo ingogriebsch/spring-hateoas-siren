@@ -37,6 +37,11 @@ import org.springframework.util.ReflectionUtils;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+/**
+ * Utility methods for instantiating beans, extracting bean properties, applying bean properties, etc.
+ * 
+ * @author Ingo Griebsch
+ */
 @NoArgsConstructor(access = PRIVATE)
 class BeanUtils {
 

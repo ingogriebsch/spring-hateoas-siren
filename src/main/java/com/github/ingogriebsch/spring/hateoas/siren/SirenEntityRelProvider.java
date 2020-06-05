@@ -24,13 +24,29 @@ import static org.springframework.hateoas.IanaLinkRelations.ITEM;
 
 import java.util.List;
 
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 
 import lombok.NonNull;
 
+/**
+ * API to provide information about the relationship of a Siren entity to it's parent.
+ *
+ * @href https://github.com/kevinswiber/siren#rel
+ * @author Ingo Griebsch
+ */
 public interface SirenEntityRelProvider {
 
+    /**
+     * Returns the {@link IanaLinkRelations relations} explaining the relationship between the model and it's parent.
+     * <p>
+     * The default implementation returns the {@link IanaLinkRelations#ITEM item} relation if the model is a child object.
+     * 
+     * @param model the {@link RepresentationModel} that is transfered into a Siren entity. Is never {@literal null}.
+     * @param parent the parent {@link RepresentationModel} of the {@literal model}. Can be {@literal null}
+     * @return the {@link IanaLinkRelations relations} explaining the relationship between the model and it's parent
+     */
     default List<LinkRelation> get(@NonNull RepresentationModel<?> model, RepresentationModel<?> parent) {
         return parent != null ? newArrayList(ITEM) : newArrayList();
     }

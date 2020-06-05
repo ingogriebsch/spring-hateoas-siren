@@ -30,8 +30,23 @@ import org.springframework.hateoas.RepresentationModel;
 
 import lombok.NonNull;
 
+/**
+ * API to provide information about the nature of the content of a Siren entity.
+ *
+ * @href https://github.com/kevinswiber/siren#class
+ * @author Ingo Griebsch
+ */
 public interface SirenEntityClassProvider {
 
+    /**
+     * Returns the class(es) explaining the nature of the content of a Siren entity.
+     * <p>
+     * The default implementation returns a simplified form of the class name of the {@link RepresentationModel} instance (not
+     * containing 'Model').
+     * 
+     * @param model the {@link RepresentationModel} that is transfered into a Siren entity. Is never {@literal null}.
+     * @return the class(es) explaining the nature of the content of a Siren entity
+     */
     default List<String> get(@NonNull RepresentationModel<?> model) {
         return newArrayList(
             uncapitalize(substringBeforeLast(getRepresentationModelClass(model.getClass()).getSimpleName(), "Model")));

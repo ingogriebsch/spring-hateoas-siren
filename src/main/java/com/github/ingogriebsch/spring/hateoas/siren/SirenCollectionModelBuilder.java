@@ -35,6 +35,11 @@ import org.springframework.hateoas.Link;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Builder that helps the {@link SirenCollectionModelDeserializer} to deserialize a Siren entity into a {@link CollectionModel}.
+ * 
+ * @author Ingo Griebsch
+ */
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenCollectionModelBuilder {
 

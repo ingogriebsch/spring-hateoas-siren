@@ -20,7 +20,7 @@
 /**
  * Siren-specific extensions, SPIs and Jackson customizations.
  *
- * @see https://github.com/kevinswiber/siren
+ * @href https://github.com/kevinswiber/siren
  */
 @org.springframework.lang.NonNullApi
 package com.github.ingogriebsch.spring.hateoas.siren;

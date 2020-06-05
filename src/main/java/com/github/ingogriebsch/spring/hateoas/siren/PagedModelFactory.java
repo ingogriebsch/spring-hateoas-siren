@@ -32,8 +32,28 @@ import org.springframework.hateoas.PagedModel.PageMetadata;
 
 import lombok.NonNull;
 
+/**
+ * Factory to create a {@link PagedModel} instance based on the given input evaluated during deserialization.
+ * 
+ * @author Ingo Griebsch
+ */
 public interface PagedModelFactory {
 
+    /**
+     * Creates a {@link PagedModel} based on the given input.
+     * <p>
+     * The default implementation instantiates the concrete {@link PagedModel} based on the assumption that the
+     * {@link PagedModel#PagedModel(Collection, PageMetadata, Iterable) constructors} of the {@link PagedModel model} is
+     * accessible.
+     * 
+     * @param type the type of the instance that should be created. Must be assignable to {@link PagedModel}.Is never
+     *        {@literal null}.
+     * @param links the links which should be used to instantiate the {@link PagedModel model}. Is never {@literal null}.
+     * @param content the objects which should be used to instantiate the {@link PagedModel model}. Is never {@literal null}.
+     * @param metadata the {@link PageMetadata} which should be used to the instantiate {@link PagedModel model}. Is never
+     *        {@literal null}.
+     * @return the created {@link PagedModel} instance.
+     */
     default PagedModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Iterable<Object> content,
         @NonNull PageMetadata metadata) {
         Class<?> modelType = type.getRawClass();

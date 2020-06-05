@@ -26,11 +26,21 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 
+import org.springframework.hateoas.Affordance;
+import org.springframework.hateoas.Link;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
+/**
+ * Representation to hold specific {@link SirenLink}s and their {@link SirenAction}s together.
+ *
+ * @see Link
+ * @see Affordance
+ * @author Ingo Griebsch
+ */
 // TODO Find a better name for this class
 @AllArgsConstructor(access = PRIVATE)
 @EqualsAndHashCode

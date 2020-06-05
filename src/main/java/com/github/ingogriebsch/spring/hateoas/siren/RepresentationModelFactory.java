@@ -32,8 +32,27 @@ import org.springframework.hateoas.RepresentationModel;
 
 import lombok.NonNull;
 
+/**
+ * Factory to create a {@link RepresentationModel} instance based on the given input evaluated during deserialization.
+ * 
+ * @author Ingo Griebsch
+ */
 public interface RepresentationModelFactory {
 
+    /**
+     * Creates a {@link RepresentationModel} based on the given input.
+     * <p>
+     * The default implementation instantiates the concrete {@link RepresentationModel} based on the assumption that the
+     * {@link RepresentationModel#RepresentationModel()} constructors is accessible, add the given links to the
+     * {@link RepresentationModel model} and applies the properties (if given).
+     * 
+     * @param type the type of the instance that should be created. Must be assignable to {@link RepresentationModel}. Is never
+     *        {@literal null}.
+     * @param links the links which should be use to instantiate the {@link RepresentationModel model}. Is never {@literal null}.
+     * @param properties the properties which should be applied on the instantiated {@link RepresentationModel model}. Can be
+     *        {@literal null}.
+     * @return the created {@link RepresentationModel} instance.
+     */
     default RepresentationModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, Map<String, Object> properties) {
         Class<?> modelType = type.getRawClass();
         isAssignable(RepresentationModel.class, modelType);

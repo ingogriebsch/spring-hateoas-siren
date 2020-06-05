@@ -20,6 +20,7 @@
 package com.github.ingogriebsch.spring.hateoas.siren;
 
 import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -30,6 +31,11 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
 
+/**
+ * Jackson {@link Module} to serialize and deserialize all the parts of Siren entities.
+ *
+ * @author Ingo Griebsch
+ */
 class Jackson2SirenModule extends SimpleModule {
 
     private static final long serialVersionUID = 7377778164657569053L;

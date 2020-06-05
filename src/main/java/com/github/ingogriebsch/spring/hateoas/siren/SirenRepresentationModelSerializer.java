@@ -34,6 +34,11 @@ import org.springframework.hateoas.RepresentationModel;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonSerializer} implementation which is able to serialize a {@link RepresentationModel} into a Siren entity.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenRepresentationModelSerializer extends AbstractSirenSerializer<RepresentationModel<?>> {
 
     private static final long serialVersionUID = 2893716845519287714L;

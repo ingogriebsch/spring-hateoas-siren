@@ -36,6 +36,11 @@ import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
 
+/**
+ * Representation of a Siren entity.
+ *
+ * @author Ingo Griebsch
+ */
 @Builder
 @JsonPropertyOrder({ "class", "rel", "properties", "entities", "links", "actions", "title" })
 @Value

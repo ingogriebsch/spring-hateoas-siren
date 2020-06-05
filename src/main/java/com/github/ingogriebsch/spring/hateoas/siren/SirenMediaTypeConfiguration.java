@@ -36,6 +36,11 @@ import org.springframework.http.MediaType;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Spring configuration for Siren support.
+ *
+ * @author Ingo Griebsch
+ */
 @Configuration
 @RequiredArgsConstructor
 class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
@@ -51,16 +56,29 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     @NonNull
     private final MessageResolver messageResolver;
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.config.HypermediaMappingInformation#getMediaTypes()
+     */
     @Override
     public List<MediaType> getMediaTypes() {
         return newArrayList(SIREN_JSON);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.config.HypermediaMappingInformation#getJacksonModule()
+     */
     @Override
     public Module getJacksonModule() {
         return new Jackson2SirenModule();
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.config.HypermediaMappingInformation#configureObjectMapper(com.fasterxml.jackson.databind.
+     * ObjectMapper)
+     */
     @Override
     public ObjectMapper configureObjectMapper(@NonNull ObjectMapper mapper) {
         mapper = HypermediaMappingInformation.super.configureObjectMapper(mapper);

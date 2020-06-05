@@ -32,9 +32,15 @@ import org.springframework.hateoas.RepresentationModel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+/**
+ * Utility methods help to understand of which type of {@link RepresentationModel} a specific object is.
+ * 
+ * @author Ingo Griebsch
+ */
 @NoArgsConstructor(access = PRIVATE)
 class RepresentationModelUtils {
 
+    // Order on purpose!
     private static final List<Class<?>> REPRESENTATION_MODEL_TYPES =
         newArrayList(PagedModel.class, CollectionModel.class, EntityModel.class, RepresentationModel.class);
 

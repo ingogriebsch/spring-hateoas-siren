@@ -19,5 +19,10 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+/**
+ * Siren specific configuration.
+ *
+ * @author Ingo Griebsch
+ */
 public class SirenConfiguration {
 }

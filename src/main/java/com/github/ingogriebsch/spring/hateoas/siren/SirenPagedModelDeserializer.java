@@ -46,6 +46,11 @@ import org.springframework.hateoas.PagedModel.PageMetadata;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link PagedModel}.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?>> {
 
     private static final long serialVersionUID = 4364222303241126575L;

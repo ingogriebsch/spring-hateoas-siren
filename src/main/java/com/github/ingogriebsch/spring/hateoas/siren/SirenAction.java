@@ -39,6 +39,11 @@ import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
 
+/**
+ * Representation of a Siren action.
+ *
+ * @author Ingo Griebsch
+ */
 @Builder
 @JsonPropertyOrder({ "name", "class", "method", "href", "title", "type", "fields" })
 @Value

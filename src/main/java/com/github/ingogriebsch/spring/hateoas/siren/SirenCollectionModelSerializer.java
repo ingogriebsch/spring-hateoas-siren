@@ -37,6 +37,11 @@ import org.springframework.hateoas.CollectionModel;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonSerializer} implementation which is able to serialize a {@link CollectionModel} into a Siren entity.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionModel<?>> {
 
     private static final long serialVersionUID = 9054285190464802945L;

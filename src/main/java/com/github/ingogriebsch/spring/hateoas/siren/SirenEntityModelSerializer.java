@@ -36,6 +36,11 @@ import org.springframework.hateoas.EntityModel;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonSerializer} implementation which is able to serialize a {@link EntityModel} into a Siren entity.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>> {
 
     private static final long serialVersionUID = 2893716845519287714L;

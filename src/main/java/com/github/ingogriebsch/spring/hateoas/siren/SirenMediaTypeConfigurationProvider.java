@@ -27,13 +27,26 @@ import org.springframework.http.MediaType;
 
 import lombok.NonNull;
 
+/**
+ * {@link MediaTypeConfigurationProvider} for Siren.
+ *
+ * @author Ingo Griebsch
+ */
 class SirenMediaTypeConfigurationProvider implements MediaTypeConfigurationProvider {
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.config.MediaTypeConfigurationProvider#getConfiguration()
+     */
     @Override
     public Class<? extends HypermediaMappingInformation> getConfiguration() {
         return SirenMediaTypeConfiguration.class;
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.hateoas.config.MediaTypeConfigurationProvider#supportsAny(java.util.Collection)
+     */
     @Override
     public boolean supportsAny(@NonNull Collection<MediaType> mediaTypes) {
         // FIXME Need to clarify how to configure this custom media type to be active!

@@ -37,6 +37,11 @@ import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
 
+/**
+ * Representation of a Siren link.
+ *
+ * @author Ingo Griebsch
+ */
 @Builder
 @JsonPropertyOrder({ "rel", "class", "href", "title", "type" })
 @Value

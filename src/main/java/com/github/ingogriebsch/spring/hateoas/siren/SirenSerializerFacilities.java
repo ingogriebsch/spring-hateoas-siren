@@ -27,6 +27,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
 
+/**
+ * Collection of facilities needed to serialize a Siren entity.
+ *
+ * @author Ingo Griebsch
+ */
 @AllArgsConstructor(access = PACKAGE)
 @Getter(PACKAGE)
 @Value

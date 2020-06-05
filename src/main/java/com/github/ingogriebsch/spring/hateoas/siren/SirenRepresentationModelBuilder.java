@@ -35,6 +35,12 @@ import org.springframework.hateoas.RepresentationModel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Builder that helps the {@link SirenRepresentationModelDeserializer} to deserialize a Siren entity into a
+ * {@link RepresentationModel}.
+ * 
+ * @author Ingo Griebsch
+ */
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenRepresentationModelBuilder {
 

@@ -32,8 +32,27 @@ import org.springframework.hateoas.Link;
 
 import lombok.NonNull;
 
+/**
+ * Factory to create a {@link CollectionModel} instance based on the given input evaluated during deserialization.
+ * 
+ * @author Ingo Griebsch
+ */
 public interface CollectionModelFactory {
 
+    /**
+     * Creates a {@link CollectionModel} based on the given input.
+     * <p>
+     * The default implementation instantiates the concrete {@link CollectionModel} based on the assumption that the
+     * {@link CollectionModel#CollectionModel(Iterable, Iterable)} constructor is accessible.
+     * 
+     * @param type the type of the instance that should be created. Must be assignable to {@link CollectionModel}. Is never
+     *        {@literal null}.
+     * @param links the links which should be used to instantiate the {@link CollectionModel model}. Is never {@literal null}.
+     * @param content the objects which should be used to instantiate the {@link CollectionModel model}. Is never {@literal null}.
+     * @param properties the properties which should be applied on the instantiated {@link CollectionModel model}. Can be
+     *        {@literal null}.
+     * @return the created {@link CollectionModel} instance.
+     */
     default CollectionModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Iterable<Object> content,
         Map<String, Object> properties) {
         Class<?> modelType = type.getRawClass();

@@ -48,6 +48,11 @@ import org.springframework.hateoas.EntityModel;
 
 import lombok.NonNull;
 
+/**
+ * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link EntityModel}.
+ * 
+ * @author Ingo Griebsch
+ */
 class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel<?>> {
 
     private static final long serialVersionUID = -3683235541542548855L;

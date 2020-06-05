@@ -25,9 +25,15 @@ import org.springframework.hateoas.AffordanceModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.QueryParameter;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 
 import lombok.EqualsAndHashCode;
 
+/**
+ * {@link AffordanceModel} for a Siren {@link MediaType}.
+ *
+ * @author Ingo Griebsch
+ */
 @EqualsAndHashCode(callSuper = true)
 class SirenAffordanceModel extends AffordanceModel {
 

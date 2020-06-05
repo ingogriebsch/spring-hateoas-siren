@@ -33,6 +33,7 @@ import com.github.ingogriebsch.spring.hateoas.siren.SirenAction.Field;
 import com.github.ingogriebsch.spring.hateoas.siren.SirenAction.Field.Type;
 
 import org.springframework.core.ResolvableType;
+import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.AffordanceModel.InputPayloadMetadata;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
 import org.springframework.hateoas.Link;
@@ -42,6 +43,12 @@ import org.springframework.hateoas.mediatype.MessageResolver;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Converter which is able to either convert {@link Link}s (and their {@link Affordance}s) into a {@link SirenNavigables}, or the
+ * other way around.
+ * 
+ * @author Ingo Griebsch
+ */
 @RequiredArgsConstructor
 class SirenLinkConverter {
 

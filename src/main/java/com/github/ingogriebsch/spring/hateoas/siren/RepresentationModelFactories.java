@@ -19,23 +19,45 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.RepresentationModel;
+
+/**
+ * Holds factories for all known types of {@link RepresentationModel}s to be used during the deserialization process.
+ * 
+ * @author Ingo Griebsch
+ */
 public interface RepresentationModelFactories {
 
+    /**
+     * @return a factory to create {@link RepresentationModel} instances.
+     */
     default RepresentationModelFactory forRepresentationModel() {
         return new RepresentationModelFactory() {
         };
     }
 
+    /**
+     * @return a factory to create {@link EntityModel} instances.
+     */
     default EntityModelFactory forEntityModel() {
         return new EntityModelFactory() {
         };
     }
 
+    /**
+     * @return a factory to create {@link CollectionModel} instances.
+     */
     default CollectionModelFactory forCollectioModel() {
         return new CollectionModelFactory() {
         };
     }
 
+    /**
+     * @return a factory to create {@link PagedModel} instances.
+     */
     default PagedModelFactory forPagedModel() {
         return new PagedModelFactory() {
         };
