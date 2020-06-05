@@ -29,7 +29,7 @@ import lombok.NonNull;
 /**
  * API to provide information about the relationship of a Siren entity to it's parent.
  *
- * @href https://github.com/kevinswiber/siren#rel
+ * @see <a href="https://github.com/kevinswiber/siren#rel" target="_top">https://github.com/kevinswiber/siren#rel</a>
  * @author Ingo Griebsch
  */
 public interface SirenEntityRelProvider {

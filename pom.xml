@@ -224,6 +224,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
@@ -256,6 +261,23 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin><!-- https://maven.apache.org/plugins/maven-javadoc-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>javadoc-no-fork</goal>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <breakiterator>true</breakiterator>
+                    <quiet>true</quiet>
+                    <show>public</show>
+                </configuration>
             </plugin>
             <plugin><!-- https://code.revelc.net/impsort-maven-plugin -->
                 <groupId>net.revelc.code</groupId>

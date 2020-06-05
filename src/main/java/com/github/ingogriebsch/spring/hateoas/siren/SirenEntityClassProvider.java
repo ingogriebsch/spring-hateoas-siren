@@ -29,7 +29,7 @@ import lombok.NonNull;
 /**
  * API to provide information about the nature of the content of a Siren entity.
  *
- * @href https://github.com/kevinswiber/siren#class
+ * @see <a href="https://github.com/kevinswiber/siren#class" target="_top">https://github.com/kevinswiber/siren#class</a>
  * @author Ingo Griebsch
  */
 public interface SirenEntityClassProvider {
