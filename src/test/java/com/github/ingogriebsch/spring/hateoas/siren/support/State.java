@@ -17,9 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.spring.hateoas.siren;
+package com.github.ingogriebsch.spring.hateoas.siren.support;
 
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 
 import lombok.Data;
@@ -28,21 +28,21 @@ import lombok.NonNull;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-class Country extends CollectionModel<State> {
+public class State extends EntityModel<Capital> {
 
     @NonNull
     private String name;
 
-    Country(@NonNull Iterable<State> content, @NonNull Iterable<Link> links) {
+    public State(@NonNull Capital content, @NonNull Iterable<Link> links) {
         super(content, links);
     }
 
-    Country(@NonNull Iterable<State> content, Link... links) {
+    public State(@NonNull Capital content, @NonNull Link... links) {
         super(content, links);
     }
 
-    Country(@NonNull String name, @NonNull Iterable<State> content, @NonNull Link... links) {
-        this(content, links);
+    public State(@NonNull String name, @NonNull Capital content, @NonNull Link... links) {
+        this(content);
         this.name = name;
     }
 }

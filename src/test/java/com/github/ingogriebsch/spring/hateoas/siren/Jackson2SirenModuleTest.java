@@ -45,9 +45,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.github.ingogriebsch.spring.hateoas.siren.support.Capital;
+import com.github.ingogriebsch.spring.hateoas.siren.support.Country;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
+import com.github.ingogriebsch.spring.hateoas.siren.support.State;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;

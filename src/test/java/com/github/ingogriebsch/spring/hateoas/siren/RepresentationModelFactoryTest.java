@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.github.ingogriebsch.spring.hateoas.siren.support.Capital;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.Link;

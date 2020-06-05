@@ -30,6 +30,7 @@ import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.github.ingogriebsch.spring.hateoas.siren.support.Country;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.CollectionModel;

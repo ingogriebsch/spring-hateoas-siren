@@ -17,35 +17,32 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.spring.hateoas.siren;
+package com.github.ingogriebsch.spring.hateoas.siren.support;
 
-import java.util.List;
-
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.RepresentationModel;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
-class Capital extends RepresentationModel<Capital> {
+public class Country extends CollectionModel<State> {
 
     @NonNull
     private String name;
 
-    Capital(@NonNull String name, @NonNull Link initialLink) {
-        super(initialLink);
-        this.name = name;
+    public Country(@NonNull Iterable<State> content, @NonNull Iterable<Link> links) {
+        super(content, links);
     }
 
-    Capital(@NonNull String name, @NonNull List<Link> initialLinks) {
-        super(initialLinks);
+    public Country(@NonNull Iterable<State> content, Link... links) {
+        super(content, links);
+    }
+
+    public Country(@NonNull String name, @NonNull Iterable<State> content, @NonNull Link... links) {
+        this(content, links);
         this.name = name;
     }
 }

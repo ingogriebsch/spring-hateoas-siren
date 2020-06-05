@@ -33,6 +33,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
 
+import com.github.ingogriebsch.spring.hateoas.siren.support.Capital;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
