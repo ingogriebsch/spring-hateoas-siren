@@ -20,11 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
-import java.util.Optional;
+import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 
 class SirenMediaTypeConfigurationTest {
 
@@ -32,15 +33,16 @@ class SirenMediaTypeConfigurationTest {
 
     @BeforeAll
     static void beforeAll() {
-        Optional<SirenConfiguration> configuration = Optional.of(new SirenConfiguration());
+        ObjectProvider<SirenConfiguration> configuration = new SimpleObjectProvider<>(new SirenConfiguration());
 
-        Optional<RepresentationModelFactories> representationModelFactories = Optional.of(new RepresentationModelFactories() {
+        ObjectProvider<RepresentationModelFactories> representationModelFactories =
+            new SimpleObjectProvider<>(new RepresentationModelFactories() {
+            });
+
+        ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
         });
 
-        Optional<SirenEntityClassProvider> entityClassProvider = Optional.of(new SirenEntityClassProvider() {
-        });
-
-        Optional<SirenEntityRelProvider> entityRelProvider = Optional.of(new SirenEntityRelProvider() {
+        ObjectProvider<SirenEntityRelProvider> entityRelProvider = new SimpleObjectProvider<>(new SirenEntityRelProvider() {
         });
 
         sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(configuration, representationModelFactories,

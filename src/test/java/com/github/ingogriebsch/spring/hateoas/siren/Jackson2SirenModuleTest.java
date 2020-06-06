@@ -35,7 +35,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
@@ -46,11 +45,13 @@ import com.github.ingogriebsch.spring.hateoas.siren.support.Country;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
+import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 import com.github.ingogriebsch.spring.hateoas.siren.support.State;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -66,19 +67,20 @@ class Jackson2SirenModuleTest {
 
     @BeforeAll
     static void beforeAll() {
-        Optional<SirenConfiguration> sirenConfiguration = Optional.of(new SirenConfiguration());
+        ObjectProvider<SirenConfiguration> configuration = new SimpleObjectProvider<>(new SirenConfiguration());
 
-        Optional<RepresentationModelFactories> representationModelFactories = Optional.of(new RepresentationModelFactories() {
+        ObjectProvider<RepresentationModelFactories> representationModelFactories =
+            new SimpleObjectProvider<>(new RepresentationModelFactories() {
+            });
+
+        ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
         });
 
-        Optional<SirenEntityClassProvider> sirenEntityClassProvider = Optional.of(new SirenEntityClassProvider() {
+        ObjectProvider<SirenEntityRelProvider> entityRelProvider = new SimpleObjectProvider<>(new SirenEntityRelProvider() {
         });
 
-        Optional<SirenEntityRelProvider> sirenEntityRelProvider = Optional.of(new SirenEntityRelProvider() {
-        });
-
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(sirenConfiguration,
-            representationModelFactories, sirenEntityClassProvider, sirenEntityRelProvider, DEFAULTS_ONLY);
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(configuration,
+            representationModelFactories, entityClassProvider, entityRelProvider, DEFAULTS_ONLY);
 
         objectMapper = sirenMediaTypeConfiguration.configureObjectMapper(new ObjectMapper());
         objectMapper.configure(INDENT_OUTPUT, true);

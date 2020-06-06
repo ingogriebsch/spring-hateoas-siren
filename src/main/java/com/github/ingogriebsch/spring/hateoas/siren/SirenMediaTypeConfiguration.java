@@ -19,11 +19,11 @@ import static com.github.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.hateoas.client.LinkDiscoverer;
@@ -44,13 +44,13 @@ import lombok.RequiredArgsConstructor;
 class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
     @NonNull
-    private final Optional<SirenConfiguration> configuration;
+    private final ObjectProvider<SirenConfiguration> configuration;
     @NonNull
-    private final Optional<RepresentationModelFactories> representationModelFactories;
+    private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
     @NonNull
-    private final Optional<SirenEntityClassProvider> entityClassProvider;
+    private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
     @NonNull
-    private final Optional<SirenEntityRelProvider> entityRelProvider;
+    private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
     @NonNull
     private final MessageResolver messageResolver;
 
@@ -94,7 +94,7 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     }
 
     private SirenConfiguration configuration() {
-        return configuration.orElse(new SirenConfiguration());
+        return configuration.getIfAvailable(() -> new SirenConfiguration());
     }
 
     private SirenDeserializerFacilities deserializerFacilities() {
@@ -110,17 +110,17 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
     }
 
     private RepresentationModelFactories representationModelFactories() {
-        return representationModelFactories.orElse(new RepresentationModelFactories() {
+        return representationModelFactories.getIfAvailable(() -> new RepresentationModelFactories() {
         });
     }
 
     private SirenEntityClassProvider entityClassProvider() {
-        return entityClassProvider.orElse(new SirenEntityClassProvider() {
+        return entityClassProvider.getIfAvailable(() -> new SirenEntityClassProvider() {
         });
     }
 
     private SirenEntityRelProvider entityRelProvider() {
-        return entityRelProvider.orElse(new SirenEntityRelProvider() {
+        return entityRelProvider.getIfAvailable(() -> new SirenEntityRelProvider() {
         });
     }
 
