@@ -15,23 +15,25 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren.support;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import java.io.IOException;
 import java.util.Scanner;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public class ResourceReader {
+@NoArgsConstructor(access = PRIVATE)
+public final class ResourceReader {
 
-    public String read(@NonNull String sourceFilename, @NonNull Class<?> clazz) throws IOException {
+    public static String read(@NonNull String sourceFilename, @NonNull Class<?> clazz) throws IOException {
         return read(new ClassPathResource(sourceFilename, clazz));
     }
 
-    public String read(Resource resource) throws IOException {
+    public static String read(Resource resource) throws IOException {
         try (Scanner scanner = new Scanner(resource.getInputStream())) {
             StringBuilder sb = new StringBuilder();
             while (scanner.hasNextLine()) {

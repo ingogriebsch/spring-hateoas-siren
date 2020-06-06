@@ -15,28 +15,29 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.MediaType.parseMediaType;
 
 import org.springframework.http.MediaType;
 
-import lombok.experimental.UtilityClass;
+import lombok.NoArgsConstructor;
 
 /**
  * Constants for the Siren hypermedia type.
  * 
  * @author Ingo Griebsch
  */
-@UtilityClass
-public class MediaTypes {
+@NoArgsConstructor(access = PRIVATE)
+public final class MediaTypes {
 
     /**
      * A String equivalent of {@link MediaTypes#SIREN_JSON}.
      */
-    public final String SIREN_JSON_VALUE = "application/vnd.siren+json";
+    public static final String SIREN_JSON_VALUE = "application/vnd.siren+json";
 
     /**
      * Public constant media type for {@code application/vnd.siren+json}.
      */
-    public final MediaType SIREN_JSON = parseMediaType(SIREN_JSON_VALUE);
+    public static final MediaType SIREN_JSON = parseMediaType(SIREN_JSON_VALUE);
 
 }
