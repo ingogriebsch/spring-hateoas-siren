@@ -444,10 +444,10 @@ assertThat(link.getHref(), is("/foo/bar"));
 ## License
 This code is open source software licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html).
 
-[Spring HATEOAS]: https://docs.spring.io/spring-hateoas/docs/current/reference/html/
-[Spring HATEOAS Representation Model]: https://docs.spring.io/spring-hateoas/docs/current/reference/html/#fundamentals.representation-models
-[Spring HATEOAS Links]: https://docs.spring.io/spring-hateoas/docs/current/reference/html/#fundamentals.links
-[Spring HATEOAS Affordances]: https://docs.spring.io/spring-hateoas/docs/current/reference/html/#server.affordances
+[Spring HATEOAS]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/
+[Spring HATEOAS Representation Model]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models
+[Spring HATEOAS Links]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.links
+[Spring HATEOAS Affordances]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#server.affordances
 [Siren]: https://github.com/kevinswiber/siren
 [Siren Entity]: https://github.com/kevinswiber/siren/blob/master/README.md#entity
 [Siren Entities]: https://github.com/kevinswiber/siren/blob/master/README.md#entities-1
