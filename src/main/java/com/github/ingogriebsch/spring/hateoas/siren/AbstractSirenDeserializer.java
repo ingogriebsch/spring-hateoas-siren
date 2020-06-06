@@ -58,7 +58,7 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
     }
 
     @Override
-    public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonToken token = jp.currentToken();
         if (!START_OBJECT.equals(token)) {
             throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
@@ -66,7 +66,7 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
         return deserializeModel(jp, ctxt);
     }
 
-    protected abstract T deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException;
+    protected abstract T deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException;
 
     @Override
     public JavaType getContentType() {
@@ -75,6 +75,7 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
 
     @Override
     public JsonDeserializer<Object> getContentDeserializer() {
+        //TODO Warning: 'null' is returned by the method declared as @NonNullApi
         return null;
     }
 
