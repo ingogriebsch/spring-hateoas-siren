@@ -65,14 +65,14 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
         return new SirenEntityModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     protected EntityModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+        throws IOException {
         SirenEntityModelBuilder builder =
             SirenEntityModelBuilder.builder(contentType, getRepresentationModelFactories().forEntityModel(), getLinkConverter());
 
@@ -139,6 +139,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
             }
         }
 
+        //TODO Warning: Expression '...orElse(null)' might evaluate to null but is returned by the method declared as @NonNullApi
         return content.stream().collect(toOptional()).orElse(null);
     }
 
