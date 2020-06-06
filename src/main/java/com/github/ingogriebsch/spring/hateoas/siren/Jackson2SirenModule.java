@@ -47,22 +47,22 @@ class Jackson2SirenModule extends SimpleModule {
 
     @JsonSerialize(using = SirenRepresentationModelSerializer.class)
     @JsonDeserialize(using = SirenRepresentationModelDeserializer.class)
-    abstract class RepresentationModelMixIn extends RepresentationModel<RepresentationModelMixin> {
+    abstract static class RepresentationModelMixIn extends RepresentationModel<RepresentationModelMixin> {
     }
 
     @JsonSerialize(using = SirenEntityModelSerializer.class)
     @JsonDeserialize(using = SirenEntityModelDeserializer.class)
-    abstract class EntityModelMixIn<T> extends EntityModel<T> {
+    abstract static class EntityModelMixIn<T> extends EntityModel<T> {
     }
 
     @JsonSerialize(using = SirenCollectionModelSerializer.class)
     @JsonDeserialize(using = SirenCollectionModelDeserializer.class)
-    abstract class CollectionModelMixIn<T> extends CollectionModel<T> {
+    abstract static class CollectionModelMixIn<T> extends CollectionModel<T> {
     }
 
     @JsonSerialize(using = SirenPagedModelSerializer.class)
     @JsonDeserialize(using = SirenPagedModelDeserializer.class)
-    abstract class PagedModelMixIn<T> extends PagedModel<T> {
+    abstract static class PagedModelMixIn<T> extends PagedModel<T> {
     }
 
 }

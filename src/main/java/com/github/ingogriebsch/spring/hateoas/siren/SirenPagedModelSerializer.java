@@ -51,7 +51,7 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
         return new SirenPagedModelSerializer(configuration, serializerFacilities, property);
     }
 
@@ -80,7 +80,7 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
     }
 
     private static List<Object> entities(CollectionModel<?> model) {
-        return model.getContent().stream().map(c -> entity(c)).collect(toList());
+        return model.getContent().stream().map(SirenPagedModelSerializer::entity).collect(toList());
     }
 
     private static Object entity(Object embeddable) {

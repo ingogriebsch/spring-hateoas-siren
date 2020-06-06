@@ -28,8 +28,7 @@ import lombok.Value;
  *
  * @author Ingo Griebsch
  */
-@AllArgsConstructor(access = PACKAGE)
-@Getter(PACKAGE)
+
 @Value
 class SirenSerializerFacilities {
 

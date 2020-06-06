@@ -34,11 +34,11 @@ public class MediaTypes {
     /**
      * A String equivalent of {@link MediaTypes#SIREN_JSON}.
      */
-    public final String SIREN_JSON_VALUE = "application/vnd.siren+json";
+    public static final String SIREN_JSON_VALUE = "application/vnd.siren+json";
 
     /**
      * Public constant media type for {@code application/vnd.siren+json}.
      */
-    public final MediaType SIREN_JSON = parseMediaType(SIREN_JSON_VALUE);
+    public static final MediaType SIREN_JSON = parseMediaType(SIREN_JSON_VALUE);
 
 }

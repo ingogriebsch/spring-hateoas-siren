@@ -139,7 +139,6 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
             }
         }
 
-        //TODO Warning: Expression '...orElse(null)' might evaluate to null but is returned by the method declared as @NonNullApi
         return content.stream().collect(toOptional()).orElse(null);
     }
 

@@ -22,7 +22,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import lombok.NonNull;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class ResourceReader {
 
     public static String read(@NonNull String sourceFilename, @NonNull Class<?> clazz) throws IOException {
