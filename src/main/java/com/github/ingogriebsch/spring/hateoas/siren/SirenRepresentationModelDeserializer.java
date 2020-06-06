@@ -56,14 +56,14 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
         return new SirenRepresentationModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override
     protected RepresentationModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+        throws IOException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
 
         SirenRepresentationModelBuilder builder =
