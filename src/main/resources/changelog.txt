@@ -1,6 +1,6 @@
 Spring HATEOAS Siren Changelog
 ========================
 
-Changes in version 1.0.0.RELEASE (2020-X-Y)
+Changes in version 1.0.0 (2020-X-Y)
 ---------------------------------------------
 - Initial release with basic support
