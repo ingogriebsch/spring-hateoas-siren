@@ -39,16 +39,15 @@ dependencies {
 Having this module on the classpath of your project is all you need to do to get the hypermedia type automatically enabled. This way incoming requests asking for the mentioned media type will get an appropriate response. The module is also able to deserialize a Json representation of the media type into the corresponding [representation models][Spring HATEOAS Representation Model].
 
 ## Behavior
-Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json` in the following way:
-In general each [representation model][Spring HATEOAS Representation Model] is rendered into a Siren [entity][Siren Entity]. Depending on the respective type of the [representation model][Spring HATEOAS Representation Model] the following rules apply:
+Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json`. In general, each [representation model][Spring HATEOAS Representation Model] provided through a `@RestController` method is rendered into a Siren [entity][Siren Entity]. Depending on the respective type of the [representation model][Spring HATEOAS Representation Model] the following rules apply:
 
 ### RepresentationModel
 If this module serializes a `RepresentationModel`, it maps
-* any custom properties of the [representation model][Spring HATEOAS Representation Model] (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties].
+* any custom properties of the [representation model][Spring HATEOAS Representation Model] (because it is subclassed) to Siren [properties][Siren Entity Properties].
 * the type of the [representation model][Spring HATEOAS Representation Model] to the Siren Entity [title][Siren Entity Title] if the type is mapped through the [Internationalization](#internationalization) mechanism.
-* [links][Spring HATEOAS Links] of the [representation model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* the [links][Spring HATEOAS Links] of the [representation model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand they are rendered).
 
-#### Example: Serialize a subclassed RepresentationModel having some links
+#### Example: Serialize a subclassed representation model having some links
 _A sample representation model type_
 ```
 class PersonModel extends RepresentationModel<PersonModel> {
@@ -56,7 +55,7 @@ class PersonModel extends RepresentationModel<PersonModel> {
 }
 ```
 
-_Using the person representation model_
+_Use the person representation model_
 ```
 PersonModel model = new PersonModel();
 model.firstname = "Dave";
@@ -87,12 +86,12 @@ _The Siren representation generated for the representation model_
 If this module renders an `EntityModel`, it maps
 * the value of the content property of the [entity model][Spring HATEOAS Representation Model] to Siren [properties][Siren Entity Properties] if the value is an instance of a simple pojo.
 * the value of the content property of the [entity model][Spring HATEOAS Representation Model] to Siren [entities][Siren Entities] if the value is an instance of one of the available [representation models][Spring HATEOAS Representation Model].
-* any custom properties of the [entity model][Spring HATEOAS Representation Model] (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties]. If the value of the content property is an instance of a simple pojo the above rule takes precedence.
+* any custom properties of the [entity model][Spring HATEOAS Representation Model] (because it is subclassed) to Siren [properties][Siren Entity Properties]. If the value of the content property is an instance of a simple pojo the above rule takes precedence (i.e. the custom properties will not be serailized).
 * the type of the content property of the [entity model][Spring HATEOAS Representation Model] to the Siren Entity [title][Siren Entity Title] if the value is an instance of a simple pojo and the type is mapped through the [Internationalization](#internationalization) mechanism.
-* the type of the [entity model][Spring HATEOAS Representation Model] to the Siren Entity [title][Siren Entity Title] if it is subclassed the type is mapped through the [Internationalization](#internationalization) mechanism.
-* [links][Spring HATEOAS Links] of the [entity model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* the type of the [entity model][Spring HATEOAS Representation Model] to the Siren Entity [title][Siren Entity Title] if the [entity model][Spring HATEOAS Representation Model] is subclassed and the type is mapped through the [Internationalization](#internationalization) mechanism.
+* the [links][Spring HATEOAS Links] of the [entity model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand they are rendered).
 
-#### Example: Serialize an EntityModel wrapping a pojo and having some links
+#### Example: Serialize an entity model wrapping a pojo and having some links
 _A sample person object_
 ```
 class Person {
@@ -100,7 +99,7 @@ class Person {
 }
 ```
 
-_Using an entity model to wrap the person object_
+_Use an entity model to wrap the person object_
 ```
 Person person = new Person();
 person.firstname = "Dave";
@@ -110,7 +109,7 @@ EntityModel<Person> model = new EntityModel<>(person);
 // add some links (having affordances) to the model...
 ```
 
-_The Siren representation generated for the entity model wrapping the person_
+_The Siren representation generated for the entity model wrapping the person object_
 ```
 {
   "class": [
@@ -129,7 +128,7 @@ _The Siren representation generated for the entity model wrapping the person_
 }
 ```
 
-#### Example: Serialize an EntityModel wrapping an EntityModel wrapping a pojo and having some links
+#### Example: Serialize an entity model wrapping an entity model wrapping a pojo and having some links
 _A sample person object_
 ```
 class Person {
@@ -137,7 +136,7 @@ class Person {
 }
 ```
 
-_Using an entity model to wrap the person object_
+_Use an entity model to wrap the person object_
 ```
 Person person = new Person();
 person.firstname = "Dave";
@@ -147,7 +146,7 @@ EntityModel<Person> personModel = new EntityModel<>(person);
 // add some links (having affordances) to the person model...
 ```
 
-_Using an entity model to wrap the entity model_
+_Use an entity model to wrap the entity model_
 ```
 EntityModel<EntityModel<Person>> model = new EntityModel<>(personModel);
 // add some links (having affordances) to the model...
@@ -183,11 +182,11 @@ _The Siren representation generated for the entity model wrapping the entity mod
 ### CollectionModel
 If this module renders a `CollectionModel`, it maps
 * the value of the content property of the [collection model][Spring HATEOAS Representation Model] to Siren [entities][Siren Entities] regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos.
-* any custom properties of the [collection model][Spring HATEOAS Representation Model] (if it has some because it is subclassed) to Siren [properties][Siren Entity Properties].
+* any custom properties of the [collection model][Spring HATEOAS Representation Model] (because it is subclassed) to Siren [properties][Siren Entity Properties].
 * the type of the [collection model][Spring HATEOAS Representation Model] to the Siren Entity [title][Siren Entity Title] if the type is mapped through the [Internationalization](#internationalization) mechanism.
-* [links][Spring HATEOAS Links] of the [collection model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* the [links][Spring HATEOAS Links] of the [collection model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand they are rendered).
 
-#### Example: Serialize a CollectionModel wrapping an entity model and having some links
+#### Example: Serialize a collection model wrapping an entity model and having some links
 _A sample person object_
 ```
 class Person {
@@ -195,7 +194,7 @@ class Person {
 }
 ```
 
-_Using an entity model to wrap the person object_
+_Use an entity model to wrap the person object_
 ```
 Person person = new Person();
 person.firstname = "Dave";
@@ -205,7 +204,7 @@ EntityModel<Person> personModel = new EntityModel<>(person);
 // add some links (having affordances) to the model...
 ```
 
-_Using a collection model to wrap the entity model_
+_Use a collection model to wrap the entity model_
 ```
 Collection<EntityModel<Person>> people = Collections.singleton(personModel);
 CollectionModel<EntityModel<Person>> people = new CollectionModel<>(people);
@@ -247,12 +246,12 @@ If this module renders a `PagedModel`, it maps
 * the value of the content property of the [paged model][Spring HATEOAS Representation Model] to Siren [entities][Siren Entities] regardless if it represents instances of one of the available [representation models][Spring HATEOAS Representation Model] or simple pojos.
 * the page metadata of the [paged model][Spring HATEOAS Representation Model] to Siren [properties][Siren Entity Properties].
 * the type of the [paged model][Spring HATEOAS Representation Model] to the Siren Entity [title][Siren Entity Title] if the type is mapped through the [Internationalization](#internationalization) mechanism.
-* [links][Spring HATEOAS Links] of the [paged model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand how links are rendered).
+* the [links][Spring HATEOAS Links] of the [paged model][Spring HATEOAS Representation Model] to Siren [links][Siren Entity Link] and [actions][Siren Entity Action] (see below to understand they are rendered).
 
 If this module renders a `PagedModel`, it does not 
-* map custom properties of the paged model (if it has some because it is subclassed). The page metadata always takes precedence.
+* map custom properties of the paged model (because it is subclassed). The page metadata always takes precedence.
 
-#### Example: Serialize a PagedModel wrapping an EntityModel wrapping a pojo and having some links
+#### Example: Serialize a paged model wrapping an entity model wrapping a pojo and having some links
 _A sample person object_
 ```
 class Person {
@@ -260,7 +259,7 @@ class Person {
 }
 ```
 
-_Using an entity model to wrap the person object_
+_Use an entity model to wrap the person object_
 ```
 Person person = new Person();
 person.firstname = "Dave";
@@ -270,7 +269,7 @@ EntityModel<Person> personModel = new EntityModel<>(person);
 // add some links (having affordances) to the model...
 ```
 
-_Using a paged model to wrap the entity model_
+_Use a paged model to wrap the entity model_
 ```
 Collection<EntityModel<Person>> people = Collections.singleton(personModel);
 PageMetadata metadata = new PageMetadata(20, 0, 1, 1);
@@ -317,10 +316,10 @@ _The Siren representation generated for the paged model wrapping the entity mode
 ### Link
 If this module renders a `Link`, it maps
 * [links][Spring HATEOAS Links] having a http method equal to `GET` to Siren [links][Siren Entity Link].
-* the rel of the [link][Spring HATEOAS Links] to the Siren Link [title][Siren Link Title] if available through the [Internationalization](#internationalization) mechanism.
+* the rel of the [link][Spring HATEOAS Links] to the Siren Link [title][Siren Entity Link Title] if available through the [Internationalization](#internationalization) mechanism.
 * [affordances][Spring HATEOAS Affordances] bound to a [link][Spring HATEOAS Links] to Siren [actions][Siren Entity Action].
-* the name of an [affordance][Spring HATEOAS Affordances] bound to a [link][Spring HATEOAS Links] to the Siren Action [title][Siren Action Title] if available through the [Internationalization](#internationalization) mechanism.
-* the name of an input property which is part of an [affordance][Spring HATEOAS Affordances] bound to a [link][Spring HATEOAS Links] to the Siren Action Field [title][Siren Action Field Title] if available through the [Internationalization](#internationalization) mechanism.
+* the name of an [affordance][Spring HATEOAS Affordances] bound to a [link][Spring HATEOAS Links] to the Siren Action [title][Siren Entity Action Title] if available through the [Internationalization](#internationalization) mechanism.
+* the name of an input property which is part of an [affordance][Spring HATEOAS Affordances] bound to a [link][Spring HATEOAS Links] to the Siren Action Field [title][Siren Entity Action Field Title] if available through the [Internationalization](#internationalization) mechanism.
 
 If this module renders a `Link`, it does not
 * map any [links][Spring HATEOAS Links] having a http method not equal to `GET`.
@@ -405,6 +404,7 @@ To define a [title][Siren Entity Link Title] for a [link][Siren Entity Link], us
 
 ### Action
 To define a [title][Siren Entity Action Title] for an [action][Siren Entity Action], use the key template `_action.$name.title`. To evaluate if a [title][Siren Entity Action Title] is available for the [action][Siren Entity Action], the `name` of the [affordance][Spring HATEOAS Affordances] will be checked first. Finally, it is checked whether type `default` is available.
+<br/><br/>
 To define a [title][Siren Entity Action Field Title] for an [action field][Siren Entity Action], use the key template `_field.$name.title`. To evaluate if a [title][Siren Entity Action Field Title] is available for the [action field][Siren Entity Action], the `name` of the input property which is part of the [affordance][Spring HATEOAS Affordances] will be checked first. Finally, it is checked whether type `default` is available.
 
 ## Restrictions
