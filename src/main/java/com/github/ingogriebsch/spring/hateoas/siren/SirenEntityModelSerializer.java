@@ -59,6 +59,8 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
     @Override
     public void serialize(EntityModel<?> model, JsonGenerator gen, SerializerProvider provider) throws IOException {
         SirenNavigables navigables = getLinkConverter().to(model.getLinks());
+        Class<?> contentType = model.getContent().getClass();
+        Class<?> titleType = !isRepresentationModel(contentType) ? contentType : model.getClass();
 
         SirenEntity sirenEntity = SirenEntity.builder() //
             .actions(navigables.getActions()) //
@@ -67,7 +69,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
             .entities(entities(model)) //
             .properties(properties(model)) //
             .rels(rels(model, provider)) //
-            .title(title(model.getContent().getClass())) //
+            .title(title(titleType)) //
             .build();
 
         JsonSerializer<Object> serializer = provider.findValueSerializer(SirenEntity.class, property);
