@@ -34,7 +34,7 @@ import lombok.NonNull;
 
 /**
  * {@link JsonSerializer} implementation which is able to serialize a {@link EntityModel} into a Siren entity.
- * 
+ *
  * @author Ingo Griebsch
  */
 class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>> {
@@ -52,7 +52,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
         return new SirenEntityModelSerializer(configuration, serializerFacilities, property);
     }
 
@@ -81,6 +81,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
     }
 
     private static List<Object> entities(EntityModel<?> model) {
+        // TODO NPE, model.getContent() is nullable
         Object content = model.getContent();
         if (isRepresentationModel(content.getClass())) {
             return newArrayList(content);
@@ -90,6 +91,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
     }
 
     private static Object properties(EntityModel<?> model) {
+        // TODO NPE, model.getContent() is nullable
         Object content = model.getContent();
         if (!isRepresentationModel(content.getClass())) {
             return model.getContent();

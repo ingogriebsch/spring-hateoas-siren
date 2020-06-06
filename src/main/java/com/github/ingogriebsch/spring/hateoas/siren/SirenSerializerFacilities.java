@@ -19,8 +19,6 @@ import static lombok.AccessLevel.PACKAGE;
 
 import org.springframework.hateoas.mediatype.MessageResolver;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.Value;
 
 /**
@@ -28,7 +26,6 @@ import lombok.Value;
  *
  * @author Ingo Griebsch
  */
-
 @Value
 class SirenSerializerFacilities {
 

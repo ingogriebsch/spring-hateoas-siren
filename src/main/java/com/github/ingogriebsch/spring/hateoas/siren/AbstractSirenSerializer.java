@@ -17,8 +17,6 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;

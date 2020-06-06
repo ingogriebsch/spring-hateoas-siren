@@ -143,6 +143,7 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         return links;
     }
 
+    // TODO uncovered method
     private List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JavaType type = defaultInstance().constructType(SirenAction.class);
         JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);

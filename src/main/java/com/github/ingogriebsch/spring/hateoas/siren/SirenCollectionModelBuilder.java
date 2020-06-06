@@ -71,6 +71,7 @@ class SirenCollectionModelBuilder {
         return this;
     }
 
+    // TODO coverage
     SirenCollectionModelBuilder actions(List<SirenAction> actions) {
         this.actions = actions != null ? actions : newArrayList();
         return this;

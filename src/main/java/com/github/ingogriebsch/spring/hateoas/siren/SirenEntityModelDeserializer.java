@@ -33,12 +33,10 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.EntityModel;
 
@@ -120,7 +118,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
             jp.nextToken();
             builder.properties((Map<String, Object>) deserializer.deserialize(jp, ctxt));
         } else {
-            // Strange things happened...
+            // Strange things happened... TODO at least log something?
         }
     }
 
@@ -158,6 +156,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         return links;
     }
 
+    // TODO uncovered method
     private List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JavaType type = defaultInstance().constructType(SirenAction.class);
         JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);

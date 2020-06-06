@@ -18,18 +18,16 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
 import static com.github.ingogriebsch.spring.hateoas.siren.SirenRepresentationModelBuilder.builder;
-import static com.google.common.collect.Maps.newHashMap;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -37,7 +35,7 @@ import lombok.NonNull;
 
 /**
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link RepresentationModel}.
- * 
+ *
  * @author Ingo Griebsch
  */
 class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<RepresentationModel<?>> {
@@ -78,7 +76,7 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     private Map<String, Object> properties(SirenEntity sirenEntity) {
         Object properties = sirenEntity.getProperties();
         if (properties == null) {
-            return newHashMap();
+            return Collections.emptyMap();
         }
 
         if (Map.class.isAssignableFrom(properties.getClass())) {

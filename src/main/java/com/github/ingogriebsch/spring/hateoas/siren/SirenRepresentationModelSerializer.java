@@ -50,7 +50,7 @@ class SirenRepresentationModelSerializer extends AbstractSirenSerializer<Represe
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
         return new SirenRepresentationModelSerializer(configuration, serializerFacilities, property);
     }
 

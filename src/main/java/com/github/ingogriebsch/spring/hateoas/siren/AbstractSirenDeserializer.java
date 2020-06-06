@@ -87,6 +87,7 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
         return deserializerFacilities.getRepresentationModelFactories();
     }
 
+    // TODO coverage: some branches missed
     protected JavaType obtainContainedType() {
         List<JavaType> typeParameters;
         JavaType type = contentType;

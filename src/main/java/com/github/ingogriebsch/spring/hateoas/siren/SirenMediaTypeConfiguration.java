@@ -43,7 +43,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
-    // Hint: Optional fields are somewhat discouraged
+    // TODO Hint: Optional fields are somewhat discouraged
     /*
      * Optional is primarily intended for use as a method return type where there is a clear need
      * to represent "no result," and where using null is likely to cause errors. A variable whose

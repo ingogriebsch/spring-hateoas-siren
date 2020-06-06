@@ -70,6 +70,7 @@ class SirenPagedModelBuilder {
         return this;
     }
 
+    // TODO uncovered method
     SirenPagedModelBuilder actions(List<SirenAction> actions) {
         this.actions = actions != null ? actions : newArrayList();
         return this;

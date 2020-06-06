@@ -146,6 +146,7 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
         return links;
     }
 
+    // TODO uncovered Method, test missing
     private List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JavaType type = defaultInstance().constructType(SirenAction.class);
         JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
