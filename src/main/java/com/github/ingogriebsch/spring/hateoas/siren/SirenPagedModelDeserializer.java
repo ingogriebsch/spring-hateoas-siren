@@ -63,14 +63,14 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         return new SirenPagedModelDeserializer(configuration, deserializerFacilities,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
     protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+        throws IOException {
         SirenPagedModelBuilder builder =
             SirenPagedModelBuilder.builder(contentType, getRepresentationModelFactories().forPagedModel(), getLinkConverter());
 
@@ -121,7 +121,7 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
 
         JsonToken nextToken = jp.nextToken();
         if (!START_OBJECT.equals(nextToken)) {
-            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%']!", START_OBJECT, nextToken));
+            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%s']!", START_OBJECT, nextToken));
         }
 
         return (PageMetadata) deserializer.deserialize(jp, ctxt);
