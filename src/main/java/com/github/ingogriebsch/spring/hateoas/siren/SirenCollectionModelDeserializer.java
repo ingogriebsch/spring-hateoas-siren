@@ -70,8 +70,7 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     }
 
     @Override
-    protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException {
+    protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException {
         SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType,
             getRepresentationModelFactories().forCollectioModel(), getLinkConverter());
 

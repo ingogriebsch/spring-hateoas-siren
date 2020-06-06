@@ -39,7 +39,7 @@ import lombok.Value;
  * @author Ingo Griebsch
  */
 @Builder
-@JsonPropertyOrder({"rel", "class", "href", "title", "type"})
+@JsonPropertyOrder({ "rel", "class", "href", "title", "type" })
 @Value
 class SirenLink {
 

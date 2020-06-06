@@ -41,7 +41,7 @@ import lombok.Value;
  * @author Ingo Griebsch
  */
 @Builder
-@JsonPropertyOrder({"name", "class", "method", "href", "title", "type", "fields"})
+@JsonPropertyOrder({ "name", "class", "method", "href", "title", "type", "fields" })
 @Value
 class SirenAction {
 
@@ -68,14 +68,14 @@ class SirenAction {
     // @Default
     @JsonInclude(NON_NULL)
     // @NonNull
-            String type /* = org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE */;
+    String type /* = org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE */;
 
     @JsonInclude(NON_EMPTY)
     @Singular
     List<Field> fields;
 
     @Builder
-    @JsonPropertyOrder({"name", "class", "type", "value", "title"})
+    @JsonPropertyOrder({ "name", "class", "type", "value", "title" })
     @Value
     static class Field {
 
@@ -97,8 +97,8 @@ class SirenAction {
         String title;
 
         enum Type {
-            checkbox, color, date, datetime, datetime_local, email, file, hidden, month, number, password, radio, range,
-            search, tel, text, time, url, week
+                checkbox, color, date, datetime, datetime_local, email, file, hidden, month, number, password, radio, range,
+                search, tel, text, time, url, week
         }
 
         @Value(staticConstructor = "of")

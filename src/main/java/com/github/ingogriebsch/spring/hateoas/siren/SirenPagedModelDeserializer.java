@@ -69,8 +69,7 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     }
 
     @Override
-    protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException {
+    protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException {
         SirenPagedModelBuilder builder =
             SirenPagedModelBuilder.builder(contentType, getRepresentationModelFactories().forPagedModel(), getLinkConverter());
 

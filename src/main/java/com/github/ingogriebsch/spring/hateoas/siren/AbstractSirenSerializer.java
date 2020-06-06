@@ -17,6 +17,8 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -28,10 +30,12 @@ import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 
+import lombok.NonNull;
+
 /**
  * Base class supporting the implementation of serializers which are able to serialize a specific {@link RepresentationModel} into
  * a Siren entity.
- * 
+ *
  * @author Ingo Griebsch
  */
 abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends ContainerSerializer<T>
@@ -44,8 +48,8 @@ abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends
     protected final SirenSerializerFacilities serializerFacilities;
     protected final BeanProperty property;
 
-    protected AbstractSirenSerializer(Class<?> type, SirenConfiguration configuration,
-        SirenSerializerFacilities serializerFacilities, BeanProperty property) {
+    protected AbstractSirenSerializer(@NonNull Class<?> type, @NonNull SirenConfiguration configuration,
+        @NonNull SirenSerializerFacilities serializerFacilities, BeanProperty property) {
         super(type, false);
         this.configuration = configuration;
         this.serializerFacilities = serializerFacilities;

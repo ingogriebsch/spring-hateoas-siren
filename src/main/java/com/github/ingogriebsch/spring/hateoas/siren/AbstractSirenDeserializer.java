@@ -33,10 +33,12 @@ import com.fasterxml.jackson.databind.deser.std.ContainerDeserializerBase;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import lombok.NonNull;
+
 /**
  * Base class supporting the implementation of deserializers which are able to deserialize a specific Siren entity into a
  * {@link RepresentationModel}.
- * 
+ *
  * @author Ingo Griebsch
  */
 abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> extends ContainerDeserializerBase<T>
@@ -48,8 +50,8 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
     protected final SirenConfiguration configuration;
     protected final JavaType contentType;
 
-    protected AbstractSirenDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
-        JavaType contentType) {
+    protected AbstractSirenDeserializer(@NonNull SirenConfiguration configuration,
+        @NonNull SirenDeserializerFacilities deserializerFacilities, JavaType contentType) {
         super(contentType);
         this.deserializerFacilities = deserializerFacilities;
         this.configuration = configuration;

@@ -71,8 +71,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     }
 
     @Override
-    protected EntityModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException {
+    protected EntityModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException {
         SirenEntityModelBuilder builder =
             SirenEntityModelBuilder.builder(contentType, getRepresentationModelFactories().forEntityModel(), getLinkConverter());
 
