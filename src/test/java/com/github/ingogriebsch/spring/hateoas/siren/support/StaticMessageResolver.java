@@ -31,8 +31,8 @@ import lombok.Value;
 public class StaticMessageResolver implements MessageResolver {
 
     @NonNull
-    private final Map<String, String> messages;
-    private final String fallback;
+    Map<String, String> messages;
+    String fallback;
 
     public static StaticMessageResolver of(String fallback) {
         return new StaticMessageResolver(newHashMap(), fallback);

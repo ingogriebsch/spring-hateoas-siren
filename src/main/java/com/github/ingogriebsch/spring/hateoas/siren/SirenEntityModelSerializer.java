@@ -24,7 +24,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
@@ -52,7 +51,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
         return new SirenEntityModelSerializer(configuration, serializerFacilities, property);
     }
 

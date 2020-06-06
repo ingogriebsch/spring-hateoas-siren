@@ -31,13 +31,11 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.CollectionModel;
 
@@ -64,14 +62,13 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         return new SirenCollectionModelDeserializer(configuration, deserializerFacilities,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
-    protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+    protected CollectionModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException {
         SirenCollectionModelBuilder builder = SirenCollectionModelBuilder.builder(contentType,
             getRepresentationModelFactories().forCollectioModel(), getLinkConverter());
 
@@ -108,7 +105,7 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
 
         JsonToken nextToken = jp.nextToken();
         if (!START_OBJECT.equals(nextToken)) {
-            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%']!", START_OBJECT, nextToken));
+            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%s']!", START_OBJECT, nextToken));
         }
 
         return (Map<String, Object>) deserializer.deserialize(jp, ctxt);

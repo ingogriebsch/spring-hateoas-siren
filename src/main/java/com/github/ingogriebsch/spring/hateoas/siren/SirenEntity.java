@@ -44,35 +44,35 @@ class SirenEntity {
 
     @JsonInclude(NON_EMPTY)
     @JsonProperty("class")
-    private List<String> classes;
+    List<String> classes;
 
     @JsonInclude(NON_EMPTY)
     @JsonProperty("rel")
     @Singular
-    private List<LinkRelation> rels;
+    List<LinkRelation> rels;
 
     @JsonInclude(NON_NULL)
-    private Object properties;
+    Object properties;
 
     @JsonInclude(NON_EMPTY)
     @Singular
-    private List<Object> entities;
+    List<Object> entities;
 
     @JsonInclude(NON_EMPTY)
     @Singular
-    private List<SirenLink> links;
+    List<SirenLink> links;
 
     @JsonInclude(NON_EMPTY)
     @Singular
-    private List<SirenAction> actions;
+    List<SirenAction> actions;
 
     @JsonInclude(NON_NULL)
-    private String title;
+    String title;
 
     @Value(staticConstructor = "of")
-    static final class TitleResolvable implements MessageSourceResolvable {
+    static class TitleResolvable implements MessageSourceResolvable {
 
-        private Class<?> type;
+        Class<?> type;
 
         @Override
         public String[] getCodes() {

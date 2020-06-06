@@ -24,12 +24,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -56,14 +54,13 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
         return new SirenRepresentationModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override
-    protected RepresentationModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+    protected RepresentationModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException {
         SirenEntity sirenEntity = jp.getCodec().readValue(jp, SirenEntity.class);
 
         SirenRepresentationModelBuilder builder =

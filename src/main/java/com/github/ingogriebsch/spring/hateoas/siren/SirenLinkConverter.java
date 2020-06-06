@@ -52,11 +52,11 @@ class SirenLinkConverter {
     private final MessageResolver messageResolver;
 
     SirenNavigables to(@NonNull Iterable<Link> links) {
-        return SirenNavigables.merge(stream(links.spliterator(), false).map(l -> convert(l)).collect(toList()));
+        return SirenNavigables.merge(stream(links.spliterator(), false).map(this::convert).collect(toList()));
     }
 
     List<Link> from(@NonNull SirenNavigables navigables) {
-        return slice(navigables).stream().map(n -> convert(n)).collect(toList());
+        return slice(navigables).stream().map(this::convert).collect(toList());
     }
 
     SirenNavigables convert(Link link) {
@@ -75,7 +75,8 @@ class SirenLinkConverter {
     private List<SirenLink> links(Link link) {
         SirenLink sirenLink = SirenLink.builder() //
             .rel(link.getRel().value()) //
-            .href(link.getHref()).title(title(link)) //
+            .href(link.getHref()) //
+            .title(title(link)) //
             .type(link.getType()) //
             .build();
 
@@ -109,7 +110,7 @@ class SirenLinkConverter {
         if (input == null) {
             return newArrayList();
         }
-        return input.stream().map(pm -> field(pm)).collect(toList());
+        return input.stream().map(this::field).collect(toList());
     }
 
     private Field field(PropertyMetadata propertyMetadata) {

@@ -45,25 +45,25 @@ class SirenLink {
 
     @JsonProperty("rel")
     @Singular
-    private List<String> rels;
+    List<String> rels;
 
     @JsonInclude(NON_EMPTY)
     @JsonProperty("class")
-    private List<String> classes;
+    List<String> classes;
 
     @NonNull
-    private String href;
+    String href;
 
     @JsonInclude(NON_NULL)
-    private String title;
+    String title;
 
     @JsonInclude(NON_NULL)
-    private String type;
+    String type;
 
     @Value(staticConstructor = "of")
-    static final class TitleResolvable implements MessageSourceResolvable {
+    static class TitleResolvable implements MessageSourceResolvable {
 
-        private LinkRelation rel;
+        LinkRelation rel;
 
         @Override
         public String[] getCodes() {

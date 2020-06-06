@@ -24,7 +24,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
@@ -58,7 +57,7 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
     }
 
     @Override
-    public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonToken token = jp.currentToken();
         if (!START_OBJECT.equals(token)) {
             throw new JsonParseException(jp, format("Current token does not represent '%s' (but '%s')!", START_OBJECT, token));
@@ -66,7 +65,7 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
         return deserializeModel(jp, ctxt);
     }
 
-    protected abstract T deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException;
+    protected abstract T deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException;
 
     @Override
     public JavaType getContentType() {

@@ -29,13 +29,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
@@ -63,14 +61,13 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) throws JsonMappingException {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
         return new SirenPagedModelDeserializer(configuration, deserializerFacilities,
             property == null ? ctxt.getContextualType() : property.getType().getContentType());
     }
 
     @Override
-    protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+    protected PagedModel<?> deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException {
         SirenPagedModelBuilder builder =
             SirenPagedModelBuilder.builder(contentType, getRepresentationModelFactories().forPagedModel(), getLinkConverter());
 
@@ -121,7 +118,7 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
 
         JsonToken nextToken = jp.nextToken();
         if (!START_OBJECT.equals(nextToken)) {
-            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%']!", START_OBJECT, nextToken));
+            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%s']!", START_OBJECT, nextToken));
         }
 
         return (PageMetadata) deserializer.deserialize(jp, ctxt);

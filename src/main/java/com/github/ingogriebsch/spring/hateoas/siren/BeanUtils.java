@@ -61,17 +61,15 @@ class BeanUtils {
     }
 
     static <T> T applyProperties(@NonNull T obj, @NonNull Map<String, Object> properties) {
-        properties.forEach((key, value) -> {
-            ofNullable(getPropertyDescriptor(obj.getClass(), key)).ifPresent(property -> {
-                try {
-                    Method writeMethod = property.getWriteMethod();
-                    ReflectionUtils.makeAccessible(writeMethod);
-                    writeMethod.invoke(obj, value);
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        });
+        properties.forEach((key, value) -> ofNullable(getPropertyDescriptor(obj.getClass(), key)).ifPresent(property -> {
+            try {
+                Method writeMethod = property.getWriteMethod();
+                ReflectionUtils.makeAccessible(writeMethod);
+                writeMethod.invoke(obj, value);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }));
 
         return obj;
     }

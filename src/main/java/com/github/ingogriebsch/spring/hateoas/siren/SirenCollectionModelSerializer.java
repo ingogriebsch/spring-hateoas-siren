@@ -25,7 +25,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
@@ -53,7 +52,7 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
         return new SirenCollectionModelSerializer(configuration, serializerFacilities, property);
     }
 
@@ -87,7 +86,7 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
     }
 
     private static List<Object> entities(CollectionModel<?> model) {
-        return model.getContent().stream().map(e -> entity(e)).collect(toList());
+        return model.getContent().stream().map(SirenCollectionModelSerializer::entity).collect(toList());
     }
 
     private static Object entity(Object embeddable) {

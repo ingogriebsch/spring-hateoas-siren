@@ -22,14 +22,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import lombok.NonNull;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class ResourceReader {
 
-    public static String read(@NonNull String sourceFilename, @NonNull Class<?> clazz) throws IOException {
+    public String read(@NonNull String sourceFilename, @NonNull Class<?> clazz) throws IOException {
         return read(new ClassPathResource(sourceFilename, clazz));
     }
 
-    public static String read(Resource resource) throws IOException {
+    public String read(Resource resource) throws IOException {
         try (Scanner scanner = new Scanner(resource.getInputStream())) {
             StringBuilder sb = new StringBuilder();
             while (scanner.hasNextLine()) {
