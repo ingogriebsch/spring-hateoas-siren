@@ -118,7 +118,8 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
             jp.nextToken();
             builder.properties((Map<String, Object>) deserializer.deserialize(jp, ctxt));
         } else {
-            // Strange things happened...
+            throw new IllegalStateException(
+                format("Cannot decide how to deserialize the given properties based on type '%s'!", contentType));
         }
     }
 
