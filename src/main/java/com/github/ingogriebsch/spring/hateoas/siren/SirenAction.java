@@ -41,70 +41,70 @@ import lombok.Value;
  * @author Ingo Griebsch
  */
 @Builder
-@JsonPropertyOrder({ "name", "class", "method", "href", "title", "type", "fields" })
+@JsonPropertyOrder({"name", "class", "method", "href", "title", "type", "fields"})
 @Value
 class SirenAction {
 
     @NonNull
-    private String name;
+    String name;
 
     @JsonInclude(NON_EMPTY)
     @JsonProperty("class")
-    private List<String> classes;
+    List<String> classes;
 
     @Default
     @JsonInclude(NON_NULL)
     @NonNull
-    private HttpMethod method = GET;
+    HttpMethod method = GET;
 
     @NonNull
-    private String href;
+    String href;
 
     @JsonInclude(NON_NULL)
-    private String title;
+    String title;
 
     // FIXME Default needs to be enabled and type needs to be handled in general as soon as
     // https://github.com/spring-projects/spring-hateoas/issues/1087 is part of Spring HATEOAS
     // @Default
     @JsonInclude(NON_NULL)
     // @NonNull
-    private String type /* = org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE */;
+            String type /* = org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE */;
 
     @JsonInclude(NON_EMPTY)
     @Singular
-    private List<Field> fields;
+    List<Field> fields;
 
     @Builder
-    @JsonPropertyOrder({ "name", "class", "type", "value", "title" })
+    @JsonPropertyOrder({"name", "class", "type", "value", "title"})
     @Value
-    static final class Field {
+    static class Field {
 
         @NonNull
-        private String name;
+        String name;
 
         @JsonInclude(NON_EMPTY)
         @JsonProperty("class")
-        private List<String> classes;
+        List<String> classes;
 
         @Default
         @JsonInclude(NON_NULL)
-        private Type type = Type.text;
+        Type type = Type.text;
 
         @JsonInclude(NON_NULL)
-        private Object value;
+        Object value;
 
         @JsonInclude(NON_NULL)
-        private String title;
+        String title;
 
-        static enum Type {
-                checkbox, color, date, datetime, datetime_local, email, file, hidden, month, number, password, radio, range,
-                search, tel, text, time, url, week
+        enum Type {
+            checkbox, color, date, datetime, datetime_local, email, file, hidden, month, number, password, radio, range,
+            search, tel, text, time, url, week
         }
 
         @Value(staticConstructor = "of")
-        static final class TitleResolvable implements MessageSourceResolvable {
+        static class TitleResolvable implements MessageSourceResolvable {
 
-            private String name;
+            String name;
 
             @Override
             public String[] getCodes() {
@@ -114,9 +114,9 @@ class SirenAction {
     }
 
     @Value(staticConstructor = "of")
-    static final class TitleResolvable implements MessageSourceResolvable {
+    static class TitleResolvable implements MessageSourceResolvable {
 
-        private String name;
+        String name;
 
         @Override
         public String[] getCodes() {
