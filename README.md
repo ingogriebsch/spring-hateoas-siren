@@ -394,6 +394,79 @@ _The Siren representation generated for the link and it's affordances_
 }
 ```
 
+### Conclusion
+[Siren][] defines a resource as an [entity][Siren Entity] which has not only [properties][Siren Entity Properties] and navigational [links][Siren Entity Link] but may also contain [embedded representations][Siren Entity Embedded Representation]. Because such representations retain all the characteristics of an [entity][Siren Entity] you can build quite complex resource structures. To allow to build such structures this module is able to handle subclassed [representation models][Spring HATEOAS Representation Model] (i.e. you are able to extend [entity models][Spring HATEOAS Representation Model] and [collection models][Spring HATEOAS Representation Model]). 
+The following example explains what is possible to do (we will skip parts like links or actions and concentrate on the properties and sub entities):
+
+_A sample representation model_
+```
+class Capital extends RepresentationModel<Capital> {
+  String name;
+}
+```
+
+_A sample entity model_
+```
+class State extends EntityModel<Capital> {
+  String name;
+}
+```
+
+_A sample collection model_
+```
+class Country extends CollectionModel<State> {
+  String name;
+}
+```
+
+_Use the different types of representation models_
+```
+State bali = new State("Bali", new Capital("Denpasar"));
+State maluku = new State("Maluku", new Capital("Ambon"));
+State riau = new State("Riau", new Capital("Pekanbaru"));
+
+Country indonesia = new Country("Indonesia", List.of(bali, maluka, riau));
+```
+
+_The generated Siren representation_
+```
+{
+  "properties": {
+    "name": "Indonesia"
+  },
+  "entities": [{
+    "properties": {
+      "name": "Bali"
+    },
+    "entities": [{
+      "properties": {
+        "name": "Denpasar"
+      },
+    }]
+  }, {
+    "properties": {
+      "name": "Maluku"
+    },
+    "entities": [{
+      "properties": {
+        "name": "Ambon"
+      },
+    }]
+  }, {
+    "properties": {
+      "name": "Riau"
+    },
+    "entities": [{
+      "properties": {
+        "name": "Pekanbaru"
+      },
+    }]
+  }]
+}
+```
+
+And this is still a relatively simple example of what is possible if using some subclassed [representation models][Spring HATEOAS Representation Model] together. Especially mixing [entity models][Spring HATEOAS Representation Model] with [collection models][Spring HATEOAS Representation Model] and vice versa allows to build quite complex structures. 
+
 ## Internationalization
 [Siren][] defines a `title` attribute for its [entity][Siren Entity], [link][Siren Entity Link] and [action][Siren Entity Action] (including their fields) objects. These titles can be populated by using Spring’s resource bundle abstraction and a resource bundle named `rest-messages` so that clients can use them in their UIs directly. This bundle will be set up automatically and is used during the serialization process.
 
