@@ -395,7 +395,10 @@ _The Siren representation generated for the link and it's affordances_
 ```
 
 ### Conclusion
-[Siren][] defines a resource as an [entity][Siren Entity] which has not only [properties][Siren Entity Properties] and navigational [links][Siren Entity Link] but may also contain [embedded representations][Siren Entity Embedded Representation]. Because such representations retain all the characteristics of an [entity][Siren Entity] you can build quite complex resource structures. To allow to build such structures this module is able to handle subclassed [representation models][Spring HATEOAS Representation Model] (i.e. you are able to extend [entity models][Spring HATEOAS Representation Model] and [collection models][Spring HATEOAS Representation Model]). 
+[Siren][] defines a resource as an [entity][Siren Entity] which has not only [properties][Siren Entity Properties] and navigational [links][Siren Entity Link] but may also contain [embedded representations][Siren Entity Embedded Representation]. Because such representations retain all the characteristics of an [entity][Siren Entity] you can build quite complex resource structures.
+<br/><br/>
+To allow to build such structures this module is able to handle subclassed [representation models][Spring HATEOAS Representation Model] of type `EntityModel` and `CollectionModel`. It is in the nature of [representation models][Spring HATEOAS Representation Model] of type `RepresentationModel` to be subclassed. It makes no sense to subclass [Representation models][Spring HATEOAS Representation Model] of type `PagedModel` because they already contain specific properties explaining the nature of this type of resource.
+<br/><br/>
 The following example explains what is possible to do (we will skip parts like links or actions and concentrate on the properties and sub entities):
 
 _A sample representation model_
