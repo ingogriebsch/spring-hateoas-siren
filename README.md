@@ -399,7 +399,7 @@ _The Siren representation generated for the link and it's affordances_
 <br/><br/>
 To allow to build such structures this module is able to handle subclassed [representation models][Spring HATEOAS Representation Model] of type `EntityModel` and `CollectionModel`. It is in the nature of [representation models][Spring HATEOAS Representation Model] of type `RepresentationModel` to be subclassed. It makes no sense to subclass [Representation models][Spring HATEOAS Representation Model] of type `PagedModel` because they already contain specific properties explaining the nature of this type of resource.
 <br/><br/>
-The following example explains what is possible to do (we will skip parts like links or actions and concentrate on the properties and sub entities):
+The following example explains what is possible to do (we will skip parts of the Siren representation like [class][Siren Entity Class], [links][Siren Entity Link] or [actions][Siren Entity Action] and concentrate on the [properties][Siren Entity Properties] and [embedded representations][Siren Entity Embedded Representation]):
 
 _A sample representation model_
 ```
