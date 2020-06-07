@@ -37,7 +37,7 @@ import lombok.NonNull;
  * @see Affordance
  * @author Ingo Griebsch
  */
-// TODO Find a better name for this class
+// TODO Find a better name for this class.
 @AllArgsConstructor(access = PRIVATE)
 @EqualsAndHashCode
 @Getter

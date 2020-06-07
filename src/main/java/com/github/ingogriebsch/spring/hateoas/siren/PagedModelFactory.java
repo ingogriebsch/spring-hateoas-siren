@@ -55,6 +55,8 @@ public interface PagedModelFactory {
         Class<?> modelType = type.getRawClass();
         isAssignable(PagedModel.class, modelType);
 
+        // TODO Check if the type of one of the content objects matches the contained type of the given type.
+
         Class<?>[] types = new Class[] { Collection.class, PageMetadata.class, Iterable.class };
         Object[] args = new Object[] { content, metadata, links };
         return (PagedModel<?>) instantiate(modelType, types, args);

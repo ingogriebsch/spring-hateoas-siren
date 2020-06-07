@@ -45,7 +45,8 @@ class SirenMediaTypeConfigurationProvider implements MediaTypeConfigurationProvi
      */
     @Override
     public boolean supportsAny(@NonNull Collection<MediaType> mediaTypes) {
-        // FIXME Need to clarify how to configure this custom media type to be active!
+        // TODO Need to clarify how to configure this custom media type to be active!
+        // This issue probably solved the problem: https://github.com/spring-projects/spring-hateoas/issues/1304
         return true; // mediaTypes.contains(MediaTypes.SIREN_JSON);
     }
 

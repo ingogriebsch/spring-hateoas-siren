@@ -54,7 +54,7 @@ public interface EntityModelFactory {
         Class<?> modelType = type.getRawClass();
         isAssignable(EntityModel.class, modelType);
 
-        // TODO check if type of object matches contained type?
+        // TODO Check if the type of the content object matches the contained type of the given type.
 
         Class<?>[] types =
             new Class[] { EntityModel.class.equals(modelType) ? Object.class : content.getClass(), Iterable.class };

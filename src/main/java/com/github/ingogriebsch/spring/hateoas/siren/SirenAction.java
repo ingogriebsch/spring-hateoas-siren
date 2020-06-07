@@ -63,8 +63,9 @@ class SirenAction {
     @JsonInclude(NON_NULL)
     String title;
 
-    // FIXME Default needs to be enabled and type needs to be handled in general as soon as
-    // https://github.com/spring-projects/spring-hateoas/issues/1087 is part of Spring HATEOAS
+    // TODO The default needs to be enabled and the type needs to be handled in general as soon as
+    // https://github.com/spring-projects/spring-hateoas/issues/1087
+    // is part of Spring HATEOAS
     // @Default
     @JsonInclude(NON_NULL)
     // @NonNull

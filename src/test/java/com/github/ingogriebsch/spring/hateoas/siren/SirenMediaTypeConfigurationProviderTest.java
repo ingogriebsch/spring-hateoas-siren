@@ -51,7 +51,7 @@ class SirenMediaTypeConfigurationProviderTest {
 
         @Test
         void should_return_false_if_supported_media_type_is_not_contained() {
-            // FIXME Check the corresponding provider method!
+            // TODO Check the corresponding provider method to understand why the test is implemented this way!
             assertThat(new SirenMediaTypeConfigurationProvider().supportsAny(newArrayList(HAL_FORMS_JSON))).isTrue();
         }
     }
