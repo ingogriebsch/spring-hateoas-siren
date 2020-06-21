@@ -37,7 +37,7 @@ import org.springframework.hateoas.RepresentationModel;
 abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> implements ContextualSerializer {
 
     private static final long serialVersionUID = -8665900081601124431L;
-    protected static final String ATTR_KEY_PARENT = "__SIREN_ENTITY_PARENT_OBJECT__";
+    protected static final String ATTR_KEY_PARENT = "__SIREN_ENTITY_PARENT__";
     protected static final String ATTR_KEY_REL = "__SIREN_ENTITY_REL__";
 
     protected final SirenConfiguration configuration;
