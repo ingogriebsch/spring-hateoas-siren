@@ -36,7 +36,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.mediatype.MessageResolver;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -48,14 +47,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class SirenLinkConverter {
 
-    @NonNull
     private final MessageResolver messageResolver;
 
-    SirenNavigables to(@NonNull Iterable<Link> links) {
+    SirenNavigables to(Iterable<Link> links) {
         return SirenNavigables.merge(stream(links.spliterator(), false).map(this::convert).collect(toList()));
     }
 
-    List<Link> from(@NonNull SirenNavigables navigables) {
+    List<Link> from(SirenNavigables navigables) {
         return slice(navigables).stream().map(this::convert).collect(toList());
     }
 

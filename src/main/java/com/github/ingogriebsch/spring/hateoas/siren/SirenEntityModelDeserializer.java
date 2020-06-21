@@ -39,8 +39,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import org.springframework.hateoas.EntityModel;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link EntityModel}.
@@ -52,18 +51,17 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
     private static final long serialVersionUID = -3683235541542548855L;
     private static final JavaType TYPE = defaultInstance().constructType(EntityModel.class);
 
-    SirenEntityModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+    SirenEntityModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities) {
         this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenEntityModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities, @NonNull JavaType contentType) {
+    SirenEntityModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
+        JavaType contentType) {
         super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, @Nullable BeanProperty property) {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
         return new SirenEntityModelDeserializer(configuration, deserializerFacilities, contentType);
     }

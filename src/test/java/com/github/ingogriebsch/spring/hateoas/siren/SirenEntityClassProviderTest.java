@@ -35,7 +35,7 @@ class SirenEntityClassProviderTest {
 
     @Test
     void get_should_throw_exception_if_input_is_null() {
-        assertThrows(IllegalArgumentException.class, () -> provider.get(null));
+        assertThrows(NullPointerException.class, () -> provider.get(null));
     }
 
     @Test

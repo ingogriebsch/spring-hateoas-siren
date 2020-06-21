@@ -24,8 +24,6 @@ import java.util.List;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import lombok.NonNull;
-
 /**
  * API to provide information about the nature of the content of a Siren entity.
  *
@@ -43,7 +41,7 @@ public interface SirenEntityClassProvider {
      * @param model the {@link RepresentationModel} that is transfered into a Siren entity. Is never {@literal null}.
      * @return the class(es) explaining the nature of the content of a Siren entity
      */
-    default List<String> get(@NonNull RepresentationModel<?> model) {
+    default List<String> get(RepresentationModel<?> model) {
         return newArrayList(
             uncapitalize(substringBeforeLast(getRepresentationModelClass(model.getClass()).getSimpleName(), "Model")));
     }

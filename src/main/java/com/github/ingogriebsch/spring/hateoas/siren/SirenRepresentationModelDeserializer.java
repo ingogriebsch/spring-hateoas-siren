@@ -30,8 +30,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import org.springframework.hateoas.RepresentationModel;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link RepresentationModel}.
@@ -43,18 +42,17 @@ class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<Rep
     private static final long serialVersionUID = -3683235541542548855L;
     private static final JavaType TYPE = defaultInstance().constructType(RepresentationModel.class);
 
-    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+    SirenRepresentationModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities) {
         this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenRepresentationModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities, @NonNull JavaType contentType) {
+    SirenRepresentationModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
+        JavaType contentType) {
         super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, @Nullable BeanProperty property) {
         JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
         return new SirenRepresentationModelDeserializer(configuration, deserializerFacilities, contentType);
     }

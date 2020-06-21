@@ -27,8 +27,6 @@ import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.Links;
 import org.springframework.hateoas.RepresentationModel;
 
-import lombok.NonNull;
-
 /**
  * Builder which allows to build complex Siren entity structures.
  * 
@@ -49,80 +47,80 @@ public final class SirenModelBuilder {
         return new SirenModelBuilder();
     }
 
-    public SirenModelBuilder classes(@NonNull String... classes) {
+    public SirenModelBuilder classes(String... classes) {
         return classes(newArrayList(classes));
     }
 
-    public SirenModelBuilder classes(@NonNull Iterable<String> classes) {
+    public SirenModelBuilder classes(Iterable<String> classes) {
         noNullElements(classes);
         classes.forEach(this.classes::add);
         return this;
     }
 
-    public SirenModelBuilder title(@NonNull String title) {
+    public SirenModelBuilder title(String title) {
         this.title = title;
         return this;
     }
 
-    public SirenModelBuilder properties(@NonNull Object properties) {
+    public SirenModelBuilder properties(Object properties) {
         // FIXME may not be a representation model subclass
         this.properties = properties;
         return this;
     }
 
-    public SirenModelBuilder entities(@NonNull RepresentationModel<?> entity) {
+    public SirenModelBuilder entities(RepresentationModel<?> entity) {
         return entities(newArrayList(entity));
     }
 
-    public SirenModelBuilder entities(@NonNull RepresentationModel<?>... entities) {
+    public SirenModelBuilder entities(RepresentationModel<?>... entities) {
         return entities(newArrayList(entities));
     }
 
-    public SirenModelBuilder entities(@NonNull Iterable<RepresentationModel<?>> entities) {
+    public SirenModelBuilder entities(Iterable<RepresentationModel<?>> entities) {
         noNullElements(entities);
         entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(e)));
         return this;
     }
 
-    public SirenModelBuilder entities(@NonNull String rel, @NonNull RepresentationModel<?> entity) {
+    public SirenModelBuilder entities(String rel, RepresentationModel<?> entity) {
         return entities(LinkRelation.of(rel), entity);
     }
 
-    public SirenModelBuilder entities(@NonNull String rel, @NonNull RepresentationModel<?>... entities) {
+    public SirenModelBuilder entities(String rel, RepresentationModel<?>... entities) {
         return entities(LinkRelation.of(rel), entities);
     }
 
-    public SirenModelBuilder entities(@NonNull String rel, @NonNull Iterable<RepresentationModel<?>> entities) {
+    public SirenModelBuilder entities(String rel, Iterable<RepresentationModel<?>> entities) {
         return entities(LinkRelation.of(rel), entities);
     }
 
-    public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull RepresentationModel<?> entity) {
+    public SirenModelBuilder entities(LinkRelation rel, RepresentationModel<?> entity) {
         return entities(rel, newArrayList(entity));
     }
 
-    public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull RepresentationModel<?>... entities) {
+    public SirenModelBuilder entities(LinkRelation rel, RepresentationModel<?>... entities) {
         return entities(rel, newArrayList(entities));
     }
 
-    public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Iterable<RepresentationModel<?>> entities) {
+    public SirenModelBuilder entities(LinkRelation rel, Iterable<RepresentationModel<?>> entities) {
         noNullElements(entities);
         entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(e, rel)));
         return this;
     }
 
-    public SirenModelBuilder linksAndActions(@NonNull Link link) {
+    public SirenModelBuilder linksAndActions(Link link) {
         return linksAndActions(of(link));
     }
 
-    public SirenModelBuilder linksAndActions(@NonNull Link... links) {
+    public SirenModelBuilder linksAndActions(Link... links) {
         return linksAndActions(of(links));
     }
 
-    public SirenModelBuilder linksAndActions(@NonNull Iterable<Link> links) {
+    public SirenModelBuilder linksAndActions(Iterable<Link> links) {
         return linksAndActions(of(links));
     }
 
-    public SirenModelBuilder linksAndActions(@NonNull Links links) {
+    public SirenModelBuilder linksAndActions(Links links) {
         List<Link> linksList = links.toList();
         noNullElements(linksList);
 

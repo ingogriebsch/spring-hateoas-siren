@@ -31,7 +31,6 @@ import org.springframework.hateoas.config.HypermediaMappingInformation;
 import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.http.MediaType;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -43,15 +42,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
-    @NonNull
     private final ObjectProvider<SirenConfiguration> configuration;
-    @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
-    @NonNull
     private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
-    @NonNull
     private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
-    @NonNull
     private final MessageResolver messageResolver;
 
     @Bean
@@ -83,7 +77,7 @@ class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
      * ObjectMapper)
      */
     @Override
-    public ObjectMapper configureObjectMapper(@NonNull ObjectMapper mapper) {
+    public ObjectMapper configureObjectMapper(ObjectMapper mapper) {
         mapper = HypermediaMappingInformation.super.configureObjectMapper(mapper);
 
         SirenHandlerInstantiator instantiator =

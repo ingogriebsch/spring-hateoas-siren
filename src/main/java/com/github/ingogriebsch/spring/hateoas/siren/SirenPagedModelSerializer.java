@@ -27,8 +27,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonSerializer} implementation which is able to serialize a {@link PagedModel} into a Siren entity.
@@ -39,18 +38,17 @@ class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
 
     private static final long serialVersionUID = 9054285190464802945L;
 
-    SirenPagedModelSerializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenSerializerFacilities serializerFacilities) {
+    SirenPagedModelSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities) {
         this(configuration, serializerFacilities, null);
     }
 
-    SirenPagedModelSerializer(@NonNull SirenConfiguration configuration, @NonNull SirenSerializerFacilities serializerFacilities,
-        BeanProperty property) {
+    SirenPagedModelSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities,
+        @Nullable BeanProperty property) {
         super(PagedModel.class, configuration, serializerFacilities, property);
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, @Nullable BeanProperty property) {
         return new SirenPagedModelSerializer(configuration, serializerFacilities, property);
     }
 

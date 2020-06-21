@@ -48,15 +48,15 @@ class SirenEmbeddedRepresentation {
     RepresentationModel<?> model;
     List<LinkRelation> rels;
 
-    SirenEmbeddedRepresentation(@NonNull RepresentationModel<?> model) {
+    SirenEmbeddedRepresentation(RepresentationModel<?> model) {
         this.model = model;
     }
 
-    SirenEmbeddedRepresentation(@NonNull RepresentationModel<?> model, @NonNull String rel) {
+    SirenEmbeddedRepresentation(RepresentationModel<?> model, String rel) {
         this(model, LinkRelation.of(rel));
     }
 
-    SirenEmbeddedRepresentation(@NonNull RepresentationModel<?> model, @NonNull LinkRelation rel) {
+    SirenEmbeddedRepresentation(RepresentationModel<?> model, LinkRelation rel) {
         this(model, newArrayList(rel));
     }
 }

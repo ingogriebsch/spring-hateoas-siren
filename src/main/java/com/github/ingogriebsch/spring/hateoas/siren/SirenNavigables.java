@@ -28,7 +28,6 @@ import org.springframework.hateoas.Link;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 
 /**
  * Representation to hold specific {@link SirenLink}s and their {@link SirenAction}s together.
@@ -46,15 +45,15 @@ class SirenNavigables {
     private final List<SirenLink> links;
     private final List<SirenAction> actions;
 
-    static SirenNavigables navigables(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
+    static SirenNavigables navigables(List<SirenLink> links, List<SirenAction> actions) {
         return of(links, actions);
     }
 
-    static SirenNavigables of(@NonNull List<SirenLink> links, @NonNull List<SirenAction> actions) {
+    static SirenNavigables of(List<SirenLink> links, List<SirenAction> actions) {
         return new SirenNavigables(links, actions);
     }
 
-    static SirenNavigables merge(@NonNull Iterable<SirenNavigables> navigables) {
+    static SirenNavigables merge(Iterable<SirenNavigables> navigables) {
         List<SirenLink> links = stream(navigables.spliterator(), false).flatMap(n -> n.getLinks().stream()).collect(toList());
         List<SirenAction> actions =
             stream(navigables.spliterator(), false).flatMap(n -> n.getActions().stream()).collect(toList());

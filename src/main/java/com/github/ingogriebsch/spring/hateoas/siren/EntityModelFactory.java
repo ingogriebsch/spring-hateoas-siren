@@ -25,8 +25,7 @@ import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * Factory to create a {@link EntityModel} instance based on the given input evaluated during deserialization.
@@ -49,8 +48,7 @@ public interface EntityModelFactory {
      *        {@literal null}.
      * @return the created {@link EntityModel} instance.
      */
-    default EntityModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Object content,
-        Map<String, Object> properties) {
+    default EntityModel<?> create(JavaType type, Iterable<Link> links, Object content, @Nullable Map<String, Object> properties) {
         Class<?> modelType = type.getRawClass();
         isAssignable(EntityModel.class, modelType);
 

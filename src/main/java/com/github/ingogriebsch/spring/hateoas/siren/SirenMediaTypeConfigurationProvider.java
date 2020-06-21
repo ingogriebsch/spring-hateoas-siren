@@ -21,8 +21,6 @@ import org.springframework.hateoas.config.HypermediaMappingInformation;
 import org.springframework.hateoas.config.MediaTypeConfigurationProvider;
 import org.springframework.http.MediaType;
 
-import lombok.NonNull;
-
 /**
  * {@link MediaTypeConfigurationProvider} for Siren.
  *
@@ -44,7 +42,7 @@ class SirenMediaTypeConfigurationProvider implements MediaTypeConfigurationProvi
      * @see org.springframework.hateoas.config.MediaTypeConfigurationProvider#supportsAny(java.util.Collection)
      */
     @Override
-    public boolean supportsAny(@NonNull Collection<MediaType> mediaTypes) {
+    public boolean supportsAny(Collection<MediaType> mediaTypes) {
         // TODO Need to clarify how to configure this custom media type to be active!
         // This issue probably solved the problem: https://github.com/spring-projects/spring-hateoas/issues/1304
         return true; // mediaTypes.contains(MediaTypes.SIREN_JSON);

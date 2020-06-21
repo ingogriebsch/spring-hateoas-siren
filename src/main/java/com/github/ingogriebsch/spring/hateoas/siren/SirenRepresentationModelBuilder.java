@@ -27,8 +27,8 @@ import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.lang.Nullable;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -40,33 +40,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenRepresentationModelBuilder {
 
-    @NonNull
     private final JavaType type;
-    @NonNull
     private final RepresentationModelFactory modelFactory;
-    @NonNull
     private final SirenLinkConverter linkConverter;
 
     private Map<String, Object> properties = newHashMap();
     private List<SirenAction> actions = newArrayList();
     private List<SirenLink> links = newArrayList();
 
-    static SirenRepresentationModelBuilder builder(@NonNull JavaType type, @NonNull RepresentationModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter) {
+    static SirenRepresentationModelBuilder builder(JavaType type, RepresentationModelFactory modelFactory,
+        SirenLinkConverter linkConverter) {
         return new SirenRepresentationModelBuilder(type, modelFactory, linkConverter);
     }
 
-    SirenRepresentationModelBuilder properties(@NonNull Map<String, Object> properties) {
+    SirenRepresentationModelBuilder properties(Map<String, Object> properties) {
         this.properties = properties;
         return this;
     }
 
-    SirenRepresentationModelBuilder links(List<SirenLink> links) {
+    SirenRepresentationModelBuilder links(@Nullable List<SirenLink> links) {
         this.links = links != null ? links : newArrayList();
         return this;
     }
 
-    SirenRepresentationModelBuilder actions(List<SirenAction> actions) {
+    SirenRepresentationModelBuilder actions(@Nullable List<SirenAction> actions) {
         this.actions = actions != null ? actions : newArrayList();
         return this;
     }

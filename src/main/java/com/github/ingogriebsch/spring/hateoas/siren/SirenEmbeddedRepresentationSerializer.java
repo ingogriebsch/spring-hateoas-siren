@@ -19,13 +19,11 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.RepresentationModel;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonSerializer} implementation which is able to serialize a {@link SirenEmbeddedRepresentation}.
@@ -37,18 +35,17 @@ class SirenEmbeddedRepresentationSerializer extends AbstractSirenSerializer<Sire
     private static final long serialVersionUID = 5908856821949616351L;
     private static final String ATTR_KEY_REL = "__SIREN_ENTITY_REL__";
 
-    SirenEmbeddedRepresentationSerializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenSerializerFacilities serializerFacilities) {
+    SirenEmbeddedRepresentationSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities) {
         this(configuration, serializerFacilities, null);
     }
 
-    SirenEmbeddedRepresentationSerializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenSerializerFacilities serializerFacilities, BeanProperty property) {
+    SirenEmbeddedRepresentationSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities,
+        @Nullable BeanProperty property) {
         super(SirenEmbeddedRepresentation.class, configuration, serializerFacilities, property);
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, @Nullable BeanProperty property) {
         return new SirenEmbeddedRepresentationSerializer(configuration, serializerFacilities, property);
     }
 

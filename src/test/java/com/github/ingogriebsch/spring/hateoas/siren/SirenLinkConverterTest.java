@@ -51,20 +51,11 @@ class SirenLinkConverterTest {
     }
 
     @Nested
-    class Ctor {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThrows(IllegalArgumentException.class, () -> new SirenLinkConverter(null));
-        }
-    }
-
-    @Nested
     class To {
 
         @Test
         void should_throw_exception_if_input_is_null() {
-            assertThrows(IllegalArgumentException.class, () -> new SirenLinkConverter(DEFAULTS_ONLY).to(null));
+            assertThrows(NullPointerException.class, () -> new SirenLinkConverter(DEFAULTS_ONLY).to(null));
         }
 
         @Test
@@ -130,7 +121,7 @@ class SirenLinkConverterTest {
 
         @Test
         void should_throw_exception_if_input_is_null() {
-            assertThrows(IllegalArgumentException.class, () -> new SirenLinkConverter(DEFAULTS_ONLY).from(null));
+            assertThrows(NullPointerException.class, () -> new SirenLinkConverter(DEFAULTS_ONLY).from(null));
         }
 
         @Test

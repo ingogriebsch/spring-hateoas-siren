@@ -37,7 +37,7 @@ class RepresentationModelFactoryTest {
         RepresentationModelFactory factory = new RepresentationModelFactory() {
         };
 
-        assertThatThrownBy(() -> factory.create(null, null, null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> factory.create(null, null, null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test

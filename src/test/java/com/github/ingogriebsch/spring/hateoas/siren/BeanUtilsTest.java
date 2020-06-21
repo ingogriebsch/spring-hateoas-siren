@@ -44,7 +44,7 @@ class BeanUtilsTest {
 
         @Test
         void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> instantiate(null, null, null)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> instantiate(null, null, null)).isInstanceOf(NullPointerException.class);
         }
 
         @Test
@@ -65,7 +65,7 @@ class BeanUtilsTest {
 
         @Test
         void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> extractProperties(null, (String[]) null)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> extractProperties(null, (String[]) null)).isInstanceOf(NullPointerException.class);
         }
 
         @Test
@@ -93,7 +93,7 @@ class BeanUtilsTest {
 
         @Test
         void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> applyProperties(null, null)).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> applyProperties(null, null)).isInstanceOf(NullPointerException.class);
         }
 
         @Test

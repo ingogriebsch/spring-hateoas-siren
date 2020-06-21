@@ -34,8 +34,6 @@ import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.lang.Nullable;
 
-import lombok.NonNull;
-
 /**
  * {@link HandlerInstantiator} to create Siren specific serializers, deserializers etc.
  *
@@ -46,14 +44,13 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
     private final Map<Class<?>, Object> serializers = new HashMap<>();
     private final AutowireCapableBeanFactory beanFactory;
 
-    SirenHandlerInstantiator(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities, @NonNull SirenSerializerFacilities serializerFacilities) {
+    SirenHandlerInstantiator(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
+        SirenSerializerFacilities serializerFacilities) {
         this(configuration, deserializerFacilities, serializerFacilities, null);
     }
 
-    SirenHandlerInstantiator(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities, @NonNull SirenSerializerFacilities serializerFacilities,
-        AutowireCapableBeanFactory beanFactory) {
+    SirenHandlerInstantiator(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
+        SirenSerializerFacilities serializerFacilities, @Nullable AutowireCapableBeanFactory beanFactory) {
 
         serializers.put(SirenRepresentationModelSerializer.class,
             new SirenRepresentationModelSerializer(configuration, serializerFacilities));

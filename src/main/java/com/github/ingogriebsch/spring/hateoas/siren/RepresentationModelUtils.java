@@ -26,7 +26,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 /**
  * Utility methods help to understand of which type of {@link RepresentationModel} a specific object is.
@@ -40,7 +39,7 @@ class RepresentationModelUtils {
     private static final List<Class<?>> REPRESENTATION_MODEL_TYPES =
         newArrayList(PagedModel.class, CollectionModel.class, EntityModel.class, RepresentationModel.class);
 
-    static boolean isRepresentationModel(@NonNull Class<?> clazz) {
+    static boolean isRepresentationModel(Class<?> clazz) {
         for (Class<?> resourceType : REPRESENTATION_MODEL_TYPES) {
             if (resourceType.isAssignableFrom(clazz)) {
                 return true;
@@ -49,12 +48,12 @@ class RepresentationModelUtils {
         return false;
     }
 
-    static boolean isRepresentationModelSubclass(@NonNull Class<?> clazz) {
+    static boolean isRepresentationModelSubclass(Class<?> clazz) {
         return !REPRESENTATION_MODEL_TYPES.contains(clazz) && REPRESENTATION_MODEL_TYPES.contains(clazz.getSuperclass());
     }
 
     @SuppressWarnings("unchecked")
-    static Class<? extends RepresentationModel<?>> getRepresentationModelClass(@NonNull Class<?> clazz) {
+    static Class<? extends RepresentationModel<?>> getRepresentationModelClass(Class<?> clazz) {
         for (Class<?> resourceType : REPRESENTATION_MODEL_TYPES) {
             if (resourceType.isAssignableFrom(clazz)) {
                 return (Class<RepresentationModel<?>>) resourceType;

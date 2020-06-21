@@ -34,7 +34,7 @@ class PagedModelFactoryTest {
         PagedModelFactory factory = new PagedModelFactory() {
         };
 
-        assertThatThrownBy(() -> factory.create(null, null, null, null)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> factory.create(null, null, null, null)).isInstanceOf(NullPointerException.class);
     }
 
     @Test

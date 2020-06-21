@@ -38,8 +38,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import org.springframework.hateoas.CollectionModel;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link CollectionModel}.
@@ -51,20 +50,19 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     private static final long serialVersionUID = 4364222303241126575L;
     private static final JavaType TYPE = defaultInstance().constructType(CollectionModel.class);
 
-    SirenCollectionModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+    SirenCollectionModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities) {
         this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenCollectionModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities, JavaType contentType) {
+    SirenCollectionModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
+        JavaType contentType) {
         super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
-        return new SirenCollectionModelDeserializer(configuration, deserializerFacilities,
-            property == null ? ctxt.getContextualType() : property.getType().getContentType());
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, @Nullable BeanProperty property) {
+        JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
+        return new SirenCollectionModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override

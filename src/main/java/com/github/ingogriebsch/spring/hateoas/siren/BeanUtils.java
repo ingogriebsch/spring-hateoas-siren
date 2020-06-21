@@ -31,7 +31,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.ReflectionUtils;
 
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 /**
  * Utility methods for instantiating beans, extracting bean properties, applying bean properties, etc.
@@ -41,7 +40,7 @@ import lombok.NonNull;
 @NoArgsConstructor(access = PRIVATE)
 class BeanUtils {
 
-    static <T> T instantiate(@NonNull Class<T> clazz, @NonNull Class<?>[] types, @NonNull Object[] args) {
+    static <T> T instantiate(Class<T> clazz, Class<?>[] types, Object[] args) {
         try {
             return instantiateClass(clazz.getDeclaredConstructor(types), args);
         } catch (NoSuchMethodException | SecurityException e) {
@@ -49,7 +48,7 @@ class BeanUtils {
         }
     }
 
-    static Map<String, Object> extractProperties(@NonNull Object object, @NonNull String... excludes) {
+    static Map<String, Object> extractProperties(Object object, String... excludes) {
         Map<String, Object> properties = new ObjectMapper().convertValue(object, new TypeReference<Map<String, Object>>() {
         });
 
@@ -60,7 +59,7 @@ class BeanUtils {
         return properties;
     }
 
-    static <T> T applyProperties(@NonNull T obj, @NonNull Map<String, Object> properties) {
+    static <T> T applyProperties(T obj, Map<String, Object> properties) {
         properties.forEach((key, value) -> ofNullable(getPropertyDescriptor(obj.getClass(), key)).ifPresent(property -> {
             try {
                 Method writeMethod = property.getWriteMethod();

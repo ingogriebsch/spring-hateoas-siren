@@ -26,8 +26,8 @@ import com.fasterxml.jackson.databind.JavaType;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
+import org.springframework.lang.Nullable;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -38,11 +38,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenPagedModelBuilder {
 
-    @NonNull
     private final JavaType type;
-    @NonNull
     private final PagedModelFactory modelFactory;
-    @NonNull
     private final SirenLinkConverter linkConverter;
 
     private List<SirenAction> actions = newArrayList();
@@ -50,27 +47,26 @@ class SirenPagedModelBuilder {
     private List<Object> content = newArrayList();
     private PageMetadata metadata;
 
-    static SirenPagedModelBuilder builder(@NonNull JavaType type, @NonNull PagedModelFactory modelFactory,
-        @NonNull SirenLinkConverter linkConverter) {
+    static SirenPagedModelBuilder builder(JavaType type, PagedModelFactory modelFactory, SirenLinkConverter linkConverter) {
         return new SirenPagedModelBuilder(type, modelFactory, linkConverter);
     }
 
-    SirenPagedModelBuilder metadata(@NonNull PageMetadata metadata) {
+    SirenPagedModelBuilder metadata(PageMetadata metadata) {
         this.metadata = metadata;
         return this;
     }
 
-    SirenPagedModelBuilder content(@NonNull List<Object> content) {
+    SirenPagedModelBuilder content(List<Object> content) {
         this.content = content;
         return this;
     }
 
-    SirenPagedModelBuilder links(List<SirenLink> links) {
+    SirenPagedModelBuilder links(@Nullable List<SirenLink> links) {
         this.links = links != null ? links : newArrayList();
         return this;
     }
 
-    SirenPagedModelBuilder actions(List<SirenAction> actions) {
+    SirenPagedModelBuilder actions(@Nullable List<SirenAction> actions) {
         this.actions = actions != null ? actions : newArrayList();
         return this;
     }

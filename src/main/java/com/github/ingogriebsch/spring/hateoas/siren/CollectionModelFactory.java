@@ -25,8 +25,7 @@ import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * Factory to create a {@link CollectionModel} instance based on the given input evaluated during deserialization.
@@ -49,8 +48,8 @@ public interface CollectionModelFactory {
      *        {@literal null}.
      * @return the created {@link CollectionModel} instance.
      */
-    default CollectionModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Iterable<Object> content,
-        Map<String, Object> properties) {
+    default CollectionModel<?> create(JavaType type, Iterable<Link> links, Iterable<Object> content,
+        @Nullable Map<String, Object> properties) {
         Class<?> modelType = type.getRawClass();
         isAssignable(CollectionModel.class, modelType);
 

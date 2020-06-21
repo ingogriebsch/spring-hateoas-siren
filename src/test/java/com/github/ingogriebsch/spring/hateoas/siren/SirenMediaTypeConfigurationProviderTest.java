@@ -20,7 +20,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.MediaTypes.HAL_FORMS_JSON;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -37,12 +36,6 @@ class SirenMediaTypeConfigurationProviderTest {
 
     @Nested
     class SupportsAny {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new SirenMediaTypeConfigurationProvider().supportsAny(null));
-        }
 
         @Test
         void should_return_true_if_supported_media_type_is_contained() {

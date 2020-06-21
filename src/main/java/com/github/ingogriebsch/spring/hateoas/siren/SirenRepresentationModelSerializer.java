@@ -26,8 +26,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import org.springframework.hateoas.RepresentationModel;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonSerializer} implementation which is able to serialize a {@link RepresentationModel} into a Siren entity.
@@ -38,18 +37,17 @@ class SirenRepresentationModelSerializer extends AbstractSirenSerializer<Represe
 
     private static final long serialVersionUID = 2893716845519287714L;
 
-    SirenRepresentationModelSerializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenSerializerFacilities serializerFacilities) {
+    SirenRepresentationModelSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities) {
         this(configuration, serializerFacilities, null);
     }
 
-    SirenRepresentationModelSerializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenSerializerFacilities serializerFacilities, BeanProperty property) {
+    SirenRepresentationModelSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities,
+        @Nullable BeanProperty property) {
         super(RepresentationModel.class, configuration, serializerFacilities, property);
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) {
+    public JsonSerializer<?> createContextual(SerializerProvider prov, @Nullable BeanProperty property) {
         return new SirenRepresentationModelSerializer(configuration, serializerFacilities, property);
     }
 

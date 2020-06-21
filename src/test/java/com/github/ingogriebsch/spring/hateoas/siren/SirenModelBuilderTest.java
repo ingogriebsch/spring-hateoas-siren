@@ -61,7 +61,7 @@ class SirenModelBuilderTest {
             @Test
             void should_throw_exception_if_iterable_of_string_was_null() {
                 assertThatThrownBy(() -> SirenModelBuilder.sirenModel().classes((Iterable<String>) null))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(NullPointerException.class);
             }
 
             @Test
@@ -99,7 +99,7 @@ class SirenModelBuilderTest {
             @Test
             void should_throw_exception_if_iterable_of_representation_models_was_null() {
                 assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((Iterable<RepresentationModel<?>>) null))
-                    .isInstanceOf(IllegalArgumentException.class);
+                    .isInstanceOf(NullPointerException.class);
             }
 
             @Test
@@ -226,12 +226,6 @@ class SirenModelBuilderTest {
         class WithProperties {
 
             @Test
-            void should_throw_exception_if_input_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().properties(null))
-                    .isInstanceOf(IllegalArgumentException.class);
-            }
-
-            @Test
             void should_return_siren_model_if_simple_pojo_was_used() {
                 Object properties = new Pojo("Peter");
                 RepresentationModel<?> model = SirenModelBuilder.sirenModel().properties(properties).build();
@@ -243,11 +237,6 @@ class SirenModelBuilderTest {
 
         @Nested
         class WithTitle {
-
-            @Test
-            void should_throw_exception_if_input_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().title(null)).isInstanceOf(IllegalArgumentException.class);
-            }
 
             @Test
             void should_return_siren_model_if_string_was_used() {

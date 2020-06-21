@@ -37,8 +37,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
-
-import lombok.NonNull;
+import org.springframework.lang.Nullable;
 
 /**
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link PagedModel}.
@@ -50,20 +49,19 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     private static final long serialVersionUID = 4364222303241126575L;
     private static final JavaType TYPE = defaultInstance().constructType(PagedModel.class);
 
-    SirenPagedModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities) {
+    SirenPagedModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities) {
         this(configuration, deserializerFacilities, TYPE);
     }
 
-    SirenPagedModelDeserializer(@NonNull SirenConfiguration configuration,
-        @NonNull SirenDeserializerFacilities deserializerFacilities, JavaType contentType) {
+    SirenPagedModelDeserializer(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
+        JavaType contentType) {
         super(configuration, deserializerFacilities, contentType);
     }
 
     @Override
-    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
-        return new SirenPagedModelDeserializer(configuration, deserializerFacilities,
-            property == null ? ctxt.getContextualType() : property.getType().getContentType());
+    public JsonDeserializer<?> createContextual(DeserializationContext ctxt, @Nullable BeanProperty property) {
+        JavaType contentType = property == null ? ctxt.getContextualType() : property.getType().getContentType();
+        return new SirenPagedModelDeserializer(configuration, deserializerFacilities, contentType);
     }
 
     @Override
