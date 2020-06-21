@@ -43,6 +43,8 @@ class Jackson2SirenModule extends SimpleModule {
         setMixInAnnotation(EntityModel.class, EntityModelMixIn.class);
         setMixInAnnotation(CollectionModel.class, CollectionModelMixIn.class);
         setMixInAnnotation(PagedModel.class, PagedModelMixIn.class);
+        setMixInAnnotation(SirenModel.class, SirenModelMixIn.class);
+        setMixInAnnotation(SirenEmbeddedRepresentation.class, SirenEmbeddedRepresentationMixIn.class);
     }
 
     @JsonSerialize(using = SirenRepresentationModelSerializer.class)
@@ -63,6 +65,14 @@ class Jackson2SirenModule extends SimpleModule {
     @JsonSerialize(using = SirenPagedModelSerializer.class)
     @JsonDeserialize(using = SirenPagedModelDeserializer.class)
     abstract static class PagedModelMixIn<T> extends PagedModel<T> {
+    }
+
+    @JsonSerialize(using = SirenModelSerializer.class)
+    abstract static class SirenModelMixIn extends SirenModel {
+    }
+
+    @JsonSerialize(using = SirenEmbeddedRepresentationSerializer.class)
+    abstract static class SirenEmbeddedRepresentationMixIn extends SirenEmbeddedRepresentation {
     }
 
 }

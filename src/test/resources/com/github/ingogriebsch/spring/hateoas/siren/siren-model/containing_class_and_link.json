@@ -1,0 +1,7 @@
+{
+  "class" : [ "about" ],
+  "links" : [ {
+    "rel" : [ "about" ],
+    "href" : "/about"
+  } ]
+}

@@ -15,6 +15,8 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static java.util.Collections.singletonMap;
+
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newTreeMap;
@@ -663,6 +665,87 @@ class Jackson2SirenModuleTest {
                 RepresentationModel<?> expected = new RepresentationModel<>();
 
                 RepresentationModel<?> actual = read(source, RepresentationModel.class);
+                assertThat(actual).isEqualTo(expected);
+            }
+        }
+    }
+
+    @Nested
+    class Siren {
+
+        @Nested
+        class Serialize {
+
+            @Test
+            void containing_link() throws Exception {
+                RepresentationModel<?> source = SirenModelBuilder.sirenModel().linksAndActions(Link.of("/about", ABOUT)).build();
+                String expected = readResource("siren-model/containing_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_class_and_link() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().classes("about").linksAndActions(Link.of("/about", ABOUT)).build();
+                String expected = readResource("siren-model/containing_class_and_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_class_and_link_and_title() throws Exception {
+                RepresentationModel<?> source = SirenModelBuilder.sirenModel().classes("about")
+                    .linksAndActions(Link.of("/about", ABOUT)).title("about").build();
+                String expected = readResource("siren-model/containing_class_and_link_and_title.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_properties() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().classes("representation").properties(new Person("Peter", 33)).build();
+                String expected = readResource("siren-model/containing_properties.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_entity() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().classes("representation").entities(new PersonModel("Peter", 33)).build();
+                String expected = readResource("siren-model/containing_entity.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_entity_with_rel() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().entities("child", new PersonModel("Peter", 33)).build();
+                String expected = readResource("siren-model/containing_entity_with_rel.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_class_and_entities_and_link_and_properties_and_title() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().classes("departement").properties(singletonMap("name", "Development"))
+                        .entities(new PersonModel("Peter", 33), new PersonModel("Paul", 44)).title("Development")
+                        .linksAndActions(Link.of("/departement", SELF)).build();
+
+                String expected =
+                    readResource("siren-model/containing_class_and_entities_and_link_and_properties_and_title.json");
+
+                String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
         }

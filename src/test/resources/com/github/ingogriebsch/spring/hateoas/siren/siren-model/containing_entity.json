@@ -1,0 +1,11 @@
+{
+  "class" : [ "representation" ],
+  "entities" : [ {
+    "class" : [ "representation" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "Peter",
+      "age" : 33
+    }
+  } ]
+}

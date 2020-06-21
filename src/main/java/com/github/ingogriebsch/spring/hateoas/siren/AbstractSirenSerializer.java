@@ -29,16 +29,16 @@ import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 
 /**
- * Base class supporting the implementation of serializers which are able to serialize a specific {@link RepresentationModel} into
+ * Base class supporting the implementation of serializers which are able to serialize a representation model related object into
  * a Siren entity.
  * 
  * @author Ingo Griebsch
  */
-abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends ContainerSerializer<T>
-    implements ContextualSerializer {
+abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> implements ContextualSerializer {
 
     private static final long serialVersionUID = -8665900081601124431L;
     protected static final String ATTR_KEY_PARENT = "__SIREN_ENTITY_PARENT_OBJECT__";
+    protected static final String ATTR_KEY_REL = "__SIREN_ENTITY_REL__";
 
     protected final SirenConfiguration configuration;
     protected final SirenSerializerFacilities serializerFacilities;
@@ -81,7 +81,13 @@ abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends
     }
 
     protected List<LinkRelation> rels(RepresentationModel<?> model, SerializerProvider provider) {
-        return serializerFacilities.getEntityRelProvider().get(model, getAttribute(ATTR_KEY_PARENT, provider));
+        List<LinkRelation> rels = getAttribute(ATTR_KEY_REL, provider);
+        if (rels != null) {
+            return rels;
+        }
+
+        RepresentationModel<?> parent = getAttribute(ATTR_KEY_PARENT, provider);
+        return serializerFacilities.getEntityRelProvider().get(model, parent);
     }
 
     protected String title(Class<?> type) {
@@ -95,7 +101,7 @@ abstract class AbstractSirenSerializer<T extends RepresentationModel<?>> extends
     }
 
     @SuppressWarnings("unchecked")
-    protected T getAttribute(String key, SerializerProvider provider) {
-        return (T) provider.getAttribute(key);
+    protected <A> A getAttribute(String key, SerializerProvider provider) {
+        return (A) provider.getAttribute(key);
     }
 }

@@ -1,0 +1,7 @@
+{
+  "class" : [ "representation" ],
+  "properties" : {
+    "name" : "Peter",
+    "age" : 33
+  }
+}

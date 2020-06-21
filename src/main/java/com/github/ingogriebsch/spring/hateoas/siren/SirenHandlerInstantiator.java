@@ -73,6 +73,10 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
         serializers.put(SirenPagedModelDeserializer.class,
             new SirenPagedModelDeserializer(configuration, deserializerFacilities));
 
+        serializers.put(SirenModelSerializer.class, new SirenModelSerializer(configuration, serializerFacilities));
+        serializers.put(SirenEmbeddedRepresentationSerializer.class,
+            new SirenEmbeddedRepresentationSerializer(configuration, serializerFacilities));
+
         this.beanFactory = beanFactory;
     }
 

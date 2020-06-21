@@ -1,0 +1,26 @@
+{
+  "class" : [ "departement" ],
+  "properties" : {
+    "name" : "Development"
+  },
+  "entities" : [ {
+    "class" : [ "representation" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "Peter",
+      "age" : 33
+    }
+  }, {
+    "class" : [ "representation" ],
+    "rel" : [ "item" ],
+    "properties" : {
+      "name" : "Paul",
+      "age" : 44
+    }
+  } ],
+  "links" : [ {
+    "rel" : [ "self" ],
+    "href" : "/departement"
+  } ],
+  "title" : "Development"
+}
