@@ -11,16 +11,19 @@ import static org.assertj.core.api.InstanceOfAssertFactories.list;
 import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import static org.springframework.hateoas.IanaLinkRelations.SELF;
 
+import java.util.Collection;
 import java.util.List;
 
-import org.assertj.core.api.ListAssert;
+import com.github.ingogriebsch.spring.hateoas.siren.support.Capital;
+import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
+import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
+import com.github.ingogriebsch.spring.hateoas.siren.support.State;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
-
-import lombok.EqualsAndHashCode;
-import lombok.Value;
 
 class SirenModelBuilderTest {
 
@@ -98,20 +101,30 @@ class SirenModelBuilderTest {
 
             @Test
             void should_throw_exception_if_iterable_of_representation_models_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((Iterable<RepresentationModel<?>>) null))
+                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((Iterable<?>) null))
                     .isInstanceOf(NullPointerException.class);
             }
 
             @Test
             void should_throw_exception_if_rel_and_iterable_of_representation_models_was_null() {
-                assertThatThrownBy(
-                    () -> SirenModelBuilder.sirenModel().entities((String) null, (Iterable<RepresentationModel<?>>) null))
-                        .isInstanceOf(IllegalArgumentException.class);
+                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((String) null, (Iterable<?>) null))
+                    .isInstanceOf(IllegalArgumentException.class);
+            }
+
+            @Test
+            void should_return_siren_model_if_single_pojo_was_used() {
+                Person entity = new Person("Peter", 33);
+                RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(entity).build();
+
+                assertThat(model) //
+                    .asInstanceOf(type(SirenModel.class)) //
+                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
+                    .containsExactly(new SirenEmbeddedRepresentation(EntityModel.of(entity)));
             }
 
             @Test
             void should_return_siren_model_if_single_reprensentation_model_was_used() {
-                RepresentationModel<?> entity = new RepresentationModelExtension("Peter");
+                RepresentationModel<?> entity = new PersonModel("Peter", 46);
                 RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(entity).build();
 
                 assertThat(model) //
@@ -121,9 +134,20 @@ class SirenModelBuilderTest {
             }
 
             @Test
+            void should_return_siren_model_if_single_entity_model_was_used() {
+                State state = new State("Pennsylvania", new Capital("Philadelphia"));
+                RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(state).build();
+
+                assertThat(model) //
+                    .asInstanceOf(type(SirenModel.class)) //
+                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
+                    .containsExactly(new SirenEmbeddedRepresentation(state));
+            }
+
+            @Test
             void should_return_siren_model_if_iterable_of_representation_models_was_used() {
                 Iterable<RepresentationModel<?>> entities =
-                    newArrayList(new RepresentationModelExtension("Peter"), new RepresentationModelExtension("Paul"));
+                    newArrayList(new PersonModel("Peter", 22), new PersonModel("Paul", 35));
                 RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(entities).build();
 
                 assertThat(model) //
@@ -133,9 +157,21 @@ class SirenModelBuilderTest {
             }
 
             @Test
+            void should_return_siren_model_if_iterable_of_pojos_was_used() {
+                Iterable<Person> entities = newArrayList(new Person("Peter", 33), new Person("Paul", 44));
+                RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(entities).build();
+
+                assertThat(model) //
+                    .asInstanceOf(type(SirenModel.class)) //
+                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
+                    .containsExactlyElementsOf(
+                        stream(entities).map(e -> new SirenEmbeddedRepresentation(EntityModel.of(e))).collect(toList()));
+            }
+
+            @Test
             void should_return_siren_model_if_rel_and_single_representation_model_was_used() {
                 String rel = "rel";
-                RepresentationModel<?> entity = new RepresentationModelExtension("Peter");
+                RepresentationModel<?> entity = new PersonModel("Peter", 31);
                 RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(rel, entity).build();
 
                 assertThat(model) //
@@ -148,7 +184,7 @@ class SirenModelBuilderTest {
             void should_return_siren_model_if_rel_and_iterable_of_representation_models_was_used() {
                 String rel = "rel";
                 Iterable<RepresentationModel<?>> entities =
-                    newArrayList(new RepresentationModelExtension("Peter"), new RepresentationModelExtension("Paul"));
+                    newArrayList(new PersonModel("Peter", 27), new PersonModel("Paul", 55));
                 RepresentationModel<?> model = SirenModelBuilder.sirenModel().entities(rel, entities).build();
 
                 assertThat(model) //
@@ -161,19 +197,19 @@ class SirenModelBuilderTest {
             @Test
             void should_return_siren_model_if_different_rels_and_their_iterables_of_representation_models_was_used() {
                 List<SirenEmbeddedRepresentation> entities = newArrayList( //
-                    new SirenEmbeddedRepresentation(new RepresentationModelExtension("Pete"), "rel1"), //
-                    new SirenEmbeddedRepresentation(new RepresentationModelExtension("Paul"), "rel1"), //
-                    new SirenEmbeddedRepresentation(new RepresentationModelExtension("Mary"), "rel2") //
+                    new SirenEmbeddedRepresentation(new PersonModel("Pete", 22), "rel1"), //
+                    new SirenEmbeddedRepresentation(new PersonModel("Paul", 33), "rel1"), //
+                    new SirenEmbeddedRepresentation(new PersonModel("Mary", 34), "rel2") //
                 );
 
                 SirenModelBuilder builder = SirenModelBuilder.sirenModel();
                 entities.stream().forEach(e -> builder.entities(e.getRels().iterator().next(), e.getModel()));
                 RepresentationModel<?> model = builder.build();
 
-                ListAssert<SirenEmbeddedRepresentation> extracting = assertThat(model) //
+                assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class));
-                extracting.containsExactlyElementsOf(entities);
+                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
+                    .containsExactlyElementsOf(entities);
             }
         }
 
@@ -188,7 +224,7 @@ class SirenModelBuilderTest {
 
             @Test
             void should_throw_exception_if_iterable_of_link_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().linksAndActions((Iterable<Link>) null))
+                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().linksAndActions((Collection<Link>) null))
                     .isInstanceOf(IllegalArgumentException.class);
             }
 
@@ -227,7 +263,7 @@ class SirenModelBuilderTest {
 
             @Test
             void should_return_siren_model_if_simple_pojo_was_used() {
-                Object properties = new Pojo("Peter");
+                Object properties = new Person("Peter", 22);
                 RepresentationModel<?> model = SirenModelBuilder.sirenModel().properties(properties).build();
 
                 assertThat(model).asInstanceOf(type(SirenModel.class)).extracting(SirenModel::getProperties)
@@ -246,18 +282,5 @@ class SirenModelBuilderTest {
                 assertThat(model).asInstanceOf(type(SirenModel.class)).hasFieldOrPropertyWithValue(title, title);
             }
         }
-    }
-
-    @Value
-    private static class Pojo {
-
-        String name;
-    }
-
-    @EqualsAndHashCode(callSuper = true)
-    @Value
-    private static class RepresentationModelExtension extends RepresentationModel<RepresentationModelExtension> {
-
-        String name;
     }
 }

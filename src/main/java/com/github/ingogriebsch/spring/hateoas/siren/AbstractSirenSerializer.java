@@ -81,7 +81,7 @@ abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> impleme
     }
 
     protected List<LinkRelation> rels(RepresentationModel<?> model, SerializerProvider provider) {
-        List<LinkRelation> rels = getAttribute(ATTR_KEY_REL, provider);
+        List<LinkRelation> rels = removeAttribute(ATTR_KEY_REL, provider);
         if (rels != null) {
             return rels;
         }
@@ -103,5 +103,11 @@ abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> impleme
     @SuppressWarnings("unchecked")
     protected <A> A getAttribute(String key, SerializerProvider provider) {
         return (A) provider.getAttribute(key);
+    }
+
+    protected <A> A removeAttribute(String key, SerializerProvider provider) {
+        A attribute = getAttribute(key, provider);
+        provider.setAttribute(key, null);
+        return attribute;
     }
 }

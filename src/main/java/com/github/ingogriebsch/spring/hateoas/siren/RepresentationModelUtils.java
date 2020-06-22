@@ -18,6 +18,7 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static com.google.common.collect.Lists.newArrayList;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
@@ -62,4 +63,13 @@ class RepresentationModelUtils {
         return null;
     }
 
+    public static RepresentationModel<?> wrap(Object obj) {
+        if (isRepresentationModelSubclass(obj.getClass())) {
+            return (RepresentationModel<?>) obj;
+        }
+        if (Collection.class.isInstance(obj)) {
+            return CollectionModel.of(obj);
+        }
+        return RepresentationModel.of(obj);
+    }
 }

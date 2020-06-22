@@ -1,0 +1,20 @@
+{
+  "class" : [ "country" ],
+  "properties" : {
+    "name" : "United States of America"
+  },
+  "entities" : [ {
+    "class" : [ "entity" ],
+    "rel" : [ "states" ],
+    "properties" : {
+      "name" : "Pennsylvania"
+    },
+    "entities" : [ {
+      "class" : [ "representation" ],
+      "rel" : [ "item" ],
+      "properties" : {
+        "name" : "Philadelphia"
+      }
+    } ]
+  } ]
+}

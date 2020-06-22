@@ -677,19 +677,14 @@ class Jackson2SirenModuleTest {
         class Serialize {
 
             @Test
-            void containing_link() throws Exception {
-                RepresentationModel<?> source = SirenModelBuilder.sirenModel().linksAndActions(Link.of("/about", ABOUT)).build();
-                String expected = readResource("siren-model/containing_link.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_class_and_link() throws Exception {
+            void containing_class_and_link_and_title_and_representation_models_as_entities_and_properties() throws Exception {
                 RepresentationModel<?> source =
-                    SirenModelBuilder.sirenModel().classes("about").linksAndActions(Link.of("/about", ABOUT)).build();
-                String expected = readResource("siren-model/containing_class_and_link.json");
+                    SirenModelBuilder.sirenModel().classes("departement").properties(singletonMap("name", "Development"))
+                        .entities(new PersonModel("Peter", 33), new PersonModel("Paul", 44)).title("Development")
+                        .linksAndActions(Link.of("/departement", SELF)).build();
+
+                String expected = readResource(
+                    "siren-model/containing_class_and_link_and_title_and_representation_models_as_entities_and_properties.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
@@ -706,6 +701,36 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
+            void containing_class_and_link() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().classes("about").linksAndActions(Link.of("/about", ABOUT)).build();
+                String expected = readResource("siren-model/containing_class_and_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_entity_model_as_entities() throws Exception {
+                RepresentationModel<?> source =
+                    SirenModelBuilder.sirenModel().classes("country").properties(singletonMap("name", "United States of America"))
+                        .entities("states", new State("Pennsylvania", new Capital("Philadelphia"))).build();
+                String expected = readResource("siren-model/containing_entity_model_as_entities.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
+            void containing_link() throws Exception {
+                RepresentationModel<?> source = SirenModelBuilder.sirenModel().linksAndActions(Link.of("/about", ABOUT)).build();
+                String expected = readResource("siren-model/containing_link.json");
+
+                String actual = write(source);
+                assertThat(actual).isEqualTo(expected);
+            }
+
+            @Test
             void containing_properties() throws Exception {
                 RepresentationModel<?> source =
                     SirenModelBuilder.sirenModel().classes("representation").properties(new Person("Peter", 33)).build();
@@ -716,34 +741,20 @@ class Jackson2SirenModuleTest {
             }
 
             @Test
-            void containing_entity() throws Exception {
-                RepresentationModel<?> source =
-                    SirenModelBuilder.sirenModel().classes("representation").entities(new PersonModel("Peter", 33)).build();
-                String expected = readResource("siren-model/containing_entity.json");
-
-                String actual = write(source);
-                assertThat(actual).isEqualTo(expected);
-            }
-
-            @Test
-            void containing_entity_with_rel() throws Exception {
+            void containing_representation_model_as_entities_with_rel() throws Exception {
                 RepresentationModel<?> source =
                     SirenModelBuilder.sirenModel().entities("child", new PersonModel("Peter", 33)).build();
-                String expected = readResource("siren-model/containing_entity_with_rel.json");
+                String expected = readResource("siren-model/containing_representation_model_as_entities_with_rel.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);
             }
 
             @Test
-            void containing_class_and_entities_and_link_and_properties_and_title() throws Exception {
+            void containing_representation_model_as_entities() throws Exception {
                 RepresentationModel<?> source =
-                    SirenModelBuilder.sirenModel().classes("departement").properties(singletonMap("name", "Development"))
-                        .entities(new PersonModel("Peter", 33), new PersonModel("Paul", 44)).title("Development")
-                        .linksAndActions(Link.of("/departement", SELF)).build();
-
-                String expected =
-                    readResource("siren-model/containing_class_and_entities_and_link_and_properties_and_title.json");
+                    SirenModelBuilder.sirenModel().classes("representation").entities(new PersonModel("Peter", 33)).build();
+                String expected = readResource("siren-model/containing_representation_model_as_entities.json");
 
                 String actual = write(source);
                 assertThat(actual).isEqualTo(expected);

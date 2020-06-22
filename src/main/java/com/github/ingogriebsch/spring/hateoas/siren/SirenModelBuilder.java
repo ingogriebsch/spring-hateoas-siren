@@ -15,6 +15,7 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.wrap;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.apache.commons.lang3.Validate.noNullElements;
 import static org.springframework.hateoas.Links.of;
@@ -68,43 +69,43 @@ public final class SirenModelBuilder {
         return this;
     }
 
-    public SirenModelBuilder entities(RepresentationModel<?> entity) {
+    public SirenModelBuilder entities(Object entity) {
         return entities(newArrayList(entity));
     }
 
-    public SirenModelBuilder entities(RepresentationModel<?>... entities) {
+    public SirenModelBuilder entities(Object... entities) {
         return entities(newArrayList(entities));
     }
 
-    public SirenModelBuilder entities(Iterable<RepresentationModel<?>> entities) {
+    public SirenModelBuilder entities(Iterable<?> entities) {
         noNullElements(entities);
-        entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(e)));
+        entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(wrap(e))));
         return this;
     }
 
-    public SirenModelBuilder entities(String rel, RepresentationModel<?> entity) {
+    public SirenModelBuilder entities(String rel, Object entity) {
         return entities(LinkRelation.of(rel), entity);
     }
 
-    public SirenModelBuilder entities(String rel, RepresentationModel<?>... entities) {
+    public SirenModelBuilder entities(String rel, Object... entities) {
         return entities(LinkRelation.of(rel), entities);
     }
 
-    public SirenModelBuilder entities(String rel, Iterable<RepresentationModel<?>> entities) {
+    public SirenModelBuilder entities(String rel, Iterable<?> entities) {
         return entities(LinkRelation.of(rel), entities);
     }
 
-    public SirenModelBuilder entities(LinkRelation rel, RepresentationModel<?> entity) {
+    public SirenModelBuilder entities(LinkRelation rel, Object entity) {
         return entities(rel, newArrayList(entity));
     }
 
-    public SirenModelBuilder entities(LinkRelation rel, RepresentationModel<?>... entities) {
+    public SirenModelBuilder entities(LinkRelation rel, Object... entities) {
         return entities(rel, newArrayList(entities));
     }
 
-    public SirenModelBuilder entities(LinkRelation rel, Iterable<RepresentationModel<?>> entities) {
+    public SirenModelBuilder entities(LinkRelation rel, Iterable<?> entities) {
         noNullElements(entities);
-        entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(e, rel)));
+        entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(wrap(e), rel)));
         return this;
     }
 
