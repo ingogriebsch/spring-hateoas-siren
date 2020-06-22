@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.github.ingogriebsch.spring.hateoas.siren.SirenModel.EmbeddedRepresentation;
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.lang.Nullable;
@@ -92,5 +93,40 @@ class SirenModelSerializer extends AbstractSirenSerializer<SirenModel> {
     private static Map<String, Object> properties(Object model) {
         Map<String, Object> properties = ofNullable(model).map(m -> extractProperties(m, "links")).orElse(newHashMap());
         return properties.isEmpty() ? null : properties;
+    }
+
+    static class EmbeddedRepresentationSerializer extends AbstractSirenSerializer<EmbeddedRepresentation> {
+
+        private static final long serialVersionUID = 5908856821949616351L;
+
+        EmbeddedRepresentationSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities) {
+            this(configuration, serializerFacilities, null);
+        }
+
+        EmbeddedRepresentationSerializer(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities,
+            @Nullable BeanProperty property) {
+            super(SirenModel.EmbeddedRepresentation.class, configuration, serializerFacilities, property);
+        }
+
+        @Override
+        public JsonSerializer<?> createContextual(SerializerProvider prov, @Nullable BeanProperty property) {
+            return new EmbeddedRepresentationSerializer(configuration, serializerFacilities, property);
+        }
+
+        @Override
+        public void serialize(EmbeddedRepresentation representation, JsonGenerator gen, SerializerProvider provider)
+            throws IOException {
+            RepresentationModel<?> model = representation.getModel();
+
+            JsonSerializer<Object> serializer = provider.findValueSerializer(model.getClass(), property);
+
+            Object former = setAttribute(ATTR_KEY_REL, representation.getRels(), provider);
+            try {
+                serializer.serialize(model, gen, provider);
+            } finally {
+                setAttribute(ATTR_KEY_REL, former, provider);
+            }
+        }
+
     }
 }

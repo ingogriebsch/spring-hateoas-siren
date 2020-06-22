@@ -15,16 +15,19 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 
+import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
@@ -42,7 +45,37 @@ import lombok.experimental.FieldDefaults;
 class SirenModel extends RepresentationModel<SirenModel> {
 
     Object properties;
-    List<SirenEmbeddedRepresentation> entities;
+    List<EmbeddedRepresentation> entities;
     List<String> classes;
     String title;
+
+    /**
+     * Representation of an embedded representation.
+     * 
+     * @author Ingo Griebsch
+     */
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    @FieldDefaults(makeFinal = false, level = PRIVATE)
+    @Getter
+    @NoArgsConstructor
+    @ToString
+    static class EmbeddedRepresentation {
+
+        @NonNull
+        RepresentationModel<?> model;
+        List<LinkRelation> rels;
+
+        EmbeddedRepresentation(RepresentationModel<?> model) {
+            this.model = model;
+        }
+
+        EmbeddedRepresentation(RepresentationModel<?> model, String rel) {
+            this(model, LinkRelation.of(rel));
+        }
+
+        EmbeddedRepresentation(RepresentationModel<?> model, LinkRelation rel) {
+            this(model, newArrayList(rel));
+        }
+    }
 }

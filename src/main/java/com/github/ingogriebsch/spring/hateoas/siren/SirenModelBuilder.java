@@ -23,6 +23,8 @@ import static org.springframework.hateoas.Links.MergeMode.REPLACE_BY_REL;
 
 import java.util.List;
 
+import com.github.ingogriebsch.spring.hateoas.siren.SirenModel.EmbeddedRepresentation;
+
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.Links;
@@ -35,7 +37,7 @@ import org.springframework.hateoas.RepresentationModel;
  */
 public final class SirenModelBuilder {
 
-    private final List<SirenEmbeddedRepresentation> entities = newArrayList();
+    private final List<EmbeddedRepresentation> entities = newArrayList();
     private final List<String> classes = newArrayList();
     private Links linksAndActions = Links.of();
     private Object properties;
@@ -79,7 +81,7 @@ public final class SirenModelBuilder {
 
     public SirenModelBuilder entities(Iterable<?> entities) {
         noNullElements(entities);
-        entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(wrap(e))));
+        entities.forEach(e -> this.entities.add(new EmbeddedRepresentation(wrap(e))));
         return this;
     }
 
@@ -105,7 +107,7 @@ public final class SirenModelBuilder {
 
     public SirenModelBuilder entities(LinkRelation rel, Iterable<?> entities) {
         noNullElements(entities);
-        entities.forEach(e -> this.entities.add(new SirenEmbeddedRepresentation(wrap(e), rel)));
+        entities.forEach(e -> this.entities.add(new EmbeddedRepresentation(wrap(e), rel)));
         return this;
     }
 

@@ -14,6 +14,7 @@ import static org.springframework.hateoas.IanaLinkRelations.SELF;
 import java.util.Collection;
 import java.util.List;
 
+import com.github.ingogriebsch.spring.hateoas.siren.SirenModel.EmbeddedRepresentation;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Capital;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
@@ -118,8 +119,8 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
-                    .containsExactly(new SirenEmbeddedRepresentation(EntityModel.of(entity)));
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
+                    .containsExactly(new EmbeddedRepresentation(EntityModel.of(entity)));
             }
 
             @Test
@@ -129,8 +130,8 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
-                    .containsExactly(new SirenEmbeddedRepresentation(entity));
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
+                    .containsExactly(new EmbeddedRepresentation(entity));
             }
 
             @Test
@@ -140,8 +141,8 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
-                    .containsExactly(new SirenEmbeddedRepresentation(state));
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
+                    .containsExactly(new EmbeddedRepresentation(state));
             }
 
             @Test
@@ -152,8 +153,8 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
-                    .containsExactlyElementsOf(stream(entities).map(e -> new SirenEmbeddedRepresentation(e)).collect(toList()));
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
+                    .containsExactlyElementsOf(stream(entities).map(e -> new EmbeddedRepresentation(e)).collect(toList()));
             }
 
             @Test
@@ -163,9 +164,9 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
                     .containsExactlyElementsOf(
-                        stream(entities).map(e -> new SirenEmbeddedRepresentation(EntityModel.of(e))).collect(toList()));
+                        stream(entities).map(e -> new EmbeddedRepresentation(EntityModel.of(e))).collect(toList()));
             }
 
             @Test
@@ -176,8 +177,8 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
-                    .containsExactly(new SirenEmbeddedRepresentation(entity, rel));
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
+                    .containsExactly(new EmbeddedRepresentation(entity, rel));
             }
 
             @Test
@@ -189,17 +190,16 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
-                    .containsExactlyElementsOf(
-                        stream(entities).map(e -> new SirenEmbeddedRepresentation(e, rel)).collect(toList()));
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
+                    .containsExactlyElementsOf(stream(entities).map(e -> new EmbeddedRepresentation(e, rel)).collect(toList()));
             }
 
             @Test
             void should_return_siren_model_if_different_rels_and_their_iterables_of_representation_models_was_used() {
-                List<SirenEmbeddedRepresentation> entities = newArrayList( //
-                    new SirenEmbeddedRepresentation(new PersonModel("Pete", 22), "rel1"), //
-                    new SirenEmbeddedRepresentation(new PersonModel("Paul", 33), "rel1"), //
-                    new SirenEmbeddedRepresentation(new PersonModel("Mary", 34), "rel2") //
+                List<EmbeddedRepresentation> entities = newArrayList( //
+                    new EmbeddedRepresentation(new PersonModel("Pete", 22), "rel1"), //
+                    new EmbeddedRepresentation(new PersonModel("Paul", 33), "rel1"), //
+                    new EmbeddedRepresentation(new PersonModel("Mary", 34), "rel2") //
                 );
 
                 SirenModelBuilder builder = SirenModelBuilder.sirenModel();
@@ -208,7 +208,7 @@ class SirenModelBuilderTest {
 
                 assertThat(model) //
                     .asInstanceOf(type(SirenModel.class)) //
-                    .extracting(SirenModel::getEntities, list(SirenEmbeddedRepresentation.class)) //
+                    .extracting(SirenModel::getEntities, list(EmbeddedRepresentation.class)) //
                     .containsExactlyElementsOf(entities);
             }
         }
