@@ -17,7 +17,7 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 
@@ -35,7 +35,7 @@ class SirenEntityClassProviderTest {
 
     @Test
     void get_should_throw_exception_if_input_is_null() {
-        assertThrows(NullPointerException.class, () -> provider.get(null));
+        assertThatThrownBy(() -> provider.get(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

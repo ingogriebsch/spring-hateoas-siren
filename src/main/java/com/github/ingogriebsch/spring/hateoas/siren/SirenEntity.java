@@ -29,6 +29,7 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.hateoas.LinkRelation;
 
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
 
@@ -72,6 +73,7 @@ class SirenEntity {
     @Value(staticConstructor = "of")
     static class TitleResolvable implements MessageSourceResolvable {
 
+        @NonNull
         Class<?> type;
 
         @Override

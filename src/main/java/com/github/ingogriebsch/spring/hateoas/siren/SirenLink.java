@@ -44,6 +44,7 @@ import lombok.Value;
 class SirenLink {
 
     @JsonProperty("rel")
+    @NonNull
     @Singular
     List<String> rels;
 
@@ -63,6 +64,7 @@ class SirenLink {
     @Value(staticConstructor = "of")
     static class TitleResolvable implements MessageSourceResolvable {
 
+        @NonNull
         LinkRelation rel;
 
         @Override

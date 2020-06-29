@@ -30,6 +30,8 @@ import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.Links;
 import org.springframework.hateoas.RepresentationModel;
 
+import lombok.NonNull;
+
 /**
  * Builder which allows to build complex Siren entity structures.
  * 
@@ -50,80 +52,80 @@ public final class SirenModelBuilder {
         return new SirenModelBuilder();
     }
 
-    public SirenModelBuilder classes(String... classes) {
+    public SirenModelBuilder classes(@NonNull String... classes) {
         return classes(newArrayList(classes));
     }
 
-    public SirenModelBuilder classes(Iterable<String> classes) {
+    public SirenModelBuilder classes(@NonNull Iterable<String> classes) {
         noNullElements(classes);
         classes.forEach(this.classes::add);
         return this;
     }
 
-    public SirenModelBuilder title(String title) {
+    public SirenModelBuilder title(@NonNull String title) {
         this.title = title;
         return this;
     }
 
-    public SirenModelBuilder properties(Object properties) {
+    public SirenModelBuilder properties(@NonNull Object properties) {
         // FIXME may not be a representation model subclass
         this.properties = properties;
         return this;
     }
 
-    public SirenModelBuilder entities(Object entity) {
+    public SirenModelBuilder entities(@NonNull Object entity) {
         return entities(newArrayList(entity));
     }
 
-    public SirenModelBuilder entities(Object... entities) {
+    public SirenModelBuilder entities(@NonNull Object... entities) {
         return entities(newArrayList(entities));
     }
 
-    public SirenModelBuilder entities(Iterable<?> entities) {
+    public SirenModelBuilder entities(@NonNull Iterable<?> entities) {
         noNullElements(entities);
         entities.forEach(e -> this.entities.add(new EmbeddedRepresentation(wrap(e))));
         return this;
     }
 
-    public SirenModelBuilder entities(String rel, Object entity) {
+    public SirenModelBuilder entities(@NonNull String rel, @NonNull Object entity) {
         return entities(LinkRelation.of(rel), entity);
     }
 
-    public SirenModelBuilder entities(String rel, Object... entities) {
+    public SirenModelBuilder entities(@NonNull String rel, @NonNull Object... entities) {
         return entities(LinkRelation.of(rel), entities);
     }
 
-    public SirenModelBuilder entities(String rel, Iterable<?> entities) {
+    public SirenModelBuilder entities(@NonNull String rel, @NonNull Iterable<?> entities) {
         return entities(LinkRelation.of(rel), entities);
     }
 
-    public SirenModelBuilder entities(LinkRelation rel, Object entity) {
+    public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Object entity) {
         return entities(rel, newArrayList(entity));
     }
 
-    public SirenModelBuilder entities(LinkRelation rel, Object... entities) {
+    public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Object... entities) {
         return entities(rel, newArrayList(entities));
     }
 
-    public SirenModelBuilder entities(LinkRelation rel, Iterable<?> entities) {
+    public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Iterable<?> entities) {
         noNullElements(entities);
         entities.forEach(e -> this.entities.add(new EmbeddedRepresentation(wrap(e), rel)));
         return this;
     }
 
-    public SirenModelBuilder linksAndActions(Link link) {
+    public SirenModelBuilder linksAndActions(@NonNull Link link) {
         return linksAndActions(of(link));
     }
 
-    public SirenModelBuilder linksAndActions(Link... links) {
+    public SirenModelBuilder linksAndActions(@NonNull Link... links) {
         return linksAndActions(of(links));
     }
 
-    public SirenModelBuilder linksAndActions(Iterable<Link> links) {
+    public SirenModelBuilder linksAndActions(@NonNull Iterable<Link> links) {
         return linksAndActions(of(links));
     }
 
-    public SirenModelBuilder linksAndActions(Links links) {
+    public SirenModelBuilder linksAndActions(@NonNull Links links) {
         List<Link> linksList = links.toList();
         noNullElements(linksList);
 

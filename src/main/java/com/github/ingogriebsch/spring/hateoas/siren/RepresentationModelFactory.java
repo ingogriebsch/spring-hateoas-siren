@@ -21,12 +21,13 @@ import static org.springframework.util.Assert.isAssignable;
 
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 import com.fasterxml.jackson.databind.JavaType;
 
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.lang.Nullable;
+
+import lombok.NonNull;
 
 /**
  * Factory to create a {@link RepresentationModel} instance based on the given input evaluated during deserialization.
@@ -49,7 +50,8 @@ public interface RepresentationModelFactory {
      *        {@literal null}.
      * @return the created {@link RepresentationModel} instance.
      */
-    default RepresentationModel<?> create(JavaType type, Iterable<Link> links, @Nullable Map<String, Object> properties) {
+    default RepresentationModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links,
+        @Nullable Map<String, Object> properties) {
         Class<?> modelType = type.getRawClass();
         isAssignable(RepresentationModel.class, modelType);
 

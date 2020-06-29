@@ -26,6 +26,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 
+import lombok.NonNull;
+
 /**
  * Factory to create a {@link PagedModel} instance based on the given input evaluated during deserialization.
  * 
@@ -48,7 +50,8 @@ public interface PagedModelFactory {
      *        {@literal null}.
      * @return the created {@link PagedModel} instance.
      */
-    default PagedModel<?> create(JavaType type, Iterable<Link> links, Iterable<Object> content, PageMetadata metadata) {
+    default PagedModel<?> create(@NonNull JavaType type, @NonNull Iterable<Link> links, @NonNull Iterable<Object> content,
+        @NonNull PageMetadata metadata) {
         Class<?> modelType = type.getRawClass();
         isAssignable(PagedModel.class, modelType);
 

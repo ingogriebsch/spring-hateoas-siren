@@ -53,7 +53,6 @@ class SirenAction {
     List<String> classes;
 
     @Default
-    @JsonInclude(NON_NULL)
     @NonNull
     HttpMethod method = GET;
 
@@ -105,6 +104,7 @@ class SirenAction {
         @Value(staticConstructor = "of")
         static class TitleResolvable implements MessageSourceResolvable {
 
+            @NonNull
             String name;
 
             @Override
@@ -117,6 +117,7 @@ class SirenAction {
     @Value(staticConstructor = "of")
     static class TitleResolvable implements MessageSourceResolvable {
 
+        @NonNull
         String name;
 
         @Override

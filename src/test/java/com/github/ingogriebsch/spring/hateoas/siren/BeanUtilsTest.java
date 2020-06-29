@@ -24,7 +24,6 @@ import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProp
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.instantiate;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map;
@@ -43,11 +42,6 @@ class BeanUtilsTest {
     class Instantiate {
 
         @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> instantiate(null, null, null)).isInstanceOf(NullPointerException.class);
-        }
-
-        @Test
         void should_create_string_object() {
             String expected = "String";
             assertThat(instantiate(String.class, new Class[] { String.class }, new Object[] { expected })).isEqualTo(expected);
@@ -62,11 +56,6 @@ class BeanUtilsTest {
 
     @Nested
     class ExtractProperties {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> extractProperties(null, (String[]) null)).isInstanceOf(NullPointerException.class);
-        }
 
         @Test
         void should_return_map_containing_properties() {
@@ -90,11 +79,6 @@ class BeanUtilsTest {
 
     @Nested
     class ApplyProperties {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThatThrownBy(() -> applyProperties(null, null)).isInstanceOf(NullPointerException.class);
-        }
 
         @Test
         void should_set_simple_property_on_pojo() {

@@ -25,6 +25,8 @@ import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.lang.Nullable;
 
+import lombok.NonNull;
+
 /**
  * API to provide information about the relationship of a Siren entity to it's parent.
  *
@@ -42,7 +44,7 @@ public interface SirenEntityRelProvider {
      * @param parent the parent {@link RepresentationModel} of the {@literal model}. Can be {@literal null}
      * @return the {@link IanaLinkRelations relations} explaining the relationship between the model and it's parent
      */
-    default List<LinkRelation> get(RepresentationModel<?> model, @Nullable RepresentationModel<?> parent) {
+    default List<LinkRelation> get(@NonNull RepresentationModel<?> model, @Nullable RepresentationModel<?> parent) {
         return parent != null ? newArrayList(ITEM) : newArrayList();
     }
 }

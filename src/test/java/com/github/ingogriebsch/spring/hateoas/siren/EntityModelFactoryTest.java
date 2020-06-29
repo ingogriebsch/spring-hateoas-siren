@@ -33,7 +33,7 @@ class EntityModelFactoryTest {
         EntityModelFactory factory = new EntityModelFactory() {
         };
 
-        assertThatThrownBy(() -> factory.create(null, null, null, null)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> factory.create(null, null, null, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

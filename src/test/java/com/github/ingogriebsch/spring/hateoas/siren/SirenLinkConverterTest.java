@@ -18,7 +18,6 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.hateoas.IanaLinkRelations.SELF;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
@@ -52,11 +51,6 @@ class SirenLinkConverterTest {
 
     @Nested
     class To {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThrows(NullPointerException.class, () -> new SirenLinkConverter(DEFAULTS_ONLY).to(null));
-        }
 
         @Test
         void containing_link_with_href_and_rel() throws IOException {
@@ -118,11 +112,6 @@ class SirenLinkConverterTest {
 
     @Nested
     class From {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThrows(NullPointerException.class, () -> new SirenLinkConverter(DEFAULTS_ONLY).from(null));
-        }
 
         @Test
         void containing_link_with_href_and_rel() throws IOException {

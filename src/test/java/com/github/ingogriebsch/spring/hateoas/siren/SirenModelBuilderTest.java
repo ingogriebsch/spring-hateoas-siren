@@ -65,7 +65,7 @@ class SirenModelBuilderTest {
             @Test
             void should_throw_exception_if_iterable_of_string_was_null() {
                 assertThatThrownBy(() -> SirenModelBuilder.sirenModel().classes((Iterable<String>) null))
-                    .isInstanceOf(NullPointerException.class);
+                    .isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
@@ -103,7 +103,7 @@ class SirenModelBuilderTest {
             @Test
             void should_throw_exception_if_iterable_of_representation_models_was_null() {
                 assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((Iterable<?>) null))
-                    .isInstanceOf(NullPointerException.class);
+                    .isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test

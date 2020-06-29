@@ -17,7 +17,6 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
 import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
@@ -66,14 +65,4 @@ class SirenMediaTypeConfigurationTest {
             assertThat(sirenMediaTypeConfiguration.getJacksonModule()).isNotNull().isInstanceOf(Jackson2SirenModule.class);
         }
     }
-
-    @Nested
-    class ConfigureObjectMapper {
-
-        @Test
-        void should_throw_exception_if_input_is_null() {
-            assertThrows(NullPointerException.class, () -> sirenMediaTypeConfiguration.configureObjectMapper(null));
-        }
-    }
-
 }
