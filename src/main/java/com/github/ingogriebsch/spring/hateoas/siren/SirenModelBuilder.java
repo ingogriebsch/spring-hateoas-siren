@@ -126,10 +126,9 @@ public final class SirenModelBuilder {
     }
 
     public SirenModelBuilder linksAndActions(@NonNull Links links) {
-        List<Link> linksList = links.toList();
-        noNullElements(linksList);
+        noNullElements(links);
 
-        linksAndActions = linksAndActions.merge(REPLACE_BY_REL, linksList);
+        linksAndActions = linksAndActions.merge(REPLACE_BY_REL, links);
         return this;
     }
 
