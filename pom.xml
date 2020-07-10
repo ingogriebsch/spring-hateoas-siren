@@ -193,16 +193,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>net.revelc.code</groupId>
-                    <artifactId>impsort-maven-plugin</artifactId>
-                    <version>1.4.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>net.revelc.code.formatter</groupId>
-                    <artifactId>formatter-maven-plugin</artifactId>
-                    <version>2.12.0</version>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
@@ -243,6 +233,11 @@
                     <version>3.0.0-M5</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>2.0.0</version>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>tidy-maven-plugin</artifactId>
                     <version>1.1.0</version>
@@ -253,9 +248,14 @@
                     <version>0.8.5</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>2.0.0</version>
+                    <groupId>net.revelc.code</groupId>
+                    <artifactId>impsort-maven-plugin</artifactId>
+                    <version>1.4.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>2.12.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
