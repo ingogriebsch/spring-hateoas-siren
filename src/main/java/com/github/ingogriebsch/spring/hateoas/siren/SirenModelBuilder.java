@@ -24,13 +24,11 @@ import static org.springframework.hateoas.Links.MergeMode.REPLACE_BY_REL;
 import java.util.List;
 
 import com.github.ingogriebsch.spring.hateoas.siren.SirenModel.EmbeddedRepresentation;
-
+import lombok.NonNull;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.Links;
 import org.springframework.hateoas.RepresentationModel;
-
-import lombok.NonNull;
 
 /**
  * Builder which allows to build complex Siren entity structures.

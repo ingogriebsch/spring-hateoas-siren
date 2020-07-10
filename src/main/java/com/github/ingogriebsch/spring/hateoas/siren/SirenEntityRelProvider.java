@@ -20,12 +20,11 @@ import static org.springframework.hateoas.IanaLinkRelations.ITEM;
 
 import java.util.List;
 
+import lombok.NonNull;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.lang.Nullable;
-
-import lombok.NonNull;
 
 /**
  * API to provide information about the relationship of a Siren entity to it's parent.

@@ -15,9 +15,8 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
-import org.springframework.hateoas.mediatype.MessageResolver;
-
 import lombok.Value;
+import org.springframework.hateoas.mediatype.MessageResolver;
 
 /**
  * Collection of facilities needed to serialize a Siren entity.

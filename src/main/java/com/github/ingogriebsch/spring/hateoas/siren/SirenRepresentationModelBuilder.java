@@ -24,12 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.lang.Nullable;
-
-import lombok.RequiredArgsConstructor;
 
 /**
  * Builder that helps the {@link SirenRepresentationModelDeserializer} to deserialize a Siren entity into a

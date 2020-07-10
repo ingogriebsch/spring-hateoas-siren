@@ -25,7 +25,7 @@ import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.reactive.server.WebTestClient.bindToApplicationContext;
 
 import com.github.ingogriebsch.spring.hateoas.siren.support.WebFluxPersonController;
-
+import lombok.RequiredArgsConstructor;
 import org.assertj.core.matcher.AssertionMatcher;
 import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,8 +47,6 @@ import org.springframework.test.util.JsonPathExpectationsHelper;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 import org.springframework.web.reactive.config.EnableWebFlux;
-
-import lombok.RequiredArgsConstructor;
 
 @ContextConfiguration
 @ExtendWith(SpringExtension.class)

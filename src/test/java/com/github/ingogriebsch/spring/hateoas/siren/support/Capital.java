@@ -17,14 +17,13 @@ package com.github.ingogriebsch.spring.hateoas.siren.support;
 
 import java.util.List;
 
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.RepresentationModel;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.RepresentationModel;
 
 @AllArgsConstructor
 @Data

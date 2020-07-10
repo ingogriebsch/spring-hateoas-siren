@@ -19,7 +19,6 @@ import com.github.ingogriebsch.spring.hateoas.siren.support.Capital;
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
 import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 import com.github.ingogriebsch.spring.hateoas.siren.support.State;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.EntityModel;

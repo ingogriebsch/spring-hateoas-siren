@@ -30,7 +30,6 @@ import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
 import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
-
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.lang.Nullable;
 

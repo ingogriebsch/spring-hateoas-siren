@@ -21,12 +21,11 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.Collection;
 import java.util.List;
 
+import lombok.NoArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
-
-import lombok.NoArgsConstructor;
 
 /**
  * Utility methods help to understand of which type of {@link RepresentationModel} a specific object is.

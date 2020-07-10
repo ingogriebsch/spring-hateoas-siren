@@ -20,9 +20,6 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.util.List;
 
-import org.springframework.hateoas.LinkRelation;
-import org.springframework.hateoas.RepresentationModel;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,6 +27,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import org.springframework.hateoas.LinkRelation;
+import org.springframework.hateoas.RepresentationModel;
 
 /**
  * A {@link RepresentationModel} extension which helps to build complex Siren entity structures.

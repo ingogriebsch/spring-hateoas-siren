@@ -49,7 +49,6 @@ import com.github.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
 import com.github.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 import com.github.ingogriebsch.spring.hateoas.siren.support.State;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

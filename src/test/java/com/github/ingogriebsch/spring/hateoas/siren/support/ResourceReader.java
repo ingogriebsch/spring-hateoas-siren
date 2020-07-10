@@ -20,11 +20,10 @@ import static lombok.AccessLevel.PRIVATE;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 @NoArgsConstructor(access = PRIVATE)
 public final class ResourceReader {

@@ -32,7 +32,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
 import com.github.ingogriebsch.spring.hateoas.siren.support.StaticMessageResolver;
 import com.github.ingogriebsch.spring.hateoas.siren.support.WebMvcPersonController;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

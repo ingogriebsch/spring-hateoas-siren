@@ -22,13 +22,11 @@ import static lombok.AccessLevel.PRIVATE;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JavaType;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.lang.Nullable;
-
-import lombok.RequiredArgsConstructor;
 
 /**
  * Builder that helps the {@link SirenPagedModelDeserializer} to deserialize a Siren entity into a {@link PagedModel}.

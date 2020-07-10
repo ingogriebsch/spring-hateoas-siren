@@ -15,12 +15,11 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren.support;
 
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

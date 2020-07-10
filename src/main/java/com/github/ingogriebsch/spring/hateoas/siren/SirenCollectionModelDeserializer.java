@@ -36,7 +36,6 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.lang.Nullable;
 

@@ -15,10 +15,9 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren.support;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class SimpleObjectProvider<T> implements ObjectProvider<T> {

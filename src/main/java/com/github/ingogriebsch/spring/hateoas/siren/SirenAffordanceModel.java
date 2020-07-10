@@ -17,13 +17,12 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.AffordanceModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.QueryParameter;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-
-import lombok.EqualsAndHashCode;
 
 /**
  * {@link AffordanceModel} for a Siren {@link MediaType}.

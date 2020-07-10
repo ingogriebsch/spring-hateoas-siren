@@ -27,10 +27,8 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.util.ReflectionUtils;
-
 import lombok.NoArgsConstructor;
+import org.springframework.util.ReflectionUtils;
 
 /**
  * Utility methods for instantiating beans, extracting bean properties, applying bean properties, etc.

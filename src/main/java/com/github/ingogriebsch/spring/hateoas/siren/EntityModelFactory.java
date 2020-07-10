@@ -22,12 +22,10 @@ import static org.springframework.util.Assert.isAssignable;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
-
+import lombok.NonNull;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.lang.Nullable;
-
-import lombok.NonNull;
 
 /**
  * Factory to create a {@link EntityModel} instance based on the given input evaluated during deserialization.

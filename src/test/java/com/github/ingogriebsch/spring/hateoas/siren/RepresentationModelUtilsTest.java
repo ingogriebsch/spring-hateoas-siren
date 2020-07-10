@@ -18,7 +18,6 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.ingogriebsch.spring.hateoas.siren.support.Person;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

@@ -21,11 +21,10 @@ import static com.google.common.collect.Maps.newHashMap;
 
 import java.util.Map;
 
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.hateoas.mediatype.MessageResolver;
-
 import lombok.NonNull;
 import lombok.Value;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.hateoas.mediatype.MessageResolver;
 
 @Value(staticConstructor = "of")
 public class StaticMessageResolver implements MessageResolver {

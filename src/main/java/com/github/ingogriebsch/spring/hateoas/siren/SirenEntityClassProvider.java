@@ -22,9 +22,8 @@ import static org.apache.commons.lang3.StringUtils.uncapitalize;
 
 import java.util.List;
 
-import org.springframework.hateoas.RepresentationModel;
-
 import lombok.NonNull;
+import org.springframework.hateoas.RepresentationModel;
 
 /**
  * API to provide information about the nature of the content of a Siren entity.

@@ -25,15 +25,13 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.http.HttpMethod;
-
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.NonNull;
 import lombok.Singular;
 import lombok.Value;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.http.HttpMethod;
 
 /**
  * Representation of a Siren action.

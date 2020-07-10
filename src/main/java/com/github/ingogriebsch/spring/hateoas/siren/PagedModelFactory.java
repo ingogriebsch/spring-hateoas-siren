@@ -21,12 +21,10 @@ import static org.springframework.util.Assert.isAssignable;
 import java.util.Collection;
 
 import com.fasterxml.jackson.databind.JavaType;
-
+import lombok.NonNull;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
-
-import lombok.NonNull;
 
 /**
  * Factory to create a {@link PagedModel} instance based on the given input evaluated during deserialization.

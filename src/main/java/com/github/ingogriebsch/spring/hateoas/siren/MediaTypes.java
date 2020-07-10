@@ -18,9 +18,8 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.MediaType.parseMediaType;
 
-import org.springframework.http.MediaType;
-
 import lombok.NoArgsConstructor;
+import org.springframework.http.MediaType;
 
 /**
  * Constants for the Siren hypermedia type.
