@@ -300,8 +300,7 @@
                 <artifactId>impsort-maven-plugin</artifactId>
                 <configuration>
                     <staticGroups>java.,javax.,*</staticGroups>
-                    <groups>java.,javax.,com.,org.,*</groups>
-                    <excludes>**/support/*.java</excludes>
+                    <groups>java.,javax.,*</groups>
                 </configuration>
                 <executions>
                     <execution>
@@ -316,14 +315,7 @@
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
                 <configuration>
-                    <configFile>/src/config/java-formatter.xml</configFile>
-                    <directories>
-                        <directory>src/main/java</directory>
-                        <directory>src/main/resources</directory>
-                        <directory>src/test/java</directory>
-                        <directory>src/test/resources</directory>
-                    </directories>
-                    <excludes>**/support/*.java,**/*.xml,**/*.json</excludes>
+                    <configFile>/etc/ide/eclipse.java-formatter.xml</configFile>
                 </configuration>
                 <executions>
                     <execution>
