@@ -252,6 +252,11 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.5</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>2.0.0</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -266,6 +271,25 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin><!-- https://asciidoctor.org/docs/asciidoctor-maven-plugin/ -->
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-docs</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <backend>html5</backend>
+                    <attributes>
+                        <version>${project.version}</version>
+                    </attributes>
+                </configuration>
             </plugin>
             <plugin><!-- https://maven.apache.org/plugins/maven-javadoc-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
