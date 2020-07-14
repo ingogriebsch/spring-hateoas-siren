@@ -1,0 +1,499 @@
+[[server-side-support]]
+= Server side support
+
+[[serialization]]
+== Serialization
+
+Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json`.
+
+[[serialization-representation-models]]
+=== Representation Models
+
+In general, each Spring HATEOAS {spring-hateoas-representation-model-url}[representation model] provided through a `@RestController` method is rendered into a Siren {siren-entity-url}[entity].
+Depending on the respective type of the {spring-hateoas-representation-model-url}[representation model] the following rules apply:
+
+[[serialization-representation-model]]
+==== Representation Model
+
+If this module serializes a {spring-hateoas-representation-model-url}[representation model], it maps
+
+* any custom properties of the {spring-hateoas-representation-model-url}[representation model] (because it is subclassed) to Siren Entity {siren-entity-properties-url}[properties].
+* the type of the {spring-hateoas-representation-model-url}[representation model] to the Siren Entity {siren-entity-title-url}[title] if the type is mapped through the <<internationalization>> mechanism.
+* the {spring-hateoas-links-url}[links] of the {spring-hateoas-representation-model-url}[representation model] to Siren Entity {siren-entity-link-url}[links] and {siren-entity-action-url}[actions] (see section <<serialization-links>> to understand how they are rendered).
+
+.Serialize a representation model having some links
+====
+Define a representation model:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+class PersonModel extends RepresentationModel<PersonModel> {
+  String firstname, lastname;
+}
+----
+
+Use the representation model:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+PersonModel model = new PersonModel();
+model.firstname = "Dave";
+model.lastname = "Matthews";
+// add some links (having affordances) to the model...
+----
+
+The resulting Siren representation:
+[source,json,indent=0,subs="verbatim,quotes,attributes"]
+----
+{
+  "class": [
+    ...
+  ],
+  "properties": {
+    "firstname": "Dave",
+    "lastname": "Matthews"
+  },
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+----
+====
+
+[[serialization-entity-model]]
+==== Entity Model
+
+If this module renders an {spring-hateoas-representation-model-url}[entity model], it maps
+
+* the value of the content property of the {spring-hateoas-representation-model-url}[entity model] to Siren Entity {siren-entity-properties-url}[properties] if the value represents an instance of a simple pojo.
+* the value of the content property of the {spring-hateoas-representation-model-url}[entity model] to Siren {siren-entities-url}[entities] if the value is an instance of one of the available {spring-hateoas-representation-model-url}[representation models].
+* the type of the content property of the {spring-hateoas-representation-model-url}[entity model] to the Siren Entity {siren-entity-title-url}[title] if the value is an instance of a simple pojo and the type is mapped through the <<internationalization>> mechanism.
+* the type of the {spring-hateoas-representation-model-url}[entity model] to the Siren Entity {siren-entity-title-url}[title] if the value is an instance of one of the available {spring-hateoas-representation-model-url}[representation models] and the type is mapped through the <<internationalization>> mechanism.
+* the {spring-hateoas-links-url}[links] of the {spring-hateoas-representation-model-url}[entity model] to Siren Entity {siren-entity-link-url}[links] and {siren-entity-action-url}[actions] (see section <<serialization-links>> to understand how they are rendered).
+
+.Serialize an entity model wrapping a pojo and having some links
+====
+A person class:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+class Person {
+  String firstname, lastname;
+}
+----
+
+An entity model wrapping a person object:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+Person person = new Person();
+person.firstname = "Dave";
+person.lastname = "Matthews";
+
+EntityModel<Person> model = new EntityModel<>(person);
+// add some links (having affordances) to the model...
+----
+
+The resulting Siren representation:
+[source,json,indent=0,subs="verbatim,quotes,attributes"]
+----
+{
+  "class": [
+    ...
+  ],
+  "properties": {
+    "firstname": "Dave",
+    "lastname": "Matthews"
+  },
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+----
+====
+
+.Serialize an entity model wrapping an entity model wrapping a pojo and having some links
+====
+A person class:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+class Person {
+  String firstname, lastname;
+}
+----
+
+An entity model wrapping a person object:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+Person person = new Person();
+person.firstname = "Dave";
+person.lastname = "Matthews";
+
+EntityModel<Person> personModel = new EntityModel<>(person);
+// add some links (having affordances) to the person model...
+----
+
+Another entity model wrapping the entity model:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+EntityModel<EntityModel<Person>> model = new EntityModel<>(personModel);
+// add some links (having affordances) to the model...
+----
+
+The resulting Siren representation:
+[source,json,indent=0,subs="verbatim,quotes,attributes"]
+----
+{
+  "class": [
+    ...
+  ],
+  "entities": [
+    "class": [
+      ...
+    ],
+    "rel": [
+      ...
+    ],
+    "properties": {
+      "firstname": "Dave",
+      "lastname": "Matthews"
+    }
+  ],
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+----
+====
+
+[[serialization-collection-model]]
+==== Collection Model
+
+If this module renders a {spring-hateoas-representation-model-url}[collection model], it maps
+
+* the value of the content property of the {spring-hateoas-representation-model-url}[collection model] to Siren {siren-entities-url}[entities] regardless if it represents instances of one of the available {spring-hateoas-representation-model-url}[representation models] or simple pojos.
+* the type of the {spring-hateoas-representation-model-url}[collection model] to the Siren Entity {siren-entity-title-url}[title] if the type is mapped through the <<internationalization>> mechanism.
+* the {spring-hateoas-links-url}[links] of the {spring-hateoas-representation-model-url}[collection model] to Siren Entity {siren-entity-link-url}[links] and {siren-entity-action-url}[actions] (see section <<serialization-links>> to understand how they are rendered).
+
+.Serialize a collection model wrapping some entity models and having some links
+====
+A person class:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+class Person {
+  String firstname, lastname;
+}
+----
+
+Some entity models each wrapping a person object:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+Person p1 = new Person();
+p1.firstname = "Dave";
+p1.lastname = "Matthews";
+
+EntityModel<Person> pm1 = new EntityModel<>(p1);
+// add some links (having affordances) to the model...
+
+Person p2 = new Person();
+p2.firstname = "Stefan";
+p2.lastname = "Lessard";
+
+EntityModel<Person> pm2 = new EntityModel<>(p2);
+// add some links (having affordances) to the model...
+----
+
+A collection model wrapping the entity models:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+Collection<EntityModel<Person>> people = Collections.singleton(pm1, pm2);
+CollectionModel<EntityModel<Person>> people = new CollectionModel<>(people);
+// add some links (having affordances) to the model...
+----
+
+The resulting Siren representation:
+[source,json,indent=0,subs="verbatim,quotes,attributes"]
+----
+{
+  "class": [
+    ...
+  ],
+  "entities": [{
+    "class": [
+      ...
+    ],
+    "properties": {
+      "firstname": "Dave",
+      "lastname": "Matthews"
+    },
+    "links": [
+      ...
+    ],
+    "actions": [
+      ...
+    ]
+  },{
+    "class": [
+      ...
+    ],
+    "properties": {
+      "firstname": "Stefan",
+      "lastname": "Lessard"
+    },
+    "links": [
+      ...
+    ],
+    "actions": [
+      ...
+    ]
+  }],
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+----
+====
+
+[[serialization-paged-model]]
+==== Paged Model
+
+If this module renders a {spring-hateoas-representation-model-url}[paged model], it maps
+
+* the value of the content property of the {spring-hateoas-representation-model-url}[paged model] to Siren {siren-entities-url}[entities] regardless if it represents instances of one of the available {spring-hateoas-representation-model-url}[representation models] or simple pojos.
+* the page metadata of the {spring-hateoas-representation-model-url}[paged model] to Siren Entity {siren-entity-properties-url}[properties].
+* the type of the {spring-hateoas-representation-model-url}[paged model] to the Siren Entity {siren-entity-title-url}[title] if the type is mapped through the <<internationalization>> mechanism.
+* the {spring-hateoas-links-url}[links] of the {spring-hateoas-representation-model-url}[paged model] to Siren Entity {siren-entity-link-url}[links] and {siren-entity-action-url}[actions] (see section <<serialization-links>> to understand how they are rendered).
+
+.Serialize a paged model wrapping some entity models and having some links
+====
+A person class:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+class Person {
+  String firstname, lastname;
+}
+----
+
+Some entity models each wrapping a person object:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+Person p1 = new Person();
+p1.firstname = "Dave";
+p1.lastname = "Matthews";
+
+EntityModel<Person> pm1 = new EntityModel<>(p1);
+// add some links (having affordances) to the model...
+
+Person p2 = new Person();
+p2.firstname = "Stefan";
+p2.lastname = "Lessard";
+
+EntityModel<Person> pm2 = new EntityModel<>(p2);
+// add some links (having affordances) to the model...
+----
+
+A paged model wrapping the entity models:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+Collection<EntityModel<Person>> people = Collections.singleton(personModel);
+PageMetadata metadata = new PageMetadata(20, 0, 1, 1);
+PagedModel<EntityModel<Person>> model = new PagedModel<>(people, metadata);
+// add some links (having affordances) to the model...
+----
+
+The resulting Siren representation:
+[source,json,indent=0,subs="verbatim,quotes,attributes"]
+----
+{
+  "class": [
+    ...
+  ],
+  "properties": {
+    "size": 20,
+    "totalElements": 1,
+    "totalPages": 1,
+    "number": 0
+  },
+  "entities": [{
+    "class": [
+      ...
+    ],
+    "properties": {
+      "firstname": "Dave",
+      "lastname": "Matthews"
+    },
+    "links": [
+      ...
+    ],
+    "actions": [
+      ...
+    ]
+  },{
+    "class": [
+      ...
+    ],
+    "properties": {
+      "firstname": "Stefan",
+      "lastname": "Lessard"
+    },
+    "links": [
+      ...
+    ],
+    "actions": [
+      ...
+    ]
+  }],
+  "links": [
+    ...
+  ],
+  "actions": [
+    ...
+  ]
+}
+----
+====
+
+[[serialization-links]]
+=== Links
+
+If this module renders a {spring-hateoas-links-url}[link], it maps
+
+* {spring-hateoas-links-url}[links] having a http method equal to `GET` to Siren Entity {siren-entity-link-url}[links].
+* the rel of the {spring-hateoas-links-url}[link] to the Siren Entity Link {siren-entity-link-title-url}[title] if available through the <<internationalization>> mechanism.
+* {spring-hateoas-affordances-url}[affordances] bound to a {spring-hateoas-links-url}[link] to Siren Entity {siren-entity-action-url}[actions].
+* the name of an {spring-hateoas-affordances-url}[affordance] bound to a {spring-hateoas-links-url}[link] to the Siren Action {siren-entity-action-title-url}[title] if available through the <<internationalization>> mechanism.
+* the name of an input property which is part of an {spring-hateoas-affordances-url}[affordance] bound to a {spring-hateoas-links-url}[link] to the Siren Action Field {siren-entity-action-field-title-url}[title] if available through the <<internationalization>> mechanism.
+
+If this module renders a {spring-hateoas-links-url}[link], it does not
+
+* map any {spring-hateoas-links-url}[links] having a http method not equal to `GET`.
+* distinguish between templated and not templated {spring-hateoas-links-url}[links].
+
+.Serialize a link having some affordances
+====
+A person class:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+class Person {
+  String firstname, lastname;
+}
+----
+
+A person controller class:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+@RestController
+class PersonController {
+
+  @GetMapping("/persons/{id}")
+  ResponseEntity<EntityModel<Person>> findOne(Long id) { ... }
+
+  @PutMapping("/persons/{id}")
+  ResponseEntity<EntityModel<Person>> update(Long id, Person person) { ... }
+
+  @DeleteMapping("/persons/{id}")
+  ResponseEntity<Void> delete(Long id) { ... }
+}
+----
+
+A self link having affordances created based on the available person controller methods:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+@GetMapping("/persons/{id}")
+ResponseEntity<EntityModel<Person>> findOne(Long id) {
+  Person person = personService.findOne(id);
+
+  Link selfLink = linkTo(methodOn(controllerClass).findOne(id)).withSelfRel() //
+    .andAffordance(afford(methodOn(controllerClass).update(id, null))) // 
+    .andAffordance(afford(methodOn(controllerClass).delete(id)));
+  
+  EntityModel<Person> model = new EntityModel<>(person, selfLink);
+  return ResponseEntity.ok(model);
+} 
+----
+
+The resulting Siren representation:
+[source,json,indent=0,subs="verbatim,quotes,attributes"]
+----
+{
+  ...
+  "links": [{
+    "rel": [
+      "self"
+    ],
+    "href": "http://localhost:8080/persons/1"
+  }],
+  "actions": [{
+    "name": "update",
+    "method": "PUT",
+    "href": "http://localhost:8080/persons/1",
+    "fields": [{
+      "name": "firstname",
+      "type": "text"
+    },{
+      "name": "lastname",
+      "type": "text"
+    }]
+  },{
+    "name": "delete",
+    "method": "DELETE",
+    "href": "http://localhost:8080/persons/1"
+  }]
+}
+----
+====
+
+[[serialization-siren-model]]
+=== Siren Model
+
+{siren-url}[Siren] defines a resource as an {siren-entity-url}[entity] which has not only {siren-entity-properties-url}[properties] and navigable {siren-entity-link-url}[links] but may also contain {siren-entity-embedded-representation-url}[embedded representations].
+Because such representations retain all the characteristics of an {siren-entity-url}[entity] you can build quite complex resource structures.
+Even if it is in most cases probably sufficient to simply use the available {spring-hateoas-representatio-model-url}[representation models] it can be necessary in some cases to be able to build such quite complex structures.
+Therefore this modules provides a builder API that allows to build a siren model which is then transfered into the respective Siren {siren-entity-url}[entity] structure.
+
+[[internationalization]]
+== Internationalization
+
+{siren-url}[Siren] defines a {siren-entity-title-url}[title] attribute for its {siren-entity-url}[entities], {siren-entity-link-url}[links] and {siren-entity-action-url}[actions] (including their fields).
+These titles can be populated by using Spring’s resource bundle abstraction together with a resource bundle named `rest-messages`.
+This bundle will be set up automatically and is used during the serialization process.
+
+[[internationalization-entities]]
+=== Entities
+
+To define a {siren-entity-title-url}[title] for a Siren {siren-entity-url}[entity], use the key template `_entity.$type.title`.
+Which type is used to build the resulting key depends on which type of Spring HATEOAS {spring-hateoas-representation-model-url}[representatio model] is used.
+To evaluate if a title is available for a specific type, the `fqcn` will be checked first, followed by the `simple name`.
+Finally, it is checked whether type `default` is available.
+
+[[internationalization-links]]
+=== Links
+
+To define a {siren-entity-link-title-url}[title] for a Siren {siren-entity-link-url}[link], use the key template `_link.$rel.title`.
+To evaluate if a title is available for the link, the `rel` of the Spring HATEOAS {spring-hateoas-links-url}[link] will be checked first.
+Finally, it is checked whether type `default` is available.
+
+[[internationalization-actions]]
+=== Actions
+
+To define a {siren-entity-action-title-url}[title] for a Siren {siren-entity-action-url}[action], use the key template `_action.$name.title`.
+To evaluate if a title is available for the action, the `name` of the Spring HATEOAS {spring-hateoas-affordances-url}[affordance] will be checked first.
+Finally, it is checked whether type `default` is available.
+
+To define a {siren-entity-action-field-title-url}[title] for a Siren {siren-entity-action-url}[action field], use the key template `_field.$name.title`.
+To evaluate if a title is available for the action field, the `name` of the input property which is part of the Spring HATEOAS {spring-hateoas-affordances-url}[affordance] will be checked first.
+Finally, it is checked whether type `default` is available.
+
+[[restrictions]]
+== Restrictions
+
+Siren {siren-entity-embedded-link-url}[embedded links] are currently not implemented through the module itself.
+If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.

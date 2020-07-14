@@ -1,0 +1,34 @@
+:docinfo: shared
+:doctype: book
+:hide-uri-scheme:
+:icons: font
+:page-layout!:
+:sectanchors:
+:sectlinks:
+:sectnums:
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+:apache2-license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+:json-path-url: https://github.com/json-path/JsonPath
+
+:siren-url: https://github.com/kevinswiber/siren
+:siren-entities-url: https://github.com/kevinswiber/siren/blob/master/README.md#entities-1
+:siren-entity-url: https://github.com/kevinswiber/siren/blob/master/README.md#entity
+:siren-entity-action-url: https://github.com/kevinswiber/siren/blob/master/README.md#actions-1
+:siren-entity-action-title-url: https://github.com/kevinswiber/siren/blob/master/README.md#title-3
+:siren-entity-action-field-title-url: https://github.com/kevinswiber/siren/blob/master/README.md#title-4
+:siren-entity-class-url: https://github.com/kevinswiber/siren/blob/master/README.md#class
+:siren-entity-embedded-link-url: https://github.com/kevinswiber/siren/blob/master/README.md#embedded-link
+:siren-entity-embedded-representation-url: https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation
+:siren-entity-link-url: https://github.com/kevinswiber/siren/blob/master/README.md#links-1
+:siren-entity-link-title-url: https://github.com/kevinswiber/siren/blob/master/README.md#title-2
+:siren-entity-properties-url: https://github.com/kevinswiber/siren/blob/master/README.md#properties
+:siren-entity-rel-url: https://github.com/kevinswiber/siren/blob/master/README.md#rel
+:siren-entity-title-url: https://github.com/kevinswiber/siren/blob/master/README.md#title
+
+:spring-hateoas-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/
+:spring-hateoas-affordances-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#server.affordances
+:spring-hateoas-links-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#fundamentals.links
+:spring-hateoas-representation-model-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#fundamentals.representation-models

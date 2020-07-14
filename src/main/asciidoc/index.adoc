@@ -1,1 +1,17 @@
-= Spring HATEOAS Siren
+[[spring-hateoas-siren-reference-documentation]]
+= Spring HATEOAS Siren Reference Documentation
+Ingo Griebsch
+:revnumber: {project-version}
+:revdate: {localdate}
+include::_attributes.adoc[]
+
+{project-description}
+
+include::_legal.adoc[leveloffset=+1]
+include::_introduction.adoc[leveloffset=+1]
+include::_setup.adoc[leveloffset=+1]
+include::_server-side-support.adoc[leveloffset=+1]
+include::_client-side-support.adoc[leveloffset=+1]
+include::_configuration.adoc[leveloffset=+1]
+include::_experimental.adoc[leveloffset=+1]
+include::_license.adoc[leveloffset=+1]

@@ -1,0 +1,32 @@
+[[client-side-support]]
+= Client side support
+
+[[deserialization]]
+== Deserialization
+
+This module allows to use/handle the {siren-url}[Siren] hypermedia type on clients requesting data from servers producing this hypermedia type. 
+Means that adding and enabling this module is sufficient to be able to deserialize responses containing data of the {siren-url}[Siren] hypermedia type into their respective {spring-hateoas-representation-model-url}[representation models].
+
+[[traverson]]
+== Traverson
+
+The hypermedia type `application/vnd.siren+json` is currently not usable with the `Traverson` implementation provided through {spring-hateoas-url}[Spring HATEOAS].
+
+[[link-discovery]]
+== Link Discovery
+
+When working with hypermedia enabled representations, a common task is to find a link with a particular relation type in it. 
+{spring-hateoas-url}[Spring HATEOAS] provides {json-path-url}[JsonPath]-based implementations of the `LinkDiscoverer` interface for the configured hypermedia types. 
+When using this module, an instance supporting this hypermedia type is exposed as a Spring bean.
+
+Alternatively, you can setup and use an instance as follows:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+String content = "{'_links' :  { 'foo' : { 'href' : '/foo/bar' }}}";
+
+LinkDiscoverer discoverer = new SirenLinkDiscoverer();
+Link link = discoverer.findLinkWithRel("foo", content);
+
+assertThat(link.getRel(), is("foo"));
+assertThat(link.getHref(), is("/foo/bar"));
+----

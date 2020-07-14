@@ -1,0 +1,4 @@
+[license]
+= License
+
+This code is open source software licensed under the {apache2-license-url}[Apache 2.0 License].

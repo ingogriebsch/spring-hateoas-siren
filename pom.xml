@@ -7,7 +7,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>Spring HATEOAS Siren</name>
-    <description>Library implementing Siren as a custom Spring HATEOAS hypermedia type. Siren is a hypermedia specification for representing entities.</description>
+    <description>A library implementing Siren as a custom Spring HATEOAS hypermedia type. Siren is a hypermedia specification for representing entities.</description>
     <url>https://github.com/ingogriebsch/spring-hateoas-siren</url>
     <inceptionYear>2019</inceptionYear>
     <organization>
@@ -46,6 +46,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-hateoas.version>1.1.0.RELEASE</spring-hateoas.version>
         <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
@@ -185,7 +186,7 @@
         <dependency>
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
-            <version>1.1.0.RELEASE</version>
+            <version>${spring-hateoas.version}</version>
         </dependency>
     </dependencies>
 
@@ -324,7 +325,9 @@
                 <configuration>
                     <backend>html5</backend>
                     <attributes>
-                        <version>${project.version}</version>
+                        <project-version>${project.version}</project-version>
+                        <project-description>${project.description}</project-description>
+                        <spring-hateoas-version>${spring-hateoas.version}</spring-hateoas-version>
                     </attributes>
                 </configuration>
             </plugin>
