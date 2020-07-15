@@ -456,7 +456,7 @@ The resulting Siren representation:
 
 {siren-url}[Siren] defines a resource as an {siren-entity-url}[entity] which has not only {siren-entity-properties-url}[properties] and navigable {siren-entity-link-url}[links] but may also contain {siren-entity-embedded-representation-url}[embedded representations].
 Because such representations retain all the characteristics of an {siren-entity-url}[entity] you can build quite complex resource structures.
-Even if it is in most cases probably sufficient to simply use the available {spring-hateoas-representatio-model-url}[representation models] it can be necessary in some cases to be able to build such quite complex structures.
+Even if it is in most cases probably sufficient to simply use the available {spring-hateoas-representation-model-url}[representation models] it can be necessary in some cases to be able to build such quite complex structures.
 Therefore this modules provides a builder API that allows to build a siren model which is then transfered into the respective Siren {siren-entity-url}[entity] structure.
 
 [[internationalization]]
