@@ -2,7 +2,8 @@
 :doctype: book
 :hide-uri-scheme:
 :icons: font
-:page-layout!:
+:idprefix:
+:idseparator: -
 :sectanchors:
 :sectlinks:
 :sectnums:
