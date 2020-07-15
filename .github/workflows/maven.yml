@@ -16,7 +16,7 @@ jobs:
     - name: Build project with Maven
       run: mvn -B verify
     - name: Upload coverage report to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v1.0.10
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
     - name: Deploy documentation
