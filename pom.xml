@@ -41,6 +41,7 @@
     </issueManagement>
 
     <properties>
+        <doc.source.directory>${project.build.directory}/doc-sources</doc.source.directory>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -106,6 +107,13 @@
             <groupId>io.projectreactor.addons</groupId>
             <artifactId>reactor-extra</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.spring.docresources</groupId>
+            <artifactId>spring-doc-resources</artifactId>
+            <version>0.2.2.RELEASE</version>
+            <type>zip</type>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -190,6 +198,14 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository> 
+            <id>repository.spring.framework.release</id> 
+            <name>Spring Framework Release Repository</name> 
+            <url>https://maven.springframework.org/release</url> 
+        </repository>
+    </repositories>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -202,6 +218,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>2.8</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -310,9 +331,59 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin><!-- https://maven.apache.org/plugins/maven-dependency-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-doc-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <excludeTransitive>true</excludeTransitive>
+                            <includeArtifactIds>spring-doc-resources</includeArtifactIds>
+                            <includeGroupIds>io.spring.docresources</includeGroupIds>
+                            <includeTypes>zip</includeTypes>
+                            <outputDirectory>${doc.source.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin><!-- https://maven.apache.org/plugins/maven-resources-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-doc-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${doc.source.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/asciidoc</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin><!-- https://asciidoctor.org/docs/asciidoctor-maven-plugin/ -->
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
+                <configuration>
+                    <attributes>
+                        <project-version>${project.version}</project-version>
+                        <project-description>${project.description}</project-description>
+                        <spring-hateoas-version>${spring-hateoas.version}</spring-hateoas-version>
+                    </attributes>
+                    <sourceDirectory>${doc.source.directory}</sourceDirectory>
+                </configuration>
                 <executions>
                     <execution>
                         <id>generate-docs</id>
@@ -320,16 +391,18 @@
                         <goals>
                             <goal>process-asciidoc</goal>
                         </goals>
+                        <configuration>
+                            <attributes>
+                                <highlightjsdir>js/highlight</highlightjsdir>
+                                <highlightjs-theme>github</highlightjs-theme>
+                                <linkcss>true</linkcss>
+                                <stylesdir>css</stylesdir>
+                                <stylesheet>spring.css</stylesheet>
+                            </attributes>
+                            <backend>html5</backend>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <backend>html5</backend>
-                    <attributes>
-                        <project-version>${project.version}</project-version>
-                        <project-description>${project.description}</project-description>
-                        <spring-hateoas-version>${spring-hateoas.version}</spring-hateoas-version>
-                    </attributes>
-                </configuration>
             </plugin>
             <plugin><!-- https://maven.apache.org/plugins/maven-javadoc-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
