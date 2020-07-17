@@ -9,3 +9,5 @@ The media type for {siren-url}[Siren] is defined as `application/vnd.siren+json`
 
 For further understanding of this document, please be aware of both the {spring-hateoas-url}[Spring HATEOAS] and the {siren-url}[Siren] documentation. 
 The following documentation assumes that the reader knows above documents.
+
+You should also check the detailed documentation of the public API of this module (can be found {spring-hateoas-siren-javadoc-url}[here]).

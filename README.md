@@ -13,6 +13,8 @@ The media type for [Siren][] is defined as `application/vnd.siren+json`.
 ## Documentation
 A detailed documentation can be found [here][Spring HATEOAS Siren].
 
+A detailed documentation of public API of this module can be found [here][Spring HATEOAS Siren Javadoc].
+
 ## Integration
 Please check section [Setup][Spring HATEOAS Siren Setup] of the documentation to understand how to integrate this module into your project.
 
@@ -24,6 +26,7 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 
 [Spring HATEOAS Siren]: https://ingogriebsch.github.io/spring-hateoas-siren/
 [Spring HATEOAS Siren Setup]: https://ingogriebsch.github.io/spring-hateoas-siren/#setup
+[Spring HATEOAS Siren Javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
 [Spring HATEOAS Siren Example]: https://github.com/ingogriebsch/sample-spring-hateoas-siren/
 [Spring HATEOAS]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/
 [Siren]: https://github.com/kevinswiber/siren
