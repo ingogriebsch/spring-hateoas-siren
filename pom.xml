@@ -42,6 +42,7 @@
 
     <properties>
         <doc.source.directory>${project.build.directory}/doc-sources</doc.source.directory>
+        <doc.target.directory>${project.build.directory}/generated-docs</doc.target.directory>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -351,6 +352,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin><!-- https://maven.apache.org/plugins/maven-javadoc-plugin/ -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-javadoc-no-fork</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>javadoc-no-fork</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <breakiterator>true</breakiterator>
+                    <quiet>true</quiet>
+                    <show>public</show>
+                </configuration>
+            </plugin>
             <plugin><!-- https://maven.apache.org/plugins/maven-resources-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -371,6 +396,21 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-javadoc-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${doc.target.directory}/apidocs</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/apidocs</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin><!-- https://asciidoctor.org/docs/asciidoctor-maven-plugin/ -->
@@ -382,6 +422,7 @@
                         <project-description>${project.description}</project-description>
                         <spring-hateoas-version>${spring-hateoas.version}</spring-hateoas-version>
                     </attributes>
+                    <outputDirectory>${doc.target.directory}</outputDirectory>
                     <sourceDirectory>${doc.source.directory}</sourceDirectory>
                 </configuration>
                 <executions>
@@ -403,23 +444,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin><!-- https://maven.apache.org/plugins/maven-javadoc-plugin/ -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>javadoc-no-fork</goal>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <breakiterator>true</breakiterator>
-                    <quiet>true</quiet>
-                    <show>public</show>
-                </configuration>
             </plugin>
             <plugin><!-- https://maven.apache.org/plugins/maven-source-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
