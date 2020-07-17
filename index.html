@@ -16,7 +16,7 @@
 <div class="details">
 <span id="author" class="author">Ingo Griebsch</span><br>
 <span id="revnumber">version 1.0.0-SNAPSHOT,</span>
-<span id="revdate">2020-07-15</span>
+<span id="revdate">2020-07-17</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -53,7 +53,7 @@
 <li><a href="#configuration">5. Configuration</a></li>
 <li><a href="#experimental">6. Experimental</a>
 <ul class="sectlevel2">
-<li><a href="#entity-collection-model-subclassing">6.1. Subclassing Representation Models</a></li>
+<li><a href="#entity-collection-model-subclassing">6.1. Subclassing specific Representation Models</a></li>
 </ul>
 </li>
 <li><a href="#license">License</a></li>
@@ -108,6 +108,9 @@ The media type for <a href="https://github.com/kevinswiber/siren">Siren</a> is d
 <p>For further understanding of this document, please be aware of both the <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/">Spring HATEOAS</a> and the <a href="https://github.com/kevinswiber/siren">Siren</a> documentation.
 The following documentation assumes that the reader knows above documents.</p>
 </div>
+<div class="paragraph">
+<p>You should also check the detailed documentation of the public API of this module (can be found <a href="https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/">here</a>).</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -120,7 +123,7 @@ The following documentation assumes that the reader knows above documents.</p>
 <div class="title">Maven</div>
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="xml" class="language-xml hljs">&lt;dependency&gt;
-    &lt;groupId&gt;com.github.ingogriebsch.hateoas&lt;/groupId&gt;
+    &lt;groupId&gt;de.ingogriebsch.hateoas&lt;/groupId&gt;
     &lt;artifactId&gt;spring-hateoas-siren&lt;/artifactId&gt;
     &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
     &lt;scope&gt;compile&lt;/scope&gt;
@@ -131,7 +134,7 @@ The following documentation assumes that the reader knows above documents.</p>
 <div class="title">Gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="json" class="language-json hljs">dependencies {
-    compile "com.github.ingogriebsch.hateoas:spring-hateoas-siren:1.0.0-SNAPSHOT"
+    compile "de.ingogriebsch.hateoas:spring-hateoas-siren:1.0.0-SNAPSHOT"
 }</code></pre>
 </div>
 </div>
@@ -841,20 +844,39 @@ If you want to override/enhance this behavior you need to expose an implementati
 <p>This section deals with experimental functions that are currently implemented but for which it is not yet clear whether they will find their way into the library..</p>
 </div>
 <div class="sect2">
-<h3 id="entity-collection-model-subclassing"><a class="anchor" href="#entity-collection-model-subclassing"></a><a class="link" href="#entity-collection-model-subclassing">6.1. Subclassing Representation Models</a></h3>
+<h3 id="entity-collection-model-subclassing"><a class="anchor" href="#entity-collection-model-subclassing"></a><a class="link" href="#entity-collection-model-subclassing">6.1. Subclassing specific Representation Models</a></h3>
 <div class="paragraph">
-<p>===
-<a href="https://github.com/kevinswiber/siren">Siren</a> defines a resource as an <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a> which has not only <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a> and navigable <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> but may also contain <a href="https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation">embedded representations</a>.
+<p><a href="https://github.com/kevinswiber/siren">Siren</a> defines a resource as an <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a> which has not only <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a> and navigable <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> but may also contain <a href="https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation">embedded representations</a>.
 Because such representations retain all the characteristics of an <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a> you can build quite complex resource structures.</p>
 </div>
 <div class="paragraph">
-<p>To allow to build such structures this module is able to handle subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> of type <code>EntityModel</code> and <code>CollectionModel</code>.
-It is in the nature of <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> of type <code>RepresentationModel</code> to be subclassed.
-It makes no sense to subclass <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> of type <code>PagedModel</code> because they already contain specific properties explaining the nature of this type of resource.</p>
+<p>It is in the nature of Spring HATEOAS' <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> of type <code>RepresentationModel</code> to be subclassed.
+But it is not intended to subclass the other <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation model</a> types, namely <code>EntityModel</code>, <code>CollectionModel</code> and <code>PagedModel</code>.</p>
 </div>
 <div class="paragraph">
-<p>The following example explains what is possible to do.
-We will skip parts of the Siren representation like <a href="https://github.com/kevinswiber/siren/blob/master/README.md#class">class</a>, <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> or <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> and concentrate on the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation">embedded representations</a>:</p>
+<p>Even if this is not intended through Spring HATEOAS we 'bend' the intended behavior to allow to build such complex structures.
+Means that this module is able to handle subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> of type <code>EntityModel</code> and <code>CollectionModel</code>.
+It still makes no sense to subclass <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> of type <code>PagedModel</code> because it already contains specific properties explaining the nature of this type of resource.</p>
+</div>
+<div class="paragraph">
+<p>To use this experimental feature you need to configure explicitly that you want to subclass the mentioned <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation model</a> types (i.e. this feature is disabled by default).
+You can enable this functionality in the following way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code data-lang="java" class="language-java hljs">@Configuration
+public class HateoasConfiguration {
+
+  @Bean
+  public SirenConfiguration sirenConfiguration() {
+    return new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example explains what is currently possible to do.
+We will skip parts of the Siren representation like <a href="https://github.com/kevinswiber/siren/blob/master/README.md#class">class</a>, <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> or <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> and concentrate on the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#embedded-representation">embedded representations</a>.</p>
 </div>
 <div class="exampleblock">
 <div class="title">Example 7. Serialize subclassed collection model wrapping some entity models each wrapping a representation model</div>
@@ -950,7 +972,7 @@ Country indonesia = new Country("Indonesia", states);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And this is still a relatively simple example of what is possible if using some subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> together.
+<p>And this is still a relatively simple example of what is possible if using subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> together.
 Especially mixing <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">entity models</a> with <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/#fundamentals.representation-models">collection models</a> and vice versa allows to build quite complex structures.</p>
 </div>
 </div>
@@ -968,7 +990,7 @@ Especially mixing <a href="https://docs.spring.io/spring-hateoas/docs/1.1.0.RELE
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2020-07-15 19:55:39 UTC
+Last updated 2020-07-17 16:27:37 UTC
 </div>
 </div>
 <link rel="stylesheet" href="js/highlight/styles/github.min.css">
