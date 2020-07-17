@@ -4,16 +4,33 @@
 This section deals with experimental functions that are currently implemented but for which it is not yet clear whether they will find their way into the library..
 
 [[entity-collection-model-subclassing]]
-== Subclassing Representation Models
+== Subclassing specific Representation Models
 
 {siren-url}[Siren] defines a resource as an {siren-entity-url}[entity] which has not only {siren-entity-properties-url}[properties] and navigable {siren-entity-link-url}[links] but may also contain {siren-entity-embedded-representation-url}[embedded representations].
 Because such representations retain all the characteristics of an {siren-entity-url}[entity] you can build quite complex resource structures.
 
-To allow to build such structures this module is able to handle subclassed {spring-hateoas-representation-model-url}[representation models] of type `EntityModel` and `CollectionModel`.
-It is in the nature of {spring-hateoas-representation-model-url}[representation models] of type `RepresentationModel` to be subclassed.
-It makes no sense to subclass {spring-hateoas-representation-model-url}[representation models] of type `PagedModel` because they already contain specific properties explaining the nature of this type of resource.
+It is in the nature of Spring HATEOAS' {spring-hateoas-representation-model-url}[representation models] of type `RepresentationModel` to be subclassed.
+But it is not intended to subclass the other {spring-hateoas-representation-model-url}[representation model] types, namely `EntityModel`, `CollectionModel` and `PagedModel`.
 
-The following example explains what is possible to do. 
+Even if this is not intended through Spring HATEOAS we 'bend' the intended behavior to allow to build such complex structures.
+Means that this module is able to handle subclassed {spring-hateoas-representation-model-url}[representation models] of type `EntityModel` and `CollectionModel`.
+It still makes no sense to subclass {spring-hateoas-representation-model-url}[representation models] of type `PagedModel` because it already contains specific properties explaining the nature of this type of resource.
+
+To use this experimental feature you need to configure explicitly that you want to subclass the mentioned {spring-hateoas-representation-model-url}[representation model] types (i.e. this feature is disabled by default).
+You can enable this functionality in the following way:
+[source,java,indent=0,subs="verbatim,quotes,attributes"]
+----
+@Configuration
+public class HateoasConfiguration {
+
+  @Bean
+  public SirenConfiguration sirenConfiguration() {
+    return new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true);
+  }
+}
+----
+
+The following example explains what is currently possible to do.
 We will skip parts of the Siren representation like {siren-entity-class-url}[class], {siren-entity-link-url}[links] or {siren-entity-action-url}[actions] and concentrate on the {siren-entity-properties-url}[properties] and {siren-entity-embedded-representation-url}[embedded representations].
 
 .Serialize subclassed collection model wrapping some entity models each wrapping a representation model

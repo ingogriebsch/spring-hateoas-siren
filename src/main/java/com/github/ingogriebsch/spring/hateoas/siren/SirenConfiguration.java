@@ -15,10 +15,23 @@
  */
 package com.github.ingogriebsch.spring.hateoas.siren;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.With;
+
 /**
  * Siren specific configuration.
  *
  * @author Ingo Griebsch
  */
+@AllArgsConstructor(access = PRIVATE)
+@NoArgsConstructor
 public class SirenConfiguration {
+
+    @Getter
+    @With
+    private boolean entityAndCollectionModelSubclassingEnabled = false;
 }

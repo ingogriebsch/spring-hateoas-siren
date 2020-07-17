@@ -18,6 +18,7 @@ package com.github.ingogriebsch.spring.hateoas.siren;
 import static java.util.stream.Collectors.toList;
 
 import static com.github.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
+import static com.github.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModelSubclass;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,6 +56,8 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
 
     @Override
     public void serialize(CollectionModel<?> model, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        assertSubclassingIsEnabledIfModelIsSubclassed(model);
+
         SirenNavigables navigables = getLinkConverter().to(model.getLinks());
 
         SirenEntity sirenEntity = SirenEntity.builder() //
@@ -74,6 +77,15 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
             serializer.serialize(sirenEntity, gen, provider);
         } finally {
             setAttribute(ATTR_KEY_PARENT, parent, provider);
+        }
+    }
+
+    private void assertSubclassingIsEnabledIfModelIsSubclassed(CollectionModel<?> model) {
+        Class<?> clazz = model.getClass();
+        if (isRepresentationModelSubclass(clazz) && !configuration.isEntityAndCollectionModelSubclassingEnabled()) {
+            throw new IllegalStateException(String.format(
+                "You did not configure the module to enable subclassing but want to serialize a subclassed %s, namely %s!",
+                CollectionModel.class.getSimpleName(), clazz.getName()));
         }
     }
 

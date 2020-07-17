@@ -54,6 +54,8 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
 
     @Override
     public void serialize(EntityModel<?> model, JsonGenerator gen, SerializerProvider provider) throws IOException {
+        assertSubclassingIsEnabledIfModelIsSubclassed(model);
+
         SirenNavigables navigables = getLinkConverter().to(model.getLinks());
         Class<?> contentType = model.getContent().getClass();
         Class<?> titleType = !isRepresentationModel(contentType) ? contentType : model.getClass();
@@ -75,6 +77,15 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
             serializer.serialize(sirenEntity, gen, provider);
         } finally {
             setAttribute(ATTR_KEY_PARENT, parent, provider);
+        }
+    }
+
+    private void assertSubclassingIsEnabledIfModelIsSubclassed(EntityModel<?> model) {
+        Class<?> clazz = model.getClass();
+        if (isRepresentationModelSubclass(clazz) && !configuration.isEntityAndCollectionModelSubclassingEnabled()) {
+            throw new IllegalStateException(String.format(
+                "You did not configure the module to enable subclassing but want to serialize a subclassed %s, namely %s!",
+                EntityModel.class.getSimpleName(), clazz.getName()));
         }
     }
 

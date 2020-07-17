@@ -68,7 +68,8 @@ class Jackson2SirenModuleTest {
 
     @BeforeAll
     static void beforeAll() {
-        ObjectProvider<SirenConfiguration> configuration = new SimpleObjectProvider<>(new SirenConfiguration());
+        ObjectProvider<SirenConfiguration> configuration =
+            new SimpleObjectProvider<>(new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true));
 
         ObjectProvider<RepresentationModelFactories> representationModelFactories =
             new SimpleObjectProvider<>(new RepresentationModelFactories() {
