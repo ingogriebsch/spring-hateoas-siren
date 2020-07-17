@@ -8,7 +8,7 @@ To enable the {siren-url}[Siren] hypermedia type you simply need to add this mod
 [source,xml,indent=0,subs="verbatim,quotes,attributes"]
 ----
 <dependency>
-    <groupId>com.github.ingogriebsch.hateoas</groupId>
+    <groupId>de.ingogriebsch.hateoas</groupId>
     <artifactId>spring-hateoas-siren</artifactId>
     <version>{project-version}</version>
     <scope>compile</scope>
@@ -20,7 +20,7 @@ To enable the {siren-url}[Siren] hypermedia type you simply need to add this mod
 [source,json,indent=0,subs="verbatim,quotes,attributes"]
 ----
 dependencies {
-    compile "com.github.ingogriebsch.hateoas:spring-hateoas-siren:{project-version}"
+    compile "de.ingogriebsch.hateoas:spring-hateoas-siren:{project-version}"
 }
 ----
 
