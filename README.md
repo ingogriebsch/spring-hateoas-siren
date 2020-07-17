@@ -1,5 +1,5 @@
 # Spring HATEOAS Siren
-[![Actions Status](https://github.com/ingogriebsch/spring-hateoas-siren/workflows/verify/badge.svg)](https://github.com/ingogriebsch/spring-hateoas-siren/actions)
+[![Actions Status](https://github.com/ingogriebsch/spring-hateoas-siren/workflows/verify/badge.svg?branch=master)](https://github.com/ingogriebsch/spring-hateoas-siren/actions)
 [![Codecov Status](https://codecov.io/gh/ingogriebsch/spring-hateoas-siren/branch/master/graph/badge.svg)](https://codecov.io/gh/ingogriebsch/spring-hateoas-siren)
 [![DepShield Status](https://depshield.sonatype.org/badges/ingogriebsch/spring-hateoas-siren/depshield.svg)](https://depshield.github.io)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
