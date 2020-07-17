@@ -1,8 +1,6 @@
 name: verify
 on:
   push:
-    branches:
-      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +19,7 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/master'
       with:
         cname: spring-hateoas-siren.ingogriebsch.de
         full_commit_message: ${{ github.event.head_commit.message }}
