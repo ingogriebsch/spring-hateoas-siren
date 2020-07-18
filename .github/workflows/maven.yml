@@ -24,7 +24,7 @@ jobs:
     - name: setup-maven-settings
       uses: s4u/maven-settings-action@v2.1.0
       with:
-        servers: '[{"id": "gpg", "passphrase": "${{ secrets.GPG_PASSPHRASE }}"}, {"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
+        servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
 
     - name: Prepare gpg environment 
       uses: crazy-max/ghaction-import-gpg@v2.1.1

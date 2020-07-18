@@ -502,9 +502,6 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
-                                <configuration>
-                                    <passphraseServerId>gpg</passphraseServerId>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
