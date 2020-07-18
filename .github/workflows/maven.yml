@@ -18,6 +18,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: setup-maven-settings
+      uses: s4u/maven-settings-action@v1
+      with:
+        servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
     - name: Build project with Maven
       run: mvn -B verify
     - name: Upload coverage report to Codecov
