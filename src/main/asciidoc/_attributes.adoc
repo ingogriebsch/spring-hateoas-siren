@@ -11,7 +11,9 @@
 :toc: left
 :toclevels: 3
 
+:apache-maven-url: https://maven.apache.org/
 :apache2-license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+:gradle-url: https://gradle.org/
 :json-path-url: https://github.com/json-path/JsonPath
 
 :siren-url: https://github.com/kevinswiber/siren
@@ -33,5 +35,6 @@
 :spring-hateoas-affordances-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#server.affordances
 :spring-hateoas-links-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#fundamentals.links
 :spring-hateoas-representation-model-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#fundamentals.representation-models
-:spring-hateoas-siren-source-url: https://github.com/ingogriebsch/spring-hateoas-siren/
+:spring-hateoas-siren-artifact-source-url: https://search.maven.org/artifact/de.ingogriebsch.hateoas/spring-hateoas-siren
 :spring-hateoas-siren-javadoc-url: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
+:spring-hateoas-siren-source-url: https://github.com/ingogriebsch/spring-hateoas-siren/

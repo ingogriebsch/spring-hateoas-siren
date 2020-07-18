@@ -2,9 +2,12 @@
 = Setup
 
 To enable the {siren-url}[Siren] hypermedia type you simply need to add this library as a dependency to your project.
+The library is accessible through the {spring-hateoas-siren-artifact-source-url}[Maven Central] or one of it's proxies.
 
 [[maven]]
-.Maven
+If you use {apache-maven-url}[Apache Maven], add the following to your build file:
+
+.pom.xml
 [source,xml,indent=0,subs="verbatim,quotes,attributes"]
 ----
 <dependency>
@@ -16,11 +19,13 @@ To enable the {siren-url}[Siren] hypermedia type you simply need to add this lib
 ----
 
 [[gradle]]
-.Gradle
-[source,json,indent=0,subs="verbatim,quotes,attributes"]
+If you prefer to use {gradle-url}[Gradle], add the following to your build file:
+
+.build.gradle.kts
+[source,kotlin,indent=0,subs="verbatim,quotes,attributes"]
 ----
 dependencies {
-    compile "de.ingogriebsch.hateoas:spring-hateoas-siren:{project-version}"
+    implementation("de.ingogriebsch.hateoas:spring-hateoas-siren:{project-version}")
 }
 ----
 
