@@ -357,13 +357,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>default-javadoc-no-fork</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>javadoc-no-fork</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>default-jar</id>
                         <goals>
                             <goal>jar</goal>
@@ -398,7 +391,7 @@
                     </execution>
                     <execution>
                         <id>copy-javadoc-resources</id>
-                        <phase>prepare-package</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
