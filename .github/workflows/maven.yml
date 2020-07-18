@@ -27,7 +27,7 @@ jobs:
         servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
 
     - name: Build project with Maven
-      run: mvn -B verify
+      run: mvn -B -Possrh deploy
 
     - name: Upload coverage report to Codecov
       uses: codecov/codecov-action@v1.0.10
