@@ -7,6 +7,7 @@ jobs:
     steps:
     - name: Checkout code base
       uses: actions/checkout@v2.3.1
+
     - name: Prepare Maven artifact cache
       uses: actions/cache@v2.0.0
       with:
@@ -14,20 +15,25 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
+
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1.3.0
       with:
         java-version: 1.8
+
     - name: setup-maven-settings
       uses: s4u/maven-settings-action@v2.1.0
       with:
         servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
+
     - name: Build project with Maven
       run: mvn -B verify
+
     - name: Upload coverage report to Codecov
       uses: codecov/codecov-action@v1.0.10
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3
       if: github.ref == 'refs/heads/master'
