@@ -26,7 +26,8 @@ jobs:
       with:
         servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
 
-    - name: Prepare gpg environment 
+    - name: Prepare gpg environment
+      id: prepare-gpg-environment
       uses: crazy-max/ghaction-import-gpg@v2.1.1
       env:
         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -34,10 +35,10 @@ jobs:
 
     - name: Check gpg environment
       run: |
-          echo "fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}"
-          echo "keyid:       ${{ steps.import_gpg.outputs.keyid }}"
-          echo "name:        ${{ steps.import_gpg.outputs.name }}"
-          echo "email:       ${{ steps.import_gpg.outputs.email }}"
+          echo "fingerprint: ${{ steps.prepare-gpg-environment.outputs.fingerprint }}"
+          echo "keyid:       ${{ steps.prepare-gpg-environment.outputs.keyid }}"
+          echo "name:        ${{ steps.prepare-gpg-environment.outputs.name }}"
+          echo "email:       ${{ steps.prepare-gpg-environment.outputs.email }}"
 
     - name: Build project with Maven
       run: mvn -B -Possrh deploy
