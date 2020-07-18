@@ -33,4 +33,5 @@
 :spring-hateoas-affordances-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#server.affordances
 :spring-hateoas-links-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#fundamentals.links
 :spring-hateoas-representation-model-url: https://docs.spring.io/spring-hateoas/docs/{spring-hateoas-version}/reference/html/#fundamentals.representation-models
+:spring-hateoas-siren-source-url: https://github.com/ingogriebsch/spring-hateoas-siren/
 :spring-hateoas-siren-javadoc-url: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
