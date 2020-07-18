@@ -273,6 +273,11 @@
                     <version>0.8.5</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                </plugin>
+                <plugin>
                     <groupId>net.revelc.code</groupId>
                     <artifactId>impsort-maven-plugin</artifactId>
                     <version>1.4.1</version>
@@ -465,4 +470,35 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>ossrh</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>            
+        
+            <build>
+                <plugins>
+                    <plugin><!-- https://github.com/sonatype/nexus-maven-plugins/tree/master/staging/maven-plugin -->
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <serverId>ossrh</serverId>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
