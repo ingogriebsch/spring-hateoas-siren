@@ -4,7 +4,7 @@
 [[serialization]]
 == Serialization
 
-Using this module will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json`.
+Using this library will make your application respond to requests that have an `Accept` header of `application/vnd.siren+json`.
 
 [[serialization-representation-models]]
 === Representation Models
@@ -15,7 +15,7 @@ Depending on the respective type of the {spring-hateoas-representation-model-url
 [[serialization-representation-model]]
 ==== Representation Model
 
-If this module serializes a {spring-hateoas-representation-model-url}[representation model], it maps
+If this library serializes a {spring-hateoas-representation-model-url}[representation model], it maps
 
 * any custom properties of the {spring-hateoas-representation-model-url}[representation model] (because it is subclassed) to Siren Entity {siren-entity-properties-url}[properties].
 * the type of the {spring-hateoas-representation-model-url}[representation model] to the Siren Entity {siren-entity-title-url}[title] if the type is mapped through the <<internationalization>> mechanism.
@@ -64,7 +64,7 @@ The resulting Siren representation:
 [[serialization-entity-model]]
 ==== Entity Model
 
-If this module renders an {spring-hateoas-representation-model-url}[entity model], it maps
+If this library renders an {spring-hateoas-representation-model-url}[entity model], it maps
 
 * the value of the content property of the {spring-hateoas-representation-model-url}[entity model] to Siren Entity {siren-entity-properties-url}[properties] if the value represents an instance of a simple pojo.
 * the value of the content property of the {spring-hateoas-representation-model-url}[entity model] to Siren {siren-entities-url}[entities] if the value is an instance of one of the available {spring-hateoas-representation-model-url}[representation models].
@@ -174,7 +174,7 @@ The resulting Siren representation:
 [[serialization-collection-model]]
 ==== Collection Model
 
-If this module renders a {spring-hateoas-representation-model-url}[collection model], it maps
+If this library renders a {spring-hateoas-representation-model-url}[collection model], it maps
 
 * the value of the content property of the {spring-hateoas-representation-model-url}[collection model] to Siren {siren-entities-url}[entities] regardless if it represents instances of one of the available {spring-hateoas-representation-model-url}[representation models] or simple pojos.
 * the type of the {spring-hateoas-representation-model-url}[collection model] to the Siren Entity {siren-entity-title-url}[title] if the type is mapped through the <<internationalization>> mechanism.
@@ -265,7 +265,7 @@ The resulting Siren representation:
 [[serialization-paged-model]]
 ==== Paged Model
 
-If this module renders a {spring-hateoas-representation-model-url}[paged model], it maps
+If this library renders a {spring-hateoas-representation-model-url}[paged model], it maps
 
 * the value of the content property of the {spring-hateoas-representation-model-url}[paged model] to Siren {siren-entities-url}[entities] regardless if it represents instances of one of the available {spring-hateoas-representation-model-url}[representation models] or simple pojos.
 * the page metadata of the {spring-hateoas-representation-model-url}[paged model] to Siren Entity {siren-entity-properties-url}[properties].
@@ -364,7 +364,7 @@ The resulting Siren representation:
 [[serialization-links]]
 === Links
 
-If this module renders a {spring-hateoas-links-url}[link], it maps
+If this library renders a {spring-hateoas-links-url}[link], it maps
 
 * {spring-hateoas-links-url}[links] having a http method equal to `GET` to Siren Entity {siren-entity-link-url}[links].
 * the rel of the {spring-hateoas-links-url}[link] to the Siren Entity Link {siren-entity-link-title-url}[title] if available through the <<internationalization>> mechanism.
@@ -372,7 +372,7 @@ If this module renders a {spring-hateoas-links-url}[link], it maps
 * the name of an {spring-hateoas-affordances-url}[affordance] bound to a {spring-hateoas-links-url}[link] to the Siren Action {siren-entity-action-title-url}[title] if available through the <<internationalization>> mechanism.
 * the name of an input property which is part of an {spring-hateoas-affordances-url}[affordance] bound to a {spring-hateoas-links-url}[link] to the Siren Action Field {siren-entity-action-field-title-url}[title] if available through the <<internationalization>> mechanism.
 
-If this module renders a {spring-hateoas-links-url}[link], it does not
+If this library renders a {spring-hateoas-links-url}[link], it does not
 
 * map any {spring-hateoas-links-url}[links] having a http method not equal to `GET`.
 * distinguish between templated and not templated {spring-hateoas-links-url}[links].
@@ -457,7 +457,7 @@ The resulting Siren representation:
 {siren-url}[Siren] defines a resource as an {siren-entity-url}[entity] which has not only {siren-entity-properties-url}[properties] and navigable {siren-entity-link-url}[links] but may also contain {siren-entity-embedded-representation-url}[embedded representations].
 Because such representations retain all the characteristics of an {siren-entity-url}[entity] you can build quite complex resource structures.
 Even if it is in most cases probably sufficient to simply use the available {spring-hateoas-representation-model-url}[representation models] it can be necessary in some cases to be able to build such quite complex structures.
-Therefore this modules provides a builder API that allows to build a siren model which is then transfered into the respective Siren {siren-entity-url}[entity] structure.
+Therefore this librarys provides a builder API that allows to build a siren model which is then transfered into the respective Siren {siren-entity-url}[entity] structure.
 
 [[internationalization]]
 == Internationalization
@@ -495,5 +495,5 @@ Finally, it is checked whether type `default` is available.
 [[restrictions]]
 == Restrictions
 
-Siren {siren-entity-embedded-link-url}[embedded links] are currently not implemented through the module itself.
+Siren {siren-entity-embedded-link-url}[embedded links] are currently not implemented through the library itself.
 If you want them, you need to implement a pojo representing an embedded link and add it as content of either a `CollectionModel` or `PagedModel` instance.

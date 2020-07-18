@@ -13,7 +13,7 @@ It is in the nature of Spring HATEOAS' {spring-hateoas-representation-model-url}
 But it is not intended to subclass the other {spring-hateoas-representation-model-url}[representation model] types, namely `EntityModel`, `CollectionModel` and `PagedModel`.
 
 Even if this is not intended through Spring HATEOAS we 'bend' the intended behavior to allow to build such complex structures.
-Means that this module is able to handle subclassed {spring-hateoas-representation-model-url}[representation models] of type `EntityModel` and `CollectionModel`.
+Means that this library is able to handle subclassed {spring-hateoas-representation-model-url}[representation models] of type `EntityModel` and `CollectionModel`.
 It still makes no sense to subclass {spring-hateoas-representation-model-url}[representation models] of type `PagedModel` because it already contains specific properties explaining the nature of this type of resource.
 
 To use this experimental feature you need to configure explicitly that you want to subclass the mentioned {spring-hateoas-representation-model-url}[representation model] types (i.e. this feature is disabled by default).

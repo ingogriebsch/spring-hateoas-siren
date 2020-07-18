@@ -4,7 +4,7 @@
 [verse,Kevin Swiber,Siren specification]
 Siren: a hypermedia specification for representing entities
 
-This module extends {spring-hateoas-url}[Spring HATEOAS] with the custom hypermedia type {siren-url}[Siren]. 
+This library extends {spring-hateoas-url}[Spring HATEOAS] with the custom hypermedia type {siren-url}[Siren]. 
 The media type for {siren-url}[Siren] is defined as `application/vnd.siren+json`. 
 
 The source of this library can be found {spring-hateoas-siren-source-url}[here]. 

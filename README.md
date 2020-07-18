@@ -5,7 +5,7 @@
 [![DepShield Status](https://depshield.sonatype.org/badges/ingogriebsch/spring-hateoas-siren/depshield.svg)](https://depshield.github.io)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-This module extends [Spring HATEOAS][] with the custom hypermedia type [Siren][]. 
+This library extends [Spring HATEOAS][] with the custom hypermedia type [Siren][]. 
 > _Siren: a hypermedia specification for representing entities_
 
 The media type for [Siren][] is defined as `application/vnd.siren+json`.
@@ -14,7 +14,7 @@ The media type for [Siren][] is defined as `application/vnd.siren+json`.
 The reference documentation can be found [here][Spring HATEOAS Siren]. The Javadoc API documentation can be found [here][Spring HATEOAS Siren Javadoc].
 
 ## Integration
-Please check section [Setup][Spring HATEOAS Siren Setup] of the documentation to understand how to integrate this module into your project.
+Please check section [Setup][Spring HATEOAS Siren Setup] of the documentation to understand how to integrate this library into your project.
 
 ## Examples
 A first simple example can be found [here][Spring HATEOAS Siren Example]. More mature examples will follow soon!
