@@ -21,7 +21,7 @@ jobs:
       with:
         java-version: 1.8
 
-    - name: setup-maven-settings
+    - name: Prepare Maven settings
       uses: s4u/maven-settings-action@v2.1.0
       with:
         servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
