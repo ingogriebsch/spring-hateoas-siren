@@ -1,7 +1,12 @@
 # This workflow builds the project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 name: build
-on: push
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
 
 jobs:
   build:
@@ -28,37 +33,37 @@ jobs:
       - name: Prepare Maven settings
         # https://github.com/s4u/maven-settings-action
         uses: s4u/maven-settings-action@v2.1.0
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         with:
           servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
 
       - name: Prepare GPG environment
         # https://github.com/crazy-max/ghaction-import-gpg
         uses: crazy-max/ghaction-import-gpg@v2.1.1
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify artifacts
-        if: startsWith(github.ref, 'refs/heads/master/') != true
+        if: github.ref == 'refs/heads/master' != true && startsWith(github.ref, 'refs/tags/') != true
         run: mvn -B verify
 
       - name: Deploy artifacts
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         run: mvn -B -Possrh deploy
 
       - name: Upload coverage report
         # https://github.com/marketplace/actions/codecov
         uses: codecov/codecov-action@v1.0.11
-        if: startsWith(github.ref, 'refs/heads/dependabot/') != true
+        if: startsWith(github.ref, 'refs/heads/dependabot/') != true && startsWith(github.ref, 'refs/tags/') != true
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Publish documentation
         # https://github.com/peaceiris/actions-gh-pages
         uses: peaceiris/actions-gh-pages@v3.6.4
-        if: github.ref == 'refs/heads/master'
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           cname: spring-hateoas-siren.ingogriebsch.de
           full_commit_message: ${{ github.event.head_commit.message }}
