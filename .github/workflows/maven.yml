@@ -36,7 +36,7 @@ jobs:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Verify artifacts
-        if: startsWith(github.ref, 'refs/heads/dependabot/')
+        if: startsWith(github.ref, 'refs/heads/master/') != true
         run: mvn -B verify
 
       - name: Deploy artifacts
