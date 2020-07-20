@@ -56,7 +56,7 @@ jobs:
       - name: Upload coverage report
         # https://github.com/marketplace/actions/codecov
         uses: codecov/codecov-action@v1.0.11
-        if: startsWith(github.ref, 'refs/heads/dependabot/') != true && startsWith(github.ref, 'refs/tags/') != true
+        if: startsWith(github.ref, 'refs/heads/dependabot/') != true
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
