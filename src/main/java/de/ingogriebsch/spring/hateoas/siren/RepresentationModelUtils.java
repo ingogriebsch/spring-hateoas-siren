@@ -62,7 +62,7 @@ class RepresentationModelUtils {
         return null;
     }
 
-    public static RepresentationModel<?> wrap(Object obj) {
+    static RepresentationModel<?> wrap(Object obj) {
         if (isRepresentationModelSubclass(obj.getClass())) {
             return (RepresentationModel<?>) obj;
         }
