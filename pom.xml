@@ -35,10 +35,10 @@
     <scm>
         <connection>scm:git:git://github.com/ingogriebsch/spring-hateoas-siren.git</connection>
         <developerConnection>scm:git:git://github.com/ingogriebsch/spring-hateoas-siren.git</developerConnection>
-        <url>${project.url}</url>
+        <url>https://github.com/ingogriebsch/spring-hateoas-siren.git</url>
     </scm>
     <issueManagement>
-        <url>${project.url}/issues</url>
+        <url>https://github.com/ingogriebsch/spring-hateoas-siren/issues</url>
         <system>GitHub</system>
     </issueManagement>
 
