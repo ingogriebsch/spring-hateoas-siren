@@ -28,7 +28,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 
 /**
- * Utility methods help to understand of which type of {@link RepresentationModel} a specific object is.
+ * Utility methods help to deal with different use cases related to all types of {@link RepresentationModel}.
  * 
  * @author Ingo Griebsch
  */

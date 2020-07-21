@@ -49,7 +49,7 @@ class SirenModel extends RepresentationModel<SirenModel> {
     String title;
 
     /**
-     * Representation of an embedded representation.
+     * Represents an embedded representation.
      * 
      * @author Ingo Griebsch
      */

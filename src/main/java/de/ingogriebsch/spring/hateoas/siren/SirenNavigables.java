@@ -31,9 +31,9 @@ import org.springframework.hateoas.Link;
 /**
  * Representation to hold specific {@link SirenLink}s and their {@link SirenAction}s together.
  *
+ * @author Ingo Griebsch
  * @see Link
  * @see Affordance
- * @author Ingo Griebsch
  */
 // TODO Find a better name for this class.
 @AllArgsConstructor(access = PRIVATE)

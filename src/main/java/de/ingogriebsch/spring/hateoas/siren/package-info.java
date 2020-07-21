@@ -16,6 +16,7 @@
 /**
  * Siren-specific extensions, SPIs and Jackson customizations.
  *
+ * @author Ingo Griebsch
  * @see <a href="https://github.com/kevinswiber/siren" target="_top">https://github.com/kevinswiber/siren</a>
  */
 package de.ingogriebsch.spring.hateoas.siren;

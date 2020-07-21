@@ -34,7 +34,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.lang.Nullable;
 
 /**
- * {@link HandlerInstantiator} to create Siren specific serializers, deserializers etc.
+ * {@link HandlerInstantiator} to create and configure Siren specific serializers and deserializers.
  *
  * @author Ingo Griebsch
  */
