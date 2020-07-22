@@ -15,23 +15,34 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
-import static lombok.AccessLevel.PRIVATE;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.Value;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 
 /**
  * Siren specific configuration.
  *
  * @author Ingo Griebsch
  */
-@AllArgsConstructor(access = PRIVATE)
-@NoArgsConstructor
+@Value
 public class SirenConfiguration {
 
-    @Getter
-    @With
-    private boolean entityAndCollectionModelSubclassingEnabled = false;
+    boolean entityAndCollectionModelSubclassingEnabled;
+
+    public SirenConfiguration() {
+        this(false);
+    }
+
+    private SirenConfiguration(boolean entityAndCollectionModelSubclassingEnabled) {
+        this.entityAndCollectionModelSubclassingEnabled = entityAndCollectionModelSubclassingEnabled;
+    }
+
+    /**
+     * Configures whether it is possible to subclass {@link EntityModel}s and {@link CollectionModel}s.
+     * Defaults to {@literal false}.
+     */
+    public SirenConfiguration withEntityAndCollectionModelSubclassingEnabled(boolean enabled) {
+        return new SirenConfiguration(enabled);
+    }
+
 }
