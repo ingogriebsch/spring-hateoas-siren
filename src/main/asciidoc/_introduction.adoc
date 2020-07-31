@@ -7,6 +7,8 @@ Siren: a hypermedia specification for representing entities
 This library extends {spring-hateoas-url}[Spring HATEOAS] with the custom hypermedia type {siren-url}[Siren]. 
 The media type for {siren-url}[Siren] is defined as `application/vnd.siren+json`. 
 
+The current version of this library (version {project-version}) is based on {spring-hateoas-url}[Spring HATEOAS] version {spring-hateoas-version}.
+
 The source of this library can be found {spring-hateoas-siren-source-url}[here]. 
 The Javadoc API documentation can be found {spring-hateoas-siren-javadoc-url}[here].
 
