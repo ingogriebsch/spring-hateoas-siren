@@ -40,6 +40,9 @@ public class SirenConfiguration {
     /**
      * Configures whether it is possible to subclass {@link EntityModel}s and {@link CollectionModel}s.
      * Defaults to {@literal false}.
+     * 
+     * @param enabled whether subclassing of {@link EntityModel}s and {@link CollectionModel}s should be enabled or not.
+     * @return the updated configuration reflecting the setting
      */
     public SirenConfiguration withEntityAndCollectionModelSubclassingEnabled(boolean enabled) {
         return new SirenConfiguration(enabled);
