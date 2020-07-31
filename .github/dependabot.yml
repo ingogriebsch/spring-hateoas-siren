@@ -1,13 +1,24 @@
+# For more information see: https://docs.github.com/en/github/administering-a-repository/keeping-your-dependencies-updated-automatically
 version: 2
 updates:
-- package-ecosystem: maven
-  directory: "/"
-  schedule:
-    interval: daily
-    time: '04:00'
-  open-pull-requests-limit: 10
-- package-ecosystem: github-actions
-  directory: "/"
-  schedule:
-    interval: daily
-    time: '04:00'
+  # Maintain dependencies for Maven
+  - package-ecosystem: maven
+    directory: "/"
+    labels:
+      - "infrastructure:dependencies"
+      - "type:improvement"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: daily
+      time: '01:00'
+  
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: github-actions
+    directory: "/"
+    labels:
+      - "infrastructure:github-actions"
+      - "type:improvement"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: daily
+      time: '01:00'
