@@ -15,7 +15,10 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
+import static java.lang.String.format;
+
 import static com.google.common.collect.Lists.newArrayList;
+import static de.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModel;
 import static de.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.wrap;
 import static org.apache.commons.lang3.Validate.noNullElements;
 import static org.springframework.hateoas.Links.of;
@@ -100,7 +103,7 @@ public final class SirenModelBuilder {
      * @see <a href="https://github.com/kevinswiber/siren#properties" target="_top">Siren Entity properties</a>
      */
     public SirenModelBuilder properties(@NonNull Object properties) {
-        // FIXME may not be a representation model subclass
+        assertNotOfTypeRepresentationModel(properties.getClass());
         this.properties = properties;
         return this;
     }
@@ -310,5 +313,12 @@ public final class SirenModelBuilder {
         SirenModel model = new SirenModel(properties, entities, classes, title);
         model.add(linksAndActions);
         return model;
+    }
+
+    private static void assertNotOfTypeRepresentationModel(Class<?> type) {
+        if (isRepresentationModel(type)) {
+            throw new IllegalArgumentException(format("The validated object should not be of type '%s' [but is of type '%s']!",
+                RepresentationModel.class.getName(), type.getName()));
+        }
     }
 }

@@ -268,6 +268,13 @@ class SirenModelBuilderTest {
                 assertThat(model).asInstanceOf(type(SirenModel.class)).extracting(SirenModel::getProperties)
                     .isEqualTo(properties);
             }
+
+            @Test
+            void should_throw_exception_if_representation_model_was_used() {
+                Object properties = new Capital("Berlin");
+                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().properties(properties))
+                    .isInstanceOf(IllegalArgumentException.class);
+            }
         }
 
         @Nested
