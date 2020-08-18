@@ -38,7 +38,7 @@ import org.springframework.http.MediaType;
  */
 @Configuration
 @RequiredArgsConstructor
-class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
+public class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
     private final ObjectProvider<SirenConfiguration> configuration;
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
