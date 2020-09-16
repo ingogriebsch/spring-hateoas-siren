@@ -18,7 +18,7 @@ jobs:
 
       - name: Prepare Maven artifact cache
         # https://github.com/actions/cache
-        uses: actions/cache@v2.1.0
+        uses: actions/cache@v2.1.1
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
