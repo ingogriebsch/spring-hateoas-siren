@@ -16,7 +16,7 @@
 package de.ingogriebsch.spring.hateoas.siren;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.mapping;
+import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
 import static lombok.AccessLevel.PACKAGE;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class SirenConfiguration {
      * @return the updated configuration reflecting the setting
      */
     public SirenConfiguration withActionFieldTypeMappging(@NonNull Class<?> source, @NonNull SirenActionFieldType target) {
-        actionFieldTypeMappings.add(mapping(source, target));
+        actionFieldTypeMappings.add(typeMapping(source, target));
         return this;
     }
 }

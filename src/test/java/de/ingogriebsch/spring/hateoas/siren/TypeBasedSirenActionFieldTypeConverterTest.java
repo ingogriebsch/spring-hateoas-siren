@@ -9,7 +9,7 @@ import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.MONTH;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.URL;
-import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.mapping;
+import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -50,7 +50,7 @@ public class TypeBasedSirenActionFieldTypeConverterTest {
 
         assertThat(converter.convert(propertyMetadata(String.class), APPLICATION_FORM_URLENCODED)).isEqualTo(TEXT);
 
-        List<TypeMapping> mappings = newArrayList(mapping(String.class, CHECKBOX));
+        List<TypeMapping> mappings = newArrayList(typeMapping(String.class, CHECKBOX));
         converter = new TypeBasedSirenActionFieldTypeConverter(mappings);
 
         assertThat(converter.convert(propertyMetadata(String.class), APPLICATION_FORM_URLENCODED)).isEqualTo(CHECKBOX);

@@ -23,6 +23,7 @@ import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.MONTH;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.URL;
+import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
 
 import java.io.File;
 import java.net.URI;
@@ -47,14 +48,14 @@ import org.springframework.http.MediaType;
 class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConverter {
 
     private static final List<TypeMapping> DEFAULT_MAPPINGS = newArrayList( //
-        TypeMapping.mapping(Date.class, DATE), //
-        TypeMapping.mapping(LocalDateTime.class, DATETIME_LOCAL), //
-        TypeMapping.mapping(File.class, FILE), //
-        TypeMapping.mapping(Path.class, FILE), //
-        TypeMapping.mapping(Month.class, MONTH), //
-        TypeMapping.mapping(Number.class, NUMBER), //
-        TypeMapping.mapping(URL.class, URL), //
-        TypeMapping.mapping(URI.class, URL) //
+        typeMapping(Date.class, DATE), //
+        typeMapping(LocalDateTime.class, DATETIME_LOCAL), //
+        typeMapping(File.class, FILE), //
+        typeMapping(Path.class, FILE), //
+        typeMapping(Month.class, MONTH), //
+        typeMapping(Number.class, NUMBER), //
+        typeMapping(URL.class, URL), //
+        typeMapping(URI.class, URL) //
     );
 
     private final List<TypeMapping> mappings;
@@ -89,7 +90,7 @@ class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConv
         return null;
     }
 
-    @Value(staticConstructor = "mapping")
+    @Value(staticConstructor = "typeMapping")
     static class TypeMapping {
 
         Class<?> source;

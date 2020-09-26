@@ -2,7 +2,7 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
-import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.mapping;
+import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class SirenConfigurationTest {
 
         configuration.withActionFieldTypeMappging(String.class, TEXT);
         assertThat(configuration.getActionFieldTypeMappings()).containsExactly( //
-            mapping(String.class, TEXT) //
+            typeMapping(String.class, TEXT) //
         );
 
         assertThat(configuration.isEntityAndCollectionModelSubclassingEnabled()).isTrue();
@@ -48,8 +48,8 @@ class SirenConfigurationTest {
 
         configuration.withActionFieldTypeMappging(Integer.class, NUMBER);
         assertThat(configuration.getActionFieldTypeMappings()).containsExactly( //
-            mapping(String.class, TEXT), //
-            mapping(Integer.class, NUMBER) //
+            typeMapping(String.class, TEXT), //
+            typeMapping(Integer.class, NUMBER) //
         );
     }
 
@@ -61,8 +61,8 @@ class SirenConfigurationTest {
         configuration.withActionFieldTypeMappging(String.class, TEXT);
         configuration.withActionFieldTypeMappging(Integer.class, NUMBER);
         assertThat(configuration.getActionFieldTypeMappings()).containsExactly( //
-            mapping(String.class, TEXT), //
-            mapping(Integer.class, NUMBER) //
+            typeMapping(String.class, TEXT), //
+            typeMapping(Integer.class, NUMBER) //
         );
     }
 }
