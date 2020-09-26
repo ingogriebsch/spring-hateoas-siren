@@ -9,7 +9,7 @@
     "href" : "/persons/1",
     "fields" : [ {
       "name" : "age",
-      "type" : "number"
+      "type" : "text"
     }, {
       "name" : "name",
       "type" : "text"

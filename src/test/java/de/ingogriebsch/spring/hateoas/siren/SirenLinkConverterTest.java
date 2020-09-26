@@ -56,7 +56,8 @@ class SirenLinkConverterTest {
             Link source = Link.of("/persons/1", SELF);
             SirenNavigables expected = read("navigables/containing_link_with_href_and_rel.json");
 
-            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY);
+            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY, new SirenActionFieldTypeConverter() {
+            });
             SirenNavigables actual = converter.to(newArrayList(source));
 
             assertThat(actual).isEqualTo(expected);
@@ -67,7 +68,8 @@ class SirenLinkConverterTest {
             Link source = Link.of("/persons/1", SELF).withTitle("title");
             SirenNavigables expected = read("navigables/containing_link_with_title.json");
 
-            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY);
+            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY, new SirenActionFieldTypeConverter() {
+            });
             SirenNavigables actual = converter.to(newArrayList(source));
 
             assertThat(actual).isEqualTo(expected);
@@ -78,7 +80,9 @@ class SirenLinkConverterTest {
             Link source = Link.of("/persons/1", SELF);
             SirenNavigables expected = read("navigables/containing_link_with_title.json");
 
-            SirenLinkConverter converter = new SirenLinkConverter(StaticMessageResolver.of("title"));
+            SirenLinkConverter converter =
+                new SirenLinkConverter(StaticMessageResolver.of("title"), new SirenActionFieldTypeConverter() {
+                });
             SirenNavigables actual = converter.to(newArrayList(source));
 
             assertThat(actual).isEqualTo(expected);
@@ -89,7 +93,9 @@ class SirenLinkConverterTest {
             Link source = Link.of("/persons/1", SELF).withTitle("title");
             SirenNavigables expected = read("navigables/containing_link_with_title.json");
 
-            SirenLinkConverter converter = new SirenLinkConverter(StaticMessageResolver.of("something"));
+            SirenLinkConverter converter =
+                new SirenLinkConverter(StaticMessageResolver.of("something"), new SirenActionFieldTypeConverter() {
+                });
             SirenNavigables actual = converter.to(newArrayList(source));
 
             assertThat(actual).isEqualTo(expected);
@@ -101,7 +107,8 @@ class SirenLinkConverterTest {
             Link source = linkTo(controller.findOne(1)).withSelfRel().andAffordance(afford(controller.update(1, null)));
             SirenNavigables expected = read("navigables/containing_link_and_action_representing_link_with_affordance.json");
 
-            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY);
+            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY, new SirenActionFieldTypeConverter() {
+            });
             SirenNavigables actual = converter.to(newArrayList(source));
 
             assertThat(actual).isEqualTo(expected);
@@ -117,7 +124,8 @@ class SirenLinkConverterTest {
             SirenNavigables source = read("navigables/containing_link_with_href_and_rel.json");
             List<Link> expected = newArrayList(Link.of("/persons/1", SELF));
 
-            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY);
+            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY, new SirenActionFieldTypeConverter() {
+            });
             List<Link> actual = converter.from(source);
 
             assertThat(actual).isEqualTo(expected);
@@ -128,7 +136,8 @@ class SirenLinkConverterTest {
             SirenNavigables source = read("navigables/containing_link_with_title.json");
             List<Link> expected = newArrayList(Link.of("/persons/1", SELF).withTitle("title"));
 
-            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY);
+            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY, new SirenActionFieldTypeConverter() {
+            });
             List<Link> actual = converter.from(source);
 
             assertThat(actual).isEqualTo(expected);
@@ -139,7 +148,8 @@ class SirenLinkConverterTest {
             SirenNavigables source = read("navigables/containing_link_with_type.json");
             List<Link> expected = newArrayList(Link.of("/persons/1", SELF).withType(APPLICATION_JSON_VALUE));
 
-            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY);
+            SirenLinkConverter converter = new SirenLinkConverter(DEFAULTS_ONLY, new SirenActionFieldTypeConverter() {
+            });
             List<Link> actual = converter.from(source);
 
             assertThat(actual).isEqualTo(expected);

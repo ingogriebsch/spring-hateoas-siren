@@ -15,26 +15,28 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
+import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
+import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import de.ingogriebsch.spring.hateoas.siren.SirenAction.Field;
-import de.ingogriebsch.spring.hateoas.siren.SirenAction.Field.Type;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.ResolvableType;
 import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.AffordanceModel.InputPayloadMetadata;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.mediatype.MessageResolver;
+import org.springframework.http.MediaType;
 
 /**
  * Converter which is able to either convert {@link Link}s (and their {@link Affordance}s) into a {@link SirenNavigables}, or the
@@ -46,6 +48,7 @@ import org.springframework.hateoas.mediatype.MessageResolver;
 class SirenLinkConverter {
 
     private final MessageResolver messageResolver;
+    private final SirenActionFieldTypeConverter sirenActionFieldTypeConverter;
 
     SirenNavigables to(Iterable<Link> links) {
         return SirenNavigables.merge(stream(links.spliterator(), false).map(this::convert).collect(toList()));
@@ -90,7 +93,8 @@ class SirenLinkConverter {
     }
 
     private SirenAction convert(SirenAffordanceModel model) {
-        List<Field> fields = fields(model);
+        MediaType type = actionType(model);
+        List<Field> fields = fields(model, type);
 
         return SirenAction.builder() //
             .name(model.getName()) //
@@ -101,18 +105,18 @@ class SirenLinkConverter {
             .build();
     }
 
-    private List<Field> fields(SirenAffordanceModel model) {
+    private List<Field> fields(SirenAffordanceModel model, MediaType actionType) {
         InputPayloadMetadata input = model.getInput();
         if (input == null) {
             return newArrayList();
         }
-        return input.stream().map(this::field).collect(toList());
+        return input.stream().map(pm -> field(pm, actionType)).collect(toList());
     }
 
-    private Field field(PropertyMetadata propertyMetadata) {
+    private Field field(PropertyMetadata propertyMetadata, MediaType actionType) {
         return Field.builder() //
             .name(propertyMetadata.getName()) //
-            .type(fieldType(propertyMetadata.getType()))//
+            .type(fieldType(propertyMetadata, actionType))//
             .title(fieldTitle(propertyMetadata.getName())) //
             .build();
     }
@@ -138,8 +142,13 @@ class SirenLinkConverter {
         return name != null ? messageResolver.resolve(SirenAction.Field.TitleResolvable.of(name)) : null;
     }
 
-    private static Type fieldType(ResolvableType type) {
-        return Number.class.isAssignableFrom(type.getRawClass()) ? Type.number : Type.text;
+    private String fieldType(PropertyMetadata propertyMetadata, MediaType actionType) {
+        return ofNullable(sirenActionFieldTypeConverter.convert(propertyMetadata, actionType))
+            .map(SirenActionFieldType::getKeyword).orElse(TEXT.getKeyword());
+    }
+
+    private static MediaType actionType(SirenAffordanceModel model) {
+        return APPLICATION_FORM_URLENCODED;
     }
 
     private static List<SirenNavigables> slice(SirenNavigables navigables) {
