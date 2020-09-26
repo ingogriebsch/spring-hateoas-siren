@@ -15,7 +15,7 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
-import static de.ingogriebsch.spring.hateoas.siren.SirenAction.Field.Type.text;
+import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.http.HttpMethod.GET;
@@ -82,7 +82,7 @@ class SirenActionTest {
                 SirenAction.Field field = SirenAction.Field.builder().name("name").build();
                 assertThat(field.getClasses()).isNull();
                 assertThat(field.getTitle()).isNull();
-                assertThat(field.getType()).isEqualTo(text);
+                assertThat(field.getType()).isEqualTo(TEXT.getKeyword());
                 assertThat(field.getValue()).isNull();
             }
         }

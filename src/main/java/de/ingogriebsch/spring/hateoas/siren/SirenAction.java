@@ -17,6 +17,7 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static org.springframework.http.HttpMethod.GET;
 
 import java.util.List;
@@ -86,18 +87,13 @@ class SirenAction {
 
         @Default
         @JsonInclude(NON_NULL)
-        Type type = Type.text;
+        String type = TEXT.getKeyword();
 
         @JsonInclude(NON_NULL)
         Object value;
 
         @JsonInclude(NON_NULL)
         String title;
-
-        enum Type {
-                checkbox, color, date, datetime, datetime_local, email, file, hidden, month, number, password, radio, range,
-                search, tel, text, time, url, week
-        }
 
         @Value(staticConstructor = "of")
         static class TitleResolvable implements MessageSourceResolvable {
