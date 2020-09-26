@@ -40,11 +40,12 @@ import org.springframework.http.MediaType;
 @RequiredArgsConstructor
 public class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
+    private final MessageResolver messageResolver;
     private final ObjectProvider<SirenConfiguration> configuration;
-    private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
     private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
     private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
-    private final MessageResolver messageResolver;
+    private final ObjectProvider<SirenActionFieldTypeConverter> sirenActionFieldTypeConverter;
+    private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
 
     @Bean
     LinkDiscoverer sirenLinkDisocoverer() {
@@ -98,12 +99,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     private SirenLinkConverter linkConverter() {
-        return new SirenLinkConverter(messageResolver);
-    }
-
-    private RepresentationModelFactories representationModelFactories() {
-        return representationModelFactories.getIfAvailable(() -> new RepresentationModelFactories() {
-        });
+        return new SirenLinkConverter(messageResolver, sirenActionFieldTypeConverter());
     }
 
     private SirenEntityClassProvider entityClassProvider() {
@@ -116,4 +112,15 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         });
     }
 
+    private SirenActionFieldTypeConverter sirenActionFieldTypeConverter() {
+        return sirenActionFieldTypeConverter.getIfAvailable(() -> {
+            return new TypeBasedSirenActionFieldTypeConverter(configuration().getActionFieldTypeMappings());
+        });
+
+    }
+
+    private RepresentationModelFactories representationModelFactories() {
+        return representationModelFactories.getIfAvailable(() -> new RepresentationModelFactories() {
+        });
+    }
 }

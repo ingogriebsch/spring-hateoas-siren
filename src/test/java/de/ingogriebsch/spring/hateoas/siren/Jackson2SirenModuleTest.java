@@ -71,18 +71,21 @@ class Jackson2SirenModuleTest {
         ObjectProvider<SirenConfiguration> configuration =
             new SimpleObjectProvider<>(new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true));
 
-        ObjectProvider<RepresentationModelFactories> representationModelFactories =
-            new SimpleObjectProvider<>(new RepresentationModelFactories() {
-            });
-
         ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
         });
 
         ObjectProvider<SirenEntityRelProvider> entityRelProvider = new SimpleObjectProvider<>(new SirenEntityRelProvider() {
         });
 
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(configuration,
-            representationModelFactories, entityClassProvider, entityRelProvider, DEFAULTS_ONLY);
+        ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter =
+            new SimpleObjectProvider<>(new TypeBasedSirenActionFieldTypeConverter());
+
+        ObjectProvider<RepresentationModelFactories> representationModelFactories =
+            new SimpleObjectProvider<>(new RepresentationModelFactories() {
+            });
+
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, configuration,
+            entityClassProvider, entityRelProvider, actionFieldTypeConverter, representationModelFactories);
 
         objectMapper = sirenMediaTypeConfiguration.configureObjectMapper(new ObjectMapper());
         objectMapper.configure(INDENT_OUTPUT, true);

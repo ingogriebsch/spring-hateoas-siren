@@ -33,18 +33,21 @@ class SirenMediaTypeConfigurationTest {
     static void beforeAll() {
         ObjectProvider<SirenConfiguration> configuration = new SimpleObjectProvider<>(new SirenConfiguration());
 
-        ObjectProvider<RepresentationModelFactories> representationModelFactories =
-            new SimpleObjectProvider<>(new RepresentationModelFactories() {
-            });
-
         ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
         });
 
         ObjectProvider<SirenEntityRelProvider> entityRelProvider = new SimpleObjectProvider<>(new SirenEntityRelProvider() {
         });
 
-        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(configuration, representationModelFactories,
-            entityClassProvider, entityRelProvider, DEFAULTS_ONLY);
+        ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter =
+            new SimpleObjectProvider<>(new TypeBasedSirenActionFieldTypeConverter());
+
+        ObjectProvider<RepresentationModelFactories> representationModelFactories =
+            new SimpleObjectProvider<>(new RepresentationModelFactories() {
+            });
+
+        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, configuration, entityClassProvider,
+            entityRelProvider, actionFieldTypeConverter, representationModelFactories);
     }
 
     @Nested
