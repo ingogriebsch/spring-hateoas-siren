@@ -21,6 +21,8 @@
 :siren-entity-url: https://github.com/kevinswiber/siren/blob/master/README.md#entity
 :siren-entity-action-url: https://github.com/kevinswiber/siren/blob/master/README.md#actions-1
 :siren-entity-action-title-url: https://github.com/kevinswiber/siren/blob/master/README.md#title-3
+:siren-entity-action-field-url: https://github.com/kevinswiber/siren/blob/master/README.md#fields-1
+:siren-entity-action-field-type-url: https://github.com/kevinswiber/siren/blob/master/README.md#type-3
 :siren-entity-action-field-title-url: https://github.com/kevinswiber/siren/blob/master/README.md#title-4
 :siren-entity-class-url: https://github.com/kevinswiber/siren/blob/master/README.md#class
 :siren-entity-embedded-link-url: https://github.com/kevinswiber/siren/blob/master/README.md#embedded-link

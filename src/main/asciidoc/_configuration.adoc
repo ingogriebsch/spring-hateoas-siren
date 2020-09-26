@@ -7,5 +7,10 @@ If you want to override/enhance this behavior you need to expose an implementati
 This library currently uses a really simple approach to evaluate the relation between a {spring-hateoas-representation-model-url}[representation model] and its contained {spring-hateoas-representation-model-url}[representation model] to set the {siren-entity-rel-url}[rel] attribute of the {siren-entity-url}[Siren entity].
 If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityRelProvider` interface as a Spring bean.
 
+This library currently uses a really simple approach to map the respective type of a payload property of an {spring-hateoas-affordances-url}[affordance model] to the {siren-entity-action-field-type-url}[type] attribute of the {siren-entity-action-field-url}[Siren action field].
+If you need to specify additional mappings or if you want to override the default behavior, you can do so with the `SirenConfiguration`.
+If this is not enough you need to expose an implementation of the `SirenActionFieldTypeConverter` interface as a Spring bean. 
+But then the support offered through the `SirenConfiguration` is not active anymore.
+
 This library currently uses a really simple approach to instantiate the concrete instances of the {spring-hateoas-representation-model-url}[representation models] during the deserialization process.
 If you want to override/enhance this behavior you need to expose an implementation of the `RepresentationModelFactories` interface as a Spring bean.
