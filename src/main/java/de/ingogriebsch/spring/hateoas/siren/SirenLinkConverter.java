@@ -86,13 +86,13 @@ class SirenLinkConverter {
         List<SirenAction> result = newArrayList();
         for (SirenAffordanceModel model : affordanceModels(link)) {
             if (!GET.equals(model.getHttpMethod())) {
-                result.add(convert(model));
+                result.add(action(model));
             }
         }
         return result;
     }
 
-    private SirenAction convert(SirenAffordanceModel model) {
+    private SirenAction action(SirenAffordanceModel model) {
         MediaType type = actionType(model);
         List<Field> fields = fields(model, type);
 
