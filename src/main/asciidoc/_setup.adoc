@@ -29,6 +29,8 @@ dependencies {
 }
 ----
 
-Having this library on the classpath of your project is all you need to get the hypermedia type automatically enabled. 
-This way incoming requests asking for the mentioned media type will get an appropriate response. 
-The library is also able to deserialize a Json representation of the media type into corresponding {spring-hateoas-representation-model-url}[representation models].
+Having this library on the classpath is all you need in a Spring Boot based project to get the hypermedia type automatically enabled.
+If you want to use the library in a project that is not based on Spring Boot, you need to use class `SirenMediaTypeConfiguration`.
+This means, that you need to create an instance of this class and that you are responsible for that the methods that are necessary to initialize the library are executed.
+
+This way incoming requests asking for the mentioned media type will get an appropriate response. The library is also able to deserialize a Json representation of the media type into corresponding {spring-hateoas-representation-model-url}[representation models].
