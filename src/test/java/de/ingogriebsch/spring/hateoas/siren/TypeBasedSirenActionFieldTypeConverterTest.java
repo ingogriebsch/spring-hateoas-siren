@@ -9,7 +9,7 @@ import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.MONTH;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.URL;
-import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
+import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping;
 import lombok.Value;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -16,12 +16,11 @@
 package de.ingogriebsch.spring.hateoas.siren;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
+import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
 import static lombok.AccessLevel.PACKAGE;
 
 import java.util.List;
 
-import de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.hateoas.CollectionModel;

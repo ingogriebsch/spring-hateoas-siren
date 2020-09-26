@@ -23,7 +23,8 @@ import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.MONTH;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.URL;
-import static de.ingogriebsch.spring.hateoas.siren.TypeBasedSirenActionFieldTypeConverter.TypeMapping.typeMapping;
+import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
+import static lombok.AccessLevel.PACKAGE;
 
 import java.io.File;
 import java.net.URI;
@@ -34,8 +35,10 @@ import java.time.Month;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Data;
+import lombok.Getter;
 import lombok.NonNull;
-import lombok.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
 import org.springframework.http.MediaType;
 
@@ -89,11 +92,17 @@ class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConv
         }
         return null;
     }
+}
 
-    @Value(staticConstructor = "typeMapping")
-    static class TypeMapping {
+@Data
+@Getter(PACKAGE)
+@RequiredArgsConstructor(access = PACKAGE)
+class TypeMapping {
 
-        Class<?> source;
-        SirenActionFieldType target;
+    private final Class<?> source;
+    private final SirenActionFieldType target;
+
+    static TypeMapping typeMapping(Class<?> source, SirenActionFieldType target) {
+        return new TypeMapping(source, target);
     }
 }
