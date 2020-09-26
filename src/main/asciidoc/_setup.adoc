@@ -2,7 +2,7 @@
 = Setup
 
 To enable the {siren-url}[Siren] hypermedia type you simply need to add this library as a dependency to your project.
-The library is accessible through the {spring-hateoas-siren-artifact-source-url}[Maven Central] or one of it's proxies.
+The library is accessible through {spring-hateoas-siren-artifact-source-url}[Maven Central] or one of its proxies.
 
 [[maven]]
 If you use {apache-maven-url}[Apache Maven], add the following to your build file:
@@ -29,6 +29,6 @@ dependencies {
 }
 ----
 
-Having this library on the classpath of your project is all you need to do to get the hypermedia type automatically enabled. 
+Having this library on the classpath of your project is all you need to get the hypermedia type automatically enabled. 
 This way incoming requests asking for the mentioned media type will get an appropriate response. 
 The library is also able to deserialize a Json representation of the media type into corresponding {spring-hateoas-representation-model-url}[representation models].

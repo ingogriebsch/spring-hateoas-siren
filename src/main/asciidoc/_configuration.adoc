@@ -4,7 +4,7 @@
 This library currently uses a really simple approach to map the respective {spring-hateoas-representation-model-url}[representation model] to the {siren-entity-class-url}[class] attribute of the {siren-entity-url}[Siren entity].
 If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityClassProvider` interface as a Spring bean.
 
-This library currently uses a really simple approach to evaluate the relation between a {spring-hateoas-representation-model-url}[representation model] and it's contained {spring-hateoas-representation-model-url}[representation model] to set the {siren-entity-rel-url}[rel] attribute of the {siren-entity-url}[Siren entity].
+This library currently uses a really simple approach to evaluate the relation between a {spring-hateoas-representation-model-url}[representation model] and its contained {spring-hateoas-representation-model-url}[representation model] to set the {siren-entity-rel-url}[rel] attribute of the {siren-entity-url}[Siren entity].
 If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityRelProvider` interface as a Spring bean.
 
 This library currently uses a really simple approach to instantiate the concrete instances of the {spring-hateoas-representation-model-url}[representation models] during the deserialization process.

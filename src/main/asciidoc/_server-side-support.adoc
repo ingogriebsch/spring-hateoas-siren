@@ -1,5 +1,5 @@
 [[server-side-support]]
-= Server side support
+= Server Side support
 
 [[serialization]]
 == Serialization
@@ -89,7 +89,7 @@ Person person = new Person();
 person.firstname = "Dave";
 person.lastname = "Matthews";
 
-EntityModel<Person> model = new EntityModel<>(person);
+EntityModel<Person> model = EntityModel.of(person);
 // add some links (having affordances) to the model...
 ----
 
@@ -131,14 +131,14 @@ Person person = new Person();
 person.firstname = "Dave";
 person.lastname = "Matthews";
 
-EntityModel<Person> personModel = new EntityModel<>(person);
+EntityModel<Person> personModel = EntityModel.of(person);
 // add some links (having affordances) to the person model...
 ----
 
 Another entity model wrapping the entity model:
 [source,java,indent=0,subs="verbatim,quotes,attributes"]
 ----
-EntityModel<EntityModel<Person>> model = new EntityModel<>(personModel);
+EntityModel<EntityModel<Person>> model = EntityModel.of(personModel);
 // add some links (having affordances) to the model...
 ----
 
@@ -197,22 +197,22 @@ Person p1 = new Person();
 p1.firstname = "Dave";
 p1.lastname = "Matthews";
 
-EntityModel<Person> pm1 = new EntityModel<>(p1);
+EntityModel<Person> pm1 = EntityModel.of(p1);
 // add some links (having affordances) to the model...
 
 Person p2 = new Person();
 p2.firstname = "Stefan";
 p2.lastname = "Lessard";
 
-EntityModel<Person> pm2 = new EntityModel<>(p2);
+EntityModel<Person> pm2 = EntityModel.of(p2);
 // add some links (having affordances) to the model...
 ----
 
 A collection model wrapping the entity models:
 [source,java,indent=0,subs="verbatim,quotes,attributes"]
 ----
-Collection<EntityModel<Person>> people = Collections.singleton(pm1, pm2);
-CollectionModel<EntityModel<Person>> people = new CollectionModel<>(people);
+Collection<EntityModel<Person>> people = Arrays.asList(pm1, pm2);
+CollectionModel<EntityModel<Person>> people = CollectionModel.of(people);
 // add some links (having affordances) to the model...
 ----
 
@@ -289,14 +289,14 @@ Person p1 = new Person();
 p1.firstname = "Dave";
 p1.lastname = "Matthews";
 
-EntityModel<Person> pm1 = new EntityModel<>(p1);
+EntityModel<Person> pm1 = EntityModel.of(p1);
 // add some links (having affordances) to the model...
 
 Person p2 = new Person();
 p2.firstname = "Stefan";
 p2.lastname = "Lessard";
 
-EntityModel<Person> pm2 = new EntityModel<>(p2);
+EntityModel<Person> pm2 = EntityModel.of(p2);
 // add some links (having affordances) to the model...
 ----
 
@@ -305,7 +305,7 @@ A paged model wrapping the entity models:
 ----
 Collection<EntityModel<Person>> people = Collections.singleton(personModel);
 PageMetadata metadata = new PageMetadata(20, 0, 1, 1);
-PagedModel<EntityModel<Person>> model = new PagedModel<>(people, metadata);
+PagedModel<EntityModel<Person>> model = PagedModel.of(people, metadata);
 // add some links (having affordances) to the model...
 ----
 
@@ -366,7 +366,7 @@ The resulting Siren representation:
 
 If this library renders a {spring-hateoas-links-url}[link], it maps
 
-* {spring-hateoas-links-url}[links] having a http method equal to `GET` to Siren Entity {siren-entity-link-url}[links].
+* {spring-hateoas-links-url}[links] having an http method equal to `GET` to Siren Entity {siren-entity-link-url}[links].
 * the rel of the {spring-hateoas-links-url}[link] to the Siren Entity Link {siren-entity-link-title-url}[title] if available through the <<internationalization>> mechanism.
 * {spring-hateoas-affordances-url}[affordances] bound to a {spring-hateoas-links-url}[link] to Siren Entity {siren-entity-action-url}[actions].
 * the name of an {spring-hateoas-affordances-url}[affordance] bound to a {spring-hateoas-links-url}[link] to the Siren Action {siren-entity-action-title-url}[title] if available through the <<internationalization>> mechanism.
@@ -374,7 +374,7 @@ If this library renders a {spring-hateoas-links-url}[link], it maps
 
 If this library renders a {spring-hateoas-links-url}[link], it does not
 
-* map any {spring-hateoas-links-url}[links] having a http method not equal to `GET`.
+* map any {spring-hateoas-links-url}[links] having an http method not equal to `GET`.
 * distinguish between templated and not templated {spring-hateoas-links-url}[links].
 
 .Serialize a link having some affordances
@@ -415,7 +415,7 @@ ResponseEntity<EntityModel<Person>> findOne(Long id) {
     .andAffordance(afford(methodOn(controllerClass).update(id, null))) // 
     .andAffordance(afford(methodOn(controllerClass).delete(id)));
   
-  EntityModel<Person> model = new EntityModel<>(person, selfLink);
+  EntityModel<Person> model = EntityModel.of(person, selfLink);
   return ResponseEntity.ok(model);
 } 
 ----
@@ -457,7 +457,7 @@ The resulting Siren representation:
 {siren-url}[Siren] defines a resource as an {siren-entity-url}[entity] which has not only {siren-entity-properties-url}[properties] and navigable {siren-entity-link-url}[links] but may also contain {siren-entity-embedded-representation-url}[embedded representations].
 Because such representations retain all the characteristics of an {siren-entity-url}[entity] you can build quite complex resource structures.
 Even if it is in most cases probably sufficient to simply use the available {spring-hateoas-representation-model-url}[representation models] it can be necessary in some cases to be able to build such quite complex structures.
-Therefore this librarys provides a builder API that allows to build a siren model which is then transfered into the respective Siren {siren-entity-url}[entity] structure.
+Therefore this librarys provides a builder API that allows to build a Siren model which is then transfered into the respective Siren {siren-entity-url}[entity] structure.
 
 [[internationalization]]
 == Internationalization
@@ -470,7 +470,7 @@ This bundle will be set up automatically and is used during the serialization pr
 === Entities
 
 To define a {siren-entity-title-url}[title] for a Siren {siren-entity-url}[entity], use the key template `_entity.$type.title`.
-Which type is used to build the resulting key depends on which type of Spring HATEOAS {spring-hateoas-representation-model-url}[representatio model] is used.
+The type used to build the resulting key depends on which type of Spring HATEOAS {spring-hateoas-representation-model-url}[representation model] is used.
 To evaluate if a title is available for a specific type, the `fqcn` will be checked first, followed by the `simple name`.
 Finally, it is checked whether type `default` is available.
 
