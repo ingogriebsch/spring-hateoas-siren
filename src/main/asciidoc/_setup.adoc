@@ -30,6 +30,7 @@ dependencies {
 ----
 
 Having this library on the classpath is all you need in a Spring Boot based project to get the hypermedia type automatically enabled.
+
 If you want to use the library in a project that is not based on Spring Boot, you need to use class `SirenMediaTypeConfiguration`.
 This means, that you need to create an instance of this class and that you are responsible for that the methods that are necessary to initialize the library are executed.
 

@@ -7,6 +7,8 @@
 This library allows to use/handle the {siren-url}[Siren] hypermedia type on clients requesting data from servers producing this hypermedia type. 
 This means that adding and enabling this library is sufficient to be able to deserialize responses containing data of the {siren-url}[Siren] hypermedia type into their respective {spring-hateoas-representation-model-url}[representation models].
 
+Please be aware of that the deserialization mechanism is currently not able to deserialize all types of complex {siren-entity-url}[Siren Entity] structures that can be build with Siren model builder API.
+
 Please be aware of that the deserialization mechanism is currently not able to deserialize a {siren-entity-action-url}[Siren action] into the corresponding {spring-hateoas-affordances-url}[affordance model].
 
 [[traverson]]

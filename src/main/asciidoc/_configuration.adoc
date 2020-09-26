@@ -8,7 +8,7 @@ This library currently uses a really simple approach to evaluate the relation be
 If you want to override/enhance this behavior you need to expose an implementation of the `SirenEntityRelProvider` interface as a Spring bean.
 
 This library currently uses a really simple approach to map the respective type of a payload property of an {spring-hateoas-affordances-url}[affordance model] to the {siren-entity-action-field-type-url}[type] attribute of the {siren-entity-action-field-url}[Siren action field].
-If you need to specify additional mappings or if you want to override the default behavior, you can do so with the `SirenConfiguration`.
+If you need to specify additional mappings or if you want to override the default behavior, you can do so through the `SirenConfiguration`.
 If this is not enough you need to expose an implementation of the `SirenActionFieldTypeConverter` interface as a Spring bean. 
 But then the support offered through the `SirenConfiguration` is not active anymore.
 
