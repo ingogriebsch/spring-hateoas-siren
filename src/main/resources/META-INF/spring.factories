@@ -1,5 +1,7 @@
+# Add the SirenAffordanceModelFactory to the available AffordanceModelFactories
 org.springframework.hateoas.mediatype.AffordanceModelFactory=\
 	de.ingogriebsch.spring.hateoas.siren.SirenAffordanceModelFactory
 
+# Enable the SirenMediaTypeConfiguration in Spring Boot environments
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
     de.ingogriebsch.spring.hateoas.siren.SirenMediaTypeConfiguration
