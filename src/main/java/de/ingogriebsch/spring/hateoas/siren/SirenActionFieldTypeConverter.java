@@ -23,8 +23,8 @@ import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
 import org.springframework.http.MediaType;
 
 /**
- * A converter that is responsible for determine a {@link SirenActionFieldType} based on the property that is part of an
- * {@link AffordanceModel} and the type of the surrounding action.
+ * SPI to convert a property that is part of an {@link AffordanceModel} and the type of the surrounding Siren action into a
+ * {@link SirenActionFieldType}.
  * 
  * @author Ingo Griebsch
  * @see <a href="https://github.com/kevinswiber/siren#type-3" target="_top">https://github.com/kevinswiber/siren#type-3</a>
@@ -33,12 +33,12 @@ import org.springframework.http.MediaType;
 public interface SirenActionFieldTypeConverter {
 
     /**
-     * Converts some {@link PropertyMetadata field metadata} and {@link MediaType action type} into a
-     * {@link SirenActionFieldType}.
+     * Converts the given {@link PropertyMetadata property metadata} and the {@link MediaType type} of the respective Siren action
+     * into a {@link SirenActionFieldType}.
      * <p>
      * The default implementation always returns the fallback, as specified through the specification.
      * 
-     * @param fieldMetadata the metadata of the field. Is never {@literal null}.
+     * @param fieldMetadata the metadata of the property. Is never {@literal null}.
      * @param actionType the type of the action. Is never {@literal null}.
      * @return the matching {@link SirenActionFieldType}.
      */

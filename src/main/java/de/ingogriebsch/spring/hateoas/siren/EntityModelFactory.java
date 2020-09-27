@@ -28,14 +28,14 @@ import org.springframework.hateoas.Link;
 import org.springframework.lang.Nullable;
 
 /**
- * Factory to create a {@link EntityModel} instance based on the given input evaluated during deserialization.
+ * A factory to create an {@link EntityModel} instance based on the given input that is evaluated during deserialization.
  * 
  * @author Ingo Griebsch
  */
 public interface EntityModelFactory {
 
     /**
-     * Creates a {@link EntityModel} based on the given input.
+     * Creates an {@link EntityModel} based on the given input.
      * <p>
      * The default implementation instantiates the concrete {@link EntityModel} based on the assumption that the
      * {@link EntityModel#EntityModel(Object, Iterable)} constructor is accessible.

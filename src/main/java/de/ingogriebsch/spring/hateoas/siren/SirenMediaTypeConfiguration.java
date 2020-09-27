@@ -32,7 +32,7 @@ import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.http.MediaType;
 
 /**
- * Spring configuration for Siren support.
+ * A Spring based configuration that enables Siren support in the surrounding environment.
  *
  * @author Ingo Griebsch
  */

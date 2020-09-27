@@ -27,7 +27,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 
 /**
- * Siren specific configuration.
+ * A Siren specific configuration that allows to configure specific parts of the library.
  *
  * @author Ingo Griebsch
  */

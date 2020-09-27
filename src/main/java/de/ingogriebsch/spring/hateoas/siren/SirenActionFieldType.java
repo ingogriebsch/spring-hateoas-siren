@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.NonNull;
 
 /**
- * Representation of a Siren action field type.
+ * A representation of a Siren action field type.
  * 
  * @author Ingo Griebsch
  * @see <a href="https://github.com/kevinswiber/siren#type-3" target="_top">https://github.com/kevinswiber/siren#type-3</a>

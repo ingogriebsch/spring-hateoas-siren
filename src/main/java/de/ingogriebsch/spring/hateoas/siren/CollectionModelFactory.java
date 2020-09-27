@@ -28,7 +28,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.lang.Nullable;
 
 /**
- * Factory to create a {@link CollectionModel} instance based on the given input evaluated during deserialization.
+ * A factory to create a {@link CollectionModel} instance based on the given input that is evaluated during deserialization.
  * 
  * @author Ingo Griebsch
  */

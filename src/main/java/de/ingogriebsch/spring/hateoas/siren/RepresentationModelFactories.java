@@ -21,7 +21,8 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 
 /**
- * Holds factories for all known types of {@link RepresentationModel}s to be used during the deserialization process.
+ * A container that holds the factories for all known types of {@link RepresentationModel}s that are used during the
+ * deserialization process.
  * 
  * @author Ingo Griebsch
  */
