@@ -26,7 +26,7 @@
         <developer>
             <id>ingogriebsch</id>
             <name>Ingo Griebsch</name>
-            <email>ingogriebsch@gmx.de</email>
+            <email>ingo.griebsch@gmx.de</email>
             <url>https://ingogriebsch.de</url>
             <timezone>Europe/Berlin</timezone>
         </developer>
@@ -385,7 +385,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
-                    <execution>
+                        <execution>
                         <id>copy-doc-resources</id>
                         <phase>generate-resources</phase>
                         <goals>
