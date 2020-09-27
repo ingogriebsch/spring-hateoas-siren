@@ -31,7 +31,7 @@ import org.springframework.lang.Nullable;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
- * @see <a href="https://github.com/kevinswiber/siren#rel" target="_top">https://github.com/kevinswiber/siren#rel</a>
+ * @see <a href="https://github.com/kevinswiber/siren#rel" target="_blank">https://github.com/kevinswiber/siren#rel</a>
  */
 public interface SirenEntityRelProvider {
 
