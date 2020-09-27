@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.core.ResolvableType;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
 
-public class TypeBasedSirenActionFieldTypeConverterTest {
+class TypeBasedSirenActionFieldTypeConverterTest {
 
     @Test
     void convert_should_throw_exception_if_no_input_given() {
