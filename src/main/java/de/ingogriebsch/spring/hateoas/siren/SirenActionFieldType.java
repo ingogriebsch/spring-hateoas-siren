@@ -22,6 +22,7 @@ import lombok.NonNull;
  * A representation of a Siren action field type.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  * @see <a href="https://github.com/kevinswiber/siren#type-3" target="_top">https://github.com/kevinswiber/siren#type-3</a>
  */
 public enum SirenActionFieldType {

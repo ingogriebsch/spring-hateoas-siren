@@ -43,6 +43,7 @@ import org.springframework.lang.Nullable;
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link CollectionModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<CollectionModel<?>> {
 

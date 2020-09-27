@@ -42,6 +42,7 @@ import org.springframework.lang.Nullable;
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link PagedModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?>> {
 

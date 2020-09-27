@@ -36,8 +36,9 @@ import org.springframework.hateoas.RepresentationModel;
 /**
  * A builder that allows to build complex Siren entity structures.
  * 
- * @see <a href="https://github.com/kevinswiber/siren#entity" target="_top">Siren Entity</a>
  * @author Ingo Griebsch
+ * @since 1.0.0
+ * @see <a href="https://github.com/kevinswiber/siren#entity" target="_top">Siren Entity</a>
  */
 public final class SirenModelBuilder {
 

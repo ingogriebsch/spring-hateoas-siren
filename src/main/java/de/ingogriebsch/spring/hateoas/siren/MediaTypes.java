@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
  * Constants for the Siren hypermedia type.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @NoArgsConstructor(access = PRIVATE)
 public final class MediaTypes {

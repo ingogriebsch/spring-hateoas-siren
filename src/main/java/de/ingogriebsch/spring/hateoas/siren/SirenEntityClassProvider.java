@@ -29,6 +29,7 @@ import org.springframework.hateoas.RepresentationModel;
  * SPI to provide information about the nature of the content of a Siren entity.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  * @see <a href="https://github.com/kevinswiber/siren#class" target="_top">https://github.com/kevinswiber/siren#class</a>
  */
 public interface SirenEntityClassProvider {

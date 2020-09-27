@@ -32,6 +32,7 @@ import org.springframework.hateoas.Link;
  * Representation to hold specific {@link SirenLink}s and their {@link SirenAction}s together.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  * @see Link
  * @see Affordance
  */

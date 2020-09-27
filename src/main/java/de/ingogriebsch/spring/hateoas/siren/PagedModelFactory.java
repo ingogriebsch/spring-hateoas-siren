@@ -30,6 +30,7 @@ import org.springframework.hateoas.PagedModel.PageMetadata;
  * A factory to create a {@link PagedModel} instance based on the given input that is evaluated during deserialization.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 public interface PagedModelFactory {
 

@@ -47,6 +47,7 @@ import org.springframework.http.MediaType;
  * field (i.e. the specific property of the payload).
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConverter {
 

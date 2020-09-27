@@ -38,6 +38,7 @@ import org.springframework.util.CollectionUtils;
  * {@link JsonSerializer} implementation which is able to serialize a {@link SirenModel} into a Siren entity.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenModelSerializer extends AbstractSirenSerializer<SirenModel> {
 

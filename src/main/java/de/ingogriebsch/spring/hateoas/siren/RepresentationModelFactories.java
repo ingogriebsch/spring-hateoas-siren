@@ -25,6 +25,7 @@ import org.springframework.hateoas.RepresentationModel;
  * deserialization process.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 public interface RepresentationModelFactories {
 

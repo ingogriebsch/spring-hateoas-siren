@@ -31,6 +31,7 @@ import org.springframework.hateoas.RepresentationModel;
  * Utility methods help to deal with different use cases related to all types of {@link RepresentationModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @NoArgsConstructor(access = PRIVATE)
 class RepresentationModelUtils {

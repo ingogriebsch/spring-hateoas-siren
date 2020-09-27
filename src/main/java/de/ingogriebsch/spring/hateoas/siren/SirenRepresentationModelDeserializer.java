@@ -35,6 +35,7 @@ import org.springframework.lang.Nullable;
  * {@link JsonDeserializer} implementation which is able to deserialize a Siren entity into a {@link RepresentationModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenRepresentationModelDeserializer extends AbstractSirenDeserializer<RepresentationModel<?>> {
 

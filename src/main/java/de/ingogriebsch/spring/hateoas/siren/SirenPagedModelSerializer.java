@@ -32,6 +32,7 @@ import org.springframework.lang.Nullable;
  * {@link JsonSerializer} implementation which is able to serialize a {@link PagedModel} into a Siren entity.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
 

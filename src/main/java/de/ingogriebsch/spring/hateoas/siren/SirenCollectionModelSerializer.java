@@ -35,6 +35,7 @@ import org.springframework.lang.Nullable;
  * {@link JsonSerializer} implementation which is able to serialize a {@link CollectionModel} into a Siren entity.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionModel<?>> {
 

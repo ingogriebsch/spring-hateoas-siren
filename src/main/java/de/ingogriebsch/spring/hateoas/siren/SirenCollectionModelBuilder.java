@@ -33,6 +33,7 @@ import org.springframework.lang.Nullable;
  * Builder that helps the {@link SirenCollectionModelDeserializer} to deserialize a Siren entity into a {@link CollectionModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenCollectionModelBuilder {

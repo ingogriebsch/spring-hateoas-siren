@@ -37,6 +37,7 @@ import org.springframework.hateoas.RepresentationModel;
  * {@link RepresentationModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> extends ContainerDeserializerBase<T>
     implements ContextualDeserializer {

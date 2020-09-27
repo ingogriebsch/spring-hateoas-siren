@@ -22,6 +22,7 @@ import org.springframework.hateoas.mediatype.MessageResolver;
  * Collection of facilities needed to serialize a Siren entity.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @Value
 class SirenSerializerFacilities {

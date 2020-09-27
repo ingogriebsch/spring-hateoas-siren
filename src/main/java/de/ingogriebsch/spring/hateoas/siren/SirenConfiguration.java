@@ -30,6 +30,7 @@ import org.springframework.hateoas.EntityModel;
  * A Siren specific configuration that allows to configure specific parts of the library.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @Getter(PACKAGE)
 public class SirenConfiguration {

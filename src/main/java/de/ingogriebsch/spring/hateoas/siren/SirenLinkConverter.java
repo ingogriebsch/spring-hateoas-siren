@@ -43,6 +43,7 @@ import org.springframework.http.MediaType;
  * other way around.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @RequiredArgsConstructor
 class SirenLinkConverter {

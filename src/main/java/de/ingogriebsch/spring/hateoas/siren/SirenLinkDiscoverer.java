@@ -24,6 +24,7 @@ import org.springframework.hateoas.client.LinkDiscoverer;
  * {@link LinkDiscoverer} implementation that is based on the Siren link structure.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 public class SirenLinkDiscoverer extends JsonPathLinkDiscoverer {
 

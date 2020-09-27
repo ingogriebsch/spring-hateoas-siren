@@ -38,6 +38,7 @@ import org.springframework.http.HttpMethod;
  * Representation of a Siren action.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @Builder
 @JsonPropertyOrder({ "name", "class", "method", "href", "title", "type", "fields" })

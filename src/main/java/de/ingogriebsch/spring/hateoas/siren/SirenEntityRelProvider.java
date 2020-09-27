@@ -30,6 +30,7 @@ import org.springframework.lang.Nullable;
  * SPI to provide information about the relationship of a Siren entity to it's parent.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  * @see <a href="https://github.com/kevinswiber/siren#rel" target="_top">https://github.com/kevinswiber/siren#rel</a>
  */
 public interface SirenEntityRelProvider {

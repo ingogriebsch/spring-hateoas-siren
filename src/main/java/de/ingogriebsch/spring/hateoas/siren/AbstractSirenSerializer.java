@@ -32,6 +32,7 @@ import org.springframework.hateoas.RepresentationModel;
  * a Siren entity.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> implements ContextualSerializer {
 

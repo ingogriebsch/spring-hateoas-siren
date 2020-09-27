@@ -34,6 +34,7 @@ import org.springframework.util.ReflectionUtils;
  * Utility methods for instantiating beans, extracting bean properties, applying bean properties, etc.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @NoArgsConstructor(access = PRIVATE)
 class BeanUtils {

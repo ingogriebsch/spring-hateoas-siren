@@ -30,6 +30,7 @@ import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
  * Jackson {@link Module} to serialize and deserialize all the parts of Siren entities.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class Jackson2SirenModule extends SimpleModule {
 

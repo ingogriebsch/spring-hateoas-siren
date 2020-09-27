@@ -34,6 +34,7 @@ import org.springframework.hateoas.RepresentationModel;
  * A {@link RepresentationModel} extension which helps to build complex Siren entity structures.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)

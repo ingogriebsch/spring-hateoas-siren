@@ -34,6 +34,7 @@ import org.springframework.lang.Nullable;
  * {@link RepresentationModel}.
  * 
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenRepresentationModelBuilder {

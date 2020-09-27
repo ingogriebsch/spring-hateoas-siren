@@ -32,6 +32,7 @@ import org.springframework.http.MediaType;
  * Factory for creating {@link SirenAffordanceModel}s.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenAffordanceModelFactory implements AffordanceModelFactory {
 

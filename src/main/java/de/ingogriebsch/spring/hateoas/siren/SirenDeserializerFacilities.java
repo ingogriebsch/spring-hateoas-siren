@@ -21,6 +21,7 @@ import lombok.Value;
  * Collection of facilities needed to deserialize a Siren entity.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @Value
 class SirenDeserializerFacilities {

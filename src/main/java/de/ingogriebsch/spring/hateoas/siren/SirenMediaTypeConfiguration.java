@@ -35,6 +35,7 @@ import org.springframework.http.MediaType;
  * A Spring based configuration that enables Siren support in the surrounding environment.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @Configuration
 @RequiredArgsConstructor

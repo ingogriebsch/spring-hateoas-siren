@@ -37,6 +37,7 @@ import org.springframework.lang.Nullable;
  * {@link HandlerInstantiator} to create and configure Siren specific serializers and deserializers.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 class SirenHandlerInstantiator extends HandlerInstantiator {
 

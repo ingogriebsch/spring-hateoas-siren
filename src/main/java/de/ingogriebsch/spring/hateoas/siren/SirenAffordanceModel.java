@@ -28,6 +28,7 @@ import org.springframework.http.MediaType;
  * {@link AffordanceModel} for a Siren {@link MediaType}.
  *
  * @author Ingo Griebsch
+ * @since 1.0.0
  */
 @EqualsAndHashCode(callSuper = true)
 class SirenAffordanceModel extends AffordanceModel {
