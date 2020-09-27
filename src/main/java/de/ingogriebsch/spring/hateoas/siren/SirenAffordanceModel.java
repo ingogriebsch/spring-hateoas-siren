@@ -29,6 +29,7 @@ import org.springframework.http.MediaType;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see AffordanceModel
  */
 @EqualsAndHashCode(callSuper = true)
 class SirenAffordanceModel extends AffordanceModel {

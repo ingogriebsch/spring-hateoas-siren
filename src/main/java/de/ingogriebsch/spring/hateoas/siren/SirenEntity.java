@@ -36,6 +36,7 @@ import org.springframework.hateoas.LinkRelation;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see <a href="https://github.com/kevinswiber/siren#entity" target="_blank">Siren Entity</a>
  */
 @Builder
 @JsonPropertyOrder({ "class", "rel", "properties", "entities", "links", "actions", "title" })

@@ -39,6 +39,7 @@ import org.springframework.http.HttpMethod;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren Action</a>
  */
 @Builder
 @JsonPropertyOrder({ "name", "class", "method", "href", "title", "type", "fields" })

@@ -31,6 +31,7 @@ import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see Module
  */
 class Jackson2SirenModule extends SimpleModule {
 

@@ -35,6 +35,8 @@ import org.springframework.hateoas.RepresentationModel;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see RepresentationModel
+ * @see <a href="https://github.com/kevinswiber/siren#entities" target="_blank">Siren Entity</a>
  */
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)

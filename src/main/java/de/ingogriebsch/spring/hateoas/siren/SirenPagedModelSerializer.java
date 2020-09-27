@@ -33,6 +33,7 @@ import org.springframework.lang.Nullable;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see PagedModel
  */
 class SirenPagedModelSerializer extends AbstractSirenSerializer<PagedModel<?>> {
 

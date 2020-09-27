@@ -31,6 +31,7 @@ import org.springframework.hateoas.PagedModel.PageMetadata;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see PagedModel
  */
 public interface PagedModelFactory {
 

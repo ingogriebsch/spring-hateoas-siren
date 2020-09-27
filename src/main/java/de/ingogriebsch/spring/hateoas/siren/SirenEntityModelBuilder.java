@@ -34,6 +34,7 @@ import org.springframework.lang.Nullable;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see EntityModel
  */
 @RequiredArgsConstructor(access = PRIVATE)
 class SirenEntityModelBuilder {

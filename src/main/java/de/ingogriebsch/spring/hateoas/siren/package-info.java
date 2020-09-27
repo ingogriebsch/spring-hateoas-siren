@@ -18,6 +18,6 @@
  *
  * @author Ingo Griebsch
  * @since 1.0.0
- * @see <a href="https://github.com/kevinswiber/siren" target="_blank">https://github.com/kevinswiber/siren</a>
+ * @see <a href="https://github.com/kevinswiber/siren" target="_blank">Siren</a>
  */
 package de.ingogriebsch.spring.hateoas.siren;

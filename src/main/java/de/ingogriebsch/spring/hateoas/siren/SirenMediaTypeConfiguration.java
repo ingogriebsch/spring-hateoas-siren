@@ -36,6 +36,10 @@ import org.springframework.http.MediaType;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see Configuration
+ * @see HypermediaMappingInformation
+ * @see Module
+ * @see ObjectMapper
  */
 @Configuration
 @RequiredArgsConstructor

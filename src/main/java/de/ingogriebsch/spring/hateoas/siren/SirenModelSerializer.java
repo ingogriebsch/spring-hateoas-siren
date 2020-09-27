@@ -39,6 +39,7 @@ import org.springframework.util.CollectionUtils;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see SirenModel
  */
 class SirenModelSerializer extends AbstractSirenSerializer<SirenModel> {
 

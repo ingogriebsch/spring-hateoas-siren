@@ -28,8 +28,9 @@ import org.springframework.http.MediaType;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
- * @see <a href="https://github.com/kevinswiber/siren#type-3" target="_blank">https://github.com/kevinswiber/siren#type-3</a>
- * @see <a href="https://github.com/kevinswiber/siren#type-2" target="_blank">https://github.com/kevinswiber/siren#type-2</a>
+ * @see SirenActionFieldType
+ * @see <a href="https://github.com/kevinswiber/siren#type-3" target="_blank">Siren Action Field Type</a>
+ * @see <a href="https://github.com/kevinswiber/siren#type-2" target="_blank">Siren Action Type</a>
  */
 public interface SirenActionFieldTypeConverter {
 

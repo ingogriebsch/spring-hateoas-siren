@@ -30,7 +30,7 @@ import org.springframework.hateoas.RepresentationModel;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
- * @see <a href="https://github.com/kevinswiber/siren#class" target="_blank">https://github.com/kevinswiber/siren#class</a>
+ * @see <a href="https://github.com/kevinswiber/siren#class" target="_blank">Siren Entity Class</a>
  */
 public interface SirenEntityClassProvider {
 

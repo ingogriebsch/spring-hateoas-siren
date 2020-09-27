@@ -33,8 +33,10 @@ import org.springframework.hateoas.Link;
  *
  * @author Ingo Griebsch
  * @since 1.0.0
- * @see Link
  * @see Affordance
+ * @see Link
+ * @see SirenLink
+ * @see SirenAction
  */
 // TODO Find a better name for this class.
 @AllArgsConstructor(access = PRIVATE)

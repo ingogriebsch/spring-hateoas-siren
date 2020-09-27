@@ -38,6 +38,7 @@ import org.springframework.hateoas.RepresentationModel;
  * 
  * @author Ingo Griebsch
  * @since 1.0.0
+ * @see SirenModel
  * @see <a href="https://github.com/kevinswiber/siren#entity" target="_blank">Siren Entity</a>
  */
 public final class SirenModelBuilder {
@@ -65,7 +66,7 @@ public final class SirenModelBuilder {
      * 
      * @param classes must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#class" target="_blank">Siren Entity class</a>
+     * @see <a href="https://github.com/kevinswiber/siren#class" target="_blank">Siren Entity Class</a>
      */
     public SirenModelBuilder classes(@NonNull String... classes) {
         return classes(newArrayList(classes));
@@ -76,7 +77,7 @@ public final class SirenModelBuilder {
      * 
      * @param classes must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#class" target="_blank">Siren Entity class</a>
+     * @see <a href="https://github.com/kevinswiber/siren#class" target="_blank">Siren Entity Class</a>
      */
     public SirenModelBuilder classes(@NonNull Iterable<String> classes) {
         noNullElements(classes);
@@ -89,7 +90,7 @@ public final class SirenModelBuilder {
      * 
      * @param title must not be {@literal null}.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#title" target="_blank">Siren Entity title</a>
+     * @see <a href="https://github.com/kevinswiber/siren#title" target="_blank">Siren Entity Title</a>
      */
     public SirenModelBuilder title(@NonNull String title) {
         this.title = title;
@@ -101,7 +102,7 @@ public final class SirenModelBuilder {
      * 
      * @param properties must not be {@literal null} and must not be of type {@literal RepresentationModel}.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#properties" target="_blank">Siren Entity properties</a>
+     * @see <a href="https://github.com/kevinswiber/siren#properties" target="_blank">Siren Entity Properties</a>
      */
     public SirenModelBuilder properties(@NonNull Object properties) {
         assertNotOfTypeRepresentationModel(properties.getClass());
@@ -117,8 +118,9 @@ public final class SirenModelBuilder {
      * 
      * @param entity must not be {@literal null}.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull Object entity) {
         return entities(newArrayList(entity));
@@ -132,8 +134,9 @@ public final class SirenModelBuilder {
      * 
      * @param entities must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull Object... entities) {
         return entities(newArrayList(entities));
@@ -147,8 +150,9 @@ public final class SirenModelBuilder {
      *
      * @param entities must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull Iterable<?> entities) {
         noNullElements(entities);
@@ -165,8 +169,9 @@ public final class SirenModelBuilder {
      * @param rel must not be {@literal null}.
      * @param entity must not be {@literal null}.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull String rel, @NonNull Object entity) {
         return entities(LinkRelation.of(rel), entity);
@@ -181,8 +186,9 @@ public final class SirenModelBuilder {
      * @param rel must not be {@literal null}.
      * @param entities must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull String rel, @NonNull Object... entities) {
         return entities(LinkRelation.of(rel), entities);
@@ -197,8 +203,9 @@ public final class SirenModelBuilder {
      * @param rel must not be {@literal null}.
      * @param entities must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull String rel, @NonNull Iterable<?> entities) {
         return entities(LinkRelation.of(rel), entities);
@@ -213,8 +220,9 @@ public final class SirenModelBuilder {
      * @param rel must not be {@literal null}.
      * @param entity must not be {@literal null}.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Object entity) {
         return entities(rel, newArrayList(entity));
@@ -229,8 +237,9 @@ public final class SirenModelBuilder {
      * @param rel must not be {@literal null}.
      * @param entities must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Object... entities) {
         return entities(rel, newArrayList(entities));
@@ -245,8 +254,9 @@ public final class SirenModelBuilder {
      * @param rel must not be {@literal null}.
      * @param entities must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren entity entities</a>
-     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren embedded representation</a>
+     * @see <a href="https://github.com/kevinswiber/siren#entities-1" target="_blank">Siren Entities</a>
+     * @see <a href="https://github.com/kevinswiber/siren#embedded-representation" target="_blank">Siren Embedded
+     *      Representation</a>
      */
     public SirenModelBuilder entities(@NonNull LinkRelation rel, @NonNull Iterable<?> entities) {
         noNullElements(entities);
@@ -259,8 +269,8 @@ public final class SirenModelBuilder {
      * 
      * @param link must not be {@literal null}.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren entity links</a>
-     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren entity actions</a>
+     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren Link</a>
+     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren Action</a>
      */
     public SirenModelBuilder linksAndActions(@NonNull Link link) {
         return linksAndActions(of(link));
@@ -271,8 +281,8 @@ public final class SirenModelBuilder {
      * 
      * @param links must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren entity links</a>
-     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren entity actions</a>
+     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren Link</a>
+     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren Action</a>
      */
     public SirenModelBuilder linksAndActions(@NonNull Link... links) {
         return linksAndActions(of(links));
@@ -283,8 +293,8 @@ public final class SirenModelBuilder {
      * 
      * @param links must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren entity links</a>
-     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren entity actions</a>
+     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren Link</a>
+     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren Action</a>
      */
     public SirenModelBuilder linksAndActions(@NonNull Iterable<Link> links) {
         return linksAndActions(of(links));
@@ -295,8 +305,8 @@ public final class SirenModelBuilder {
      * 
      * @param links must not be {@literal null} and must not contain {@literal null} values.
      * @return the current {@link SirenModelBuilder} instance.
-     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren entity links</a>
-     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren entity actions</a>
+     * @see <a href="https://github.com/kevinswiber/siren#links-1" target="_blank">Siren Link</a>
+     * @see <a href="https://github.com/kevinswiber/siren#actions-1" target="_blank">Siren Action</a>
      */
     public SirenModelBuilder linksAndActions(@NonNull Links links) {
         noNullElements(links);
