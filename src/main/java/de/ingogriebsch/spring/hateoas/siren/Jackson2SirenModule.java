@@ -35,10 +35,11 @@ import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
  */
 class Jackson2SirenModule extends SimpleModule {
 
+    private static final Version MODULE_VERSION = new Version(1, 0, 0, null, "de.ingogriebsch.hateoas", "spring-hateoas-siren");
     private static final long serialVersionUID = 7377778164657569053L;
 
     Jackson2SirenModule() {
-        super("siren-module", new Version(1, 0, 0, null, "de.ingogriebsch", "spring-hateoas-siren"));
+        super("siren-module", MODULE_VERSION);
 
         setMixInAnnotation(RepresentationModel.class, RepresentationModelMixIn.class);
         setMixInAnnotation(EntityModel.class, EntityModelMixIn.class);
