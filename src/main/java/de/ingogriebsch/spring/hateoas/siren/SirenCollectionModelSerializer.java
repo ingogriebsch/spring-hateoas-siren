@@ -86,7 +86,7 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
         Class<?> clazz = model.getClass();
         if (isRepresentationModelSubclass(clazz) && !configuration.isEntityAndCollectionModelSubclassingEnabled()) {
             throw new IllegalStateException(String.format(
-                "You did not configure the module to enable subclassing but want to serialize a subclassed %s, namely %s!",
+                "You did not configure the library to enable subclassing but want to serialize a subclassed %s, namely %s!",
                 CollectionModel.class.getSimpleName(), clazz.getName()));
         }
     }
