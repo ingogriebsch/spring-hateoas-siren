@@ -59,8 +59,6 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
         assertSubclassingIsEnabledIfModelIsSubclassed(model);
 
         SirenNavigables navigables = getLinkConverter().to(model.getLinks());
-        Class<?> contentType = model.getContent().getClass();
-        Class<?> titleType = !isRepresentationModel(contentType) ? contentType : model.getClass();
 
         SirenEntity sirenEntity = SirenEntity.builder() //
             .actions(navigables.getActions()) //
@@ -69,7 +67,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
             .entities(entities(model)) //
             .properties(properties(model)) //
             .rels(rels(model, provider)) //
-            .title(title(titleType)) //
+            .title(title(model)) //
             .build();
 
         JsonSerializer<Object> serializer = provider.findValueSerializer(SirenEntity.class, property);
@@ -91,9 +89,15 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
         }
     }
 
+    private String title(EntityModel<?> model) {
+        Object content = model.getContent();
+        Class<?> contentType = content != null ? content.getClass() : model.getClass();
+        return super.title(!isRepresentationModel(contentType) ? contentType : model.getClass());
+    }
+
     private static List<Object> entities(EntityModel<?> model) {
         Object content = model.getContent();
-        if (isRepresentationModel(content.getClass())) {
+        if (content != null && isRepresentationModel(content.getClass())) {
             return newArrayList(content);
         } else {
             return newArrayList();
@@ -102,7 +106,7 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
 
     private static Object properties(EntityModel<?> model) {
         Object content = model.getContent();
-        if (!isRepresentationModel(content.getClass())) {
+        if (content != null && !isRepresentationModel(content.getClass())) {
             return model.getContent();
         }
 
