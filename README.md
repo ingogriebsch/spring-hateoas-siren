@@ -19,7 +19,7 @@ Please check section [Setup][Spring HATEOAS Siren Setup] of the documentation to
 
 The latest RELEASE version is available through [Maven Central][].
 
-The latest SNPASHOT version is available [here][Sonatype Snapshots Repository].
+The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][].
 
 ## Examples
 A collection of examples that showcase how to use the features provided by the library can be found [here][Spring HATEOAS Siren Samples].
