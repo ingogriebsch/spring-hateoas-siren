@@ -20,7 +20,7 @@ Please check section [Setup][Spring HATEOAS Siren Setup] of the documentation to
 The latest SNPASHOT version is available [here][Sonatype Snapshots Repository].
 
 ## Examples
-A first simple example can be found [here][Spring HATEOAS Siren Example]. More mature examples will follow soon!
+A collection of examples that showcase how to use the features provided by the library can be found [here][Spring HATEOAS Siren Samples].
 
 ## License
 This code is open source software licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html).
@@ -28,7 +28,7 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 [Spring HATEOAS Siren]: https://ingogriebsch.github.io/spring-hateoas-siren/
 [Spring HATEOAS Siren Setup]: https://ingogriebsch.github.io/spring-hateoas-siren/#setup
 [Spring HATEOAS Siren Javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
-[Spring HATEOAS Siren Example]: https://github.com/ingogriebsch/sample-spring-hateoas-siren/
+[Spring HATEOAS Siren Samples]: https://github.com/ingogriebsch/spring-hateoas-siren-samples/
 [Spring HATEOAS]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/
 [Siren]: https://github.com/kevinswiber/siren
 [Sonatype Snapshots Repository]: https://oss.sonatype.org/content/repositories/snapshots/de/ingogriebsch/hateoas/spring-hateoas-siren/
