@@ -17,6 +17,8 @@ The reference documentation can be found [here][Spring HATEOAS Siren]. The Javad
 ## Integration
 Please check section [Setup][Spring HATEOAS Siren Setup] of the documentation to understand how to integrate this library into your project.
 
+The latest RELEASE version is available through [Maven Central][].
+
 The latest SNPASHOT version is available [here][Sonatype Snapshots Repository].
 
 ## Examples
@@ -31,4 +33,5 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 [Spring HATEOAS Siren Samples]: https://github.com/ingogriebsch/spring-hateoas-siren-samples/
 [Spring HATEOAS]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/
 [Siren]: https://github.com/kevinswiber/siren
+[Maven Central]: https://search.maven.org/artifact/de.ingogriebsch.hateoas/spring-hateoas-siren
 [Sonatype Snapshots Repository]: https://oss.sonatype.org/content/repositories/snapshots/de/ingogriebsch/hateoas/spring-hateoas-siren/
