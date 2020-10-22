@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 
 import de.ingogriebsch.spring.hateoas.siren.SirenAction.Field;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.AffordanceModel.InputPayloadMetadata;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
@@ -131,17 +133,27 @@ class SirenLinkConverter {
 
         LinkRelation rel = link.getRel();
         if (rel != null) {
-            return messageResolver.resolve(SirenLink.TitleResolvable.of(link.getRel()));
+            return title(SirenLink.TitleResolvable.of(link.getRel()));
         }
         return null;
     }
 
     private String actionTitle(String name) {
-        return name != null ? messageResolver.resolve(SirenAction.TitleResolvable.of(name)) : null;
+        return name != null ? title(SirenAction.TitleResolvable.of(name)) : null;
     }
 
     private String fieldTitle(String name) {
-        return name != null ? messageResolver.resolve(SirenAction.Field.TitleResolvable.of(name)) : null;
+        return name != null ? title(SirenAction.Field.TitleResolvable.of(name)) : null;
+    }
+
+    private String title(MessageSourceResolvable resolvable) {
+        String title;
+        try {
+            title = messageResolver.resolve(resolvable);
+        } catch (NoSuchMessageException e) {
+            title = null;
+        }
+        return title;
     }
 
     private String fieldType(PropertyMetadata propertyMetadata, MediaType actionType) {
