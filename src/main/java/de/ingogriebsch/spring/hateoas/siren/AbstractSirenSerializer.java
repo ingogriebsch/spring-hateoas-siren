@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.ContainerSerializer;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -92,13 +91,7 @@ abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> impleme
     }
 
     protected String title(Class<?> type) {
-        String title;
-        try {
-            title = serializerFacilities.getMessageResolver().resolve(SirenEntity.TitleResolvable.of(type));
-        } catch (NoSuchMessageException e) {
-            title = null;
-        }
-        return title;
+        return serializerFacilities.getMessageResolver().resolve(SirenEntity.TitleResolvable.of(type));
     }
 
     protected Object setAttribute(String key, Object value, SerializerProvider provider) {

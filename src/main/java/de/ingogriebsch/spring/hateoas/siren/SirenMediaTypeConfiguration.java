@@ -23,7 +23,10 @@ import java.util.List;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.hateoas.client.LinkDiscoverer;
@@ -100,11 +103,15 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     private SirenSerializerFacilities serializerFacilities() {
-        return new SirenSerializerFacilities(entityClassProvider(), entityRelProvider(), linkConverter(), messageResolver);
+        return new SirenSerializerFacilities(entityClassProvider(), entityRelProvider(), linkConverter(), messageResolver());
     }
 
     private SirenLinkConverter linkConverter() {
-        return new SirenLinkConverter(messageResolver, sirenActionFieldTypeConverter());
+        return new SirenLinkConverter(messageResolver(), sirenActionFieldTypeConverter());
+    }
+
+    private MessageResolver messageResolver() {
+        return new NoSuchMessageExceptionSuppressingMessageResolver(messageResolver);
     }
 
     private SirenEntityClassProvider entityClassProvider() {
@@ -127,5 +134,20 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     private RepresentationModelFactories representationModelFactories() {
         return representationModelFactories.getIfAvailable(() -> new RepresentationModelFactories() {
         });
+    }
+
+    @Value
+    private static class NoSuchMessageExceptionSuppressingMessageResolver implements MessageResolver {
+
+        MessageResolver delegate;
+
+        @Override
+        public String resolve(MessageSourceResolvable resolvable) {
+            try {
+                return delegate.resolve(resolvable);
+            } catch (NoSuchMessageException e) {
+                return null;
+            }
+        }
     }
 }

@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 import de.ingogriebsch.spring.hateoas.siren.SirenAction.Field;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.hateoas.Affordance;
 import org.springframework.hateoas.AffordanceModel.InputPayloadMetadata;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
@@ -147,13 +146,7 @@ class SirenLinkConverter {
     }
 
     private String title(MessageSourceResolvable resolvable) {
-        String title;
-        try {
-            title = messageResolver.resolve(resolvable);
-        } catch (NoSuchMessageException e) {
-            title = null;
-        }
-        return title;
+        return messageResolver.resolve(resolvable);
     }
 
     private String fieldType(PropertyMetadata propertyMetadata, MediaType actionType) {
