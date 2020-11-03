@@ -62,11 +62,6 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
 
-    @Bean
-    LinkDiscoverer sirenLinkDisocoverer() {
-        return new SirenLinkDiscoverer();
-    }
-
     /*
      * (non-Javadoc)
      * @see org.springframework.hateoas.config.HypermediaMappingInformation#getMediaTypes()
@@ -99,6 +94,11 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         mapper.setHandlerInstantiator(instantiator);
 
         return mapper;
+    }
+
+    @Bean
+    LinkDiscoverer sirenLinkDisocoverer() {
+        return new SirenLinkDiscoverer();
     }
 
     private SirenConfiguration configuration() {
