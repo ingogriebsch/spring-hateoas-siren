@@ -36,6 +36,12 @@ import org.springframework.lang.Nullable;
 public interface SirenEntityRelProvider {
 
     /**
+     * The default instance that can be used if no specific implementation of this interface is necessary.
+     */
+    SirenEntityRelProvider DEFAULT_INSTANCE = new SirenEntityRelProvider() {
+    };
+
+    /**
      * Returns the {@link IanaLinkRelations relations} explaining the relationship between the model and it's parent.
      * <p>
      * The default implementation returns the {@link IanaLinkRelations#ITEM item} relation if the model is a child object.
