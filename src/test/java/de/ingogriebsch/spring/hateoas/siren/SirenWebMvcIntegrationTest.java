@@ -163,7 +163,7 @@ class SirenWebMvcIntegrationTest {
         }
 
         @Bean
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration(MessageResolver messageResolver,
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration(ObjectProvider<MessageResolver> messageResolver,
             ObjectProvider<SirenConfiguration> configuration, ObjectProvider<SirenEntityClassProvider> entityClassProvider,
             ObjectProvider<SirenEntityRelProvider> entityRelProvider,
             ObjectProvider<SirenActionFieldTypeConverter> sirenActionFieldTypeConverter,

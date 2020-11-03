@@ -48,7 +48,7 @@ import org.springframework.http.MediaType;
 @RequiredArgsConstructor
 public class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
-    private final MessageResolver messageResolver;
+    private final ObjectProvider<MessageResolver> messageResolver;
     private final ObjectProvider<SirenConfiguration> configuration;
     private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
     private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
@@ -111,7 +111,8 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     private MessageResolver messageResolver() {
-        return new NoSuchMessageExceptionSuppressingMessageResolver(messageResolver);
+        return new NoSuchMessageExceptionSuppressingMessageResolver(
+            messageResolver.getIfAvailable(() -> MessageResolver.of(null)));
     }
 
     private SirenEntityClassProvider entityClassProvider() {

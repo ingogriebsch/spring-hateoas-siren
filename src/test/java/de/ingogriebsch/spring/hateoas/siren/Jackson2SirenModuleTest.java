@@ -60,6 +60,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.web.util.UriComponentsBuilder;
 
 class Jackson2SirenModuleTest {
@@ -68,6 +69,8 @@ class Jackson2SirenModuleTest {
 
     @BeforeAll
     static void beforeAll() {
+        ObjectProvider<MessageResolver> messageResolver = new SimpleObjectProvider<>(DEFAULTS_ONLY);
+
         ObjectProvider<SirenConfiguration> configuration =
             new SimpleObjectProvider<>(new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true));
 
@@ -84,7 +87,7 @@ class Jackson2SirenModuleTest {
             new SimpleObjectProvider<>(new RepresentationModelFactories() {
             });
 
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, configuration,
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(messageResolver, configuration,
             entityClassProvider, entityRelProvider, actionFieldTypeConverter, representationModelFactories);
 
         objectMapper = sirenMediaTypeConfiguration.configureObjectMapper(new ObjectMapper());

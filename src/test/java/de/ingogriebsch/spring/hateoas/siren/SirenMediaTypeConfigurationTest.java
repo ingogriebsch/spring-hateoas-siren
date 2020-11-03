@@ -24,6 +24,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.hateoas.mediatype.MessageResolver;
 
 class SirenMediaTypeConfigurationTest {
 
@@ -31,6 +32,8 @@ class SirenMediaTypeConfigurationTest {
 
     @BeforeAll
     static void beforeAll() {
+        ObjectProvider<MessageResolver> messageResolver = new SimpleObjectProvider<>(DEFAULTS_ONLY);
+
         ObjectProvider<SirenConfiguration> configuration = new SimpleObjectProvider<>(new SirenConfiguration());
 
         ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
@@ -46,7 +49,7 @@ class SirenMediaTypeConfigurationTest {
             new SimpleObjectProvider<>(new RepresentationModelFactories() {
             });
 
-        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, configuration, entityClassProvider,
+        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(messageResolver, configuration, entityClassProvider,
             entityRelProvider, actionFieldTypeConverter, representationModelFactories);
     }
 
