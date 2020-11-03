@@ -68,7 +68,7 @@ class Jackson2SirenModuleTest {
     static void beforeAll() {
         SirenConfiguration configuration = new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true);
 
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, configuration,
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = SirenMediaTypeConfiguration.of(DEFAULTS_ONLY, configuration,
             SirenEntityClassProvider.DEFAULT_INSTANCE, SirenEntityRelProvider.DEFAULT_INSTANCE,
             new TypeBasedSirenActionFieldTypeConverter(), RepresentationModelFactories.DEFAULT_INSTANCE);
 

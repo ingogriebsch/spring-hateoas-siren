@@ -63,14 +63,6 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
 
-    SirenMediaTypeConfiguration(MessageResolver messageResolver, SirenConfiguration configuration,
-        SirenEntityClassProvider entityClassProvider, SirenEntityRelProvider entityRelProvider,
-        SirenActionFieldTypeConverter actionFieldTypeConverter, RepresentationModelFactories representationModelFactories) {
-        this(objectProvider(messageResolver), objectProvider(configuration), objectProvider(entityClassProvider),
-            objectProvider(entityRelProvider), objectProvider(actionFieldTypeConverter),
-            objectProvider(representationModelFactories));
-    }
-
     /*
      * (non-Javadoc)
      * @see org.springframework.hateoas.config.HypermediaMappingInformation#getMediaTypes()
@@ -108,6 +100,14 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     @Bean
     LinkDiscoverer sirenLinkDisocoverer() {
         return new SirenLinkDiscoverer();
+    }
+
+    static SirenMediaTypeConfiguration of(MessageResolver messageResolver, SirenConfiguration configuration,
+        SirenEntityClassProvider entityClassProvider, SirenEntityRelProvider entityRelProvider,
+        SirenActionFieldTypeConverter actionFieldTypeConverter, RepresentationModelFactories representationModelFactories) {
+        return new SirenMediaTypeConfiguration(objectProvider(messageResolver), objectProvider(configuration),
+            objectProvider(entityClassProvider), objectProvider(entityRelProvider), objectProvider(actionFieldTypeConverter),
+            objectProvider(representationModelFactories));
     }
 
     private SirenConfiguration configuration() {

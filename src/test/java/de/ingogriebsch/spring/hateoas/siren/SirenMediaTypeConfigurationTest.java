@@ -29,7 +29,7 @@ class SirenMediaTypeConfigurationTest {
 
     @BeforeAll
     static void beforeAll() {
-        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, new SirenConfiguration(),
+        sirenMediaTypeConfiguration = SirenMediaTypeConfiguration.of(DEFAULTS_ONLY, new SirenConfiguration(),
             SirenEntityClassProvider.DEFAULT_INSTANCE, SirenEntityRelProvider.DEFAULT_INSTANCE,
             new TypeBasedSirenActionFieldTypeConverter(), RepresentationModelFactories.DEFAULT_INSTANCE);
     }
