@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.ingogriebsch.spring.hateoas.siren.support;
+package de.ingogriebsch.spring.hateoas.siren;
+
+import static lombok.AccessLevel.PACKAGE;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
 
-@RequiredArgsConstructor
-public class SimpleObjectProvider<T> implements ObjectProvider<T> {
+@RequiredArgsConstructor(access = PACKAGE)
+class SimpleObjectProvider<T> implements ObjectProvider<T> {
 
     private final T object;
 
@@ -42,5 +44,13 @@ public class SimpleObjectProvider<T> implements ObjectProvider<T> {
     @Override
     public T getIfUnique() throws BeansException {
         return getObject();
+    }
+
+    public static <T> SimpleObjectProvider<T> of(T object) {
+        return objectProvider(object);
+    }
+
+    public static <T> SimpleObjectProvider<T> objectProvider(T object) {
+        return new SimpleObjectProvider<>(object);
     }
 }
