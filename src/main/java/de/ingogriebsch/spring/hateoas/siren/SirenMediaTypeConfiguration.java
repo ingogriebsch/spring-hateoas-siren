@@ -95,7 +95,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     private SirenConfiguration configuration() {
-        return configuration.getIfAvailable(() -> new SirenConfiguration());
+        return configuration.getIfAvailable(SirenConfiguration::new);
     }
 
     private SirenDeserializerFacilities deserializerFacilities() {
