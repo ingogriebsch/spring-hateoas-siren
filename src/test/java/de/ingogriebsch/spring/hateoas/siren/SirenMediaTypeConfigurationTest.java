@@ -19,12 +19,9 @@ import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
-import de.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.hateoas.mediatype.MessageResolver;
 
 class SirenMediaTypeConfigurationTest {
 
@@ -32,25 +29,9 @@ class SirenMediaTypeConfigurationTest {
 
     @BeforeAll
     static void beforeAll() {
-        ObjectProvider<MessageResolver> messageResolver = new SimpleObjectProvider<>(DEFAULTS_ONLY);
-
-        ObjectProvider<SirenConfiguration> configuration = new SimpleObjectProvider<>(new SirenConfiguration());
-
-        ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
-        });
-
-        ObjectProvider<SirenEntityRelProvider> entityRelProvider = new SimpleObjectProvider<>(new SirenEntityRelProvider() {
-        });
-
-        ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter =
-            new SimpleObjectProvider<>(new TypeBasedSirenActionFieldTypeConverter());
-
-        ObjectProvider<RepresentationModelFactories> representationModelFactories =
-            new SimpleObjectProvider<>(new RepresentationModelFactories() {
-            });
-
-        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(messageResolver, configuration, entityClassProvider,
-            entityRelProvider, actionFieldTypeConverter, representationModelFactories);
+        sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, new SirenConfiguration(),
+            SirenEntityClassProvider.DEFAULT_INSTANCE, SirenEntityRelProvider.DEFAULT_INSTANCE,
+            new TypeBasedSirenActionFieldTypeConverter(), RepresentationModelFactories.DEFAULT_INSTANCE);
     }
 
     @Nested

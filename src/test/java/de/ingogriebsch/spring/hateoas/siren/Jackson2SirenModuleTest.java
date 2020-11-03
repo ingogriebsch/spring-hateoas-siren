@@ -47,12 +47,10 @@ import de.ingogriebsch.spring.hateoas.siren.support.Country;
 import de.ingogriebsch.spring.hateoas.siren.support.Person;
 import de.ingogriebsch.spring.hateoas.siren.support.PersonModel;
 import de.ingogriebsch.spring.hateoas.siren.support.ResourceReader;
-import de.ingogriebsch.spring.hateoas.siren.support.SimpleObjectProvider;
 import de.ingogriebsch.spring.hateoas.siren.support.State;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -60,7 +58,6 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.mediatype.MessageResolver;
 import org.springframework.web.util.UriComponentsBuilder;
 
 class Jackson2SirenModuleTest {
@@ -69,26 +66,11 @@ class Jackson2SirenModuleTest {
 
     @BeforeAll
     static void beforeAll() {
-        ObjectProvider<MessageResolver> messageResolver = new SimpleObjectProvider<>(DEFAULTS_ONLY);
+        SirenConfiguration configuration = new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true);
 
-        ObjectProvider<SirenConfiguration> configuration =
-            new SimpleObjectProvider<>(new SirenConfiguration().withEntityAndCollectionModelSubclassingEnabled(true));
-
-        ObjectProvider<SirenEntityClassProvider> entityClassProvider = new SimpleObjectProvider<>(new SirenEntityClassProvider() {
-        });
-
-        ObjectProvider<SirenEntityRelProvider> entityRelProvider = new SimpleObjectProvider<>(new SirenEntityRelProvider() {
-        });
-
-        ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter =
-            new SimpleObjectProvider<>(new TypeBasedSirenActionFieldTypeConverter());
-
-        ObjectProvider<RepresentationModelFactories> representationModelFactories =
-            new SimpleObjectProvider<>(new RepresentationModelFactories() {
-            });
-
-        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(messageResolver, configuration,
-            entityClassProvider, entityRelProvider, actionFieldTypeConverter, representationModelFactories);
+        SirenMediaTypeConfiguration sirenMediaTypeConfiguration = new SirenMediaTypeConfiguration(DEFAULTS_ONLY, configuration,
+            SirenEntityClassProvider.DEFAULT_INSTANCE, SirenEntityRelProvider.DEFAULT_INSTANCE,
+            new TypeBasedSirenActionFieldTypeConverter(), RepresentationModelFactories.DEFAULT_INSTANCE);
 
         objectMapper = sirenMediaTypeConfiguration.configureObjectMapper(new ObjectMapper());
         objectMapper.configure(INDENT_OUTPUT, true);

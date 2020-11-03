@@ -17,6 +17,7 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
+import static de.ingogriebsch.spring.hateoas.siren.SimpleObjectProvider.objectProvider;
 
 import java.util.List;
 
@@ -61,6 +62,14 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     private final ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter;
     @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
+
+    SirenMediaTypeConfiguration(MessageResolver messageResolver, SirenConfiguration configuration,
+        SirenEntityClassProvider entityClassProvider, SirenEntityRelProvider entityRelProvider,
+        SirenActionFieldTypeConverter actionFieldTypeConverter, RepresentationModelFactories representationModelFactories) {
+        this(objectProvider(messageResolver), objectProvider(configuration), objectProvider(entityClassProvider),
+            objectProvider(entityRelProvider), objectProvider(actionFieldTypeConverter),
+            objectProvider(representationModelFactories));
+    }
 
     /*
      * (non-Javadoc)
