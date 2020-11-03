@@ -30,6 +30,12 @@ import org.springframework.hateoas.RepresentationModel;
 public interface RepresentationModelFactories {
 
     /**
+     * The default instance that can be used if no specific implementation of this interface is necessary.
+     */
+    RepresentationModelFactories DEFAULT_INSTANCE = new RepresentationModelFactories() {
+    };
+
+    /**
      * @return a factory to create {@link RepresentationModel} instances.
      */
     default RepresentationModelFactory forRepresentationModel() {
