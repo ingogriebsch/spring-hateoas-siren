@@ -35,6 +35,12 @@ import org.springframework.http.MediaType;
 public interface SirenActionFieldTypeConverter {
 
     /**
+     * The default instance that can be used if no specific implementation of this interface is necessary.
+     */
+    SirenActionFieldTypeConverter DEFAULT_INSTANCE = new SirenActionFieldTypeConverter() {
+    };
+
+    /**
      * Converts the given {@link PropertyMetadata property metadata} and the {@link MediaType type} of the respective Siren action
      * into a {@link SirenActionFieldType}.
      * <p>
