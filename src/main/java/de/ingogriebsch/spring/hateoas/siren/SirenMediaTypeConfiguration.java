@@ -58,7 +58,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     @NonNull
     private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
     @NonNull
-    private final ObjectProvider<SirenActionFieldTypeConverter> sirenActionFieldTypeConverter;
+    private final ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter;
     @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
 
@@ -114,7 +114,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     private SirenLinkConverter linkConverter() {
-        return new SirenLinkConverter(messageResolver(), sirenActionFieldTypeConverter());
+        return new SirenLinkConverter(messageResolver(), actionFieldTypeConverter());
     }
 
     private MessageResolver messageResolver() {
@@ -132,8 +132,8 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         });
     }
 
-    private SirenActionFieldTypeConverter sirenActionFieldTypeConverter() {
-        return sirenActionFieldTypeConverter.getIfAvailable(() -> {
+    private SirenActionFieldTypeConverter actionFieldTypeConverter() {
+        return actionFieldTypeConverter.getIfAvailable(() -> {
             return new TypeBasedSirenActionFieldTypeConverter(configuration().getActionFieldTypeMappings());
         });
 
