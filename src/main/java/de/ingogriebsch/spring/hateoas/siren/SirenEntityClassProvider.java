@@ -35,6 +35,12 @@ import org.springframework.hateoas.RepresentationModel;
 public interface SirenEntityClassProvider {
 
     /**
+     * The default instance that can be used if no specific implementation of this interface is necessary.
+     */
+    SirenEntityClassProvider DEFAULT_INSTANCE = new SirenEntityClassProvider() {
+    };
+
+    /**
      * Returns the class(es) explaining the nature of the content of a Siren entity.
      * <p>
      * The default implementation returns a simplified form of the class name of the {@link RepresentationModel} instance (not
