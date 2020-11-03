@@ -22,6 +22,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.beans.factory.ObjectProvider;
@@ -48,11 +49,17 @@ import org.springframework.http.MediaType;
 @RequiredArgsConstructor
 public class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
+    @NonNull
     private final ObjectProvider<MessageResolver> messageResolver;
+    @NonNull
     private final ObjectProvider<SirenConfiguration> configuration;
+    @NonNull
     private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
+    @NonNull
     private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
+    @NonNull
     private final ObjectProvider<SirenActionFieldTypeConverter> sirenActionFieldTypeConverter;
+    @NonNull
     private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
 
     @Bean
