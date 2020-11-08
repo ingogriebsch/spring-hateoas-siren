@@ -4,7 +4,7 @@
 
     <groupId>de.ingogriebsch.hateoas</groupId>
     <artifactId>spring-hateoas-siren</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-M3</version>
 
     <name>Spring HATEOAS Siren</name>
     <description>A library implementing Siren as a custom Spring HATEOAS hypermedia type. Siren is a hypermedia specification for representing entities.</description>
