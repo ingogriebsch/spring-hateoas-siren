@@ -15,8 +15,8 @@
 <h1>Spring HATEOAS Siren Reference Documentation</h1>
 <div class="details">
 <span id="author" class="author">Ingo Griebsch</span><br>
-<span id="revnumber">version 1.0.0-M2,</span>
-<span id="revdate">2020-09-27</span>
+<span id="revnumber">version 1.0.0-M3,</span>
+<span id="revdate">2020-11-08</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -43,7 +43,7 @@
 <li><a href="#restrictions">3.3. Restrictions</a></li>
 </ul>
 </li>
-<li><a href="#client-side-support">4. Client side support</a>
+<li><a href="#client-side-support">4. Client Side support</a>
 <ul class="sectlevel2">
 <li><a href="#deserialization">4.1. Deserialization</a></li>
 <li><a href="#traverson">4.2. Traverson</a></li>
@@ -105,7 +105,7 @@ whether distributed in print or electronically.
 The media type for <a href="https://github.com/kevinswiber/siren">Siren</a> is defined as <code>application/vnd.siren+json</code>.</p>
 </div>
 <div class="paragraph">
-<p>The current version of this library (version 1.0.0-M2) is based on <a href="https://docs.spring.io/spring-hateoas/docs/1.1.2.RELEASE/reference/html/">Spring HATEOAS</a> version 1.1.2.RELEASE.</p>
+<p>The current version of this library (version 1.0.0-M3) is based on <a href="https://docs.spring.io/spring-hateoas/docs/1.1.2.RELEASE/reference/html/">Spring HATEOAS</a> version 1.1.2.RELEASE.</p>
 </div>
 <div class="paragraph">
 <p>The source of this library can be found <a href="https://github.com/ingogriebsch/spring-hateoas-siren/">here</a>.
@@ -133,7 +133,7 @@ The library is accessible through <a href="https://search.maven.org/artifact/de.
 <pre class="highlightjs highlight"><code data-lang="xml" class="language-xml hljs">&lt;dependency&gt;
     &lt;groupId&gt;de.ingogriebsch.hateoas&lt;/groupId&gt;
     &lt;artifactId&gt;spring-hateoas-siren&lt;/artifactId&gt;
-    &lt;version&gt;1.0.0-M2&lt;/version&gt;
+    &lt;version&gt;1.0.0-M3&lt;/version&gt;
     &lt;scope&gt;compile&lt;/scope&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -145,7 +145,7 @@ The library is accessible through <a href="https://search.maven.org/artifact/de.
 <div class="title">build.gradle.kts</div>
 <div class="content">
 <pre class="highlightjs highlight"><code data-lang="kotlin" class="language-kotlin hljs">dependencies {
-    implementation("de.ingogriebsch.hateoas:spring-hateoas-siren:1.0.0-M2")
+    implementation("de.ingogriebsch.hateoas:spring-hateoas-siren:1.0.0-M3")
 }</code></pre>
 </div>
 </div>
@@ -749,7 +749,7 @@ ResponseEntity&lt;EntityModel&lt;Person&gt;&gt; findOne(Long id) {
 Even if it is in most cases probably sufficient to simply use the available <a href="https://docs.spring.io/spring-hateoas/docs/1.1.2.RELEASE/reference/html/#fundamentals.representation-models">representation models</a> it can be necessary in some cases to be able to build such quite complex structures.</p>
 </div>
 <div class="paragraph">
-<p>Therefore this library provides a builder API that allows to build a Siren model which is then transfered into the respective <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren Entity</a> structure.</p>
+<p>Therefore this library provides a builder API that allows to build a Siren model which is then transfered into the respective <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren Entity</a> structure. Means the library provides a <code>SirenModelBuilder</code> that allows to create <code>RepresentationModel</code> instances through a Siren idiomatic API.</p>
 </div>
 </div>
 </div>
@@ -801,7 +801,7 @@ If you want them, you need to implement a pojo representing an embedded link and
 </div>
 </div>
 <div class="sect1">
-<h2 id="client-side-support"><a class="anchor" href="#client-side-support"></a><a class="link" href="#client-side-support">4. Client side support</a></h2>
+<h2 id="client-side-support"><a class="anchor" href="#client-side-support"></a><a class="link" href="#client-side-support">4. Client Side support</a></h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="deserialization"><a class="anchor" href="#deserialization"></a><a class="link" href="#deserialization">4.1. Deserialization</a></h3>
@@ -1021,8 +1021,8 @@ Especially mixing <a href="https://docs.spring.io/spring-hateoas/docs/1.1.2.RELE
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.0-M2<br>
-Last updated 2020-09-27 13:27:17 UTC
+Version 1.0.0-M3<br>
+Last updated 2020-11-08 21:16:30 UTC
 </div>
 </div>
 <link rel="stylesheet" href="js/highlight/styles/github.min.css">
