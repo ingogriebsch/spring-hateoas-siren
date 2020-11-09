@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout code base
         # https://github.com/actions/checkout
-        uses: actions/checkout@v2.3.3
+        uses: actions/checkout@v2.3.4
 
       - name: Prepare Maven artifact cache
         # https://github.com/actions/cache
