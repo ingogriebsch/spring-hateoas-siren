@@ -31,7 +31,7 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 [spring-hateoas-siren-setup]: https://ingogriebsch.github.io/spring-hateoas-siren/#setup
 [spring-hateoas-siren-javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
 [spring-hateoas-siren-samples]: https://github.com/ingogriebsch/spring-hateoas-siren-samples/
-[spring-hateoas]: https://docs.spring.io/spring-hateoas/docs/1.1.0.RELEASE/reference/html/
+[spring-hateoas]: https://spring.io/projects/spring-hateoas
 [siren]: https://github.com/kevinswiber/siren
 [maven-central]: https://search.maven.org/artifact/de.ingogriebsch.hateoas/spring-hateoas-siren
 [sonatype-snapshots-repository]: https://oss.sonatype.org/content/repositories/snapshots/de/ingogriebsch/hateoas/spring-hateoas-siren/
