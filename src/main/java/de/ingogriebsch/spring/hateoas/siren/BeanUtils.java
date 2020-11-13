@@ -43,7 +43,7 @@ class BeanUtils {
         try {
             return instantiateClass(clazz.getDeclaredConstructor(types), args);
         } catch (NoSuchMethodException | SecurityException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -65,7 +65,7 @@ class BeanUtils {
                 ReflectionUtils.makeAccessible(writeMethod);
                 writeMethod.invoke(obj, value);
             } catch (IllegalAccessException | InvocationTargetException e) {
-                throw new RuntimeException(e);
+                throw new IllegalStateException(e);
             }
         }));
 
