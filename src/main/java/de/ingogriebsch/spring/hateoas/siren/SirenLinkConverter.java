@@ -26,7 +26,6 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.ingogriebsch.spring.hateoas.siren.SirenAction.Field;
 import lombok.RequiredArgsConstructor;
@@ -159,7 +158,7 @@ class SirenLinkConverter {
     }
 
     private static List<SirenNavigables> slice(SirenNavigables navigables) {
-        return navigables.getLinks().stream().map(l -> slice(l, navigables.getActions())).collect(Collectors.toList());
+        return navigables.getLinks().stream().map(l -> slice(l, navigables.getActions())).collect(toList());
     }
 
     private static SirenNavigables slice(SirenLink link, List<SirenAction> actions) {
