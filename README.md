@@ -23,7 +23,7 @@ The latest SNPASHOT version is available through the [Sonatype Snapshots Reposit
 
 ## Version Matrix
 If you want to add the library to your app, the first step is to determine the version of the library you should use.
-The table below outlines which version of the library maps to which version of Spring HATEOAS, Spring Boot and the Spring Framework.
+The table below outlines which version of the library maps to which version of [Spring HATEOAS][spring-hateoas], [Spring Boot][spring-boot] and the [Spring Framework][spring-framework].
 
 | Spring HATEOAS Siren | Spring HATEOAS | Spring Boot | Spring Framework
 | :---: | :---: | :---: | :---: |
@@ -40,6 +40,8 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 [spring-hateoas-siren-javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
 [spring-hateoas-siren-samples]: https://github.com/ingogriebsch/spring-hateoas-siren-samples/
 [spring-hateoas]: https://spring.io/projects/spring-hateoas
+[spring-boot]: https://spring.io/projects/spring-boot
+[spring-framework]: https://spring.io/projects/spring-framework
 [siren]: https://github.com/kevinswiber/siren
 [maven-central]: https://search.maven.org/artifact/de.ingogriebsch.hateoas/spring-hateoas-siren
 [sonatype-snapshots-repository]: https://oss.sonatype.org/content/repositories/snapshots/de/ingogriebsch/hateoas/spring-hateoas-siren/
