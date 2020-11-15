@@ -21,6 +21,14 @@ The latest RELEASE version is available through [Maven Central][maven-central].
 
 The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
 
+## Version Matrix
+If you want to add the library to your app, the first step is to determine the version of the library you should use.
+The table below outlines which version of the library maps to which version of Spring HATEOAS, Spring Boot and the Spring Framework.
+
+| Spring HATEOAS Siren | Spring HATEOAS | Spring Boot | Spring Framework
+| :---: | :---: | :---: | :---: |
+| 1.0.x | 1.1.x | 2.3.x | 5.2.x |
+
 ## Examples
 A collection of examples that showcase how to use the features provided by the library can be found [here][spring-hateoas-siren-samples].
 
