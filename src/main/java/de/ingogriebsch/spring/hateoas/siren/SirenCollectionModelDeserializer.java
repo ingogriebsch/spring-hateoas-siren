@@ -104,7 +104,7 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
 
         JsonToken nextToken = jp.nextToken();
         if (!START_OBJECT.equals(nextToken)) {
-            throw new JsonParseException(jp, String.format("Token does not represent '%s' [but '%s']!", START_OBJECT, nextToken));
+            throw new JsonParseException(jp, format("Token does not represent '%s' [but '%s']!", START_OBJECT, nextToken));
         }
 
         return (Map<String, Object>) deserializer.deserialize(jp, ctxt);

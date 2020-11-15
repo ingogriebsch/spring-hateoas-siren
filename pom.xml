@@ -4,7 +4,7 @@
 
     <groupId>de.ingogriebsch.hateoas</groupId>
     <artifactId>spring-hateoas-siren</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
 
     <name>Spring HATEOAS Siren</name>
     <description>A library implementing Siren as a custom Spring HATEOAS hypermedia type. Siren is a hypermedia specification for representing entities.</description>
@@ -50,7 +50,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-hateoas.version>1.1.2.RELEASE</spring-hateoas.version>
+        <spring-hateoas.version>1.2.1</spring-hateoas.version>
         <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>io.spring.docresources</groupId>
             <artifactId>spring-doc-resources</artifactId>
-            <version>0.2.2.RELEASE</version>
+            <version>0.2.4</version>
             <type>zip</type>
             <optional>true</optional>
         </dependency>
@@ -138,7 +138,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.17.2</version>
+            <version>3.18.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
