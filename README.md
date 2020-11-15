@@ -15,11 +15,7 @@ The media type for [Siren][siren] is defined as `application/vnd.siren+json`.
 The reference documentation can be found [here][spring-hateoas-siren]. The Javadoc API documentation can be found [here][spring-hateoas-siren-javadoc].
 
 ## Integration
-Please check section [Setup][spring-hateoas-siren-setup] of the documentation to understand how to integrate this library into your project.
-
-The latest RELEASE version is available through [Maven Central][maven-central].
-
-The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
+Please check section [Setup][spring-hateoas-siren-setup] of the documentation to understand how to integrate this library into your project. The latest RELEASE version is available through [Maven Central][maven-central]. The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
 
 ## Version Matrix
 If you want to add the library to your app, the first step is to determine the version of the library you should use.
