@@ -45,13 +45,13 @@ class SirenHandlerInstantiator extends HandlerInstantiator {
     private final Map<Class<?>, Object> serializers = new HashMap<>();
     private final AutowireCapableBeanFactory beanFactory;
 
-    SirenHandlerInstantiator(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
-        SirenSerializerFacilities serializerFacilities) {
-        this(configuration, deserializerFacilities, serializerFacilities, null);
+    SirenHandlerInstantiator(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities,
+        SirenDeserializerFacilities deserializerFacilities) {
+        this(configuration, serializerFacilities, deserializerFacilities, null);
     }
 
-    SirenHandlerInstantiator(SirenConfiguration configuration, SirenDeserializerFacilities deserializerFacilities,
-        SirenSerializerFacilities serializerFacilities, @Nullable AutowireCapableBeanFactory beanFactory) {
+    SirenHandlerInstantiator(SirenConfiguration configuration, SirenSerializerFacilities serializerFacilities,
+        SirenDeserializerFacilities deserializerFacilities, @Nullable AutowireCapableBeanFactory beanFactory) {
 
         serializers.put(SirenRepresentationModelSerializer.class,
             new SirenRepresentationModelSerializer(configuration, serializerFacilities));

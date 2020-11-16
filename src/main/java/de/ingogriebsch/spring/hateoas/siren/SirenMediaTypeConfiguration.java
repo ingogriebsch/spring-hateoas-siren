@@ -137,7 +137,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         SirenSerializerFacilities serializerFacilities =
             new SirenSerializerFacilities(entityClassProvider, entityRelProvider, linkConverter, messageResolver);
 
-        return new SirenHandlerInstantiator(configuration, deserializerFacilities, serializerFacilities);
+        return new SirenHandlerInstantiator(configuration, serializerFacilities, deserializerFacilities);
     }
 
     private static MessageResolver messageResolver(ObjectProvider<MessageResolver> messageResolver) {
