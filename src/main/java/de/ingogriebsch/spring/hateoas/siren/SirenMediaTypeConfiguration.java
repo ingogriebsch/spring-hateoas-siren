@@ -99,8 +99,8 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     public ObjectMapper configureObjectMapper(ObjectMapper mapper) {
         ObjectMapper configured = HypermediaMappingInformation.super.configureObjectMapper(mapper);
 
-        SirenHandlerInstantiator instantiator = sirenHandlerInitiator();
-        configured.setHandlerInstantiator(instantiator);
+        configured.setHandlerInstantiator(sirenHandlerInitiator());
+        configuration.getObjectMapperCustomizer().accept(configured);
 
         return configured;
     }

@@ -20,7 +20,9 @@ import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
 import static lombok.AccessLevel.PACKAGE;
 
 import java.util.List;
+import java.util.function.Consumer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.hateoas.CollectionModel;
@@ -37,6 +39,8 @@ public class SirenConfiguration {
 
     private boolean entityAndCollectionModelSubclassingEnabled = false;
     private List<TypeMapping> actionFieldTypeMappings = newArrayList();
+    private Consumer<ObjectMapper> objectMapperCustomizer = objectMapper -> {
+    };
 
     /**
      * Configures whether it is possible to subclass {@link EntityModel}s and {@link CollectionModel}s.
@@ -63,6 +67,18 @@ public class SirenConfiguration {
      */
     public SirenConfiguration withActionFieldTypeMappging(@NonNull Class<?> source, @NonNull SirenActionFieldType target) {
         actionFieldTypeMappings.add(typeMapping(source, target));
+        return this;
+    }
+
+    /**
+     * Configures the {@link ObjectMapper} instance that is used for serialization.
+     * 
+     * @param objectMapperCustomizer the customizer which is used to apply additional customizations to the {@link ObjectMapper}
+     *        instance that is used for serialization.
+     * @return the updated configuration reflecting the setting
+     */
+    public SirenConfiguration withObjectMapperCustomizer(@NonNull Consumer<ObjectMapper> objectMapperCustomizer) {
+        this.objectMapperCustomizer = objectMapperCustomizer;
         return this;
     }
 }

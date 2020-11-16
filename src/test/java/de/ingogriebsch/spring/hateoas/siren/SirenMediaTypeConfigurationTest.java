@@ -19,6 +19,11 @@ import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
+import java.text.DateFormat;
+import java.util.Locale;
+import java.util.function.Consumer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -49,6 +54,33 @@ class SirenMediaTypeConfigurationTest {
         @Test
         void should_return_matching_jackson_module() {
             assertThat(sirenMediaTypeConfiguration.getJacksonModule()).isNotNull().isInstanceOf(Jackson2SirenModule.class);
+        }
+    }
+
+    @Nested
+    class ConfigureObjectMapper {
+
+        @Test
+        void should_apply_customizer() {
+            DateFormat flag = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ENGLISH);
+
+            Consumer<ObjectMapper> objectMapperCustomizer = (objectMapper) -> {
+                objectMapper.setDateFormat(flag);
+            };
+
+            SirenMediaTypeConfiguration configuration = SirenMediaTypeConfiguration.of( //
+                DEFAULTS_ONLY, //
+                new SirenConfiguration().withObjectMapperCustomizer(objectMapperCustomizer), //
+                SirenEntityClassProvider.DEFAULT_INSTANCE, //
+                SirenEntityRelProvider.DEFAULT_INSTANCE, //
+                new TypeBasedSirenActionFieldTypeConverter(), //
+                RepresentationModelFactories.DEFAULT_INSTANCE //
+            );
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            assertThat(objectMapper.getDateFormat()).isNotEqualTo(flag);
+            configuration.configureObjectMapper(objectMapper);
+            assertThat(objectMapper.getDateFormat()).isEqualTo(flag);
         }
     }
 }

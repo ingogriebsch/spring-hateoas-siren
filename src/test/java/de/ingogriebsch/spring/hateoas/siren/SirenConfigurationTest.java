@@ -5,6 +5,9 @@ import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.function.Consumer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 class SirenConfigurationTest {
@@ -51,6 +54,17 @@ class SirenConfigurationTest {
             typeMapping(String.class, TEXT), //
             typeMapping(Integer.class, NUMBER) //
         );
+
+        Consumer<ObjectMapper> objectMapperCustomizer = (objectMapper) -> {
+        };
+        configuration.withObjectMapperCustomizer(objectMapperCustomizer);
+        assertThat(configuration.getObjectMapperCustomizer()).isEqualTo(objectMapperCustomizer);
+
+        assertThat(configuration.isEntityAndCollectionModelSubclassingEnabled()).isFalse();
+        assertThat(configuration.getActionFieldTypeMappings()).containsExactly( //
+            typeMapping(String.class, TEXT), //
+            typeMapping(Integer.class, NUMBER) //
+        );
     }
 
     @Test
@@ -64,5 +78,16 @@ class SirenConfigurationTest {
             typeMapping(String.class, TEXT), //
             typeMapping(Integer.class, NUMBER) //
         );
+    }
+
+    @Test
+    void withObjectMapperCustomizer_should_return_set_value() {
+        SirenConfiguration configuration = new SirenConfiguration();
+
+        Consumer<ObjectMapper> objectMapperCustomizer = (objectMapper) -> {
+        };
+        configuration.withObjectMapperCustomizer(objectMapperCustomizer);
+
+        assertThat(configuration.getObjectMapperCustomizer()).isEqualTo(objectMapperCustomizer);
     }
 }
