@@ -15,36 +15,38 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
+import static java.text.DateFormat.SHORT;
+import static java.text.DateFormat.getDateInstance;
+import static java.util.Locale.ENGLISH;
+
 import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 
 import java.text.DateFormat;
-import java.util.Locale;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class SirenMediaTypeConfigurationTest {
-
-    private static SirenMediaTypeConfiguration sirenMediaTypeConfiguration;
-
-    @BeforeAll
-    static void beforeAll() {
-        sirenMediaTypeConfiguration = SirenMediaTypeConfiguration.of(DEFAULTS_ONLY, new SirenConfiguration(),
-            SirenEntityClassProvider.DEFAULT_INSTANCE, SirenEntityRelProvider.DEFAULT_INSTANCE,
-            new TypeBasedSirenActionFieldTypeConverter(), RepresentationModelFactories.DEFAULT_INSTANCE);
-    }
 
     @Nested
     class GetMediaTypes {
 
         @Test
         void should_return_matching_media_type() {
-            assertThat(sirenMediaTypeConfiguration.getMediaTypes()).containsExactly(SIREN_JSON);
+            SirenMediaTypeConfiguration configuration = SirenMediaTypeConfiguration.of( //
+                DEFAULTS_ONLY, //
+                new SirenConfiguration(), //
+                SirenEntityClassProvider.DEFAULT_INSTANCE, //
+                SirenEntityRelProvider.DEFAULT_INSTANCE, //
+                new TypeBasedSirenActionFieldTypeConverter(), //
+                RepresentationModelFactories.DEFAULT_INSTANCE //
+            );
+
+            assertThat(configuration.getMediaTypes()).containsExactly(SIREN_JSON);
         }
     }
 
@@ -53,7 +55,16 @@ class SirenMediaTypeConfigurationTest {
 
         @Test
         void should_return_matching_jackson_module() {
-            assertThat(sirenMediaTypeConfiguration.getJacksonModule()).isNotNull().isInstanceOf(Jackson2SirenModule.class);
+            SirenMediaTypeConfiguration configuration = SirenMediaTypeConfiguration.of( //
+                DEFAULTS_ONLY, //
+                new SirenConfiguration(), //
+                SirenEntityClassProvider.DEFAULT_INSTANCE, //
+                SirenEntityRelProvider.DEFAULT_INSTANCE, //
+                new TypeBasedSirenActionFieldTypeConverter(), //
+                RepresentationModelFactories.DEFAULT_INSTANCE //
+            );
+
+            assertThat(configuration.getJacksonModule()).isNotNull().isInstanceOf(Jackson2SirenModule.class);
         }
     }
 
@@ -62,7 +73,7 @@ class SirenMediaTypeConfigurationTest {
 
         @Test
         void should_apply_customizer() {
-            DateFormat flag = DateFormat.getDateInstance(DateFormat.SHORT, Locale.ENGLISH);
+            DateFormat flag = getDateInstance(SHORT, ENGLISH);
 
             Consumer<ObjectMapper> objectMapperCustomizer = (objectMapper) -> {
                 objectMapper.setDateFormat(flag);
