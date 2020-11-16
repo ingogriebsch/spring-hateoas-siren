@@ -24,7 +24,6 @@ import java.util.List;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.MessageSourceResolvable;
@@ -47,21 +46,31 @@ import org.springframework.http.MediaType;
  * @see ObjectMapper
  */
 @Configuration
-@RequiredArgsConstructor
 public class SirenMediaTypeConfiguration implements HypermediaMappingInformation {
 
-    @NonNull
-    private final ObjectProvider<MessageResolver> messageResolver;
-    @NonNull
-    private final ObjectProvider<SirenConfiguration> configuration;
-    @NonNull
-    private final ObjectProvider<SirenEntityClassProvider> entityClassProvider;
-    @NonNull
-    private final ObjectProvider<SirenEntityRelProvider> entityRelProvider;
-    @NonNull
-    private final ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter;
-    @NonNull
-    private final ObjectProvider<RepresentationModelFactories> representationModelFactories;
+    private final MessageResolver messageResolver;
+    private final SirenConfiguration configuration;
+    private final SirenEntityClassProvider entityClassProvider;
+    private final SirenEntityRelProvider entityRelProvider;
+    private final SirenActionFieldTypeConverter actionFieldTypeConverter;
+    private final RepresentationModelFactories representationModelFactories;
+
+    public SirenMediaTypeConfiguration( //
+        @NonNull ObjectProvider<MessageResolver> messageResolver, //
+        @NonNull ObjectProvider<SirenConfiguration> configuration, //
+        @NonNull ObjectProvider<SirenEntityClassProvider> entityClassProvider, //
+        @NonNull ObjectProvider<SirenEntityRelProvider> entityRelProvider, //
+        @NonNull ObjectProvider<SirenActionFieldTypeConverter> actionFieldTypeConverter, //
+        @NonNull ObjectProvider<RepresentationModelFactories> representationModelFactories) {
+
+        this.messageResolver = messageResolver(messageResolver);
+        this.configuration = configuration(configuration);
+        this.entityClassProvider = entityClassProvider(entityClassProvider);
+        this.entityRelProvider = entityRelProvider(entityRelProvider);
+        this.actionFieldTypeConverter =
+            actionFieldTypeConverter(actionFieldTypeConverter, this.configuration.getActionFieldTypeMappings());
+        this.representationModelFactories = representationModelFactories(representationModelFactories);
+    }
 
     /*
      * (non-Javadoc)
@@ -90,8 +99,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     public ObjectMapper configureObjectMapper(ObjectMapper mapper) {
         ObjectMapper configured = HypermediaMappingInformation.super.configureObjectMapper(mapper);
 
-        SirenHandlerInstantiator instantiator =
-            new SirenHandlerInstantiator(configuration(), deserializerFacilities(), serializerFacilities());
+        SirenHandlerInstantiator instantiator = sirenHandlerInitiator();
         configured.setHandlerInstantiator(instantiator);
 
         return configured;
@@ -120,46 +128,47 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         );
     }
 
-    private SirenConfiguration configuration() {
-        return configuration.getIfAvailable(SirenConfiguration::new);
+    private SirenHandlerInstantiator sirenHandlerInitiator() {
+        SirenLinkConverter linkConverter = new SirenLinkConverter(messageResolver, actionFieldTypeConverter);
+
+        SirenDeserializerFacilities deserializerFacilities =
+            new SirenDeserializerFacilities(representationModelFactories, linkConverter);
+
+        SirenSerializerFacilities serializerFacilities =
+            new SirenSerializerFacilities(entityClassProvider, entityRelProvider, linkConverter, messageResolver);
+
+        return new SirenHandlerInstantiator(configuration, deserializerFacilities, serializerFacilities);
     }
 
-    private SirenDeserializerFacilities deserializerFacilities() {
-        return new SirenDeserializerFacilities(representationModelFactories(), linkConverter());
-    }
-
-    private SirenSerializerFacilities serializerFacilities() {
-        return new SirenSerializerFacilities(entityClassProvider(), entityRelProvider(), linkConverter(), messageResolver());
-    }
-
-    private SirenLinkConverter linkConverter() {
-        return new SirenLinkConverter(messageResolver(), actionFieldTypeConverter());
-    }
-
-    private MessageResolver messageResolver() {
+    private static MessageResolver messageResolver(ObjectProvider<MessageResolver> messageResolver) {
         return new NoSuchMessageExceptionSuppressingMessageResolver(
             messageResolver.getIfAvailable(() -> MessageResolver.of(null)));
     }
 
-    private SirenEntityClassProvider entityClassProvider() {
+    private static SirenConfiguration configuration(ObjectProvider<SirenConfiguration> configuration) {
+        return configuration.getIfAvailable(SirenConfiguration::new);
+    }
+
+    private static SirenEntityClassProvider entityClassProvider(ObjectProvider<SirenEntityClassProvider> entityClassProvider) {
         return entityClassProvider.getIfAvailable(() -> new SirenEntityClassProvider() {
         });
     }
 
-    private SirenEntityRelProvider entityRelProvider() {
+    private static SirenEntityRelProvider entityRelProvider(ObjectProvider<SirenEntityRelProvider> entityRelProvider) {
         return entityRelProvider.getIfAvailable(() -> new SirenEntityRelProvider() {
         });
     }
 
-    private SirenActionFieldTypeConverter actionFieldTypeConverter() {
-        return actionFieldTypeConverter.getIfAvailable(() -> {
-            return new TypeBasedSirenActionFieldTypeConverter(configuration().getActionFieldTypeMappings());
+    private static SirenActionFieldTypeConverter actionFieldTypeConverter(ObjectProvider<SirenActionFieldTypeConverter> provider,
+        List<TypeMapping> actionFieldTypeMappings) {
+        return provider.getIfAvailable(() -> {
+            return new TypeBasedSirenActionFieldTypeConverter(actionFieldTypeMappings);
         });
-
     }
 
-    private RepresentationModelFactories representationModelFactories() {
-        return representationModelFactories.getIfAvailable(() -> new RepresentationModelFactories() {
+    private static RepresentationModelFactories
+        representationModelFactories(ObjectProvider<RepresentationModelFactories> provider) {
+        return provider.getIfAvailable(() -> new RepresentationModelFactories() {
         });
     }
 
