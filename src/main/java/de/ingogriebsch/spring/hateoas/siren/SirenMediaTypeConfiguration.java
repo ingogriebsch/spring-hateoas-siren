@@ -102,12 +102,22 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         return new SirenLinkDiscoverer();
     }
 
-    static SirenMediaTypeConfiguration of(MessageResolver messageResolver, SirenConfiguration configuration,
-        SirenEntityClassProvider entityClassProvider, SirenEntityRelProvider entityRelProvider,
-        SirenActionFieldTypeConverter actionFieldTypeConverter, RepresentationModelFactories representationModelFactories) {
-        return new SirenMediaTypeConfiguration(objectProvider(messageResolver), objectProvider(configuration),
-            objectProvider(entityClassProvider), objectProvider(entityRelProvider), objectProvider(actionFieldTypeConverter),
-            objectProvider(representationModelFactories));
+    static SirenMediaTypeConfiguration of( //
+        MessageResolver messageResolver, //
+        SirenConfiguration configuration, //
+        SirenEntityClassProvider entityClassProvider, //
+        SirenEntityRelProvider entityRelProvider, //
+        SirenActionFieldTypeConverter actionFieldTypeConverter, //
+        RepresentationModelFactories representationModelFactories) {
+
+        return new SirenMediaTypeConfiguration(//
+            objectProvider(messageResolver), //
+            objectProvider(configuration), //
+            objectProvider(entityClassProvider), //
+            objectProvider(entityRelProvider), //
+            objectProvider(actionFieldTypeConverter), //
+            objectProvider(representationModelFactories) //
+        );
     }
 
     private SirenConfiguration configuration() {
