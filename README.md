@@ -12,10 +12,15 @@ This library extends [Spring HATEOAS][spring-hateoas] with the custom hypermedia
 The media type for [Siren][siren] is defined as `application/vnd.siren+json`.
 
 ## Documentation
-The reference documentation can be found [here][spring-hateoas-siren]. The Javadoc API documentation can be found [here][spring-hateoas-siren-javadoc].
+The Reference documentation of the current SNAPSHOT version can be found [here][spring-hateoas-siren-docs]. 
+The API documentation of the current SNAPSHOT version can be found [here][spring-hateoas-siren-javadoc]. 
+The Reference/API documentation of a specific version can be addressed if the path segment `current` of the url is replaced with the specifc version. 
+For example, the reference documentation of version 1.0.0 can be addressed if the path segment `current` is replaced with `1.0.0`.
 
 ## Integration
-Please check section [Setup][spring-hateoas-siren-setup] of the documentation to understand how to integrate this library into your project. The latest RELEASE version is available through [Maven Central][maven-central]. The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
+Please check section [Setup][spring-hateoas-siren-docs-setup] of the documentation to understand how to integrate this library into your project. 
+The latest RELEASE version is available through [Maven Central][maven-central]. 
+The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
 
 ## Version Matrix
 If you want to add the library to your app, the first step is to determine the version of the library you should use.
@@ -32,9 +37,9 @@ A collection of examples that showcase how to use the features provided by the l
 ## License
 This code is open source software licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html).
 
-[spring-hateoas-siren]: https://ingogriebsch.github.io/spring-hateoas-siren/
-[spring-hateoas-siren-setup]: https://ingogriebsch.github.io/spring-hateoas-siren/#setup
-[spring-hateoas-siren-javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/apidocs/
+[spring-hateoas-siren-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/
+[spring-hateoas-siren-docs-setup]: https://ingogriebsch.github.io/spring-hateoas-siren/current/#setup
+[spring-hateoas-siren-javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/current/apidocs/
 [spring-hateoas-siren-samples]: https://github.com/ingogriebsch/spring-hateoas-siren-samples/
 [spring-hateoas]: https://spring.io/projects/spring-hateoas
 [spring-boot]: https://spring.io/projects/spring-boot
