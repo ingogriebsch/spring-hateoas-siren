@@ -32,7 +32,7 @@ jobs:
 
       - name: Prepare Maven settings
         # https://github.com/s4u/maven-settings-action
-        uses: s4u/maven-settings-action@v2.2.0
+        uses: s4u/maven-settings-action@v2.3.0
         if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         with:
           servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
