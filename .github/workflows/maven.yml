@@ -60,25 +60,27 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: Prepare documentation tag
-        id: prepare-documentation-tag
+      - name: Prepare documentation
+        id: prepare-documentation
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           TAG_NAME="${GITHUB_REF##refs/tags/}"
-          echo "::set-output name=tag_name::${TAG_NAME}"
-          echo "::set-output name=docs_tag_name::${TAG_NAME}-docs"
-          
+          echo "::set-output name=dest_dir::${TAG_NAME}"
+          echo "::set-output name=base_tag::${TAG_NAME}"
+          echo "::set-output name=tag_name::${TAG_NAME}-docs"
       - name: Publish documentation
         # https://github.com/peaceiris/actions-gh-pages
-        uses: peaceiris/actions-gh-pages@v3.6.4
+        uses: peaceiris/actions-gh-pages@v3.7.3
         if: startsWith(github.ref, 'refs/tags/')
         with:
           cname: spring-hateoas-siren.ingogriebsch.de
           commit_message: 'docs: publish documentation to gh-pages'
+          destination_dir: ${{ steps.prepare-documentation.outputs.dest_dir }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          keep_files: true
           publish_branch: gh-pages
           publish_dir: ./target/generated-docs
-          tag_message: 'Tag documentation for ${{ steps.prepare-documentation-tag.outputs.tag_name }}'
-          tag_name: ${{ steps.prepare-documentation-tag.outputs.docs_tag_name }}
+          tag_message: 'Tag documentation for ${{ steps.prepare-documentation.outputs.base_tag }}'
+          tag_name: ${{ steps.prepare-documentation.outputs.tag_name }}
           user_email: 'github-actions[bot]@users.noreply.github.com'
           user_name: 'github-actions[bot]'
