@@ -12,13 +12,24 @@ This library extends [Spring HATEOAS][spring-hateoas] with the custom hypermedia
 The media type for [Siren][siren] is defined as `application/vnd.siren+json`.
 
 ## Documentation
-The Reference documentation of the current SNAPSHOT version can be found [here][spring-hateoas-siren-docs]. 
-The API documentation of the current SNAPSHOT version can be found [here][spring-hateoas-siren-javadoc]. 
-The Reference/API documentation of a specific version can be addressed if the path segment `current` of the url is replaced with the specifc version. 
-For example, the reference documentation of version 1.0.0 can be addressed if the path segment `current` is replaced with `1.0.0`.
+The url to the Reference documentation has the following pattern:
+
+> `<scheme>://<host>/spring-hateoas-siren/<version>/index.html`
+
+The value `current` is used for the path segment `<version>` if the url points to the Reference documentation of the current SNAPSHOT version (the documentation can be found [here][spring-hateoas-siren-current-docs]).
+The Reference documentation of a specific version can be addressed if the path segment `<version>` of the url is replaced with a specifc release version.
+For example, the Reference documentation of version 1.0.0 can be addressed if the path segment `<version>` is replaced with `1.0.0` (the documentation can be found [here][spring-hateoas-siren-1.0.0-docs]).
+
+The url to the API documentation has the following pattern:
+
+> `<scheme>://<host>/spring-hateoas-siren/<version>/apidocs/index.html`
+
+The value `current` is used for the path segment `<version>` if the url points to the Reference documentation of the current SNAPSHOT version (the documentation can be found [here][spring-hateoas-siren-current-apidocs]).
+The Reference documentation of a specific version can be addressed if the path segment `<version>` of the url is replaced with a specifc release version.
+For example, the Reference documentation of version 1.0.0 can be addressed if the path segment `<version>` is replaced with `1.0.0` (the documentation can be found [here][spring-hateoas-siren-1.0.0-apidocs]).
 
 ## Integration
-Please check section [Setup][spring-hateoas-siren-docs-setup] of the documentation to understand how to integrate this library into your project. 
+Please check section [Setup][spring-hateoas-siren-current-docs-setup] of the documentation to understand how to integrate this library into your project. 
 The latest RELEASE version is available through [Maven Central][maven-central]. 
 The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
 
@@ -37,9 +48,11 @@ A collection of examples that showcase how to use the features provided by the l
 ## License
 This code is open source software licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html).
 
-[spring-hateoas-siren-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/
-[spring-hateoas-siren-docs-setup]: https://ingogriebsch.github.io/spring-hateoas-siren/current/#setup
-[spring-hateoas-siren-javadoc]: https://ingogriebsch.github.io/spring-hateoas-siren/current/apidocs/
+[spring-hateoas-siren-current-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/
+[spring-hateoas-siren-current-apidocs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/apidocs/
+[spring-hateoas-siren-1.0.0-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/
+[spring-hateoas-siren-1.0.0-apidocs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/apidocs/
+[spring-hateoas-siren-current-docs-setup]: https://ingogriebsch.github.io/spring-hateoas-siren/current/#setup
 [spring-hateoas-siren-samples]: https://github.com/ingogriebsch/spring-hateoas-siren-samples/
 [spring-hateoas]: https://spring.io/projects/spring-hateoas
 [spring-boot]: https://spring.io/projects/spring-boot
