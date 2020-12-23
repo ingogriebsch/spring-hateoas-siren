@@ -13,6 +13,7 @@ The media type for [Siren][siren] is defined as `application/vnd.siren+json`.
 
 ## Documentation
 Here you find the documentation for the latest releases and the current SNAPSHOT version:
+
 | :---: | :---: | :---: |
 | SNAPSHOT | [Reference Doc.][spring-hateoas-siren-current-docs] | [API Doc.][spring-hateoas-siren-current-apidocs] |
 | 1.0.0 | [Reference Doc.][spring-hateoas-siren-1.0.0-docs] | [API Doc.][spring-hateoas-siren-1.0.0-apidocs] |
