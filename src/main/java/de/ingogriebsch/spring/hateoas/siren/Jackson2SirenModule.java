@@ -35,7 +35,7 @@ import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
  */
 class Jackson2SirenModule extends SimpleModule {
 
-    private static final Version MODULE_VERSION = new Version(1, 0, 0, null, "de.ingogriebsch.hateoas", "spring-hateoas-siren");
+    private static final Version MODULE_VERSION = new Version(1, 1, 0, null, "de.ingogriebsch.hateoas", "spring-hateoas-siren");
     private static final long serialVersionUID = 7377778164657569053L;
 
     Jackson2SirenModule() {
