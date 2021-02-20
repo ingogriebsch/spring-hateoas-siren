@@ -34,6 +34,7 @@ Here you find the documentation for the latest releases and the current SNAPSHOT
 | Version | Reference documentation | API documentation |
 | :---: | :---: | :---: |
 | SNAPSHOT | [Reference Doc.][spring-hateoas-siren-current-docs] | [API Doc.][spring-hateoas-siren-current-apidocs] |
+| 1.0.2 | [Reference Doc.][spring-hateoas-siren-1.0.2-docs] | [API Doc.][spring-hateoas-siren-1.0.2-apidocs] |
 | 1.0.1 | [Reference Doc.][spring-hateoas-siren-1.0.1-docs] | [API Doc.][spring-hateoas-siren-1.0.1-apidocs] |
 | 1.0.0 | [Reference Doc.][spring-hateoas-siren-1.0.0-docs] | [API Doc.][spring-hateoas-siren-1.0.0-apidocs] |
 
@@ -60,6 +61,8 @@ This code is open source software licensed under the [Apache 2.0 License](https:
 
 [spring-hateoas-siren-current-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/index.html
 [spring-hateoas-siren-current-apidocs]: https://ingogriebsch.github.io/spring-hateoas-siren/current/apidocs/index.html
+[spring-hateoas-siren-1.0.2-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/1.0.2/index.html
+[spring-hateoas-siren-1.0.2-apidocs]: https://ingogriebsch.github.io/spring-hateoas-siren/1.0.2/apidocs/index.html
 [spring-hateoas-siren-1.0.1-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/1.0.1/index.html
 [spring-hateoas-siren-1.0.1-apidocs]: https://ingogriebsch.github.io/spring-hateoas-siren/1.0.1/apidocs/index.html
 [spring-hateoas-siren-1.0.0-docs]: https://ingogriebsch.github.io/spring-hateoas-siren/1.0.0/index.html
