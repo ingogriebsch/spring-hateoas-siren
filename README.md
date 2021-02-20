@@ -22,7 +22,7 @@ The table below outlines which version of the library maps to which version of [
 
 ## Integration
 Please check section [Setup][spring-hateoas-siren-current-docs-setup] of the documentation to understand how to integrate this library into your project. 
-The latest RELEASE version is available through [Maven Central][maven-central]. 
+The RELEASE versions are available through [Maven Central][maven-central]. 
 The latest SNPASHOT version is available through the [Sonatype Snapshots Repository][sonatype-snapshots-repository].
 
 ## Examples
