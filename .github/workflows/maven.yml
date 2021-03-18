@@ -53,13 +53,6 @@ jobs:
         if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
         run: mvn -B -Possrh deploy
 
-      - name: Upload coverage report
-        # https://github.com/marketplace/actions/codecov
-        uses: codecov/codecov-action@v1.2.1
-        if: startsWith(github.ref, 'refs/heads/dependabot/') != true
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-
       - name: Prepare master documentation
         id: prepare-master-documentation
         if: github.ref == 'refs/heads/master'
