@@ -1,5 +1,6 @@
 # Spring HATEOAS Siren
 [![Actions Status](https://github.com/ingogriebsch/spring-hateoas-siren/workflows/build/badge.svg?branch=master)](https://github.com/ingogriebsch/spring-hateoas-siren/actions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=de.ingogriebsch.hateoas%3Aspring-hateoas-siren&metric=alert_status)](https://sonarcloud.io/dashboard?id=de.ingogriebsch.hateoas%3Aspring-hateoas-siren)
 [![Maven-Central](https://img.shields.io/maven-central/v/de.ingogriebsch.hateoas/spring-hateoas-siren?color=green)](https://search.maven.org/artifact/de.ingogriebsch.hateoas/spring-hateoas-siren)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
