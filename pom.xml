@@ -50,6 +50,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>ingogriebsch</sonar.organization>
         <spring-doc-resources.version>0.2.5</spring-doc-resources.version>
         <spring-hateoas.version>1.2.4</spring-hateoas.version>
         <slf4j.version>1.7.30</slf4j.version>
@@ -268,6 +270,11 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.6</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.8.0.2131</version>
+                </plugin>            
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
