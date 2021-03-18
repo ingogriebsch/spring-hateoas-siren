@@ -22,13 +22,13 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Prepare Maven artifact cache
+      - name: Prepare Maven cache
         # https://github.com/actions/cache
         uses: actions/cache@v2.1.4
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-maven-
+          restore-keys: ${{ runner.os }}-maven
 
       - name: Prepare Maven settings
         # https://github.com/s4u/maven-settings-action
