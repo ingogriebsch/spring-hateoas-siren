@@ -53,7 +53,7 @@ jobs:
         # https://github.com/crazy-max/ghaction-import-gpg
         uses: crazy-max/ghaction-import-gpg@v3.1.0
         if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/')
-        env:
+        with:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
