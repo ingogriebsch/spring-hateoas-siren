@@ -79,7 +79,7 @@ jobs:
 
       - name: Publish master documentation
         # https://github.com/peaceiris/actions-gh-pages
-        uses: peaceiris/actions-gh-pages@v3.7.3
+        uses: peaceiris/actions-gh-pages@v3.8.0
         if: github.ref == 'refs/heads/master'
         with:
           cname: spring-hateoas-siren.ingogriebsch.de
@@ -103,7 +103,7 @@ jobs:
           
       - name: Publish tags documentation
         # https://github.com/peaceiris/actions-gh-pages
-        uses: peaceiris/actions-gh-pages@v3.7.3
+        uses: peaceiris/actions-gh-pages@v3.8.0
         if: startsWith(github.ref, 'refs/tags/')
         with:
           cname: spring-hateoas-siren.ingogriebsch.de
