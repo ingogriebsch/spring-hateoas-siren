@@ -20,6 +20,8 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JavaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.EntityModel;
@@ -41,8 +43,10 @@ class EntityModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructSimpleType(String.class, null);
-        assertThatThrownBy(() -> factory.create(type, newArrayList(), new Object(), null))
-            .isInstanceOf(IllegalArgumentException.class);
+        List<Link> links = newArrayList();
+        Object content = new Object();
+
+        assertThatThrownBy(() -> factory.create(type, links, content, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
