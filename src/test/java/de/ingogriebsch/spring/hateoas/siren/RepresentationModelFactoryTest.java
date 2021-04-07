@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -45,7 +46,8 @@ class RepresentationModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructSimpleType(String.class, null);
-        assertThatThrownBy(() -> factory.create(type, newArrayList(), null)).isInstanceOf(IllegalArgumentException.class);
+        List<Link> links = newArrayList();
+        assertThatThrownBy(() -> factory.create(type, links, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
