@@ -39,8 +39,8 @@ class TypeBasedSirenActionFieldTypeConverterTest {
 
     @Test
     void convert_should_throw_exception_if_no_input_given() {
-        assertThatThrownBy(() -> new TypeBasedSirenActionFieldTypeConverter().convert(null, null))
-            .isInstanceOf(IllegalArgumentException.class);
+        TypeBasedSirenActionFieldTypeConverter converter = new TypeBasedSirenActionFieldTypeConverter();
+        assertThatThrownBy(() -> converter.convert(null, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
