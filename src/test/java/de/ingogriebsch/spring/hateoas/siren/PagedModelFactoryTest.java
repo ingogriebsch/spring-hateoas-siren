@@ -20,6 +20,8 @@ import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JavaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.Link;
@@ -42,8 +44,11 @@ class PagedModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructSimpleType(String.class, null);
-        assertThatThrownBy(() -> factory.create(type, newArrayList(), newArrayList(), new PageMetadata(0, 0, 0)))
-            .isInstanceOf(IllegalArgumentException.class);
+        List<Link> links = newArrayList();
+        List<Object> content = newArrayList();
+        PageMetadata metadata = new PageMetadata(0, 0, 0);
+
+        assertThatThrownBy(() -> factory.create(type, links, content, metadata)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
