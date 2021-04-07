@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -47,8 +48,10 @@ class CollectionModelFactoryTest {
         };
 
         JavaType type = defaultInstance().constructSimpleType(String.class, null);
-        assertThatThrownBy(() -> factory.create(type, newArrayList(), newArrayList(), null))
-            .isInstanceOf(IllegalArgumentException.class);
+        List<Link> links = newArrayList();
+        List<Object> content = newArrayList();
+
+        assertThatThrownBy(() -> factory.create(type, links, content, null)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
