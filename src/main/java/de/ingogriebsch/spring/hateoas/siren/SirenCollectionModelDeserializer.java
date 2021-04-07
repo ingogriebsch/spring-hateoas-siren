@@ -122,29 +122,25 @@ class SirenCollectionModelDeserializer extends AbstractSirenDeserializer<Collect
     }
 
     private static List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<Object> deserializer = obtainDeserializer(defaultInstance().constructType(SirenLink.class), jp, ctxt);
-
-        List<SirenLink> links = newArrayList();
-        if (START_ARRAY.equals(jp.nextToken())) {
-            while (!END_ARRAY.equals(jp.nextToken())) {
-                links.add((SirenLink) deserializer.deserialize(jp, ctxt));
-            }
-        }
-
-        return links;
+        return deserializeEntries(SirenLink.class, jp, ctxt);
     }
 
     private static List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<Object> deserializer = obtainDeserializer(defaultInstance().constructType(SirenAction.class), jp, ctxt);
+        return deserializeEntries(SirenAction.class, jp, ctxt);
+    }
 
-        List<SirenAction> actions = newArrayList();
+    @SuppressWarnings("unchecked")
+    private static <T> List<T> deserializeEntries(Class<T> clazz, JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JsonDeserializer<T> deserializer =
+            (JsonDeserializer<T>) obtainDeserializer(defaultInstance().constructType(clazz), jp, ctxt);
+
+        List<T> entries = newArrayList();
         if (START_ARRAY.equals(jp.nextToken())) {
             while (!END_ARRAY.equals(jp.nextToken())) {
-                actions.add((SirenAction) deserializer.deserialize(jp, ctxt));
+                entries.add(deserializer.deserialize(jp, ctxt));
             }
         }
-
-        return actions;
+        return entries;
     }
 
     private static JsonDeserializer<Object> obtainDeserializer(JavaType type, JsonParser jp, DeserializationContext ctxt)
