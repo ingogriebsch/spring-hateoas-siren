@@ -15,6 +15,7 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
+import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
@@ -66,7 +67,8 @@ class SirenLinkConverter {
 
     private Link convert(SirenNavigables navigables) {
         SirenLink link = navigables.getLinks().iterator().next();
-        String rel = link.getRels().stream().findFirst().orElse(null);
+        String rel = link.getRels().stream().findAny()
+            .orElseThrow(() -> new IllegalArgumentException(format("No rel available for link '%s'!", link)));
 
         return Link.of(link.getHref(), rel) //
             .withTitle(link.getTitle()) //
