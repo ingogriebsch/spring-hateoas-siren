@@ -57,14 +57,14 @@ class SirenModelBuilderTest {
 
             @Test
             void should_throw_exception_if_single_string_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().classes((String) null))
-                    .isInstanceOf(IllegalArgumentException.class);
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.classes((String) null)).isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
             void should_throw_exception_if_iterable_of_string_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().classes((Iterable<String>) null))
-                    .isInstanceOf(IllegalArgumentException.class);
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.classes((Iterable<String>) null)).isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
@@ -95,19 +95,21 @@ class SirenModelBuilderTest {
 
             @Test
             void should_throw_exception_if_single_representation_model_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((RepresentationModel<?>) null))
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.entities((RepresentationModel<?>) null))
                     .isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
             void should_throw_exception_if_iterable_of_representation_models_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((Iterable<?>) null))
-                    .isInstanceOf(IllegalArgumentException.class);
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.entities((Iterable<?>) null)).isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
             void should_throw_exception_if_rel_and_iterable_of_representation_models_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().entities((String) null, (Iterable<?>) null))
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.entities((String) null, (Iterable<?>) null))
                     .isInstanceOf(IllegalArgumentException.class);
             }
 
@@ -217,13 +219,14 @@ class SirenModelBuilderTest {
 
             @Test
             void should_throw_exception_if_single_link_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().linksAndActions((Link) null))
-                    .isInstanceOf(IllegalArgumentException.class);
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.linksAndActions((Link) null)).isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
             void should_throw_exception_if_iterable_of_link_was_null() {
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().linksAndActions((Collection<Link>) null))
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.linksAndActions((Collection<Link>) null))
                     .isInstanceOf(IllegalArgumentException.class);
             }
 
@@ -272,8 +275,8 @@ class SirenModelBuilderTest {
             @Test
             void should_throw_exception_if_representation_model_was_used() {
                 Object properties = new Capital("Berlin");
-                assertThatThrownBy(() -> SirenModelBuilder.sirenModel().properties(properties))
-                    .isInstanceOf(IllegalArgumentException.class);
+                SirenModelBuilder builder = SirenModelBuilder.sirenModel();
+                assertThatThrownBy(() -> builder.properties(properties)).isInstanceOf(IllegalArgumentException.class);
             }
         }
 
