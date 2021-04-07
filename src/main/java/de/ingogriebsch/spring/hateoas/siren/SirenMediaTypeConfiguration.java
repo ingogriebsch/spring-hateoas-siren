@@ -161,9 +161,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
 
     private static SirenActionFieldTypeConverter actionFieldTypeConverter(ObjectProvider<SirenActionFieldTypeConverter> provider,
         List<TypeMapping> actionFieldTypeMappings) {
-        return provider.getIfAvailable(() -> {
-            return new TypeBasedSirenActionFieldTypeConverter(actionFieldTypeMappings);
-        });
+        return provider.getIfAvailable(() -> new TypeBasedSirenActionFieldTypeConverter(actionFieldTypeMappings));
     }
 
     private static RepresentationModelFactories
