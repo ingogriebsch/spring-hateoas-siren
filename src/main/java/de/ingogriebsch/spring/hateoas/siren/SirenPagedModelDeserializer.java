@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.lang.Nullable;
@@ -93,11 +94,7 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
     }
 
     private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JavaType type = obtainContainedType();
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
+        JsonDeserializer<Object> deserializer = obtainDeserializer(obtainContainedType(), jp, ctxt);
 
         List<Object> content = newArrayList();
         if (START_ARRAY.equals(jp.nextToken())) {
@@ -105,15 +102,12 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
                 content.add(deserializer.deserialize(jp, ctxt));
             }
         }
+
         return content;
     }
 
-    private PageMetadata deserializeMetadata(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JavaType type = defaultInstance().constructType(PageMetadata.class);
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
+    private static PageMetadata deserializeMetadata(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JsonDeserializer<Object> deserializer = obtainDeserializer(defaultInstance().constructType(PageMetadata.class), jp, ctxt);
 
         JsonToken nextToken = jp.nextToken();
         if (!START_OBJECT.equals(nextToken)) {
@@ -123,12 +117,8 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         return (PageMetadata) deserializer.deserialize(jp, ctxt);
     }
 
-    private List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JavaType type = defaultInstance().constructType(SirenLink.class);
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
+    private static List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JsonDeserializer<Object> deserializer = obtainDeserializer(defaultInstance().constructType(SirenLink.class), jp, ctxt);
 
         List<SirenLink> links = newArrayList();
         if (START_ARRAY.equals(jp.nextToken())) {
@@ -140,12 +130,8 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         return links;
     }
 
-    private List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JavaType type = defaultInstance().constructType(SirenAction.class);
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
+    private static List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JsonDeserializer<Object> deserializer = obtainDeserializer(defaultInstance().constructType(SirenAction.class), jp, ctxt);
 
         List<SirenAction> actions = newArrayList();
         if (JsonToken.START_ARRAY.equals(jp.nextToken())) {
@@ -155,5 +141,14 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         }
 
         return actions;
+    }
+
+    private static JsonDeserializer<Object> obtainDeserializer(JavaType type, JsonParser jp, DeserializationContext ctxt)
+        throws JsonMappingException, JsonParseException {
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
+        }
+        return deserializer;
     }
 }
