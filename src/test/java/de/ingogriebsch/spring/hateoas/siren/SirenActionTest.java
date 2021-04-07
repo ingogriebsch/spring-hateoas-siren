@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.http.HttpMethod.GET;
 
+import de.ingogriebsch.spring.hateoas.siren.SirenAction.Field.FieldBuilder;
+import de.ingogriebsch.spring.hateoas.siren.SirenAction.SirenActionBuilder;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -30,12 +32,14 @@ class SirenActionTest {
 
         @Test
         void should_throw_exception_if_href_is_not_given() {
-            assertThatThrownBy(() -> SirenAction.builder().name("name").build()).isInstanceOf(IllegalArgumentException.class);
+            SirenActionBuilder builder = SirenAction.builder().name("name");
+            assertThatThrownBy(() -> builder.build()).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
         void should_throw_exception_if_name_is_not_given() {
-            assertThatThrownBy(() -> SirenAction.builder().href("/api").build()).isInstanceOf(IllegalArgumentException.class);
+            SirenActionBuilder builder = SirenAction.builder().href("/api");
+            assertThatThrownBy(() -> builder.build()).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
@@ -74,7 +78,8 @@ class SirenActionTest {
 
             @Test
             void should_throw_exception_if_name_is_not_given() {
-                assertThatThrownBy(() -> SirenAction.Field.builder().build()).isInstanceOf(IllegalArgumentException.class);
+                FieldBuilder builder = SirenAction.Field.builder();
+                assertThatThrownBy(() -> builder.build()).isInstanceOf(IllegalArgumentException.class);
             }
 
             @Test
