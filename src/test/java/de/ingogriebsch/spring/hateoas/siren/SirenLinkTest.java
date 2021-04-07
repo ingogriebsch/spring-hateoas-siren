@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.hateoas.IanaLinkRelations.ABOUT;
 
+import de.ingogriebsch.spring.hateoas.siren.SirenLink.SirenLinkBuilder;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +31,8 @@ class SirenLinkTest {
 
         @Test
         void should_throw_exception_if_href_is_not_given() {
-            assertThatThrownBy(() -> SirenLink.builder().rels(newArrayList()).build())
-                .isInstanceOf(IllegalArgumentException.class);
+            SirenLinkBuilder builder = SirenLink.builder().rels(newArrayList());
+            assertThatThrownBy(() -> builder.build()).isInstanceOf(IllegalArgumentException.class);
         }
 
         @Test
