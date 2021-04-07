@@ -80,7 +80,7 @@ class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConv
 
         SirenActionFieldType target = map(type, mappings);
         target = target != null ? target : map(type, DEFAULT_MAPPINGS);
-        return target = target != null ? target : TEXT;
+        return target != null ? target : TEXT;
     }
 
     private static Class<?> obtainType(PropertyMetadata fieldMetadata) {
