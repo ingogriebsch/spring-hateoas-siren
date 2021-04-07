@@ -101,19 +101,13 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         throws IOException {
         JavaType containedType = obtainContainedType();
         if (!isRepresentationModel(containedType.getRawClass())) {
-            JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(containedType);
-            if (deserializer == null) {
-                throw new JsonParseException(jp, format("No deserializer available for type '%s'!", containedType));
-            }
+            JsonDeserializer<Object> deserializer = obtainDeserializer(containedType, jp, ctxt);
 
             jp.nextToken();
             builder.content(deserializer.deserialize(jp, ctxt));
         } else if (isRepresentationModelSubclass(contentType.getRawClass())) {
             JavaType type = defaultInstance().constructMapType(Map.class, String.class, Object.class);
-            JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-            if (deserializer == null) {
-                throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-            }
+            JsonDeserializer<Object> deserializer = obtainDeserializer(type, jp, ctxt);
 
             jp.nextToken();
             builder.properties((Map<String, Object>) deserializer.deserialize(jp, ctxt));
