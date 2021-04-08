@@ -17,27 +17,21 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static java.lang.String.format;
 
-import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.END_OBJECT;
 import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
-import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.MoreCollectors.toOptional;
 import static de.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModel;
 import static de.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModelSubclass;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.lang.Nullable;
 
@@ -81,7 +75,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
                 }
 
                 if ("entities".equals(text)) {
-                    builder.content(deserializeEntities(jp, ctxt));
+                    builder.content(deserializeEntity(jp, ctxt));
                 }
 
                 if ("links".equals(text)) {
@@ -101,13 +95,13 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         throws IOException {
         JavaType containedType = obtainContainedType();
         if (!isRepresentationModel(containedType.getRawClass())) {
-            JsonDeserializer<Object> deserializer = obtainDeserializer(containedType, jp, ctxt);
+            JsonDeserializer<Object> deserializer = getDeserializer(containedType, jp, ctxt);
 
             jp.nextToken();
             builder.content(deserializer.deserialize(jp, ctxt));
         } else if (isRepresentationModelSubclass(contentType.getRawClass())) {
             JavaType type = defaultInstance().constructMapType(Map.class, String.class, Object.class);
-            JsonDeserializer<Object> deserializer = obtainDeserializer(type, jp, ctxt);
+            JsonDeserializer<Object> deserializer = getDeserializer(type, jp, ctxt);
 
             jp.nextToken();
             builder.properties((Map<String, Object>) deserializer.deserialize(jp, ctxt));
@@ -117,47 +111,7 @@ class SirenEntityModelDeserializer extends AbstractSirenDeserializer<EntityModel
         }
     }
 
-    private Object deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<Object> deserializer = obtainDeserializer(obtainContainedType(), jp, ctxt);
-
-        List<Object> content = newArrayList();
-        if (START_ARRAY.equals(jp.nextToken())) {
-            while (!END_ARRAY.equals(jp.nextToken())) {
-                content.add(deserializer.deserialize(jp, ctxt));
-            }
-        }
-
-        return content.stream().collect(toOptional()).orElse(null);
-    }
-
-    private static List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        return deserializeEntries(SirenLink.class, jp, ctxt);
-    }
-
-    private static List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        return deserializeEntries(SirenAction.class, jp, ctxt);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> List<T> deserializeEntries(Class<T> clazz, JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<T> deserializer =
-            (JsonDeserializer<T>) obtainDeserializer(defaultInstance().constructType(clazz), jp, ctxt);
-
-        List<T> entries = newArrayList();
-        if (START_ARRAY.equals(jp.nextToken())) {
-            while (!END_ARRAY.equals(jp.nextToken())) {
-                entries.add(deserializer.deserialize(jp, ctxt));
-            }
-        }
-        return entries;
-    }
-
-    private static JsonDeserializer<Object> obtainDeserializer(JavaType type, JsonParser jp, DeserializationContext ctxt)
-        throws JsonMappingException, JsonParseException {
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
-        return deserializer;
+    private Object deserializeEntity(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        return deserializeEntities(jp, ctxt).stream().collect(toOptional()).orElse(null);
     }
 }

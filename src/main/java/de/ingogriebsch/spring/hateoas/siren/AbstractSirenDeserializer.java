@@ -17,7 +17,11 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static java.lang.String.format;
 
+import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
+import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
+import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
+import static com.google.common.collect.Lists.newArrayList;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +32,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.databind.deser.std.ContainerDeserializerBase;
 import org.springframework.hateoas.RepresentationModel;
@@ -57,6 +62,16 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
     }
 
     @Override
+    public JavaType getContentType() {
+        return contentType;
+    }
+
+    @Override
+    public JsonDeserializer<Object> getContentDeserializer() {
+        return null;
+    }
+
+    @Override
     public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonToken token = jp.currentToken();
         if (!START_OBJECT.equals(token)) {
@@ -67,22 +82,29 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
 
     protected abstract T deserializeModel(JsonParser jp, DeserializationContext ctxt) throws IOException;
 
-    @Override
-    public JavaType getContentType() {
-        return contentType;
+    @SuppressWarnings("unchecked")
+    protected <E> List<E> deserializeEntries(JavaType javaType, JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JsonDeserializer<E> deserializer = (JsonDeserializer<E>) getDeserializer(javaType, jp, ctxt);
+
+        List<E> entries = newArrayList();
+        if (START_ARRAY.equals(jp.nextToken())) {
+            while (!END_ARRAY.equals(jp.nextToken())) {
+                entries.add(deserializer.deserialize(jp, ctxt));
+            }
+        }
+        return entries;
     }
 
-    @Override
-    public JsonDeserializer<Object> getContentDeserializer() {
-        return null;
+    protected List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        return deserializeEntries(obtainContainedType(), jp, ctxt);
     }
 
-    protected SirenLinkConverter getLinkConverter() {
-        return deserializerFacilities.getLinkConverter();
+    protected List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        return deserializeEntries(defaultInstance().constructType(SirenLink.class), jp, ctxt);
     }
 
-    protected RepresentationModelFactories getRepresentationModelFactories() {
-        return deserializerFacilities.getRepresentationModelFactories();
+    protected List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        return deserializeEntries(defaultInstance().constructType(SirenAction.class), jp, ctxt);
     }
 
     protected JavaType obtainContainedType() {
@@ -105,5 +127,22 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
                 format("No unique type parameter available through content type '%s'!", contentType));
         }
         return typeParameters.iterator().next();
+    }
+
+    protected JsonDeserializer<Object> getDeserializer(JavaType type, JsonParser jp, DeserializationContext ctxt)
+        throws JsonMappingException, JsonParseException {
+        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
+        if (deserializer == null) {
+            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
+        }
+        return deserializer;
+    }
+
+    protected SirenLinkConverter getLinkConverter() {
+        return deserializerFacilities.getLinkConverter();
+    }
+
+    protected RepresentationModelFactories getRepresentationModelFactories() {
+        return deserializerFacilities.getRepresentationModelFactories();
     }
 }

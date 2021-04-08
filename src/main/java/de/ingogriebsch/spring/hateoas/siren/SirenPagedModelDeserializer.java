@@ -15,17 +15,11 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
-import static java.lang.String.format;
-
-import static com.fasterxml.jackson.core.JsonToken.END_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.FIELD_NAME;
-import static com.fasterxml.jackson.core.JsonToken.START_ARRAY;
 import static com.fasterxml.jackson.core.JsonToken.START_OBJECT;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
-import static com.google.common.collect.Lists.newArrayList;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -34,7 +28,6 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.PagedModel.PageMetadata;
 import org.springframework.lang.Nullable;
@@ -93,21 +86,8 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         return builder.build();
     }
 
-    private List<Object> deserializeEntities(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<Object> deserializer = obtainDeserializer(obtainContainedType(), jp, ctxt);
-
-        List<Object> content = newArrayList();
-        if (START_ARRAY.equals(jp.nextToken())) {
-            while (!END_ARRAY.equals(jp.nextToken())) {
-                content.add(deserializer.deserialize(jp, ctxt));
-            }
-        }
-
-        return content;
-    }
-
-    private static PageMetadata deserializeMetadata(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<Object> deserializer = obtainDeserializer(defaultInstance().constructType(PageMetadata.class), jp, ctxt);
+    private PageMetadata deserializeMetadata(JsonParser jp, DeserializationContext ctxt) throws IOException {
+        JsonDeserializer<Object> deserializer = getDeserializer(defaultInstance().constructType(PageMetadata.class), jp, ctxt);
 
         JsonToken nextToken = jp.nextToken();
         if (!START_OBJECT.equals(nextToken)) {
@@ -115,37 +95,5 @@ class SirenPagedModelDeserializer extends AbstractSirenDeserializer<PagedModel<?
         }
 
         return (PageMetadata) deserializer.deserialize(jp, ctxt);
-    }
-
-    private static List<SirenLink> deserializeLinks(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        return deserializeEntries(SirenLink.class, jp, ctxt);
-    }
-
-    private static List<SirenAction> deserializeActions(JsonParser jp, DeserializationContext ctxt) throws IOException {
-        return deserializeEntries(SirenAction.class, jp, ctxt);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> List<T> deserializeEntries(Class<T> clazz, JsonParser jp, DeserializationContext ctxt) throws IOException {
-        JsonDeserializer<T> deserializer =
-            (JsonDeserializer<T>) obtainDeserializer(defaultInstance().constructType(clazz), jp, ctxt);
-
-        List<T> actions = newArrayList();
-        if (JsonToken.START_ARRAY.equals(jp.nextToken())) {
-            while (!JsonToken.END_ARRAY.equals(jp.nextToken())) {
-                actions.add(deserializer.deserialize(jp, ctxt));
-            }
-        }
-
-        return actions;
-    }
-
-    private static JsonDeserializer<Object> obtainDeserializer(JavaType type, JsonParser jp, DeserializationContext ctxt)
-        throws JsonMappingException, JsonParseException {
-        JsonDeserializer<Object> deserializer = ctxt.findRootValueDeserializer(type);
-        if (deserializer == null) {
-            throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
-        }
-        return deserializer;
     }
 }
