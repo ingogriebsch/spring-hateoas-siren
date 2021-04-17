@@ -84,7 +84,7 @@ class TypeBasedSirenActionFieldTypeConverterTest {
     }
 
     private static PropertyMetadata propertyMetadata(Class<?> type) {
-        return SimplePropertyMetadata.of(forClass(type), false, false, null, null);
+        return SimplePropertyMetadata.of(forClass(type), false, false, null, null, null);
     }
 
     @Value(staticConstructor = "of")
@@ -95,5 +95,6 @@ class TypeBasedSirenActionFieldTypeConverterTest {
         boolean readOnly;
         String name;
         Optional<String> pattern;
+        String inputType;
     }
 }

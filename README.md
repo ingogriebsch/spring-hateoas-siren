@@ -15,6 +15,7 @@ The table below outlines which version of the library maps to which version of [
 
 | Spring HATEOAS Siren | Spring HATEOAS | Spring Boot | Spring Framework
 | :---: | :---: | :---: | :---: |
+| 1.2.x | 1.3.x | 2.5.x | 5.3.x |
 | 1.1.x | 1.2.x | 2.4.x | 5.3.x |
 | 1.0.x | 1.1.x | 2.3.x | 5.2.x |
 
