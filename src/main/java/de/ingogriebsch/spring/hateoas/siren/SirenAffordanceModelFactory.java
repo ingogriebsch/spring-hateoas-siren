@@ -17,15 +17,9 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
 
-import java.util.List;
-
 import org.springframework.hateoas.AffordanceModel;
-import org.springframework.hateoas.AffordanceModel.InputPayloadMetadata;
-import org.springframework.hateoas.AffordanceModel.PayloadMetadata;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.QueryParameter;
 import org.springframework.hateoas.mediatype.AffordanceModelFactory;
-import org.springframework.http.HttpMethod;
+import org.springframework.hateoas.mediatype.ConfiguredAffordance;
 import org.springframework.http.MediaType;
 
 /**
@@ -53,9 +47,8 @@ class SirenAffordanceModelFactory implements AffordanceModelFactory {
      * java.util.List, org.springframework.core.ResolvableType)
      */
     @Override
-    public AffordanceModel getAffordanceModel(String name, Link link, HttpMethod httpMethod, InputPayloadMetadata inputType,
-        List<QueryParameter> queryMethodParameters, PayloadMetadata outputType) {
-        return new SirenAffordanceModel(name, link, httpMethod, inputType, queryMethodParameters, outputType);
+    public AffordanceModel getAffordanceModel(ConfiguredAffordance configured) {
+        return new SirenAffordanceModel(configured);
     }
 
 }

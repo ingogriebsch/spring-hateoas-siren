@@ -21,6 +21,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.hateoas.AffordanceModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.QueryParameter;
+import org.springframework.hateoas.mediatype.ConfiguredAffordance;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
@@ -33,6 +34,11 @@ import org.springframework.http.MediaType;
  */
 @EqualsAndHashCode(callSuper = true)
 class SirenAffordanceModel extends AffordanceModel {
+
+    SirenAffordanceModel(ConfiguredAffordance configured) {
+        this(configured.getNameOrDefault(), configured.getTarget(), configured.getMethod(), configured.getInputMetadata(),
+            configured.getQueryParameters(), configured.getOutputMetadata());
+    }
 
     SirenAffordanceModel(String name, Link link, HttpMethod httpMethod, InputPayloadMetadata inputType,
         List<QueryParameter> queryMethodParameters, PayloadMetadata outputType) {
