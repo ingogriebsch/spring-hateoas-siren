@@ -106,7 +106,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     @Bean
-    LinkDiscoverer sirenLinkDisocoverer() {
+    LinkDiscoverer sirenLinkDiscoverer() {
         return new SirenLinkDiscoverer();
     }
 
