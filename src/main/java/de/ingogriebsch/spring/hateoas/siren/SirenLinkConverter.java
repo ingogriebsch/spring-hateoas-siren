@@ -97,7 +97,7 @@ class SirenLinkConverter {
     }
 
     private SirenAction action(SirenAffordanceModel model) {
-        MediaType type = actionType(model);
+        MediaType type = actionType(model, fieldsAvailable(model));
         List<Field> fields = fields(model, type);
 
         return SirenAction.builder() //
@@ -105,6 +105,7 @@ class SirenLinkConverter {
             .method(model.getHttpMethod()) //
             .href(model.getLink().getHref()) //
             .title(actionTitle(model.getName())) //
+            .type(type != null ? type.toString() : null) //
             .fields(fields) //
             .build();
     }
@@ -155,8 +156,14 @@ class SirenLinkConverter {
             .map(SirenActionFieldType::getKeyword).orElse(TEXT.getKeyword());
     }
 
-    private static MediaType actionType(SirenAffordanceModel model) {
-        return APPLICATION_FORM_URLENCODED;
+    private static boolean fieldsAvailable(SirenAffordanceModel model) {
+        return model.getInput().stream().count() > 0;
+    }
+
+    private static MediaType actionType(SirenAffordanceModel model, boolean fieldsAvailable) {
+        MediaType fallback = fieldsAvailable ? APPLICATION_FORM_URLENCODED : null;
+        MediaType mediaType = model.getInput().getPrimaryMediaType();
+        return mediaType != null && fieldsAvailable ? mediaType : fallback;
     }
 
     private static List<SirenNavigables> slice(SirenNavigables navigables) {

@@ -30,6 +30,7 @@ import static org.springframework.hateoas.mediatype.Affordances.of;
 import static org.springframework.hateoas.mediatype.MessageResolver.DEFAULTS_ONLY;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 
 import java.io.IOException;
@@ -557,7 +558,8 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link_with_update_affordance() throws Exception {
-                Link link = of(Link.of("/persons/1", SELF)).afford(PUT).withInput(Person.class).withName("update").toLink();
+                Link link = of(Link.of("/persons/1", SELF)).afford(PUT).withInput(Person.class)
+                    .withInputMediaType(APPLICATION_JSON).withName("update").toLink();
                 RepresentationModel<?> source = new RepresentationModel<>(link);
                 String expected = readResource("representation-model/containing_link_with_update_affordance.json");
 
@@ -567,8 +569,8 @@ class Jackson2SirenModuleTest {
 
             @Test
             void containing_link_with_update_and_delete_affordances() throws Exception {
-                Link link = of(Link.of("/persons/1", SELF)).afford(PUT).withInput(Person.class).withName("update")
-                    .andAfford(DELETE).withName("delete").toLink();
+                Link link = of(Link.of("/persons/1", SELF)).afford(PUT).withInput(Person.class)
+                    .withInputMediaType(APPLICATION_JSON).withName("update").andAfford(DELETE).withName("delete").toLink();
                 RepresentationModel<?> source = new RepresentationModel<>(link);
                 String expected = readResource("representation-model/containing_link_with_update_and_delete_affordances.json");
 

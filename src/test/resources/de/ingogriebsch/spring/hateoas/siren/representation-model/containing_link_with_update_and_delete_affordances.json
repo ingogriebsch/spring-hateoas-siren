@@ -8,6 +8,7 @@
     "name" : "update",
     "method" : "PUT",
     "href" : "/persons/1",
+    "type" : "application/json",
     "fields" : [ {
       "name" : "age",
       "type" : "number"

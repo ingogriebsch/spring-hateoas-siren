@@ -111,9 +111,8 @@ class SirenLinkConverterTest {
             });
             SirenNavigables actual = converter.to(newArrayList(source));
 
-            assertThat(actual).isEqualTo(expected);
+            assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
         }
-
     }
 
     @Nested

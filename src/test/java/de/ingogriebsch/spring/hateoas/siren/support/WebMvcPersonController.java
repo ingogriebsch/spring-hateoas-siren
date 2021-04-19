@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 import static com.google.common.collect.Maps.newHashMap;
+import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON_VALUE;
 import static org.springframework.hateoas.IanaLinkRelations.SELF;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.afford;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -108,20 +109,20 @@ public class WebMvcPersonController {
             personsLink);
     }
 
-    @PostMapping("/persons")
+    @PostMapping(path = "/persons", consumes = SIREN_JSON_VALUE)
     public ResponseEntity<?> insert(@RequestBody EntityModel<Person> person) {
         int personId = PERSONS.size();
         PERSONS.put(personId, person.getContent());
         return created(linkTo(methodOn(getClass()).findOne(personId)).withSelfRel().expand().toUri()).build();
     }
 
-    @PutMapping("/persons/{id}")
+    @PutMapping(path = "/persons/{id}", consumes = SIREN_JSON_VALUE)
     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody EntityModel<Person> person) {
         PERSONS.put(id, person.getContent());
         return noContent().location(linkTo(methodOn(getClass()).findOne(id)).withSelfRel().expand().toUri()).build();
     }
 
-    @PatchMapping("/persons/{id}")
+    @PatchMapping(path = "/persons/{id}", consumes = SIREN_JSON_VALUE)
     public ResponseEntity<?> patch(@PathVariable Integer id, @RequestBody EntityModel<Person> person) {
         Person patchedPerson = PERSONS.get(id);
         if (person.getContent().getAge() != null) {
