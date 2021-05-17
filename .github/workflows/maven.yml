@@ -28,7 +28,7 @@ jobs:
 
       - name: Prepare Maven cache
         # https://github.com/actions/cache
-        uses: actions/cache@v2.1.4
+        uses: actions/cache@v2.1.5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -36,7 +36,7 @@ jobs:
 
       - name: Prepare Sonar cache
         # https://github.com/actions/cache
-        uses: actions/cache@v1
+        uses: actions/cache@v2.1.5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
