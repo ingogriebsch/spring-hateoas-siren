@@ -16,30 +16,34 @@
 package de.ingogriebsch.spring.hateoas.siren;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.DATE;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.DATETIME_LOCAL;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.FILE;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.MONTH;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.URL;
 import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
 import static lombok.AccessLevel.PACKAGE;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.DATE;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.DATETIME_LOCAL;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.FILE;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.MONTH;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.NUMBER;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.TIME;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.URL;
 
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
+import org.springframework.hateoas.mediatype.html.HtmlInputType;
 import org.springframework.http.MediaType;
 
 /**
@@ -55,11 +59,19 @@ class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConv
 
     private static final List<TypeMapping> DEFAULT_MAPPINGS = newArrayList( //
         typeMapping(Date.class, DATE), //
+        typeMapping(LocalDate.class, DATE), //
+        typeMapping(LocalTime.class, TIME), //
         typeMapping(LocalDateTime.class, DATETIME_LOCAL), //
         typeMapping(File.class, FILE), //
         typeMapping(Path.class, FILE), //
         typeMapping(Month.class, MONTH), //
         typeMapping(Number.class, NUMBER), //
+        typeMapping(byte.class, NUMBER), //
+        typeMapping(short.class, NUMBER), //
+        typeMapping(int.class, NUMBER), //
+        typeMapping(long.class, NUMBER), //
+        typeMapping(double.class, NUMBER), //
+        typeMapping(float.class, NUMBER), //
         typeMapping(URL.class, URL), //
         typeMapping(URI.class, URL) //
     );
@@ -75,19 +87,19 @@ class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConv
     }
 
     @Override
-    public SirenActionFieldType convert(@NonNull PropertyMetadata fieldMetadata, @NonNull MediaType actionType) {
+    public Optional<HtmlInputType> execute(@NonNull PropertyMetadata fieldMetadata, @NonNull MediaType actionType) {
         Class<?> type = obtainType(fieldMetadata);
+        HtmlInputType result = map(type, mappings);
+        result = result != null ? result : map(type, DEFAULT_MAPPINGS);
+        return Optional.ofNullable(result != null ? result : HtmlInputType.TEXT);
 
-        SirenActionFieldType target = map(type, mappings);
-        target = target != null ? target : map(type, DEFAULT_MAPPINGS);
-        return target != null ? target : TEXT;
     }
 
     private static Class<?> obtainType(PropertyMetadata fieldMetadata) {
         return fieldMetadata.getType().getRawClass();
     }
 
-    private static SirenActionFieldType map(Class<?> type, List<TypeMapping> mappings) {
+    private static HtmlInputType map(Class<?> type, List<TypeMapping> mappings) {
         for (TypeMapping mapping : mappings) {
             if (mapping.getSource().isAssignableFrom(type)) {
                 return mapping.getTarget();
@@ -103,9 +115,9 @@ class TypeBasedSirenActionFieldTypeConverter implements SirenActionFieldTypeConv
 class TypeMapping {
 
     private final Class<?> source;
-    private final SirenActionFieldType target;
+    private final HtmlInputType target;
 
-    static TypeMapping typeMapping(Class<?> source, SirenActionFieldType target) {
+    static TypeMapping typeMapping(Class<?> source, HtmlInputType target) {
         return new TypeMapping(source, target);
     }
 }

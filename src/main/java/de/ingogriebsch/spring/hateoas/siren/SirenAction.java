@@ -17,7 +17,7 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.TEXT_VALUE;
 import static org.springframework.http.HttpMethod.GET;
 
 import java.util.List;
@@ -84,7 +84,7 @@ class SirenAction {
 
         @Default
         @JsonInclude(NON_NULL)
-        String type = TEXT.getKeyword();
+        String type = TEXT_VALUE;
 
         @JsonInclude(NON_NULL)
         Object value;

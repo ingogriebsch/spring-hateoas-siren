@@ -17,6 +17,7 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import lombok.Getter;
 import lombok.NonNull;
+import org.springframework.hateoas.mediatype.html.HtmlInputType;
 
 /**
  * A representation of a Siren action field type.
@@ -24,33 +25,36 @@ import lombok.NonNull;
  * @author Ingo Griebsch
  * @since 1.0.0
  * @see <a href="https://github.com/kevinswiber/siren#type-3" target="_blank">Siren Action Field Type</a>
+ * @see HtmlInputType
+ * @deprecated use {@link HtmlInputType} instead.
  */
+@Deprecated
 public enum SirenActionFieldType {
 
-        CHECKBOX("checkbox"), //
-        COLOR("color"), //
-        DATE("date"), //
-        DATETIME("datetime"), //
-        DATETIME_LOCAL("datetime-local"), //
-        EMAIL("email"), //
-        FILE("file"), //
-        HIDDEN("hidden"), //
-        MONTH("month"), //
-        NUMBER("number"), //
-        PASSWORD("password"), //
-        RADIO("radio"), //
-        RANGE("range"), //
-        SEARCH("search"), //
-        TEL("tel"), //
-        TEXT("text"), //
-        TIME("time"), //
-        URL("url"), //
-        WEEK("week");
+        CHECKBOX(HtmlInputType.CHECKBOX), //
+        COLOR(HtmlInputType.COLOR), //
+        DATE(HtmlInputType.DATE), //
+        DATETIME(HtmlInputType.TIME), //
+        DATETIME_LOCAL(HtmlInputType.DATETIME_LOCAL), //
+        EMAIL(HtmlInputType.EMAIL), //
+        FILE(HtmlInputType.FILE), //
+        HIDDEN(HtmlInputType.HIDDEN), //
+        MONTH(HtmlInputType.MONTH), //
+        NUMBER(HtmlInputType.NUMBER), //
+        PASSWORD(HtmlInputType.PASSWORD), //
+        RADIO(HtmlInputType.RADIO), //
+        RANGE(HtmlInputType.RANGE), //
+        SEARCH(HtmlInputType.SEARCH), //
+        TEL(HtmlInputType.TEL), //
+        TEXT(HtmlInputType.TEXT), //
+        TIME(HtmlInputType.TIME), //
+        URL(HtmlInputType.URL), //
+        WEEK(HtmlInputType.WEEK);
 
     @Getter
-    private final String keyword;
+    private final HtmlInputType type;
 
-    SirenActionFieldType(@NonNull String keyword) {
-        this.keyword = keyword;
+    SirenActionFieldType(@NonNull HtmlInputType type) {
+        this.type = type;
     }
 }

@@ -27,6 +27,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.mediatype.html.HtmlInputType;
 
 /**
  * A Siren specific configuration that allows to configure specific parts of the library.
@@ -64,8 +65,26 @@ public class SirenConfiguration {
      * @param target the {@link SirenActionFieldType type} of the Siren Action field that should represent the {@literal source}
      *        type in the Siren representation.
      * @return the updated configuration reflecting the setting
+     * @deprecated use {@link SirenConfiguration#withActionFieldTypeMappging(Class, HtmlInputType)} instead.
      */
+    @Deprecated
     public SirenConfiguration withActionFieldTypeMappging(@NonNull Class<?> source, @NonNull SirenActionFieldType target) {
+        actionFieldTypeMappings.add(typeMapping(source, target.getType()));
+        return this;
+    }
+
+    /**
+     * Configures additional mappings that are used to convert the type of a payload field into a Siren action field type.
+     * <p>
+     * These mappings override the default mappings that are defined inside the library. The order of the defined mappings is
+     * important because the class hierarchy is taken into consideration.
+     * 
+     * @param source the type of the member that is part of the payload that is transformed into Siren action fields.
+     * @param target the {@link HtmlInputType type} of the Siren Action field that should represent the {@literal source}
+     *        type in the Siren representation.
+     * @return the updated configuration reflecting the setting
+     */
+    public SirenConfiguration withActionFieldTypeMappging(@NonNull Class<?> source, @NonNull HtmlInputType target) {
         actionFieldTypeMappings.add(typeMapping(source, target));
         return this;
     }

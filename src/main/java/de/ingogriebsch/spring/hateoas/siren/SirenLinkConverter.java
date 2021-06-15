@@ -16,13 +16,12 @@
 package de.ingogriebsch.spring.hateoas.siren;
 
 import static java.lang.String.format;
-import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static de.ingogriebsch.spring.hateoas.siren.MediaTypes.SIREN_JSON;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.TEXT_VALUE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 
@@ -37,6 +36,7 @@ import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.mediatype.MessageResolver;
+import org.springframework.hateoas.mediatype.html.HtmlInputType;
 import org.springframework.http.MediaType;
 
 /**
@@ -152,8 +152,9 @@ class SirenLinkConverter {
     }
 
     private String fieldType(PropertyMetadata propertyMetadata, MediaType actionType) {
-        return ofNullable(sirenActionFieldTypeConverter.convert(propertyMetadata, actionType))
-            .map(SirenActionFieldType::getKeyword).orElse(TEXT.getKeyword());
+        return sirenActionFieldTypeConverter.execute(propertyMetadata, actionType) //
+            .map(HtmlInputType::toString) //
+            .orElse(TEXT_VALUE);
     }
 
     private static boolean fieldsAvailable(SirenAffordanceModel model) {

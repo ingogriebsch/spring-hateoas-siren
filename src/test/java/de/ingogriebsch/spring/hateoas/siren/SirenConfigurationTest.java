@@ -1,9 +1,9 @@
 package de.ingogriebsch.spring.hateoas.siren;
 
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.NUMBER;
-import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
 import static de.ingogriebsch.spring.hateoas.siren.TypeMapping.typeMapping;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.NUMBER;
+import static org.springframework.hateoas.mediatype.html.HtmlInputType.TEXT;
 
 import java.util.function.Consumer;
 

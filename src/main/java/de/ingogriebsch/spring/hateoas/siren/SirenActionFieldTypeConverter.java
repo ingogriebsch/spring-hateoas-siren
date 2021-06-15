@@ -15,11 +15,16 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
+import static java.util.Optional.ofNullable;
+
 import static de.ingogriebsch.spring.hateoas.siren.SirenActionFieldType.TEXT;
+
+import java.util.Optional;
 
 import lombok.NonNull;
 import org.springframework.hateoas.AffordanceModel;
 import org.springframework.hateoas.AffordanceModel.PropertyMetadata;
+import org.springframework.hateoas.mediatype.html.HtmlInputType;
 import org.springframework.http.MediaType;
 
 /**
@@ -49,8 +54,25 @@ public interface SirenActionFieldTypeConverter {
      * @param fieldMetadata the metadata of the property. Is never {@literal null}.
      * @param actionType the type of the action. Is never {@literal null}.
      * @return the matching {@link SirenActionFieldType}.
+     * @deprecated use {@link SirenActionFieldTypeConverter#execute(PropertyMetadata, MediaType)} instead.
      */
+    @Deprecated
     default SirenActionFieldType convert(@NonNull PropertyMetadata fieldMetadata, @NonNull MediaType actionType) {
         return TEXT;
+    }
+
+    /**
+     * Converts the given {@link PropertyMetadata property metadata} and the {@link MediaType type} of the respective Siren action
+     * into a {@link HtmlInputType}, if possible.
+     * <p>
+     * The default implementation always returns the fallback, as specified through the specification.
+     * 
+     * @param fieldMetadata the metadata of the property. Is never {@literal null}.
+     * @param actionType the type of the action. Is never {@literal null}.
+     * @return the matching {@link HtmlInputType} or an empty {@link Optional}.
+     */
+    @SuppressWarnings("deprecation")
+    default Optional<HtmlInputType> execute(@NonNull PropertyMetadata fieldMetadata, @NonNull MediaType actionType) {
+        return ofNullable(convert(fieldMetadata, actionType)).map(SirenActionFieldType::getType);
     }
 }
