@@ -20,7 +20,6 @@ import static de.ingogriebsch.spring.hateoas.siren.support.ResourceReader.read;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.empty;
-import static org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType.HAL;
 import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.test.web.reactive.server.WebTestClient.bindToApplicationContext;
 
@@ -171,7 +170,7 @@ class SirenWebFluxIntegrationTest {
 
     @Configuration
     @EnableWebFlux
-    @EnableHypermediaSupport(type = HAL)
+    @EnableHypermediaSupport(type = {})
     static class TestConfig {
 
         @Bean
