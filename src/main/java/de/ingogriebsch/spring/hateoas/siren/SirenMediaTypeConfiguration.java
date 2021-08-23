@@ -54,6 +54,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     private final SirenEntityRelProvider entityRelProvider;
     private final SirenActionFieldTypeConverter actionFieldTypeConverter;
     private final RepresentationModelFactories representationModelFactories;
+    private final PropertiesFacility propertiesFacility;
 
     public SirenMediaTypeConfiguration( //
         @NonNull ObjectProvider<MessageResolver> messageResolver, //
@@ -65,11 +66,12 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
 
         this.messageResolver = messageResolver(messageResolver);
         this.configuration = configuration(configuration);
+
         this.entityClassProvider = entityClassProvider(entityClassProvider);
         this.entityRelProvider = entityRelProvider(entityRelProvider);
-        this.actionFieldTypeConverter =
-            actionFieldTypeConverter(actionFieldTypeConverter, this.configuration.getActionFieldTypeMappings());
+        this.actionFieldTypeConverter = actionFieldTypeConverter(actionFieldTypeConverter, this.configuration);
         this.representationModelFactories = representationModelFactories(representationModelFactories);
+        this.propertiesFacility = propertiesFacility(this.configuration);
     }
 
     /*
@@ -97,12 +99,12 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
      */
     @Override
     public ObjectMapper configureObjectMapper(ObjectMapper mapper) {
-        ObjectMapper configured = HypermediaMappingInformation.super.configureObjectMapper(mapper);
+        mapper = HypermediaMappingInformation.super.configureObjectMapper(mapper);
 
-        configured.setHandlerInstantiator(sirenHandlerInitiator());
-        configuration.getObjectMapperCustomizer().accept(configured);
+        mapper.setHandlerInstantiator(sirenHandlerInitiator());
+        configuration.getObjectMapperCustomizer().accept(mapper);
 
-        return configured;
+        return mapper;
     }
 
     @Bean
@@ -118,7 +120,7 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         SirenActionFieldTypeConverter actionFieldTypeConverter, //
         RepresentationModelFactories representationModelFactories) {
 
-        return new SirenMediaTypeConfiguration(//
+        return new SirenMediaTypeConfiguration( //
             objectProvider(messageResolver), //
             objectProvider(configuration), //
             objectProvider(entityClassProvider), //
@@ -132,10 +134,10 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         SirenLinkConverter linkConverter = new SirenLinkConverter(messageResolver, actionFieldTypeConverter);
 
         SirenDeserializerFacilities deserializerFacilities =
-            new SirenDeserializerFacilities(representationModelFactories, linkConverter);
+            new SirenDeserializerFacilities(representationModelFactories, propertiesFacility, linkConverter);
 
-        SirenSerializerFacilities serializerFacilities =
-            new SirenSerializerFacilities(entityClassProvider, entityRelProvider, linkConverter, messageResolver);
+        SirenSerializerFacilities serializerFacilities = new SirenSerializerFacilities(entityClassProvider, entityRelProvider,
+            propertiesFacility, linkConverter, messageResolver);
 
         return new SirenHandlerInstantiator(configuration, serializerFacilities, deserializerFacilities);
     }
@@ -160,7 +162,8 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
     }
 
     private static SirenActionFieldTypeConverter actionFieldTypeConverter(ObjectProvider<SirenActionFieldTypeConverter> provider,
-        List<TypeMapping> actionFieldTypeMappings) {
+        SirenConfiguration configuration) {
+        List<TypeMapping> actionFieldTypeMappings = configuration.getActionFieldTypeMappings();
         return provider.getIfAvailable(() -> new TypeBasedSirenActionFieldTypeConverter(actionFieldTypeMappings));
     }
 
@@ -168,6 +171,12 @@ public class SirenMediaTypeConfiguration implements HypermediaMappingInformation
         representationModelFactories(ObjectProvider<RepresentationModelFactories> provider) {
         return provider.getIfAvailable(() -> new RepresentationModelFactories() {
         });
+    }
+
+    private static PropertiesFacility propertiesFacility(SirenConfiguration configuration) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        configuration.getObjectMapperCustomizer().accept(objectMapper);
+        return new PropertiesFacility(objectMapper);
     }
 
     @Value

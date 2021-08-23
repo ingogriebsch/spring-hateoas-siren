@@ -25,8 +25,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NoArgsConstructor;
 import org.springframework.util.ReflectionUtils;
 
@@ -45,17 +43,6 @@ class BeanUtils {
         } catch (NoSuchMethodException | SecurityException e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    static Map<String, Object> extractProperties(Object object, String... excludes) {
-        Map<String, Object> properties = new ObjectMapper().convertValue(object, new TypeReference<Map<String, Object>>() {
-        });
-
-        for (String exclude : excludes) {
-            properties.remove(exclude);
-        }
-
-        return properties;
     }
 
     static <T> T applyProperties(T obj, Map<String, Object> properties) {

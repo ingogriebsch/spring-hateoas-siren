@@ -29,6 +29,7 @@ class SirenSerializerFacilities {
 
     SirenEntityClassProvider entityClassProvider;
     SirenEntityRelProvider entityRelProvider;
+    PropertiesFacility propertiesFacility;
     SirenLinkConverter linkConverter;
     MessageResolver messageResolver;
 

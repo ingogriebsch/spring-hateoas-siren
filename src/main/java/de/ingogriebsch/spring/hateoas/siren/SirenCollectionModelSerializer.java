@@ -17,7 +17,6 @@ package de.ingogriebsch.spring.hateoas.siren;
 
 import static java.util.stream.Collectors.toList;
 
-import static de.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
 import static de.ingogriebsch.spring.hateoas.siren.RepresentationModelUtils.isRepresentationModelSubclass;
 
 import java.io.IOException;
@@ -91,8 +90,8 @@ class SirenCollectionModelSerializer extends AbstractSirenSerializer<CollectionM
         }
     }
 
-    private static Map<String, Object> properties(CollectionModel<?> model) {
-        Map<String, Object> properties = extractProperties(model, "links", "content");
+    private Map<String, Object> properties(CollectionModel<?> model) {
+        Map<String, Object> properties = extractProperties(model, "content");
         return properties.isEmpty() ? null : properties;
     }
 

@@ -18,7 +18,6 @@ package de.ingogriebsch.spring.hateoas.siren;
 import static java.util.Optional.ofNullable;
 
 import static com.google.common.collect.Maps.newHashMap;
-import static de.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
 
 import java.io.IOException;
 import java.util.List;
@@ -91,8 +90,8 @@ class SirenModelSerializer extends AbstractSirenSerializer<SirenModel> {
         return CollectionUtils.isEmpty(model.getClasses()) ? super.classes(model) : model.getClasses();
     }
 
-    private static Map<String, Object> properties(Object model) {
-        Map<String, Object> properties = ofNullable(model).map(m -> extractProperties(m, "links")).orElse(newHashMap());
+    private Map<String, Object> properties(Object model) {
+        Map<String, Object> properties = ofNullable(model).map(m -> extractProperties(m)).orElse(newHashMap());
         return properties.isEmpty() ? null : properties;
     }
 

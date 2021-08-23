@@ -104,14 +104,14 @@ class SirenEntityModelSerializer extends AbstractSirenSerializer<EntityModel<?>>
         }
     }
 
-    private static Object properties(EntityModel<?> model) {
+    private Object properties(EntityModel<?> model) {
         Object content = model.getContent();
         if (content != null && !isRepresentationModel(content.getClass())) {
             return model.getContent();
         }
 
         if (isRepresentationModelSubclass(model.getClass())) {
-            return BeanUtils.extractProperties(model, "links", "content");
+            return extractProperties(model, "content");
         }
 
         return null;

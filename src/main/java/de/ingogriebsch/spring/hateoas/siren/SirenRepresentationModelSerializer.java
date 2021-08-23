@@ -15,8 +15,6 @@
  */
 package de.ingogriebsch.spring.hateoas.siren;
 
-import static de.ingogriebsch.spring.hateoas.siren.BeanUtils.extractProperties;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -75,8 +73,8 @@ class SirenRepresentationModelSerializer extends AbstractSirenSerializer<Represe
         }
     }
 
-    private static Map<String, Object> properties(RepresentationModel<?> model) {
-        Map<String, Object> properties = extractProperties(model, "links");
+    private Map<String, Object> properties(RepresentationModel<?> model) {
+        Map<String, Object> properties = extractProperties(model);
         return properties.isEmpty() ? null : properties;
     }
 

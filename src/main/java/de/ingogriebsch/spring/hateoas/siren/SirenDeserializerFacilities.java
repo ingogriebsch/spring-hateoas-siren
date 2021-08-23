@@ -27,6 +27,7 @@ import lombok.Value;
 class SirenDeserializerFacilities {
 
     RepresentationModelFactories representationModelFactories;
+    PropertiesFacility propertiesFacility;
     SirenLinkConverter linkConverter;
 
 }

@@ -16,6 +16,7 @@
 package de.ingogriebsch.spring.hateoas.siren;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JavaType;
@@ -70,6 +71,10 @@ abstract class AbstractSirenSerializer<T> extends ContainerSerializer<T> impleme
     @Override
     protected ContainerSerializer<?> _withValueTypeSerializer(TypeSerializer vts) {
         return null;
+    }
+
+    protected Map<String, Object> extractProperties(Object object, String... excludes) {
+        return serializerFacilities.getPropertiesFacility().extract(object, excludes);
     }
 
     protected SirenLinkConverter getLinkConverter() {

@@ -25,6 +25,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -136,6 +137,10 @@ abstract class AbstractSirenDeserializer<T extends RepresentationModel<?>> exten
             throw new JsonParseException(jp, format("No deserializer available for type '%s'!", type));
         }
         return deserializer;
+    }
+
+    protected Map<String, Object> extractProperties(Object object, String... excludes) {
+        return deserializerFacilities.getPropertiesFacility().extract(object, excludes);
     }
 
     protected SirenLinkConverter getLinkConverter() {
