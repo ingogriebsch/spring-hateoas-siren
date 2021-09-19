@@ -31,16 +31,14 @@ jobs:
         uses: actions/cache@v2.1.6
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-maven
+          key: maven-${{ hashFiles('**/pom.xml') }}
 
       - name: Prepare Sonar cache
         # https://github.com/actions/cache
         uses: actions/cache@v2.1.6
         with:
           path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          key: sonar
 
       - name: Prepare Maven settings
         # https://github.com/s4u/maven-settings-action
