@@ -91,7 +91,7 @@ class SirenModelSerializer extends AbstractSirenSerializer<SirenModel> {
     }
 
     private Map<String, Object> properties(Object model) {
-        Map<String, Object> properties = ofNullable(model).map(m -> extractProperties(m)).orElse(newHashMap());
+        Map<String, Object> properties = ofNullable(model).map(this::extractProperties).orElse(newHashMap());
         return properties.isEmpty() ? null : properties;
     }
 
