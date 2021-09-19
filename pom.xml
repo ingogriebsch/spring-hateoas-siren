@@ -515,5 +515,19 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>nextgen</id>
+            <properties>
+                <spring-hateoas.version>1.4.0-SNAPSHOT</spring-hateoas.version>
+            </properties>        
+            
+            <repositories>
+                <repository> 
+                    <id>spring-snapshots</id> 
+                    <name>Spring Snapshot Repository</name> 
+                    <url>https://repo.spring.io/snapshot</url> 
+                </repository>
+            </repositories>
+        </profile>
     </profiles>
 </project>
