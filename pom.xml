@@ -424,6 +424,11 @@
                         <project-description>${project.description}</project-description>
                         <spring-hateoas-version>${spring-hateoas.version}</spring-hateoas-version>
                     </attributes>
+                    <logHandler>
+                    	<failIf>
+                    		<severity>WARN</severity>
+                    	</failIf>
+                    </logHandler>
                     <outputDirectory>${doc.target.directory}</outputDirectory>
                     <sourceDirectory>${doc.source.directory}</sourceDirectory>
                 </configuration>
