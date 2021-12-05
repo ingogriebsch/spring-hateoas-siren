@@ -15,6 +15,8 @@
  */
 package de.ingogriebsch.spring.hateoas.siren.support;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -28,16 +30,16 @@ public class State extends EntityModel<Capital> {
     @NonNull
     private String name;
 
-    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
-    @SuppressWarnings("deprecation")
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow
+    // subclassing is possible.
     public State(@NonNull Capital content, @NonNull Iterable<Link> links) {
         super(content, links);
     }
 
-    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
-    @SuppressWarnings("deprecation")
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow
+    // subclassing is possible.
     public State(@NonNull Capital content, @NonNull Link... links) {
-        super(content, links);
+        this(content, newArrayList(links));
     }
 
     public State(@NonNull String name, @NonNull Capital content, @NonNull Link... links) {

@@ -23,6 +23,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JavaType;
 import lombok.NonNull;
+import org.springframework.core.ResolvableType;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.lang.Nullable;
@@ -40,7 +41,7 @@ public interface CollectionModelFactory {
      * Creates a {@link CollectionModel} based on the given input.
      * <p>
      * The default implementation instantiates the concrete {@link CollectionModel} based on the assumption that the
-     * {@link CollectionModel#CollectionModel(Iterable, Iterable)} constructor is accessible.
+     * {@link CollectionModel#CollectionModel(Iterable, Iterable, ResolvableType)} constructor is accessible.
      * 
      * @param type the type of the instance that should be created. Must be assignable to {@link CollectionModel}. Is never
      *        {@literal null}.
@@ -57,8 +58,8 @@ public interface CollectionModelFactory {
 
         // TODO Check if the type of one of the content objects matches the contained type of the given type.
 
-        Class<?>[] types = new Class[] { Iterable.class, Iterable.class };
-        Object[] args = new Object[] { content, links };
+        Class<?>[] types = new Class[] { Iterable.class, Iterable.class, ResolvableType.class };
+        Object[] args = new Object[] { content, links, null };
         CollectionModel<?> model = (CollectionModel<?>) instantiate(modelType, types, args);
 
         if (properties != null) {
