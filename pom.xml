@@ -523,7 +523,7 @@
         <profile>
             <id>nextgen</id>
             <properties>
-                <spring-hateoas.version>1.4.0-SNAPSHOT</spring-hateoas.version>
+                <spring-hateoas.version>1.5.0-SNAPSHOT</spring-hateoas.version>
             </properties>        
             
             <repositories>
