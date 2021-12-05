@@ -274,7 +274,7 @@
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.9.1.2184</version>
-                </plugin>            
+                </plugin>
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -425,9 +425,9 @@
                         <spring-hateoas-version>${spring-hateoas.version}</spring-hateoas-version>
                     </attributes>
                     <logHandler>
-                    	<failIf>
-                    		<severity>WARN</severity>
-                    	</failIf>
+                        <failIf>
+                            <severity>WARN</severity>
+                        </failIf>
                     </logHandler>
                     <outputDirectory>${doc.target.directory}</outputDirectory>
                     <sourceDirectory>${doc.source.directory}</sourceDirectory>
@@ -490,8 +490,8 @@
                     <id>ossrh</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
-            </distributionManagement>            
-        
+            </distributionManagement>
+
             <build>
                 <plugins>
                     <plugin><!-- https://maven.apache.org/plugins/maven-gpg-plugin/ -->
@@ -524,8 +524,8 @@
             <id>nextgen</id>
             <properties>
                 <spring-hateoas.version>1.5.0-SNAPSHOT</spring-hateoas.version>
-            </properties>        
-            
+            </properties>
+
             <repositories>
                 <repository> 
                     <id>spring-snapshots</id> 
