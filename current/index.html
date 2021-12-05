@@ -17,7 +17,7 @@
 <div class="details">
 <span id="author" class="author">Ingo Griebsch</span><br>
 <span id="revnumber">version 1.3.0-SNAPSHOT,</span>
-<span id="revdate">2021-12-04</span>
+<span id="revdate">2021-12-05</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -102,16 +102,16 @@ whether distributed in print or electronically.
 </div>
 </div>
 <div class="paragraph">
-<p>This library extends <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/">Spring HATEOAS</a> with the custom hypermedia type <a href="https://github.com/kevinswiber/siren">Siren</a>.
+<p>This library extends <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/">Spring HATEOAS</a> with the custom hypermedia type <a href="https://github.com/kevinswiber/siren">Siren</a>.
 The media type for <a href="https://github.com/kevinswiber/siren">Siren</a> is defined as <code>application/vnd.siren+json</code>.</p>
 </div>
 <div class="paragraph">
-<p>The current version of this library (version 1.3.0-SNAPSHOT) is based on <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/">Spring HATEOAS</a> version 1.3.3.
+<p>The current version of this library (version 1.3.0-SNAPSHOT) is based on <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/">Spring HATEOAS</a> version 1.4.0.
 The source of this library can be found <a href="https://github.com/ingogriebsch/spring-hateoas-siren/">here</a>.
 The Javadoc API documentation can be found <a href="https://ingogriebsch.github.io/spring-hateoas-siren/1.3.0-SNAPSHOT/apidocs/">here</a>.</p>
 </div>
 <div class="paragraph">
-<p>For further understanding of this document, please be aware of both the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/">Spring HATEOAS</a> and the <a href="https://github.com/kevinswiber/siren">Siren</a> documentation.
+<p>For further understanding of this document, please be aware of both the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/">Spring HATEOAS</a> and the <a href="https://github.com/kevinswiber/siren">Siren</a> documentation.
 The following documentation assumes that the reader knows above documents.</p>
 </div>
 </div>
@@ -156,7 +156,7 @@ The library is accessible through <a href="https://search.maven.org/artifact/de.
 This means, that you need to create an instance of this class and that you are responsible for that the methods that are necessary to initialize the library are executed.</p>
 </div>
 <div class="paragraph">
-<p>This way incoming requests asking for the mentioned media type will get an appropriate response. The library is also able to deserialize a Json representation of the media type into corresponding <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a>.</p>
+<p>This way incoming requests asking for the mentioned media type will get an appropriate response. The library is also able to deserialize a Json representation of the media type into corresponding <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a>.</p>
 </div>
 </div>
 </div>
@@ -171,24 +171,24 @@ This means, that you need to create an instance of this class and that you are r
 <div class="sect3">
 <h4 id="serialization-representation-models"><a class="anchor" href="#serialization-representation-models"></a><a class="link" href="#serialization-representation-models">3.1.1. Representation Models</a></h4>
 <div class="paragraph">
-<p>In general, each Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> provided through a <code>@RestController</code> method is rendered into a Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a>.
-Depending on the respective type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> the following rules apply:</p>
+<p>In general, each Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> provided through a <code>@RestController</code> method is rendered into a Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a>.
+Depending on the respective type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> the following rules apply:</p>
 </div>
 <div class="sect4">
 <h5 id="serialization-representation-model"><a class="anchor" href="#serialization-representation-model"></a><a class="link" href="#serialization-representation-model">Representation Model</a></h5>
 <div class="paragraph">
-<p>If this library serializes a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a>, it maps</p>
+<p>If this library serializes a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a>, it maps</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>any custom properties of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> (because it is subclassed) to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a>.</p>
+<p>any custom properties of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> (because it is subclassed) to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a>.</p>
 </li>
 <li>
-<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
+<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
 </li>
 </ul>
 </div>
@@ -244,24 +244,24 @@ model.lastname = "Matthews";
 <div class="sect4">
 <h5 id="serialization-entity-model"><a class="anchor" href="#serialization-entity-model"></a><a class="link" href="#serialization-entity-model">Entity Model</a></h5>
 <div class="paragraph">
-<p>If this library renders an <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity model</a>, it maps</p>
+<p>If this library renders an <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity model</a>, it maps</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a> if the value represents an instance of a simple pojo.</p>
+<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a> if the value represents an instance of a simple pojo.</p>
 </li>
 <li>
-<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity model</a> to Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entities-1">entities</a> if the value is an instance of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a>.</p>
+<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity model</a> to Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entities-1">entities</a> if the value is an instance of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a>.</p>
 </li>
 <li>
-<p>the type of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the value is an instance of a simple pojo and the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the type of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the value is an instance of a simple pojo and the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the value is an instance of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> and the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the value is an instance of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> and the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
+<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
 </li>
 </ul>
 </div>
@@ -386,18 +386,18 @@ EntityModel&lt;Person&gt; personModel = EntityModel.of(person);
 <div class="sect4">
 <h5 id="serialization-collection-model"><a class="anchor" href="#serialization-collection-model"></a><a class="link" href="#serialization-collection-model">Collection Model</a></h5>
 <div class="paragraph">
-<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">collection model</a>, it maps</p>
+<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">collection model</a>, it maps</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">collection model</a> to Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entities-1">entities</a> regardless if it represents instances of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> or simple pojos.</p>
+<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">collection model</a> to Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entities-1">entities</a> regardless if it represents instances of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> or simple pojos.</p>
 </li>
 <li>
-<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">collection model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">collection model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">collection model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
+<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">collection model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
 </li>
 </ul>
 </div>
@@ -497,21 +497,21 @@ CollectionModel&lt;EntityModel&lt;Person&gt;&gt; people = CollectionModel.of(peo
 <div class="sect4">
 <h5 id="serialization-paged-model"><a class="anchor" href="#serialization-paged-model"></a><a class="link" href="#serialization-paged-model">Paged Model</a></h5>
 <div class="paragraph">
-<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">paged model</a>, it maps</p>
+<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">paged model</a>, it maps</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">paged model</a> to Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entities-1">entities</a> regardless if it represents instances of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> or simple pojos.</p>
+<p>the value of the content property of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">paged model</a> to Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entities-1">entities</a> regardless if it represents instances of one of the available <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> or simple pojos.</p>
 </li>
 <li>
-<p>the page metadata of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">paged model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a>.</p>
+<p>the page metadata of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">paged model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#properties">properties</a>.</p>
 </li>
 <li>
-<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">paged model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the type of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">paged model</a> to the Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> if the type is mapped through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">paged model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
+<p>the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a> of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">paged model</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a> and <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a> (see section <a href="#serialization-links">Links</a> to understand how they are rendered).</p>
 </li>
 </ul>
 </div>
@@ -619,37 +619,37 @@ PagedModel&lt;EntityModel&lt;Person&gt;&gt; model = PagedModel.of(people, metada
 <div class="sect3">
 <h4 id="serialization-links"><a class="anchor" href="#serialization-links"></a><a class="link" href="#serialization-links">3.1.2. Links</a></h4>
 <div class="paragraph">
-<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a>, it maps</p>
+<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a>, it maps</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a> having an http method equal to <code>GET</code> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a>.</p>
+<p><a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a> having an http method equal to <code>GET</code> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">links</a>.</p>
 </li>
 <li>
-<p>the rel of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a> to the Siren Entity Link <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-2">title</a> if available through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the rel of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a> to the Siren Entity Link <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-2">title</a> if available through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p><a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordances</a> bound to a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a>.</p>
+<p><a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordances</a> bound to a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a> to Siren Entity <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">actions</a>.</p>
 </li>
 <li>
-<p>the name of an <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordance</a> bound to a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a> to the Siren Action <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-3">title</a> if available through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the name of an <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordance</a> bound to a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a> to the Siren Action <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-3">title</a> if available through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 <li>
-<p>the name of an input property which is part of an <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordance</a> bound to a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a> to the Siren Action Field <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-4">title</a> if available through the <a href="#internationalization">Internationalization</a> mechanism.</p>
+<p>the name of an input property which is part of an <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordance</a> bound to a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a> to the Siren Action Field <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-4">title</a> if available through the <a href="#internationalization">Internationalization</a> mechanism.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a>, it does not</p>
+<p>If this library renders a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a>, it does not</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>map any <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a> having an http method not equal to <code>GET</code>.</p>
+<p>map any <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a> having an http method not equal to <code>GET</code>.</p>
 </li>
 <li>
-<p>distinguish between templated and not templated <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">links</a>.</p>
+<p>distinguish between templated and not templated <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">links</a>.</p>
 </li>
 </ul>
 </div>
@@ -745,7 +745,7 @@ ResponseEntity&lt;EntityModel&lt;Person&gt;&gt; findOne(Long id) {
 </div>
 <div class="paragraph">
 <p>Because such representations retain all the characteristics of an <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a> you can build quite complex resource structures.
-Even if it is in most cases probably sufficient to simply use the available <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> it can be necessary in some cases to be able to build such quite complex structures.</p>
+Even if it is in most cases probably sufficient to simply use the available <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> it can be necessary in some cases to be able to build such quite complex structures.</p>
 </div>
 <div class="paragraph">
 <p>Therefore this library provides a builder API that allows to build a Siren model which is then transfered into the respective <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren Entity</a> structure. Means the library provides a <code>SirenModelBuilder</code> that allows to create <code>RepresentationModel</code> instances through a Siren idiomatic API.</p>
@@ -763,7 +763,7 @@ This bundle will be set up automatically and is used during the serialization pr
 <h4 id="internationalization-entities"><a class="anchor" href="#internationalization-entities"></a><a class="link" href="#internationalization-entities">3.2.1. Entities</a></h4>
 <div class="paragraph">
 <p>To define a <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title">title</a> for a Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a>, use the key template <code>_entity.$type.title</code>.
-The type used to build the resulting key depends on which type of Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> is used.
+The type used to build the resulting key depends on which type of Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> is used.
 To evaluate if a title is available for a specific type, the <code>fqcn</code> will be checked first, followed by the <code>simple name</code>.
 Finally, it is checked whether type <code>default</code> is available.</p>
 </div>
@@ -772,7 +772,7 @@ Finally, it is checked whether type <code>default</code> is available.</p>
 <h4 id="internationalization-links"><a class="anchor" href="#internationalization-links"></a><a class="link" href="#internationalization-links">3.2.2. Links</a></h4>
 <div class="paragraph">
 <p>To define a <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-2">title</a> for a Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#links-1">link</a>, use the key template <code>_link.$rel.title</code>.
-To evaluate if a title is available for the link, the <code>rel</code> of the Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.links">link</a> will be checked first.
+To evaluate if a title is available for the link, the <code>rel</code> of the Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.links">link</a> will be checked first.
 Finally, it is checked whether type <code>default</code> is available.</p>
 </div>
 </div>
@@ -780,12 +780,12 @@ Finally, it is checked whether type <code>default</code> is available.</p>
 <h4 id="internationalization-actions"><a class="anchor" href="#internationalization-actions"></a><a class="link" href="#internationalization-actions">3.2.3. Actions</a></h4>
 <div class="paragraph">
 <p>To define a <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-3">title</a> for a Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">action</a>, use the key template <code>_action.$name.title</code>.
-To evaluate if a title is available for the action, the <code>name</code> of the Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordance</a> will be checked first.
+To evaluate if a title is available for the action, the <code>name</code> of the Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordance</a> will be checked first.
 Finally, it is checked whether type <code>default</code> is available.</p>
 </div>
 <div class="paragraph">
 <p>To define a <a href="https://github.com/kevinswiber/siren/blob/master/README.md#title-4">title</a> for a Siren <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">action field</a>, use the key template <code>_field.$name.title</code>.
-To evaluate if a title is available for the action field, the <code>name</code> of the input property which is part of the Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordance</a> will be checked first.
+To evaluate if a title is available for the action field, the <code>name</code> of the input property which is part of the Spring HATEOAS <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordance</a> will be checked first.
 Finally, it is checked whether type <code>default</code> is available.</p>
 </div>
 </div>
@@ -806,26 +806,26 @@ If you want them, you need to implement a pojo representing an embedded link and
 <h3 id="deserialization"><a class="anchor" href="#deserialization"></a><a class="link" href="#deserialization">4.1. Deserialization</a></h3>
 <div class="paragraph">
 <p>This library allows to use/handle the <a href="https://github.com/kevinswiber/siren">Siren</a> hypermedia type on clients requesting data from servers producing this hypermedia type.
-This means that adding and enabling this library is sufficient to be able to deserialize responses containing data of the <a href="https://github.com/kevinswiber/siren">Siren</a> hypermedia type into their respective <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a>.</p>
+This means that adding and enabling this library is sufficient to be able to deserialize responses containing data of the <a href="https://github.com/kevinswiber/siren">Siren</a> hypermedia type into their respective <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a>.</p>
 </div>
 <div class="paragraph">
 <p>Please be aware of that the deserialization mechanism is currently not able to deserialize all types of complex <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren Entity</a> structures that can be build with Siren model builder API.</p>
 </div>
 <div class="paragraph">
-<p>Please be aware of that the deserialization mechanism is currently not able to deserialize a <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">Siren action</a> into the corresponding <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordance model</a>.</p>
+<p>Please be aware of that the deserialization mechanism is currently not able to deserialize a <a href="https://github.com/kevinswiber/siren/blob/master/README.md#actions-1">Siren action</a> into the corresponding <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordance model</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="traverson"><a class="anchor" href="#traverson"></a><a class="link" href="#traverson">4.2. Traverson</a></h3>
 <div class="paragraph">
-<p>The hypermedia type <code>application/vnd.siren+json</code> is currently not usable with the <code>Traverson</code> implementation provided through <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/">Spring HATEOAS</a>.</p>
+<p>The hypermedia type <code>application/vnd.siren+json</code> is currently not usable with the <code>Traverson</code> implementation provided through <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/">Spring HATEOAS</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="link-discovery"><a class="anchor" href="#link-discovery"></a><a class="link" href="#link-discovery">4.3. Link Discovery</a></h3>
 <div class="paragraph">
 <p>When working with hypermedia enabled representations, a common task is to find a link with a particular relation type in it.
-<a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/">Spring HATEOAS</a> provides <a href="https://github.com/json-path/JsonPath">JsonPath</a>-based implementations of the <code>LinkDiscoverer</code> interface for the configured hypermedia types.
+<a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/">Spring HATEOAS</a> provides <a href="https://github.com/json-path/JsonPath">JsonPath</a>-based implementations of the <code>LinkDiscoverer</code> interface for the configured hypermedia types.
 When using this library, an instance supporting this hypermedia type is exposed as a Spring bean.</p>
 </div>
 <div class="paragraph">
@@ -849,21 +849,21 @@ assertThat(link.getHref(), is("/foo/bar"));</code></pre>
 <h2 id="configuration"><a class="anchor" href="#configuration"></a><a class="link" href="#configuration">5. Configuration</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This library currently uses a really simple approach to map the respective <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> to the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#class">class</a> attribute of the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren entity</a>.
+<p>This library currently uses a really simple approach to map the respective <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> to the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#class">class</a> attribute of the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren entity</a>.
 If you want to override/enhance this behavior you need to expose an implementation of the <code>SirenEntityClassProvider</code> interface as a Spring bean.</p>
 </div>
 <div class="paragraph">
-<p>This library currently uses a really simple approach to evaluate the relation between a <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> and its contained <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> to set the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#rel">rel</a> attribute of the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren entity</a>.
+<p>This library currently uses a really simple approach to evaluate the relation between a <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> and its contained <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> to set the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#rel">rel</a> attribute of the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">Siren entity</a>.
 If you want to override/enhance this behavior you need to expose an implementation of the <code>SirenEntityRelProvider</code> interface as a Spring bean.</p>
 </div>
 <div class="paragraph">
-<p>This library currently uses a really simple approach to map the respective type of a payload property of an <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#server.affordances">affordance model</a> to the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#type-3">type</a> attribute of the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#fields-1">Siren action field</a>.
+<p>This library currently uses a really simple approach to map the respective type of a payload property of an <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#server.affordances">affordance model</a> to the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#type-3">type</a> attribute of the <a href="https://github.com/kevinswiber/siren/blob/master/README.md#fields-1">Siren action field</a>.
 If you need to specify additional mappings or if you want to override the default behavior, you can do so through the <code>SirenConfiguration</code>.
 If this is not enough you need to expose an implementation of the <code>SirenActionFieldTypeConverter</code> interface as a Spring bean.
 But then the support offered through the <code>SirenConfiguration</code> is not active anymore.</p>
 </div>
 <div class="paragraph">
-<p>This library currently uses a really simple approach to instantiate the concrete instances of the <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> during the deserialization process.
+<p>This library currently uses a really simple approach to instantiate the concrete instances of the <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> during the deserialization process.
 If you want to override/enhance this behavior you need to expose an implementation of the <code>RepresentationModelFactories</code> interface as a Spring bean.</p>
 </div>
 </div>
@@ -881,16 +881,16 @@ If you want to override/enhance this behavior you need to expose an implementati
 Because such representations retain all the characteristics of an <a href="https://github.com/kevinswiber/siren/blob/master/README.md#entity">entity</a> you can build quite complex resource structures.</p>
 </div>
 <div class="paragraph">
-<p>It is in the nature of Spring HATEOAS' <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> of type <code>RepresentationModel</code> to be subclassed.
-But it is not intended to subclass the other <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> types, namely <code>EntityModel</code>, <code>CollectionModel</code> and <code>PagedModel</code>.</p>
+<p>It is in the nature of Spring HATEOAS' <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> of type <code>RepresentationModel</code> to be subclassed.
+But it is not intended to subclass the other <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> types, namely <code>EntityModel</code>, <code>CollectionModel</code> and <code>PagedModel</code>.</p>
 </div>
 <div class="paragraph">
 <p>Even if this is not intended through Spring HATEOAS we 'bend' the intended behavior to allow to build such complex structures.
-This means that this library is able to handle subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> of type <code>EntityModel</code> and <code>CollectionModel</code>.
-It still makes no sense to subclass <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> of type <code>PagedModel</code> because they already contain specific properties explaining the nature of this type of resource.</p>
+This means that this library is able to handle subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> of type <code>EntityModel</code> and <code>CollectionModel</code>.
+It still makes no sense to subclass <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> of type <code>PagedModel</code> because they already contain specific properties explaining the nature of this type of resource.</p>
 </div>
 <div class="paragraph">
-<p>To use this experimental feature you need to configure explicitly that you want to subclass the mentioned <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation model</a> types (i.e. this feature is disabled by default).
+<p>To use this experimental feature you need to configure explicitly that you want to subclass the mentioned <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation model</a> types (i.e. this feature is disabled by default).
 You can enable this functionality in the following way:</p>
 </div>
 <div class="listingblock">
@@ -1003,8 +1003,8 @@ Country indonesia = new Country("Indonesia", states);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This is still a relatively simple example of what is possible if using subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">representation models</a> together.
-Especially mixing <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">entity models</a> with <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/reference/html/#fundamentals.representation-models">collection models</a> and vice versa allows to build quite complex structures.</p>
+<p>This is still a relatively simple example of what is possible if using subclassed <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">representation models</a> together.
+Especially mixing <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">entity models</a> with <a href="https://docs.spring.io/spring-hateoas/docs/1.4.0/reference/html/#fundamentals.representation-models">collection models</a> and vice versa allows to build quite complex structures.</p>
 </div>
 </div>
 </div>
@@ -1021,7 +1021,7 @@ Especially mixing <a href="https://docs.spring.io/spring-hateoas/docs/1.3.3/refe
 <div id="footer">
 <div id="footer-text">
 Version 1.3.0-SNAPSHOT<br>
-Last updated 2021-12-04 16:22:17 UTC
+Last updated 2021-12-05 20:34:31 UTC
 </div>
 </div>
 <script src="js/highlight/highlight.min.js"></script>
