@@ -534,7 +534,6 @@ class Jackson2SirenModuleTest {
     class Representation {
 
         @Nested
-        @SuppressWarnings("deprecation")
         class Serialize {
 
             @Test

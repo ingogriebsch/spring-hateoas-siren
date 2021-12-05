@@ -15,11 +15,15 @@
  */
 package de.ingogriebsch.spring.hateoas.siren.support;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import org.springframework.core.ResolvableType;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.lang.Nullable;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -28,16 +32,16 @@ public class Country extends CollectionModel<State> {
     @NonNull
     private String name;
 
-    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
-    @SuppressWarnings("deprecation")
-    public Country(@NonNull Iterable<State> content, @NonNull Iterable<Link> links) {
-        super(content, links);
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow
+    // subclassing is possible.
+    public Country(@NonNull Iterable<State> content, @NonNull Iterable<Link> links, @Nullable ResolvableType fallbackType) {
+        super(content, links, fallbackType);
     }
 
-    // TODO Need to clarify with the Spring gals if having a protected ctor to allow subclassing is possible.
-    @SuppressWarnings("deprecation")
+    // TODO Need to clarify with the Spring gals if having a protected ctor to allow
+    // subclassing is possible.
     public Country(@NonNull Iterable<State> content, Link... links) {
-        super(content, links);
+        super(content, newArrayList(links), null);
     }
 
     public Country(@NonNull String name, @NonNull Iterable<State> content, @NonNull Link... links) {
