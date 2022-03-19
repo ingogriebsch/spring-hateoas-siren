@@ -4,7 +4,7 @@
 
     <groupId>de.ingogriebsch.hateoas</groupId>
     <artifactId>spring-hateoas-siren</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0-SNAPSHOT</version>
 
     <name>Spring HATEOAS Siren</name>
     <description>A library implementing Siren as a custom Spring HATEOAS hypermedia type. Siren is a hypermedia specification for representing entities.</description>
@@ -53,7 +53,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>ingogriebsch</sonar.organization>
         <spring-doc-resources.version>0.2.5</spring-doc-resources.version>
-        <spring-hateoas.version>1.4.1</spring-hateoas.version>
+        <spring-hateoas.version>1.5.0-SNAPSHOT</spring-hateoas.version>
         <slf4j.version>1.7.36</slf4j.version>
     </properties>
 
