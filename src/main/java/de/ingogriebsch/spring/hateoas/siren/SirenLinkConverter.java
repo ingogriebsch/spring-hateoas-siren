@@ -134,7 +134,7 @@ class SirenLinkConverter {
 
         LinkRelation rel = link.getRel();
         if (rel != null) {
-            return title(SirenLink.TitleResolvable.of(link.getRel()));
+            return title(SirenLink.TitleResolvable.of(rel));
         }
         return null;
     }
