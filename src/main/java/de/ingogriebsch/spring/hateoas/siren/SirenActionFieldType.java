@@ -28,7 +28,7 @@ import org.springframework.hateoas.mediatype.html.HtmlInputType;
  * @see HtmlInputType
  * @deprecated use {@link HtmlInputType} instead.
  */
-@Deprecated
+@Deprecated(forRemoval = true)
 public enum SirenActionFieldType {
 
         CHECKBOX(HtmlInputType.CHECKBOX), //

@@ -56,7 +56,7 @@ public interface SirenActionFieldTypeConverter {
      * @return the matching {@link SirenActionFieldType}.
      * @deprecated use {@link SirenActionFieldTypeConverter#execute(PropertyMetadata, MediaType)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default SirenActionFieldType convert(@NonNull PropertyMetadata fieldMetadata, @NonNull MediaType actionType) {
         return TEXT;
     }
@@ -71,7 +71,7 @@ public interface SirenActionFieldTypeConverter {
      * @param actionType the type of the action. Is never {@literal null}.
      * @return the matching {@link HtmlInputType} or an empty {@link Optional}.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("removal")
     default Optional<HtmlInputType> execute(@NonNull PropertyMetadata fieldMetadata, @NonNull MediaType actionType) {
         return ofNullable(convert(fieldMetadata, actionType)).map(SirenActionFieldType::getType);
     }

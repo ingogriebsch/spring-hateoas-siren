@@ -67,7 +67,7 @@ public class SirenConfiguration {
      * @return the updated configuration reflecting the setting
      * @deprecated use {@link SirenConfiguration#withActionFieldTypeMappging(Class, HtmlInputType)} instead.
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public SirenConfiguration withActionFieldTypeMappging(@NonNull Class<?> source, @NonNull SirenActionFieldType target) {
         actionFieldTypeMappings.add(typeMapping(source, target.getType()));
         return this;
