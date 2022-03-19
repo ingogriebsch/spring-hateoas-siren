@@ -4,7 +4,7 @@ name: nextgen
 on:
   push:
     branches:
-      - main
+      - 2.x
   workflow_dispatch:
     
 jobs:
@@ -25,4 +25,4 @@ jobs:
           java-version: 17
 
       - name: Verify artifacts
-        run: mvn -B -Pnextgen verify
+        run: mvn -B verify
