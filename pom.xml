@@ -197,6 +197,19 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository> 
+            <id>spring-snapshots</id> 
+            <name>Spring Snapshot Repository</name> 
+            <url>https://repo.spring.io/snapshot</url> 
+        </repository>
+        <repository> 
+            <id>spring-milestones</id> 
+            <name>Spring Milestone Repository</name> 
+            <url>https://repo.spring.io/milestone</url> 
+        </repository>
+    </repositories>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -523,16 +536,9 @@
         <profile>
             <id>nextgen</id>
             <properties>
-                <spring-hateoas.version>1.5.0-SNAPSHOT</spring-hateoas.version>
+                <java.version>17</java.version>
+                <spring-hateoas.version>2.0.0-SNAPSHOT</spring-hateoas.version>
             </properties>
-
-            <repositories>
-                <repository> 
-                    <id>spring-snapshots</id> 
-                    <name>Spring Snapshot Repository</name> 
-                    <url>https://repo.spring.io/snapshot</url> 
-                </repository>
-            </repositories>
         </profile>
     </profiles>
 </project>
