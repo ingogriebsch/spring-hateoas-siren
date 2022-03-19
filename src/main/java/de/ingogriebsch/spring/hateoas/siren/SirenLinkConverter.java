@@ -133,10 +133,7 @@ class SirenLinkConverter {
         }
 
         LinkRelation rel = link.getRel();
-        if (rel != null) {
-            return title(SirenLink.TitleResolvable.of(rel));
-        }
-        return null;
+        return title(SirenLink.TitleResolvable.of(rel));
     }
 
     private String actionTitle(String name) {
