@@ -43,7 +43,7 @@ jobs:
 
       - name: Prepare GPG environment
         # https://github.com/crazy-max/ghaction-import-gpg
-        uses: crazy-max/ghaction-import-gpg@v3.1.0
+        uses: crazy-max/ghaction-import-gpg@v5.1.0
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         with:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
