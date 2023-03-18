@@ -25,6 +25,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
+import org.springframework.http.HttpMethod;
 
 /**
  * Jackson {@link Module} to serialize and deserialize all the parts of Siren entities.
@@ -35,23 +36,9 @@ import org.springframework.hateoas.mediatype.hal.RepresentationModelMixin;
  */
 class Jackson2SirenModule extends SimpleModule {
 
-    private static final Version MODULE_VERSION = new Version(1, 1, 0, null, "de.ingogriebsch.hateoas", "spring-hateoas-siren");
-    private static final long serialVersionUID = 7377778164657569053L;
-
-    Jackson2SirenModule() {
-        super("siren-module", MODULE_VERSION);
-
-        setMixInAnnotation(RepresentationModel.class, RepresentationModelMixIn.class);
-        setMixInAnnotation(EntityModel.class, EntityModelMixIn.class);
-        setMixInAnnotation(CollectionModel.class, CollectionModelMixIn.class);
-        setMixInAnnotation(PagedModel.class, PagedModelMixIn.class);
-        setMixInAnnotation(SirenModel.class, SirenModelMixIn.class);
-        setMixInAnnotation(SirenModel.EmbeddedRepresentation.class, SirenModelMixIn.EmbeddedRepresentationMixIn.class);
-    }
-
-    @JsonSerialize(using = SirenRepresentationModelSerializer.class)
-    @JsonDeserialize(using = SirenRepresentationModelDeserializer.class)
-    abstract static class RepresentationModelMixIn extends RepresentationModel<RepresentationModelMixin> {
+    @JsonSerialize(using = SirenCollectionModelSerializer.class)
+    @JsonDeserialize(using = SirenCollectionModelDeserializer.class)
+    abstract static class CollectionModelMixIn<T> extends CollectionModel<T> {
     }
 
     @JsonSerialize(using = SirenEntityModelSerializer.class)
@@ -59,14 +46,14 @@ class Jackson2SirenModule extends SimpleModule {
     abstract static class EntityModelMixIn<T> extends EntityModel<T> {
     }
 
-    @JsonSerialize(using = SirenCollectionModelSerializer.class)
-    @JsonDeserialize(using = SirenCollectionModelDeserializer.class)
-    abstract static class CollectionModelMixIn<T> extends CollectionModel<T> {
-    }
-
     @JsonSerialize(using = SirenPagedModelSerializer.class)
     @JsonDeserialize(using = SirenPagedModelDeserializer.class)
     abstract static class PagedModelMixIn<T> extends PagedModel<T> {
+    }
+
+    @JsonSerialize(using = SirenRepresentationModelSerializer.class)
+    @JsonDeserialize(using = SirenRepresentationModelDeserializer.class)
+    abstract static class RepresentationModelMixIn extends RepresentationModel<RepresentationModelMixin> {
     }
 
     @JsonSerialize(using = SirenModelSerializer.class)
@@ -76,6 +63,23 @@ class Jackson2SirenModule extends SimpleModule {
         abstract static class EmbeddedRepresentationMixIn extends SirenModel.EmbeddedRepresentation {
         }
 
+    }
+
+    private static final Version MODULE_VERSION = new Version(1, 1, 0, null, "de.ingogriebsch.hateoas", "spring-hateoas-siren");
+
+    private static final long serialVersionUID = 7377778164657569053L;
+
+    Jackson2SirenModule() {
+        super("siren-module", MODULE_VERSION);
+
+        this.setMixInAnnotation(RepresentationModel.class, RepresentationModelMixIn.class);
+        this.setMixInAnnotation(EntityModel.class, EntityModelMixIn.class);
+        this.setMixInAnnotation(CollectionModel.class, CollectionModelMixIn.class);
+        this.setMixInAnnotation(PagedModel.class, PagedModelMixIn.class);
+        this.setMixInAnnotation(SirenModel.class, SirenModelMixIn.class);
+        this.setMixInAnnotation(SirenModel.EmbeddedRepresentation.class, SirenModelMixIn.EmbeddedRepresentationMixIn.class);
+        this.addSerializer(HttpMethod.class, new HttpMethodSerializer());
+        this.addDeserializer(HttpMethod.class, new HttpMethodDeserializer());
     }
 
 }

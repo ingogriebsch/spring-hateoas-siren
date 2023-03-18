@@ -20,7 +20,7 @@ jobs:
 
       - name: Set up JDK 11
         # https://github.com/actions/setup-java
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           cache: 'maven'
           check-latest: true
@@ -29,21 +29,21 @@ jobs:
 
       - name: Prepare Sonar cache
         # https://github.com/actions/cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3.3.1
         with:
           path: ~/.sonar/cache
           key: sonar
 
       - name: Prepare Maven settings
         # https://github.com/s4u/maven-settings-action
-        uses: s4u/maven-settings-action@v2.5.0
+        uses: s4u/maven-settings-action@v2.8.0
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         with:
           servers: '[{"id": "ossrh", "username": "${{ secrets.OSSRH_USERNAME }}", "password": "${{ secrets.OSSRH_PASSWORD }}"}]'
 
       - name: Prepare GPG environment
         # https://github.com/crazy-max/ghaction-import-gpg
-        uses: crazy-max/ghaction-import-gpg@v3.1.0
+        uses: crazy-max/ghaction-import-gpg@v5.2.0
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         with:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -73,7 +73,7 @@ jobs:
 
       - name: Publish main documentation
         # https://github.com/peaceiris/actions-gh-pages
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        uses: peaceiris/actions-gh-pages@v3.9.2
         if: github.ref == 'refs/heads/main'
         with:
           cname: spring-hateoas-siren.ingogriebsch.de
@@ -97,7 +97,7 @@ jobs:
           
       - name: Publish tags documentation
         # https://github.com/peaceiris/actions-gh-pages
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        uses: peaceiris/actions-gh-pages@v3.9.2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           cname: spring-hateoas-siren.ingogriebsch.de
