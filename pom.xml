@@ -49,7 +49,7 @@
 		<sonar.organization>ingogriebsch</sonar.organization>
 		<spring-doc-resources.version>0.2.5</spring-doc-resources.version>
 		<spring-hateoas.version>2.0.1</spring-hateoas.version>
-		<slf4j.version>2.0.6</slf4j.version>
+		<slf4j.version>2.0.7</slf4j.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
